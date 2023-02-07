@@ -1,0 +1,14 @@
+@import "../../../styles/variables";
+@import "../../../styles/mixins";
+
+.textinput {
+  @include input-wrap;
+
+  &__input {
+      @include input;
+
+      &--rounded {
+        @include input-rounded;
+      }
+  }
+}

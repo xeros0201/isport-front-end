@@ -1,0 +1,29 @@
+.reactdropdown {
+    width: 100%;
+
+    .Dropdown {
+        &-control {
+            cursor: pointer;
+        }
+
+        &-arrow {
+            top: 15px;
+        }
+
+        &-menu {
+            z-index: 2;
+        }
+
+        &-option.is-selected {
+            background: var(--light-gray);
+        }
+
+        &-option:hover {
+            background: var(--primary);
+        }
+
+        &-placeholder {
+            white-space: nowrap;
+        }
+    }
+}

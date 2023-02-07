@@ -1,0 +1,19 @@
+@import "../../../styles/variables";
+@import "../../../styles/mixins";
+
+.footer {
+    background-color: $black;
+    color: $white;
+    padding: 20px;
+    min-height: $footer-vertical-height;
+
+    .footer__container {
+        @include container;
+        flex-direction: row;
+        justify-content: space-between;
+    }
+    
+    .footer__logo {
+        
+    }
+}

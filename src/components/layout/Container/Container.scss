@@ -1,0 +1,11 @@
+@import "../../../styles/variables";
+@import "../../../styles/mixins";
+
+.container {
+    @include container;
+
+    &-fullwidth {
+        width: 100%;
+        padding: 0;
+    }
+}

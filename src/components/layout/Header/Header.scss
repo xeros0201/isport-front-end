@@ -1,0 +1,60 @@
+@import "../../../styles/variables";
+@import "../../../styles/mixins";
+
+.header {
+    background-color: $black;
+    color : $white;
+    
+    .header__container {
+        @include container;
+        flex-direction: row;
+        justify-content: space-between;
+
+        .header__logo {
+            flex: 0;
+            padding: 10px;
+            padding-left: 0;
+            cursor: pointer;
+        }
+    
+        .header__nav {
+            flex: 1;
+            display: flex;
+            flex-direction: row;
+            justify-content: right;
+    
+            ul {
+                display: flex;
+                flex-direction: row;
+                list-style-type: none;
+                margin: 0;
+                padding: 0;
+    
+                li {
+                    height: $menu-vertical-height;
+                    display: inline-block;
+
+                    .header__navlink {
+                        height: $menu-vertical-height;
+                        cursor: pointer;
+                        display: table-cell;
+                        padding: 0 10px;
+                        white-space: nowrap;
+                        vertical-align: middle;
+                        color: $white;
+                        text-decoration: none;
+                        text-decoration-color: $cyan;
+
+                        &--active {
+                            text-decoration: underline solid $cyan;
+                            text-decoration-thickness: 3px;
+                            text-underline-offset: 10px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+
+}

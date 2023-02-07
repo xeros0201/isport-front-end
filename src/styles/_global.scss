@@ -1,0 +1,34 @@
+@import "./variables";
+
+/* Import fonts */
+
+
+/* Override defaults */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  transition: 0.5s;
+//   font-family: "Montserrat";
+}
+
+/* Minimum height is height of window */
+html,
+body,
+#root {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  transition: 0s !important;
+  background-color: $grey-light;
+}
+
+/* Typography */
+
+
+/* Inputs */
+fieldset {
+  border: none;
+  padding-left: 0px;
+  padding-right: 0px;
+}

@@ -1,0 +1,8 @@
+@import "../../../styles/variables";
+
+.page {
+    width: 100%;
+    min-height: calc(100vh - #{$menu-vertical-height} - #{$footer-vertical-height}); /* 305px is the smallest value the footer can be, may need to be updated if footer is modified */
+    display: flex;
+    flex-direction: column;
+}
