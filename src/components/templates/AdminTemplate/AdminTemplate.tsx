@@ -17,6 +17,7 @@ const AdminTemplate = () => {
       <Container>
         <Outlet />
       </Container>
+      <Footer />
     </div>
   );
 };
