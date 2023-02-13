@@ -6,7 +6,7 @@ import { Button, Spinner } from "../../../components/common";
 import { TextInput } from "../../../components/input";
 import { useMemo, useState } from "react";
 
-const LeaguesList = () => {
+const LeagueList = () => {
     const [query, setQuery] = useState("");
 
     // Fetch data
@@ -27,7 +27,7 @@ const LeaguesList = () => {
             <Row alignItems='center' disableWrapping noFlex>
                 <h1>Leagues</h1>
                 <Button
-                    label="Add League"
+                    label="New League"
                     onClick={() => navigate('/admin/leagues/new')}
                 />
             </Row>
@@ -54,4 +54,4 @@ const LeaguesList = () => {
     );
 };
 
-export default LeaguesList;
+export default LeagueList;
