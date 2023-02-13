@@ -6,20 +6,36 @@ $black: #111111;
 $white: #ffffff;
 $red: #B30000;
 $grey-light: #F2F2F2;
-$grey-dark: #808080;
+$grey-mid: #808080;
+$grey-dark: #525252;
+$transparent: transparent;
 
 /* Typography */
-$font-size-label: 16px;
+$font-size-default: 16px;
+$font-size-h1: 34px;
+$font-size-h2: 27px;
+$font-size-h3: 20px;
+$font-size-h4: 18px;
+$font-size-p: $font-size-default;
+$font-size-label: $font-size-default;
+
+/* Borders */
+$border-radius-small: 0px;
+$border-radius-large: 10px;
+$border-width-thin: 1px;
+$border-width-thick: 5px;
 
 /* Layout */
 $container-width-max: 1300px;
 $container-horizontal-padding: 20px;
+$page-vertical-padding: 40px;
 
 /* Spacing */
 $margin-top-small: 10px;
 $margin-top-medium: 20px;
+$margin-between: 20px;
 
-/* Navbar */
+/* Header */
 $menu-vertical-height: 70px;
 $menu-vertical-padding: 15px;
 

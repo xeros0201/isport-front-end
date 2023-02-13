@@ -1,7 +1,15 @@
-const Spinner = () => {
+import './Spinner.scss';
+
+interface SpinnerProps {
+    size?: 'small' | 'large';	
+}
+
+const Spinner = ({ size = 'small' }: SpinnerProps) => {
+    const sizeClass = 'spinner--' + size;
+
     return (
-        <div className="spinner">
-            <h3>Loading...</h3>
+        <div className={`spinner ${sizeClass}`}>
+            <div className={`spinner__inner `}></div>
         </div>
     )
 }

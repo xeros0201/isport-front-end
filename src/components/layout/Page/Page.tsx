@@ -15,7 +15,7 @@ type PageProps = {
 /**
  * Layout component used to wrap an entire pages content.
  */
-const Page: React.FC<PageProps> = ({ title, children }) => {
+const Page = ({ title, children }: PageProps) => {
   return (
     <main className="page">
       <SEO title={title} />

@@ -1,0 +1,84 @@
+@import "../../../styles/variables";
+
+@mixin disabled {
+  opacity: 0.7;
+  cursor: default;
+}
+
+.button {
+  border-radius: $border-radius-small;
+  margin-top: $margin-top-medium;
+  cursor: pointer;
+  font-weight: bold;
+  margin-right: 10px;
+  border: 3px solid $black;
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+  
+  &--active {
+    &:hover {
+      opacity: 0.9;
+    }
+  }
+  .spinner {
+    display: none;
+  }
+  &--loading {
+    @include disabled;
+    .spinner {
+      display: inline-block;
+      width: auto;
+      height: 50px;
+      min-height: auto;
+      width: 50px;
+      left: 0%;
+      transform: scale(0.3);
+  
+      &__bar::after {
+        background-color: white;
+      }
+    }
+  }
+
+  &--primary {
+    color: $white;
+    background-color: $black;
+    border-color: $black;
+  }
+
+  &--secondary {
+    color: $white;
+    background-color: $grey-dark;
+    border-color: $grey-dark;
+  }
+
+  &--danger {
+    color: $white;
+    background-color: $red;
+    border-color: $red;
+  }
+
+  &--fullwidth {
+    display: block;
+    width: 100%;
+    margin-right: 0px;
+  }
+
+  &--transparent {
+    color: $black;
+    border: none;
+    background-color: $transparent;
+  }
+
+  &--rounded {
+    border-radius: 25px;
+  }
+
+  &--disabled {
+    @include disabled; 
+  } 
+}

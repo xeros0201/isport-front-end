@@ -9,6 +9,9 @@ import Leaderboard from '../../pages/public/Leaderboard/Leaderboard';
 import TeamStats from '../../pages/public/TeamStats/TeamStats';
 import Fixtures from '../../pages/public/Fixtures/Fixtures';
 import LeaguesList from '../../pages/admin/LeaguesList/LeaguesList';
+import Test from '../../pages/admin/Test/Test';
+import LeaguesCreate from '../../pages/admin/LeaguesCreate/LeaguesCreate';
+import LeaguesEdit from '../../pages/admin/LeaguesEdit/LeaguesEdit';
 
 export interface RouteConfig {
     path: string;
@@ -34,6 +37,27 @@ export const adminRoutes: RouteConfig[] = [
         name: 'LeaguesList',
         exact: true,
         Component: LeaguesList,
+        secured: true
+    },
+    {
+        path: 'leagues/new',
+        name: 'LeaguesCreate',
+        exact: true,
+        Component: LeaguesCreate,
+        secured: true
+    },
+    {
+        path: 'leagues/edit/',
+        name: 'LeaguesEdit',
+        exact: true,
+        Component: LeaguesEdit,
+        secured: true
+    },
+    {
+        path: 'test',
+        name: 'Test',
+        exact: true,
+        Component: Test,
         secured: true
     }
 ];
