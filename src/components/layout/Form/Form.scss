@@ -1,0 +1,9 @@
+.form {
+  // Links inside form
+  a {
+    text-decoration: underline;
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}

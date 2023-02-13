@@ -1,0 +1,44 @@
+@import '../../../styles/variables.scss';
+
+@keyframes spin {
+    from {transform:rotate(0deg);}
+    to {transform:rotate(360deg);}
+}
+
+.spinner {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+
+    &__inner {
+        margin: 0 auto;
+        border-radius: 50%;
+        border-left: $transparent $border-width-thick solid;
+        border-top: $magenta $border-width-thick solid;
+        border-right: $yellow $border-width-thick solid;
+        border-bottom: $cyan $border-width-thick solid;
+        animation: spin 1.5s linear infinite;
+    }
+    
+
+    &--small {
+        height: 80px;
+
+        .spinner__inner {
+            width: 40px;
+            height: 40px;
+            border-width: $border-width-thin;
+        }
+    }
+
+    &--large {
+        height: 200px;
+        
+        .spinner__inner {
+            width: 100px;
+            height: 100px;
+            border-width: $border-width-thick;
+        }
+    }
+}
