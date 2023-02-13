@@ -1,0 +1,20 @@
+@import "../../../styles/mixins";
+
+.row {
+  @include row;
+
+  &--disallow-wrapping {
+    @include row-disallow-wrapping;
+  }
+
+  &--nospacing {
+    > * {
+      flex: 1;
+      flex-grow: 0;
+      
+      button {
+        white-space: nowrap;
+      }
+    }
+  }
+}

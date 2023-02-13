@@ -1,11 +1,62 @@
 @import "variables";
 
+/* Breakpoints */
+@mixin lg-screen {
+  @media only screen {
+    @content;
+  }
+}
+@mixin md-screen {
+  @media only screen and (max-width: 1000px) {
+    @content;
+  }
+}
+@mixin sm-screen {
+  @media only screen and (max-width: 740px) {
+    @content;
+  }
+}
+@mixin xs-screen {
+  @media only screen and (max-width: 460px) {
+    @content;
+  }
+}
+
 /* Layout */
 @mixin container {
   width: calc(100% - #{$container-horizontal-padding} * 2);
   max-width: $container-width-max;
   margin: 0 auto;
   flex-direction: column;
+  display: flex;
+}
+
+@mixin row {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  justify-content: space-between;
+  @include sm-screen {
+    display: block;
+  }
+  
+  > * {
+    flex: 1;
+    flex-grow: 1;
+    > * {
+      margin: 0 !important;
+    }
+
+    &:not(:last-child) {
+      margin-right: $margin-between;
+      @include sm-screen {
+        margin-right: 0;
+      }
+    }
+  }
+}
+
+@mixin row-disallow-wrapping {
   display: flex;
 }
 
@@ -21,14 +72,14 @@
   width: 100%;
   border-width: 1px;
   border-style: solid;
-  border-color: $grey-dark;
+  border-color: $grey-mid;
   padding: 10px;
   font-size: 16px;
   &:hover {
     border-color: $cyan;
   }
 }
-
+ 
 @mixin input-rounded {
   border-radius: 20px;
 }

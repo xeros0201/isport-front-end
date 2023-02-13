@@ -1,11 +1,9 @@
 import "./InputLabel.scss";
-import React from "react";
-import { InputLabelProps } from "../../../types/inputs";
 
 /**
  * The label used for input components.
  */
-const InputLabel: React.FC<InputLabelProps> = ({ label, required = false }) => {
+const InputLabel = ({ label, required = false }: InputLabelProps) => {
   /**
    * Return nothing if label wasn't provided;
    */

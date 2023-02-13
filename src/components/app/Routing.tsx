@@ -8,7 +8,22 @@ import PublicTemplate from '../templates/PublicTemplate/PublicTemplate';
 import Leaderboard from '../../pages/public/Leaderboard/Leaderboard';
 import TeamStats from '../../pages/public/TeamStats/TeamStats';
 import Fixtures from '../../pages/public/Fixtures/Fixtures';
-import LeaguesList from '../../pages/admin/LeaguesList/LeaguesList';
+import LeagueList from '../../pages/admin/LeagueList/LeagueList';
+import LeagueCreate from '../../pages/admin/LeagueCreate/LeagueCreate';
+import LeagueEdit from '../../pages/admin/LeagueEdit/LeagueEdit';
+import SeasonList from '../../pages/admin/SeasonList/SeasonList';
+import SeasonCreate from '../../pages/admin/SeasonCreate/SeasonCreate';
+import SeasonEdit from '../../pages/admin/SeasonEdit/SeasonEdit';
+import TeamList from '../../pages/admin/TeamList/TeamList';
+import TeamCreate from '../../pages/admin/TeamCreate/TeamCreate';
+import TeamEdit from '../../pages/admin/TeamEdit/TeamEdit';
+import PlayerList from '../../pages/admin/PlayerList/PlayerList';
+import PlayerCreate from '../../pages/admin/PlayerCreate/PlayerCreate';
+import PlayerEdit from '../../pages/admin/PlayerEdit/PlayerEdit';
+import MatchList from '../../pages/admin/MatchList/MatchList';
+import MatchCreate from '../../pages/admin/MatchCreate/MatchCreate';
+import MatchEdit from '../../pages/admin/MatchEdit/MatchEdit';
+import Test from '../../pages/admin/Test/Test';
 
 export interface RouteConfig {
     path: string;
@@ -31,9 +46,114 @@ export const adminRoutes: RouteConfig[] = [
     },
     {
         path: 'leagues',
-        name: 'LeaguesList',
+        name: 'LeagueList',
         exact: true,
-        Component: LeaguesList,
+        Component: LeagueList,
+        secured: true
+    },
+    {
+        path: 'leagues/new',
+        name: 'LeagueCreate',
+        exact: true,
+        Component: LeagueCreate,
+        secured: true
+    },
+    {
+        path: 'leagues/edit/',
+        name: 'LeagueEdit',
+        exact: true,
+        Component: LeagueEdit,
+        secured: true
+    },
+    {
+        path: 'seasons',
+        name: 'SeasonList',
+        exact: true,
+        Component: SeasonList,
+        secured: true
+    },
+    {
+        path: 'seasons/new',
+        name: 'SeasonCreate',
+        exact: true,
+        Component: SeasonCreate,
+        secured: true
+    },
+    {
+        path: 'seasons/edit',
+        name: 'SeasonEdit',
+        exact: true,
+        Component: SeasonEdit,
+        secured: true
+    },
+    {
+        path: 'teams',
+        name: 'TeamList',
+        exact: true,
+        Component: TeamList,
+        secured: true
+    },
+    {
+        path: 'teams/new',
+        name: 'TeamCreate',
+        exact: true,
+        Component: TeamCreate,
+        secured: true
+    },
+    {
+        path: 'teams/edit',
+        name: 'TeamEdit',
+        exact: true,
+        Component: TeamEdit,
+        secured: true
+    },
+    {
+        path: 'players',
+        name: 'PlayerList',
+        exact: true,
+        Component: PlayerList,
+        secured: true
+    },
+    {
+        path: 'players/new',
+        name: 'PlayerCreate',
+        exact: true,
+        Component: PlayerCreate,
+        secured: true
+    },
+    {
+        path: 'players/edit',
+        name: 'PlayerEdit',
+        exact: true,
+        Component: PlayerEdit,
+        secured: true
+    },
+    {
+        path: 'matches',
+        name: 'MatchList',
+        exact: true,
+        Component: MatchList,
+        secured: true
+    },
+    {
+        path: 'matches/new',
+        name: 'MatchCreate',
+        exact: true,
+        Component: MatchCreate,
+        secured: true
+    },
+    {
+        path: 'matches/edit',
+        name: 'MatchEdit',
+        exact: true,
+        Component: MatchEdit,
+        secured: true
+    },
+    {
+        path: 'test',
+        name: 'Test',
+        exact: true,
+        Component: Test,
         secured: true
     }
 ];

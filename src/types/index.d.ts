@@ -1,6 +1,6 @@
 declare global {
 
-  export interface League {
+  interface League {
     id: number;
     sportId: number;
     name: string;
