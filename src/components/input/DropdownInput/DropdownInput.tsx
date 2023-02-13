@@ -1,6 +1,7 @@
 import ReactDropdown from "react-dropdown";
 import "./DropdownInput.scss";
 
+
 interface DropdownInputProps extends InputWithOptionsProps {
   /**
    * Placeholder text inside dropdown

@@ -1,0 +1,14 @@
+@import "react-datepicker/dist/react-datepicker.css";
+
+.DateInput__datepicker {
+  border: 1px solid #333;
+  background-color: white;
+  padding: 10px 10px;
+  width: 100%;
+}
+
+.DateInput__icon {
+  position: absolute;
+  bottom: 12px;
+  right: 12px;
+}
