@@ -73,8 +73,9 @@
   border-width: 1px;
   border-style: solid;
   border-color: $grey-mid;
-  padding: 10px;
-  font-size: 16px;
+  background-color: $white;
+  padding: $padding-input;
+  font-size: $font-size-default;
   &:hover {
     border-color: $cyan;
   }

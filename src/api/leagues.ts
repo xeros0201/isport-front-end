@@ -4,7 +4,7 @@ import axios from "./axios";
  * Fetches all leagues.
  */
 export const getLeagues = async (): Promise<League[]> => {
-    const response = await axios.get<League[]>('/league');
+    const response = await axios.get<League[]>('/leagues');
     return response.data;
 };
 
@@ -12,7 +12,7 @@ export const getLeagues = async (): Promise<League[]> => {
  * Fetches league that matches id.
  */
 export const getLeague = async (id: number): Promise<League> => {
-    const response = await axios.get<League>(`/league/${id}`);
+    const response = await axios.get<League>(`/leagues/${id}`);
     return response.data;
 };
 
@@ -20,7 +20,7 @@ export const getLeague = async (id: number): Promise<League> => {
  * Creates new league.
  */
 export const createLeague = async (league: { name: string }): Promise<League> => {
-    const response = await axios.post<League>('/league', { ...league, sportId: 1 });
+    const response = await axios.post<League>('/leagues', { ...league, sportId: 1 });
     return response.data;
 }
 
@@ -28,6 +28,6 @@ export const createLeague = async (league: { name: string }): Promise<League> =>
  * Updates existing league.
  */
 export const updateLeague = async (id: number, league: { name: string }): Promise<League> => {
-    const response = await axios.patch<League>('/league/${id}', league);
+    const response = await axios.patch<League>('/leagues/${id}', league);
     return response.data;
 }
