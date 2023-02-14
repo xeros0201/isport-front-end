@@ -78,6 +78,23 @@ declare global {
         onBlur?: React.FocusEventHandler<T>;
     }
 
+    export interface AsInputProps {
+        /**
+         * Whether this component should be styled and behave like an input.
+         * Perfect for components that are only sometimes used as inputs (such as dropdowns). 
+         */
+        asInput?: boolean;
+    }
+
+    export interface AsyncOptionsInputProps {
+        /**
+         * Whether options are still being fetched.
+         */
+        fetching?: boolean;
+    }
+
+    export interface ImplementedDropdownProps extends InputProps, AsInputProps {}
+
     export interface TwoOrMoreArray<T> extends Array<T> {
         0: T;
         1: T;
