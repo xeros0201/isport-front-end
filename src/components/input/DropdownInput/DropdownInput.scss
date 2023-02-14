@@ -1,29 +1,65 @@
-.reactdropdown {
-    width: 100%;
+@import "react-dropdown/style.css";
+@import "../../../styles/variables";
+@import "../../../styles/mixins";
+
+.dropdowninput {
+  .Dropdown {
+    &-control {
+      cursor: pointer;
+    }
+
+    &-arrow {
+      top: 15px;
+    }
+
+    &-menu {
+      z-index: 2;
+    }
+
+    // &-option.is-selected {
+    //     background: var(--light-gray);
+    // }
+
+    // &-option:hover {
+    //     background: var(--primary);
+    // }
+
+    &-placeholder {
+      white-space: nowrap;
+    }
+
+  }
+
+  &--as-input {
+    @include input-wrap;
 
     .Dropdown {
-        &-control {
-            cursor: pointer;
-        }
-
-        &-arrow {
-            top: 15px;
-        }
-
-        &-menu {
-            z-index: 2;
-        }
-
-        &-option.is-selected {
-            background: var(--light-gray);
-        }
-
-        &-option:hover {
-            background: var(--primary);
-        }
-
-        &-placeholder {
-            white-space: nowrap;
-        }
+      &-control {
+        @include input;
+        cursor: pointer;
+      }
     }
+
+    .dropdowninput__spinner {
+      @include input;
+      padding: 0;
+
+      .spinner {
+        height: calc(#{$padding-input} * 2 + #{$font-size-default});
+      }
+    }
+  }
+
+  &--not-as-input {
+    margin-top: $margin-top-small;
+
+    .Dropdown {
+      &-control {
+        cursor: pointer;
+        border: none;
+        background: none;
+        width: 160px;
+      }
+    }
+  }
 }

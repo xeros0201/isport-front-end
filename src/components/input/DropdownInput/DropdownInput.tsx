@@ -1,16 +1,17 @@
 import ReactDropdown from "react-dropdown";
+import { Spinner } from "../../common";
+import InputError from "../InputError/InputError";
+import InputLabel from "../InputLabel/InputLabel";
 import "./DropdownInput.scss";
 
-
-interface DropdownInputProps extends InputWithOptionsProps {
+interface DropdownInputProps
+  extends InputWithOptionsProps,
+    AsInputProps,
+    AsyncOptionsInputProps {
   /**
    * Placeholder text inside dropdown
    */
   placeholder?: string;
-  /**
-   * Selected item; can set default item selected
-   */
-  value?: string;
 }
 
 /**
@@ -21,15 +22,37 @@ function DropdownInput({
   options = [],
   placeholder,
   onChange,
+  label,
+  required,
+  disabled,
+  error,
+  touched,
+  fetching,
+  asInput = false,
 }: DropdownInputProps) {
+  const asInputClass = `dropdowninput--${
+    asInput ? "as-input" : "not-as-input"
+  }`;
   return (
-    <ReactDropdown
-      className="reactdropdown"
-      options={options}
-      value={value}
-      placeholder={placeholder ?? ""}
-      onChange={(e) => onChange(e.value)}
-    />
+    <div className={`dropdowninput ${asInputClass}`}>
+      {asInput && <InputLabel label={label} required={required} />}
+      {!fetching && (
+        <ReactDropdown
+          className="reactdropdown"
+          options={options}
+          value={value}
+          placeholder={placeholder ?? ""}
+          onChange={(e) => onChange(e.value)}
+          disabled={disabled}
+        />
+      )}
+      {fetching && (
+        <div className="dropdowninput__spinner">
+          <Spinner size="tiny" />
+        </div>
+      )}
+      {asInput && <InputError error={error} touched={touched} />}
+    </div>
   );
 }
 

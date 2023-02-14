@@ -1,13 +1,10 @@
-import { Button } from "../../../components/common";
-import LeagueForm from "../../../components/forms/LeagueForm";
-import { TextInput } from "../../../components/input";
-import { Form, Row } from "../../../components/layout";
+import { Page } from "../../../components/layout";
 
 const Test = () => {
     return (
-        <div>
+        <Page title="Test">
             <h1>Test page</h1>
-        </div>
+        </Page>
     );
 }
 

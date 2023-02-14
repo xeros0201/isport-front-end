@@ -4,7 +4,7 @@ interface SpinnerProps {
   /**
    * Size of the spinner. Default is 'small'.
    */
-  size?: "small" | "large";
+  size?: "tiny" |"small" | "large";
 }
 
 /**

@@ -21,6 +21,15 @@
         animation: spin 1.5s linear infinite;
     }
     
+    &--tiny {
+        height: 30px;
+
+        .spinner__inner {
+            width: 25px;
+            height: 25px;
+            border-width: $border-width-thin;
+        }
+    }
 
     &--small {
         height: 80px;
