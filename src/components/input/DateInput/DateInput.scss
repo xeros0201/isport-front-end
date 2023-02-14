@@ -1,14 +1,17 @@
 @import "react-datepicker/dist/react-datepicker.css";
+@import "../../../styles/mixins";
 
-.DateInput__datepicker {
-  border: 1px solid #333;
-  background-color: white;
-  padding: 10px 10px;
-  width: 100%;
+.dateinput__datepicker {
+
+  @include input;
 }
 
-.DateInput__icon {
+.dateinput__icon {
   position: absolute;
-  bottom: 12px;
+  top: 20px;
   right: 12px;
+
+  &.with_label {
+    top: 40px;
+  }
 }

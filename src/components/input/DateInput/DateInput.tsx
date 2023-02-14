@@ -1,30 +1,36 @@
 import "./DateInput.scss";
 import { InputError, InputLabel } from "../../input";
 
-import React, { ReactNode, useState } from "react";
+import React, { ReactNode, useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { FaCalendar } from "react-icons/fa";
 
 // import "react-datepicker/dist/react-datepicker.css";
 
 // CSS Modules, react-datepicker-cssmodules.css
 //import "react-datepicker/dist/react-datepicker-cssmodules.css";
-interface DateInputProps extends InputWithOptionsProps {
+interface TextInputProps extends InputProps {
   /**
    * Placeholder text inside dropdown
    */
   placeholder?: string;
-  /**
-   * Selected item; can set default item selected
-   */
-  value?: string;
 
-  icon?: ReactNode;
+  value?: Date;
 }
 
-function DateInput({ label, required, error, touched, icon }: DateInputProps) {
-  const [startDate, setStartDate] = useState<Date | null>();
+function DateInput({
+  label,
+  required,
+  error,
+  touched,
+  value,
+  onChange,
+}: TextInputProps) {
+  const [startDate, setStartDate] = useState<Date | null | undefined>(value);
+
+  useEffect(() => {
+    setStartDate(value);
+  }, [value]);
 
   return (
     <div
@@ -35,11 +41,19 @@ function DateInput({ label, required, error, touched, icon }: DateInputProps) {
       <InputLabel label={label} required={required} />
       <DatePicker
         selected={startDate}
-        onChange={(date) => setStartDate(date)}
-        className="DateInput__datepicker"
+        onChange={(date) => {
+          setStartDate(date);
+
+          if (date !== undefined && date !== null) {
+            onChange(date.toString());
+          }
+        }}
+        className="dateinput__datepicker"
         placeholderText="DD-MM-YYYY"
       />
-      {icon === undefined ? <FaCalendar className="DateInput__icon" /> : icon}
+      <FaCalendar
+        className={`dateinput__icon${label !== undefined ? " with_label" : ""}`}
+      />
       <InputError error={error} touched={touched} />
     </div>
   );
