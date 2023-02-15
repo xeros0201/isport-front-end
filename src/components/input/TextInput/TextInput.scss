@@ -3,13 +3,22 @@
 
 .textinput {
   @include input-wrap;
+  margin-top: 0px !important;
 
   &__input {
       @include input;
+      margin-top: 20px;
+      padding-left: 32px;
 
       &--rounded {
         @include input-rounded;
       }
+  }
+
+  &__icon{
+    position: relative;
+    transform: translateY(-180%);
+    left: 10px;
   }
 }
 

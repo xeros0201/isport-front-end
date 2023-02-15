@@ -1,5 +1,6 @@
 import "./TextInput.scss";
 import { InputError, InputLabel } from "../../input";
+import { FaCalendar, FaSearch } from "react-icons/fa";
 
 interface TextInputProps extends InputProps, FocusProps<HTMLInputElement> {
   /**
@@ -11,9 +12,11 @@ interface TextInputProps extends InputProps, FocusProps<HTMLInputElement> {
    */
   placeholder?: string;
   /**
-   * 
+   *
    */
   rounded?: boolean;
+  iconUrl?: string;
+  iconsize?: number;
 }
 
 /**
@@ -32,6 +35,8 @@ const TextInput = ({
   placeholder = "",
   disabled = false,
   rounded = false,
+  iconUrl,
+  iconsize = 18,
 }: TextInputProps) => {
   return (
     <div className="textinput">
@@ -39,13 +44,23 @@ const TextInput = ({
       <input
         onFocus={onFocus}
         onBlur={onBlur}
-        className={`textinput__input ${rounded ? "textinput__input--rounded" : ""}`}
+        className={`textinput__input ${
+          rounded ? "textinput__input--rounded" : ""
+        }`}
         type={type}
         value={value}
         onChange={(e) => onChange(e.target.value || "")}
         disabled={disabled}
         placeholder={placeholder}
       />
+      {iconUrl && (
+        <img
+          className="textinput__icon"
+          src={iconUrl}
+          width={iconsize}
+          height={iconsize}
+        />
+      )}
       <InputError error={error} touched={touched} />
     </div>
   );
