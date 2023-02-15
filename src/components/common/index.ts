@@ -1,5 +1,5 @@
 import Spinner from './Spinner/Spinner';
 import Button from './Button/Button';
-import Image from './Image/Image';
+import Logo from './Logo/Logo';
 
-export { Spinner, Button, Image };
+export { Spinner, Button, Logo };
