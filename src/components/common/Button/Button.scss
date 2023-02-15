@@ -18,15 +18,36 @@
   align-items: center;
   justify-content: center;
   white-space: nowrap;
+
+  &__icon {
+    margin-right: 12px;
+  }
+
+  &--small-size {
+    align-self: center;
+    padding: 14px 2%;
+  }
+
+  &--medium-size {
+    align-self: center;
+    padding: 14px 4%;
+  }
+
+  &--large-size {
+    align-self: center;
+    padding: 14px 7%;
+  }
   
   &--active {
     &:hover {
       opacity: 0.9;
     }
   }
+
   .spinner {
     display: none;
   }
+
   &--loading {
     @include disabled;
     .spinner {

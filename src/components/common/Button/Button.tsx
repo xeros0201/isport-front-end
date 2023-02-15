@@ -34,6 +34,18 @@ type ButtonProps = {
    * Whether the button has rounded corners.
    */
   rounded?: boolean;
+  /**
+   * Modify button size
+   */
+  size?: "small" | "medium" | "large";
+  /**
+   * Add icon before label
+   */
+  iconUrl?: string;
+  /**
+   * Modify icon size
+   */
+  iconSize?: number;
 };
 
 /**
@@ -48,6 +60,9 @@ const Button = ({
   isSubmit = false,
   isDisabled = false,
   rounded = true,
+  size = "medium",
+  iconUrl,
+  iconSize = 18,
 }: ButtonProps) => {
   /**
    * Determine the status of the button.
@@ -62,14 +77,28 @@ const Button = ({
   const roundedModifier = rounded ? "button--rounded" : "";
   const statusModifier = `button--${status}`;
 
+  const sizeModifier = () => {
+    if (size === "small") return "button--small-size";
+    if (size === "medium") return "button--medium-size";
+    return "button--large-size";
+  };
+
   return (
     <button
       disabled={isLoading || isDisabled}
-      className={`button ${typeModifier} ${fullwidthModifier} ${roundedModifier} ${statusModifier}`}
+      className={`button ${typeModifier} ${fullwidthModifier} ${roundedModifier} ${statusModifier} ${sizeModifier()}`}
       onClick={isLoading || isDisabled ? undefined : onClick}
       type={isSubmit ? "submit" : undefined}
     >
       <Spinner />
+      {iconUrl && (
+        <img
+          className="button__icon"
+          src={iconUrl}
+          width={iconSize}
+          height={iconSize}
+        />
+      )}
       <span>{label}</span>
     </button>
   );
