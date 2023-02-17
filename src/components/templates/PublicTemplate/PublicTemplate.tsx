@@ -1,4 +1,5 @@
 import { Outlet, useNavigate } from "react-router-dom";
+import SeasonForm from "../../forms/SeasonForm";
 import { Container, Footer, Header } from "../../layout";
 
 const PublicTemplate = () => {
@@ -14,6 +15,7 @@ const PublicTemplate = () => {
         ]}
       />
       <Container>
+        <SeasonForm />
         <Outlet />
       </Container>
       <Footer />
