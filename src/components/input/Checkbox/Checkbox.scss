@@ -1,74 +1,84 @@
 @import "../../../styles/variables";
+@import "../../../styles/mixins";
 
 .checkbox {
-    position: relative;
-    padding-left: 35px;
-    margin-bottom: 12px;
-    cursor: pointer;
-    font-size: 22px;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
     display: inline-block;
 
-    input {
-        position: absolute;
-        opacity: 0;
+    .checkbox {
+        @include input-wrap;
+
+        position: relative;
+        padding-left: 35px;
+        padding-top: 4px;
+        margin-bottom: 12px;
         cursor: pointer;
-        height: 0;
-        width: 0;
+        font-size: $font-size-default;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        display: inline-block;
 
+        input {
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
+            height: 0;
+            width: 0;
 
-        &:checked {
-            ~ {
-                .checkmark {
-                    background-color: $white;
+            &:checked {
+                ~ {
+                    .checkmark {
+                        background-color: $white;
 
-                    &:after {
-                        display: block;
+                        &:after {
+                            display: block;
+                        }
                     }
                 }
             }
         }
-    }
 
-    &:hover {
-        input {
-            ~ {
-                .checkmark {
-                    background-color: $grey-light;
+        &:hover {
+            input {
+                ~ {
+                    .checkmark {
+                        background-color: $grey-light;
+                    }
                 }
+            }
+        }
+
+        .checkmark {
+            &:after {
+                left: 9px;
+                top: 5px;
+                width: 5px;
+                height: 10px;
+                border: solid $grey-mid;
+                border-width: 0 3px 3px 0;
+                -webkit-transform: rotate(45deg);
+                transform: rotate(45deg);
             }
         }
     }
 
-    .checkmark {
-        &:after {
-            left: 9px;
-            top: 5px;
-            width: 5px;
-            height: 10px;
-            border: solid $grey-mid;
-            border-width: 0 3px 3px 0;
-            -webkit-transform: rotate(45deg);
-            transform: rotate(45deg);
-        }
+    button {
+        border: 0px;
     }
-}
 
-.checkmark {
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 25px;
-    width: 25px;
-    border: 1px solid $grey-mid;
-
-
-    &:after {
-        content: "";
+    .checkmark {
         position: absolute;
-        display: none;
+        top: 0;
+        left: 0;
+        height: 25px;
+        width: 25px;
+        border: 1px solid $grey-mid;
+
+        &:after {
+            content: "";
+            position: absolute;
+            display: none;
+        }
     }
 }

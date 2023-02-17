@@ -60,6 +60,13 @@ declare global {
         disabled?: boolean;
     }
 
+    export interface InputCheckboxProps extends InputErrorProps, InputLabelProps {
+        /**
+         * Return checkbox's value
+         */
+        onChange: (isChecked: boolean, value?: string) => void;
+    }
+
     export interface InputWithOptionsProps extends InputProps {
         /**
          * The options to be displayed to the user.
