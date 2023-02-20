@@ -60,6 +60,23 @@ declare global {
         disabled?: boolean;
     }
 
+    export interface ImageInputProps extends InputErrorProps, InputLabelProps {
+        /**
+         * The input's value.
+         */
+        value?: string;
+        /**
+         * The function to be called with the updated/selected
+         * value when the input is modified.
+         */
+        onChange: (values: ImageListType, addUpdatedIndex: number[] | undefined) => void;
+        /**
+         * Whether the input can be interacted with.
+         */
+        disabled?: boolean;
+    }
+
+
     export interface InputWithOptionsProps extends InputProps {
         /**
          * The options to be displayed to the user.
