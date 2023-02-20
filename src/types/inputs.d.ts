@@ -48,7 +48,7 @@ declare global {
     /**
      * The input's value.
      */
-    value?: string | Date;
+    value?: string;
     /**
      * The function to be called with the updated/selected
      * value when the input is modified.
@@ -99,11 +99,6 @@ declare global {
   }
 
   export interface ImplementedDropdownProps extends InputProps, AsInputProps {}
-
-  export interface TwoOrMoreArray<T> extends Array<T> {
-    0: T;
-    1: T;
-  }
 }
 
 export {};

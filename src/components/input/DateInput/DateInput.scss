@@ -4,21 +4,15 @@
 .dateinput {
   @include input-wrap;
 
-  .dateinput__input-wrap {
+  &__input-wrap {
     position: relative;
 
-    .dateinput__input {
+    &--picker {
       @include input;
       padding-right: 40px;
     }
 
-    .react-datepicker__triangle{
-      left: 50% !important;
-      transform: none !important;
-      z-index: 1;
-    }
-
-    .dateinput__icon {
+    &--icon {
       position: absolute;
       bottom: 12px;
       right: 12px;
