@@ -5,6 +5,7 @@ import { useQuery } from "react-query";
 import { useNavigate } from "react-router-dom";
 import { Button, Spinner } from "../common";
 import { InputError, TextInput } from "../input";
+import DropdownInput from "../input/DropdownInput/DropdownInput";
 
 interface SeasonValues {
   seasonName: "";
@@ -72,19 +73,18 @@ const SeasonForm = ({ id }: FormProps) => {
         value={formik.values.seasonName}
         onChange={formik.handleChange("seasonName")}
         touched={formik.touched.seasonName}
-        error={formik.errors.seasonName}
-        required
       />
-      <TextInput
+      <DropdownInput
         label="League"
-        value={formik.values.seasonName}
-        onChange={formik.handleChange("seasonName")}
-        touched={formik.touched.seasonName}
-        error={formik.errors.seasonName}
-        required
+        placeholder="Select the League"
+        options={[]}
+        onChange={function (value: string): void {
+          throw new Error("Function not implemented.");
+        }}
+        asInput
       />
       <Button
-        label={initialValues ? "Save" : "Add League"}
+        label={initialValues ? "Save" : "Add Season"}
         onClick={() => formik.submitForm()}
         isSubmit
       />
