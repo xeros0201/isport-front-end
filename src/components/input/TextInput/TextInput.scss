@@ -3,6 +3,7 @@
 
 .textinput {
   @include input-wrap;
+  flex: 1;
 
   &__input {
       @include input;
