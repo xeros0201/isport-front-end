@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { InputError, InputLabel } from "../../input";
 import DatePicker from "react-datepicker";
 import { FaCalendar } from "react-icons/fa";
@@ -12,12 +11,9 @@ const DateInput = ({
   value,
   onChange,
 }: InputProps) => {
-  const [date, setDate] = useState(value ? new Date(value) : new Date())
-
   const handleChange = (date: null | Date) => {
     if (!date) return;
 
-    setDate(date);
     onChange(date.toISOString());
   };
 
@@ -27,12 +23,12 @@ const DateInput = ({
       <div className="dateinput__input-wrap">
         <DatePicker
           dateFormat="dd/MM/yyyy"
-          selected={date}
+          selected={value !== undefined ? new Date(value) : undefined}
           onChange={handleChange}
-          className="dateinput__input-wrap--picker"
+          className="dateinput__input"
           placeholderText="DD-MM-YYYY"
         />
-        <FaCalendar className="dateinput__input-wrap--icon" />
+        <FaCalendar className="dateinput__icon" />
       </div>
       <InputError error={error} touched={touched} />
     </div>
