@@ -44,14 +44,12 @@ const Checkbox = ({
   };
 
   return (
-    <div className="checkbox">
-      <button className="checkbox" onClick={onCheck}>
-        <InputLabel label={label} required={required} />
-        <input value={value} type="checkbox" checked={isCheckedValue} />
-        <span className="checkmark"></span>
-        <InputError error={error} touched={touched} />
-      </button>
-    </div>
+    <a className="checkbox" onClick={onCheck}>
+      <InputLabel label={label} required={required} />
+      <input value={value} type="checkbox" checked={isCheckedValue} />
+      <span className="checkmark"></span>
+      <InputError error={error} touched={touched} />
+    </a>
   );
 };
 
