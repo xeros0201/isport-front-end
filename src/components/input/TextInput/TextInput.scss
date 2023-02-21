@@ -3,15 +3,12 @@
 
 .textinput {
   @include input-wrap;
-  margin-top: 0px !important;
 
   .textinput__input-wrap {
     position: relative;
 
     .textinput__input {
         @include input;
-        margin-top: 20px;
-        padding-left: 36px;
   
         &--rounded {
           @include input-rounded;
@@ -21,7 +18,15 @@
     .icon {
       position: absolute;
       bottom: 12px;
-      left: 12px;
+      left: 14px;
+    }
+  }
+
+  &--has-icon {
+    .textinput__input-wrap {  
+      .textinput__input {
+        padding-left: 40px;
+      }
     }
   }
 

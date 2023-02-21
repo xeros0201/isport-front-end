@@ -1,6 +1,7 @@
 import "./TextInput.scss";
 import { InputError, InputLabel } from "../../input";
 import { Icon } from "../../common";
+import classNames from "classnames";
 
 interface TextInputProps extends InputProps, FocusProps<HTMLInputElement> {
   /**
@@ -40,15 +41,19 @@ const TextInput = ({
   icon
 }: TextInputProps) => {
   return (
-    <div className='textinput'>
+    <div className={classNames({
+      'textinput': true,
+      'textinput--has-icon': icon
+    })}>
       <InputLabel label={label} required={required} />
       <div className="textinput__input-wrap">
         <input
           onFocus={onFocus}
           onBlur={onBlur}
-          className={`textinput__input ${
-            rounded ? "textinput__input--rounded" : ""
-          }`}
+          className={classNames({
+            'textinput__input': true,
+            'textinput__input--rounded': rounded
+          })}
           type={type}
           value={value}
           onChange={(e) => onChange(e.target.value || "")}

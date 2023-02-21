@@ -1,8 +1,9 @@
-import * as reactIcon from "react-icons/fa";
+import * as reactIcon from "react-icons/all";
+import { _ReactIcon } from "../components/common/Icon/Icon";
 
 declare global {
   
-  type ReactIcon = keyof typeof reactIcon;
+  type ReactIcon = _ReactIcon;
 
   interface League {
     id: number;
