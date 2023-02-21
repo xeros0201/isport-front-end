@@ -1,3 +1,4 @@
+import { ReactNode } from "react";
 import Spinner from "../Spinner/Spinner";
 import "./Button.scss";
 
@@ -34,6 +35,9 @@ type ButtonProps = {
    * Whether the button has rounded corners.
    */
   rounded?: boolean;
+
+  icon?: ReactNode;
+  className?: string;
 };
 
 /**
@@ -48,6 +52,8 @@ const Button = ({
   isSubmit = false,
   isDisabled = false,
   rounded = true,
+  icon,
+  className,
 }: ButtonProps) => {
   /**
    * Determine the status of the button.
@@ -65,11 +71,12 @@ const Button = ({
   return (
     <button
       disabled={isLoading || isDisabled}
-      className={`button ${typeModifier} ${fullwidthModifier} ${roundedModifier} ${statusModifier}`}
+      className={`button ${typeModifier} ${fullwidthModifier} ${roundedModifier} ${statusModifier} ${className}`}
       onClick={isLoading || isDisabled ? undefined : onClick}
       type={isSubmit ? "submit" : undefined}
     >
       <Spinner />
+      {icon && icon}
       <span>{label}</span>
     </button>
   );
