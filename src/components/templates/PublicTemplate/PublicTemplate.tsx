@@ -1,4 +1,5 @@
 import { Outlet, useNavigate } from "react-router-dom";
+import { Checkbox } from "../../input";
 import { Container, Footer, Header } from "../../layout";
 
 const PublicTemplate = () => {
