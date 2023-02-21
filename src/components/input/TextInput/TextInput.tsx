@@ -40,21 +40,23 @@ const TextInput = ({
   icon
 }: TextInputProps) => {
   return (
-    <div className="textinput">
+    <div className='textinput'>
       <InputLabel label={label} required={required} />
-      <input
-        onFocus={onFocus}
-        onBlur={onBlur}
-        className={`textinput__input ${
-          rounded ? "textinput__input--rounded" : ""
-        }`}
-        type={type}
-        value={value}
-        onChange={(e) => onChange(e.target.value || "")}
-        disabled={disabled}
-        placeholder={placeholder}
-      />
-      {icon && <Icon name={icon} />}
+      <div className="textinput__input-wrap">
+        <input
+          onFocus={onFocus}
+          onBlur={onBlur}
+          className={`textinput__input ${
+            rounded ? "textinput__input--rounded" : ""
+          }`}
+          type={type}
+          value={value}
+          onChange={(e) => onChange(e.target.value || "")}
+          disabled={disabled}
+          placeholder={placeholder}
+        />
+        {icon && <Icon name={icon} />}
+      </div>
       <InputError error={error} touched={touched} />
     </div>
   );

@@ -36,7 +36,7 @@ const LeagueList = () => {
                 value={query}
                 onChange={setQuery}
                 icon="FaSearch"
-                rounded
+                // rounded
             />
             {/*** This should be rewritten and turned into its own component ***/}
             {isLoading && <Spinner size="large" />}

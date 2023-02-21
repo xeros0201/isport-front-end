@@ -5,22 +5,24 @@
   @include input-wrap;
   margin-top: 0px !important;
 
-  &__input {
-      @include input;
-      margin-top: 20px;
-      padding-left: 32px;
-
-      &--rounded {
-        @include input-rounded;
-      }
-  }
-
-  &__icon{
+  .textinput__input-wrap {
     position: relative;
-    transform: translateY(-180%);
-    left: 10px;
-  }
-}
 
-// Block Element Modifier 
-// (BEM) is a methodology that helps you to create reusable components and code sharing in front-end development. BEM is a naming convention for classes in HTML and CSS. The name of each class must be meaningful and easy to read. BEM is a way to name classes in a consistent and predictable way. It helps to work with developers and front-end developers in a team.
+    .textinput__input {
+        @include input;
+        margin-top: 20px;
+        padding-left: 36px;
+  
+        &--rounded {
+          @include input-rounded;
+        }
+    }
+  
+    .icon {
+      position: absolute;
+      bottom: 12px;
+      left: 12px;
+    }
+  }
+
+}
