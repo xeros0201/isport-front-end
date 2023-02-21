@@ -2,7 +2,7 @@ import { Page, Row } from "../../../components/layout";
 import { useQuery } from "react-query";
 import { getLeagues } from "../../../api/leagues";
 import { useNavigate } from "react-router-dom";
-import { Button } from "../../../components/common";
+import { Button, Icon } from "../../../components/common";
 import { TextInput } from "../../../components/input";
 import { useMemo, useState } from "react";
 import { LeagueTable } from "../../../components/tables";
@@ -36,6 +36,7 @@ const LeagueList = () => {
                 placeholder="Search..."
                 value={query}
                 onChange={setQuery}
+                icon="IoSearch"
                 rounded
             />
             <LeagueTable data={filteredLeagues} isLoading={isLoading} />
