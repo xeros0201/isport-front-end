@@ -1,24 +1,25 @@
 import { Page, Row } from "../../../components/layout";
 import { useQuery } from "react-query";
 import { getLeagues } from "../../../api/leagues";
-import { Link, useNavigate } from "react-router-dom";
-import { Button, Spinner } from "../../../components/common";
+import { useNavigate } from "react-router-dom";
+import { Button } from "../../../components/common";
 import { TextInput } from "../../../components/input";
 import { useMemo, useState } from "react";
+import { LeagueTable } from "../../../components/tables";
 
 const LeagueList = () => {
-    const [query, setQuery] = useState("");
+    const [query, setQuery] = useState('');
 
     // Fetch data
-    const { isLoading, data } = useQuery(
+    const { isLoading, data: leagues } = useQuery(
         ["getLeagues"], async () => await getLeagues()
     );
 
     // Filter data to match query  
-    const leagues = useMemo(() => {
-        if (!data) return [];
-        return data.filter((league: any) => league.name.toLowerCase().includes(query.toLowerCase()));
-    }, [data, query]);
+    const filteredLeagues = useMemo(() => {
+        if (!leagues) return [];
+        return leagues.filter((league: any) => league.name.toLowerCase().includes(query.toLowerCase()));
+    }, [leagues, query]);
 
     const navigate = useNavigate();
 
@@ -38,19 +39,7 @@ const LeagueList = () => {
                 icon="FaSearch"
                 // rounded
             />
-            {/*** This should be rewritten and turned into its own component ***/}
-            {isLoading && <Spinner size="large" />}
-            {!isLoading && !leagues?.length && <h3>No data</h3>}
-            <ul>
-                { leagues.map((league: any) => (
-                    <li key={league.id}>
-                        <Link to={`/admin/leagues/edit?id=${league.id}`}>
-                            {league.name}
-                        </Link>
-                    </li>
-                ))}
-            </ul>
-            {/****************************************************************/}
+            <LeagueTable data={filteredLeagues} isLoading={isLoading} />
         </Page>
     );
 };

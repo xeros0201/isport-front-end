@@ -220,6 +220,7 @@
   "integrity" "sha512-y+EHuSchhL7FjHgvQL/0fnnFmO4T1bhvWANX6gcnqTjtnKWbTvUMCpGnv2+t+31d7RzyEAYAd4u2fnIhHL6N/Q=="
   "resolved" "https://registry.npmjs.org/@esbuild/win32-x64/-/win32-x64-0.16.17.tgz"
   "version" "0.16.17"
+<<<<<<< HEAD
 
 "@fortawesome/fontawesome-common-types@6.3.0":
   "integrity" "sha512-4BC1NMoacEBzSXRwKjZ/X/gmnbp/HU5Qqat7E8xqorUtBFZS+bwfGH5/wqOC2K6GV0rgEobp3OjGRMa5fK9pFg=="
@@ -253,6 +254,8 @@
   "version" "0.2.0"
   dependencies:
     "prop-types" "^15.8.1"
+=======
+>>>>>>> origin/develop
 
 "@jridgewell/gen-mapping@^0.1.0":
   "integrity" "sha512-sQXCasFk+U8lWYEe66WxRDOE9PjVz4vSM51fTu3Hw+ClTpUSQb718772vH3pyS5pShp6lvQM7SxgIDXXXmOX7w=="
@@ -295,9 +298,31 @@
     "@jridgewell/sourcemap-codec" "1.4.14"
 
 "@remix-run/router@1.3.1":
+<<<<<<< HEAD
   "version" "1.3.1"
 
 "@types/node@^18.11.18", "@types/node@>= 14":
+=======
+  "integrity" "sha512-+eun1Wtf72RNRSqgU7qM2AMX/oHp+dnx7BHk1qhK5ZHzdHTUU4LA1mGG1vT+jMc8sbhG3orvsfOmryjzx2PzQw=="
+  "resolved" "https://registry.npmjs.org/@remix-run/router/-/router-1.3.1.tgz"
+  "version" "1.3.1"
+
+"@tanstack/react-table@^8.7.9":
+  "integrity" "sha512-6MbbQn5AupSOkek1+6IYu+1yZNthAKTRZw9tW92Vi6++iRrD1GbI3lKTjJalf8lEEKOqapPzQPE20nywu0PjCA=="
+  "resolved" "https://registry.npmjs.org/@tanstack/react-table/-/react-table-8.7.9.tgz"
+  "version" "8.7.9"
+  dependencies:
+    "@tanstack/table-core" "8.7.9"
+
+"@tanstack/table-core@8.7.9":
+  "integrity" "sha512-4RkayPMV1oS2SKDXfQbFoct1w5k+pvGpmX18tCXMofK/VDRdA2hhxfsQlMvsJ4oTX8b0CI4Y3GDKn5T425jBCw=="
+  "resolved" "https://registry.npmjs.org/@tanstack/table-core/-/table-core-8.7.9.tgz"
+  "version" "8.7.9"
+
+"@types/node@^18.11.18", "@types/node@>= 14":
+  "integrity" "sha512-DHQpWGjyQKSHj3ebjFI/wRKcqQcdR+MoFBygntYOZytCqNfkd2ZC4ARDJ2DQqhjH5p85Nnd3jhUJIXrszFX/JA=="
+  "resolved" "https://registry.npmjs.org/@types/node/-/node-18.11.18.tgz"
+>>>>>>> origin/develop
   "version" "18.11.18"
 
 "@types/prop-types@*":
@@ -320,6 +345,11 @@
     "@types/react" "*"
 
 "@types/react@*", "@types/react@^18.0.27":
+<<<<<<< HEAD
+=======
+  "integrity" "sha512-3vtRKHgVxu3Jp9t718R9BuzoD4NcQ8YJ5XRzsSKxNDiDonD2MXIT1TmSkenxuCycZJoQT5d2vE8LwWJxBC1gmA=="
+  "resolved" "https://registry.npmjs.org/@types/react/-/react-18.0.27.tgz"
+>>>>>>> origin/develop
   "version" "18.0.27"
   dependencies:
     "@types/prop-types" "*"
@@ -363,6 +393,11 @@
   "version" "0.4.0"
 
 "axios@^1.3.2":
+<<<<<<< HEAD
+=======
+  "integrity" "sha512-1M3O703bYqYuPhbHeya5bnhpYVsDDRyQSabNja04mZtboLNSuZ4YrltestrLXfHgmzua4TpUqRiVKbiQuo2epw=="
+  "resolved" "https://registry.npmjs.org/axios/-/axios-1.3.2.tgz"
+>>>>>>> origin/develop
   "version" "1.3.2"
   dependencies:
     "follow-redirects" "^1.15.0"
@@ -424,6 +459,11 @@
     "update-browserslist-db" "^1.0.10"
 
 "caniuse-lite@^1.0.30001449":
+<<<<<<< HEAD
+=======
+  "integrity" "sha512-qMBmvmQmFXaSxexkjjfMvD5rnDL0+m+dUMZKoDYsGG8iZN29RuYh9eRoMvKsT6uMAWlyUUGDEQGJJYjzCIO9ew=="
+  "resolved" "https://registry.npmjs.org/caniuse-lite/-/caniuse-lite-1.0.30001450.tgz"
+>>>>>>> origin/develop
   "version" "1.0.30001450"
 
 "chalk@^2.0.0":
@@ -450,7 +490,11 @@
   optionalDependencies:
     "fsevents" "~2.3.2"
 
+<<<<<<< HEAD
 "classnames@^2.2.3":
+=======
+"classnames@^2.2.3", "classnames@^2.3.2":
+>>>>>>> origin/develop
   "integrity" "sha512-CSbhY4cFEJRe6/GQzIk5qXZ4Jeg5pcsP7b5peFSDpffpe1cqjASH/n9UTjBwOp6XpMSTwQ8Za2K5V02ueA7Tmw=="
   "resolved" "https://registry.npmjs.org/classnames/-/classnames-2.3.2.tgz"
   "version" "2.3.2"
@@ -512,6 +556,11 @@
   "version" "2.1.0"
 
 "electron-to-chromium@^1.4.284":
+<<<<<<< HEAD
+=======
+  "integrity" "sha512-M8WEXFuKXMYMVr45fo8mq0wUrrJHheiKZf6BArTKk9ZBYCKJEOU5H8cdWgDT+qCVZf7Na4lVUaZsA+h6uA9+PA=="
+  "resolved" "https://registry.npmjs.org/electron-to-chromium/-/electron-to-chromium-1.4.284.tgz"
+>>>>>>> origin/develop
   "version" "1.4.284"
 
 "esbuild@^0.16.14":
@@ -645,6 +694,11 @@
     "react-is" "^16.7.0"
 
 "immutable@^4.0.0":
+<<<<<<< HEAD
+=======
+  "integrity" "sha512-IHpmvaOIX4VLJwPOuQr1NpeBr2ZG6vpIj3blsLVxXRWJscLioaJRStqC+NcBsLeCDsnGlPpXd5/WZmnE7MbsKA=="
+  "resolved" "https://registry.npmjs.org/immutable/-/immutable-4.2.3.tgz"
+>>>>>>> origin/develop
   "version" "4.2.3"
 
 "inflight@^1.0.4":
@@ -792,6 +846,11 @@
   "version" "3.3.4"
 
 "node-releases@^2.0.8":
+<<<<<<< HEAD
+=======
+  "integrity" "sha512-2xfmOrRkGogbTK9R6Leda0DGiXeY3p2NJpy4+gNCffdUvV6mdEJnaDEic1i3Ec2djAo8jWYoJMR5PB0MSMpxUA=="
+  "resolved" "https://registry.npmjs.org/node-releases/-/node-releases-2.0.9.tgz"
+>>>>>>> origin/develop
   "version" "2.0.9"
 
 "normalize-path@^3.0.0", "normalize-path@~3.0.0":
@@ -845,7 +904,11 @@
     "picocolors" "^1.0.0"
     "source-map-js" "^1.0.2"
 
+<<<<<<< HEAD
 "prop-types@^15.7.2", "prop-types@^15.8.1":
+=======
+"prop-types@^15.7.2":
+>>>>>>> origin/develop
   "integrity" "sha512-oj87CgZICdulUohogVAR7AjlC0327U4el4L6eAvOqCeudMDVU0NThNaV+b9Df4dXgSP1gXMTnPdhfe/2qDH5cg=="
   "resolved" "https://registry.npmjs.org/prop-types/-/prop-types-15.8.1.tgz"
   "version" "15.8.1"
@@ -859,7 +922,11 @@
   "resolved" "https://registry.npmjs.org/proxy-from-env/-/proxy-from-env-1.1.0.tgz"
   "version" "1.1.0"
 
+<<<<<<< HEAD
 "react-dom@^0.14.7 || ^15.0.0-0 || ^16.0.0 || ^17.0.0|| ^18.0.0", "react-dom@^18.2.0", "react-dom@>=16.8":
+=======
+"react-dom@^0.14.7 || ^15.0.0-0 || ^16.0.0 || ^17.0.0|| ^18.0.0", "react-dom@^18.2.0", "react-dom@>=16", "react-dom@>=16.8":
+>>>>>>> origin/develop
   "integrity" "sha512-6IMTriUmvsjHUjNtEDudZfuDQUoWXVxKHhlEGSk81n4YFS+r/Kl99wXiwlVXtPBtJenozv2P+hxDsw9eA7Xo6g=="
   "resolved" "https://registry.npmjs.org/react-dom/-/react-dom-18.2.0.tgz"
   "version" "18.2.0"
@@ -894,6 +961,7 @@
     "react-fast-compare" "^3.1.1"
     "react-side-effect" "^2.1.0"
 
+<<<<<<< HEAD
 "react-icons@^4.7.1":
   "integrity" "sha512-yHd3oKGMgm7zxo3EA7H2n7vxSoiGmHk5t6Ou4bXsfcgWyhfDKMpyKfhHR6Bjnn63c+YXBLBPUql9H4wPJM6sXw=="
   "resolved" "https://registry.npmjs.org/react-icons/-/react-icons-4.7.1.tgz"
@@ -904,6 +972,13 @@
   "resolved" "https://registry.npmjs.org/react-is/-/react-is-16.13.1.tgz"
   "version" "16.13.1"
 
+=======
+"react-is@^16.13.1", "react-is@^16.7.0":
+  "integrity" "sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ=="
+  "resolved" "https://registry.npmjs.org/react-is/-/react-is-16.13.1.tgz"
+  "version" "16.13.1"
+
+>>>>>>> origin/develop
 "react-query@^3.39.3":
   "integrity" "sha512-nLfLz7GiohKTJDuT4us4X3h/8unOh+00MLb2yJoGTPjxKs2bc1iDhkNx2bd5MKklXnOD3NrVZ+J2UXujA5In4g=="
   "resolved" "https://registry.npmjs.org/react-query/-/react-query-3.39.3.tgz"
@@ -919,12 +994,22 @@
   "version" "0.14.0"
 
 "react-router-dom@^6.8.0":
+<<<<<<< HEAD
+=======
+  "integrity" "sha512-hQouduSTywGJndE86CXJ2h7YEy4HYC6C/uh19etM+79FfQ6cFFFHnHyDlzO4Pq0eBUI96E4qVE5yUjA00yJZGQ=="
+  "resolved" "https://registry.npmjs.org/react-router-dom/-/react-router-dom-6.8.0.tgz"
+>>>>>>> origin/develop
   "version" "6.8.0"
   dependencies:
     "@remix-run/router" "1.3.1"
     "react-router" "6.8.0"
 
 "react-router@6.8.0":
+<<<<<<< HEAD
+=======
+  "integrity" "sha512-760bk7y3QwabduExtudhWbd88IBbuD1YfwzpuDUAlJUJ7laIIcqhMvdhSVh1Fur1PE8cGl84L0dxhR3/gvHF7A=="
+  "resolved" "https://registry.npmjs.org/react-router/-/react-router-6.8.0.tgz"
+>>>>>>> origin/develop
   "version" "6.8.0"
   dependencies:
     "@remix-run/router" "1.3.1"
@@ -934,7 +1019,11 @@
   "resolved" "https://registry.npmjs.org/react-side-effect/-/react-side-effect-2.1.2.tgz"
   "version" "2.1.2"
 
+<<<<<<< HEAD
 "react@*", "react@^0.14.7 || ^15.0.0-0 || ^16.0.0 || ^17.0.0 || ^18.0.0", "react@^16.3.0 || ^17.0.0 || ^18.0.0", "react@^16.8.0 || ^17.0.0 || ^18.0.0", "react@^18.2.0", "react@>=16.3", "react@>=16.3.0", "react@>=16.8", "react@>=16.8.0":
+=======
+"react@^0.14.7 || ^15.0.0-0 || ^16.0.0 || ^17.0.0 || ^18.0.0", "react@^16.3.0 || ^17.0.0 || ^18.0.0", "react@^16.8.0 || ^17.0.0 || ^18.0.0", "react@^18.2.0", "react@>=16", "react@>=16.3.0", "react@>=16.8", "react@>=16.8.0":
+>>>>>>> origin/develop
   "integrity" "sha512-/3IjMdb2L9QbBdWiW5e3P2/npwMBaU9mHCSCUzNln0ZCYbcfTsGbTJrU/kGemdH2IWmB2ioZ+zkxtmq6g09fGQ=="
   "resolved" "https://registry.npmjs.org/react/-/react-18.2.0.tgz"
   "version" "18.2.0"
@@ -975,6 +1064,11 @@
     "glob" "^7.1.3"
 
 "rollup@^3.10.0":
+<<<<<<< HEAD
+=======
+  "integrity" "sha512-t9elERrz2i4UU9z7AwISj3CQcXP39cWxgRWLdf4Tm6aKm1eYrqHIgjzXBgb67GNY1sZckTFFi0oMozh3/S++Ig=="
+  "resolved" "https://registry.npmjs.org/rollup/-/rollup-3.12.1.tgz"
+>>>>>>> origin/develop
   "version" "3.12.1"
   optionalDependencies:
     "fsevents" "~2.3.2"
