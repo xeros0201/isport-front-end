@@ -1,5 +1,6 @@
 import { NavLink } from 'react-router-dom';
 import './Header.scss';
+import { useNavigate } from 'react-router-dom';
 
 interface RouteLink {
     label: string;
@@ -15,10 +16,16 @@ interface HeaderProps {
 }
 
 const Header = ({ links }: HeaderProps) => {
+    const navigate = useNavigate();
+
     return (
         <div className="header">
             <div className="header__container">
-                <div className="header__logo">Logo</div>
+                <img
+                    className="header__logo"
+                    src="/public/isports.png"
+                    onClick={() => navigate('/admin/leagues')}
+                />
                 <nav className="header__nav">
                     <ul>
                         {links.map((link, index) => (
