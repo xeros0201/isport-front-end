@@ -35,6 +35,7 @@ const LeagueList = () => {
                 placeholder="Search..."
                 value={query}
                 onChange={setQuery}
+                icon="FaSearch"
                 rounded
             />
             {/*** This should be rewritten and turned into its own component ***/}
