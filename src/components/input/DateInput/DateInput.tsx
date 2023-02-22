@@ -1,6 +1,6 @@
 import { InputError, InputLabel } from "../../input";
 import DatePicker from "react-datepicker";
-import { FaCalendar } from "react-icons/fa";
+import { IoCalendarClearOutline } from "react-icons/io5";
 import "./DateInput.scss";
 
 const DateInput = ({
@@ -28,7 +28,7 @@ const DateInput = ({
           className="dateinput__input"
           placeholderText="DD-MM-YYYY"
         />
-        <FaCalendar className="dateinput__icon" />
+        <IoCalendarClearOutline className="dateinput__icon" />
       </div>
       <InputError error={error} touched={touched} />
     </div>
