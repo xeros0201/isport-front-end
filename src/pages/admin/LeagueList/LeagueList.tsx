@@ -30,6 +30,7 @@ const LeagueList = () => {
                 <Button
                     label="New League"
                     onClick={() => navigate('/admin/leagues/new')}
+                    icon="IoAdd"
                 />
             </Row>
             <TextInput
