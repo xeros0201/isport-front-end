@@ -4,7 +4,6 @@ import ImageUploading, { ImageListType } from "react-images-uploading";
 import { FaFontAwesome, FaPaperclip } from "react-icons/fa";
 import { Button, Spinner } from "../../common";
 import { useState } from "react";
-
 interface ImageInputTypes
   extends ImageInputProps,
     FocusProps<HTMLInputElement> {
@@ -122,11 +121,7 @@ function ImageInput({
                     onClick={() => onImageRemove(0)}
                     className="btn"
                     icon={
-                      <FaFontAwesome
-                        name="user"
-                        size={22}
-                        style={{ marginRight: 6 }}
-                      />
+                      "IoTrash"
                     }
                   />
                 </div>
