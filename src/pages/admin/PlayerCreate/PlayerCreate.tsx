@@ -8,9 +8,10 @@ const PlayerCreate = () => {
     return (
         <Page title="New Player">
             <Button
-                label="< Players"
+                label="Players"
                 onClick={() => navigate('/admin/players')}
                 type="transparent"
+                icon="IoChevronBackOutline"
             />
             <h1>Add New Player</h1>
         </Page>

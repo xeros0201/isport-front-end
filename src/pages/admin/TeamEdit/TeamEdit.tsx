@@ -12,9 +12,10 @@ const TeamEdit = () => {
     return (
         <Page title="Edit Team">
             <Button
-                label="< Teams"
+                label="Teams"
                 onClick={() => navigate('/admin/teams')}
                 type="transparent"
+                icon="IoChevronBackOutline"
             />
             <h1>Edit Team</h1>
         </Page>

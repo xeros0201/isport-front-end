@@ -12,9 +12,10 @@ const MatchEdit = () => {
     return (
         <Page title="Edit Match">
             <Button
-                label="< Matches"
+                label="Matches"
                 onClick={() => navigate('/admin/matches')}
                 type="transparent"
+                icon="IoChevronBackOutline"
             />
             <h1>Edit Match</h1>
         </Page>

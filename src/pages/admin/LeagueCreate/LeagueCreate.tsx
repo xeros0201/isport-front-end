@@ -9,9 +9,10 @@ const LeagueCreate = () => {
     return (
         <Page title="New League">
             <Button
-                label="< Leagues"
+                label="Leagues"
                 onClick={() => navigate('/admin/leagues')}
                 type="transparent"
+                icon="IoChevronBackOutline"
             />
             <h1>Add New League</h1>
             <LeagueForm />
