@@ -1,3 +1,5 @@
+import classNames from "classnames";
+import Icon from "../Icon/Icon";
 import Spinner from "../Spinner/Spinner";
 import "./Button.scss";
 
@@ -39,13 +41,9 @@ type ButtonProps = {
    */
   size?: "small" | "medium" | "large";
   /**
-   * Add icon before label
+   * The icon to be shown inside the input field.
    */
-  iconUrl?: string;
-  /**
-   * Modify icon size
-   */
-  iconSize?: number;
+  icon?: ReactIcon;
 };
 
 /**
@@ -61,8 +59,7 @@ const Button = ({
   isDisabled = false,
   rounded = true,
   size = "medium",
-  iconUrl,
-  iconSize = 18,
+  icon
 }: ButtonProps) => {
   /**
    * Determine the status of the button.
@@ -72,33 +69,24 @@ const Button = ({
   /**
    * Conditionally render class names for styling.
    */
-  const typeModifier = `button--${type}`;
-  const fullwidthModifier = fullwidth ? "button--fullwidth" : "";
-  const roundedModifier = rounded ? "button--rounded" : "";
-  const statusModifier = `button--${status}`;
-
-  const sizeModifier = () => {
-    if (size === "small") return "button--small-size";
-    if (size === "medium") return "button--medium-size";
-    return "button--large-size";
-  };
+  const buttonClasses = classNames({
+    button: true,
+    "button--fullwidth": fullwidth,
+    "button--rounded": rounded,
+    [`button--${type}`]: true,
+    [`button--${status}`]: true,
+    [`button--${size}`]: true
+  });
 
   return (
     <button
       disabled={isLoading || isDisabled}
-      className={`button ${typeModifier} ${fullwidthModifier} ${roundedModifier} ${statusModifier} ${sizeModifier()}`}
+      className={buttonClasses}
       onClick={isLoading || isDisabled ? undefined : onClick}
       type={isSubmit ? "submit" : undefined}
     >
-      <Spinner />
-      {iconUrl && (
-        <img
-          className="button__icon"
-          src={iconUrl}
-          width={iconSize}
-          height={iconSize}
-        />
-      )}
+      <Spinner size="tiny" />
+      {icon && !isLoading && <Icon name={icon} />}
       <span>{label}</span>
     </button>
   );
