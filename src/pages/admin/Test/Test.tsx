@@ -1,10 +1,13 @@
 import { useFormik } from "formik";
+import { useState } from "react";
 import { Button } from "../../../components/common";
 import { LeagueDropdown } from "../../../components/dropdowns";
 import { TextInput } from "../../../components/input";
 import { Form, Page } from "../../../components/layout";
 
 const Test = () => {
+    const [isSubmitting, setIsSubmitting] = useState(false);
+
     const formik = useFormik({
         initialValues: {
             text1: "",
@@ -12,7 +15,12 @@ const Test = () => {
             league: "",
         },
         onSubmit: (values) => {
-            console.log(values);
+            setIsSubmitting(true);
+            // Wait 2 seconds
+            setTimeout(() => {
+                setIsSubmitting(false);
+                alert(JSON.stringify(values, null, 2));
+            }, 2000);
         },
     });
 
@@ -47,6 +55,7 @@ const Test = () => {
             <Button
                 label="Submit"
                 onClick={formik.submitForm}
+                isLoading={isSubmitting}
                 isSubmit
             />
             <br />
