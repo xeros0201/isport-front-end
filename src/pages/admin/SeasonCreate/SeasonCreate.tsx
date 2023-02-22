@@ -8,9 +8,10 @@ const SeasonCreate = () => {
     return (
         <Page title="New Season">
             <Button
-                label="< Seasons"
+                label="Seasons"
                 onClick={() => navigate('/admin/seasons')}
                 type="transparent"
+                icon="IoChevronBackOutline"
             />
             <h1>Add New Season</h1>
         </Page>

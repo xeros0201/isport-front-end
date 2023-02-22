@@ -13,9 +13,10 @@ const LeagueEdit = () => {
     return (
         <Page title="Edit League">
             <Button
-                label="< Leagues"
+                label="Leagues"
                 onClick={() => navigate('/admin/leagues')}
                 type="transparent"
+                icon="IoChevronBackOutline"
             />
             <h1>Edit League</h1>
             {id && <LeagueForm id={+id} />}

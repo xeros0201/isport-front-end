@@ -12,9 +12,10 @@ const SeasonEdit = () => {
     return (
         <Page title="Edit Season">
             <Button
-                label="< Seasons"
+                label="Seasons"
                 onClick={() => navigate('/admin/seasons')}
                 type="transparent"
+                icon="IoChevronBackOutline"
             />
             <h1>Edit Season</h1>
         </Page>

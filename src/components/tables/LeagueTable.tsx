@@ -37,6 +37,8 @@ const LeagueTable = ({ data, isLoading = false }: LeagueTableProps) => {
                 <Button
                     label="Edit"
                     type="secondary"
+                    icon="IoPencilOutline"
+                    size="small"
                     onClick={() => navigate(`/admin/leagues/edit?id=${info.getValue()}`)}
                 />
             ),

@@ -8,9 +8,10 @@ const TeamCreate = () => {
     return (
         <Page title="New Team">
             <Button
-                label="< Teams"
+                label="Teams"
                 onClick={() => navigate('/admin/teams')}
                 type="transparent"
+                icon="IoChevronBackOutline"
             />
             <h1>Add New Team</h1>
         </Page>
