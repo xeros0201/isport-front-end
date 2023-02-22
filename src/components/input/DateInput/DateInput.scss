@@ -11,9 +11,19 @@
     @include input;
     padding-right: 40px;
   }
-  &__icon {
+  .icon {
     position: absolute;
     bottom: 12px;
     right: 12px;
   }
+}
+
+.react-datepicker-popper {
+  transition: 0s;
+}
+
+.react-datepicker__triangle{
+  left: 50% !important;
+  transform: none !important;
+  z-index: 1;
 }
