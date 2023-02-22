@@ -2,7 +2,7 @@ import { useFormik } from "formik";
 import { useState } from "react";
 import { Button } from "../../../components/common";
 import { LeagueDropdown } from "../../../components/dropdowns";
-import { TextInput } from "../../../components/input";
+import { CheckboxInput, TextInput } from "../../../components/input";
 import { Form, Page } from "../../../components/layout";
 
 const Test = () => {
@@ -13,6 +13,7 @@ const Test = () => {
             text1: "",
             text2: "",
             league: "",
+            active: "true",
         },
         onSubmit: (values) => {
             setIsSubmitting(true);
@@ -50,6 +51,12 @@ const Test = () => {
                     error={formik.errors.league}
                     touched={formik.touched.league}
                     asInput
+                />
+                <CheckboxInput
+                    label="Active"
+                    checkboxLabel="Active"
+                    value={formik.values.active}
+                    onChange={formik.handleChange('active')}
                 />
             </Form>
             <Button
