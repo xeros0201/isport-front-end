@@ -12,6 +12,7 @@ const SeasonList = () => {
                 <Button
                     label="New Season"
                     onClick={() => navigate('/admin/seasons/new')}
+                    icon="IoAdd"
                 />
             </Row>
         </Page>

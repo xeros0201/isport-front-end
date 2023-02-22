@@ -1,3 +1,5 @@
+import classNames from "classnames";
+import Icon from "../Icon/Icon";
 import Spinner from "../Spinner/Spinner";
 import "./Button.scss";
 
@@ -34,6 +36,14 @@ type ButtonProps = {
    * Whether the button has rounded corners.
    */
   rounded?: boolean;
+  /**
+   * Modify button size
+   */
+  size?: "small" | "medium" | "large";
+  /**
+   * The icon to be shown inside the input field.
+   */
+  icon?: ReactIcon;
 };
 
 /**
@@ -48,6 +58,8 @@ const Button = ({
   isSubmit = false,
   isDisabled = false,
   rounded = true,
+  size = "medium",
+  icon
 }: ButtonProps) => {
   /**
    * Determine the status of the button.
@@ -57,19 +69,24 @@ const Button = ({
   /**
    * Conditionally render class names for styling.
    */
-  const typeModifier = `button--${type}`;
-  const fullwidthModifier = fullwidth ? "button--fullwidth" : "";
-  const roundedModifier = rounded ? "button--rounded" : "";
-  const statusModifier = `button--${status}`;
+  const buttonClasses = classNames({
+    button: true,
+    "button--fullwidth": fullwidth,
+    "button--rounded": rounded,
+    [`button--${type}`]: true,
+    [`button--${status}`]: true,
+    [`button--${size}`]: true
+  });
 
   return (
     <button
       disabled={isLoading || isDisabled}
-      className={`button ${typeModifier} ${fullwidthModifier} ${roundedModifier} ${statusModifier}`}
+      className={buttonClasses}
       onClick={isLoading || isDisabled ? undefined : onClick}
       type={isSubmit ? "submit" : undefined}
     >
-      <Spinner />
+      <Spinner size="tiny" />
+      {icon && !isLoading && <Icon name={icon} />}
       <span>{label}</span>
     </button>
   );
