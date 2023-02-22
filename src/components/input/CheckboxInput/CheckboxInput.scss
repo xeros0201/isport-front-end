@@ -1,0 +1,18 @@
+@import "../../../styles/variables";
+@import "../../../styles/mixins";
+
+.checkbox {
+    @include input-wrap;
+
+    .checkbox__input-wrap {
+        cursor: pointer;
+
+        .checkbox__input {
+            cursor: pointer;
+            margin-top: $margin-top-small;
+            width: $font-size-default;
+            height: $font-size-default;
+            margin-right: 6px;
+        }
+    }
+}
