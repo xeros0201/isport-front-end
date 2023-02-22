@@ -2,7 +2,7 @@ import { useFormik } from "formik";
 import { useState } from "react";
 import { Button } from "../../../components/common";
 import { LeagueDropdown } from "../../../components/dropdowns";
-import { CheckboxInput, TextInput } from "../../../components/input";
+import { DateInput, CheckboxInput, TextInput } from "../../../components/input";
 import { Form, Page } from "../../../components/layout";
 
 const Test = () => {
@@ -12,16 +12,16 @@ const Test = () => {
         initialValues: {
             text1: "",
             text2: "",
+            date: new Date().toISOString(),
             league: "",
             active: "true",
         },
         onSubmit: (values) => {
             setIsSubmitting(true);
-            // Wait 2 seconds
             setTimeout(() => {
                 setIsSubmitting(false);
                 alert(JSON.stringify(values, null, 2));
-            }, 2000);
+            }, 1000);
         },
     });
 
@@ -43,6 +43,13 @@ const Test = () => {
                     error={formik.errors.text2}
                     touched={formik.touched.text2}
                     icon="IoSearch"
+                />
+                <DateInput
+                    label="Date"
+                    value={formik.values.date}
+                    onChange={formik.handleChange('date')}
+                    error={formik.errors.date}
+                    touched={formik.touched.date}
                 />
                 <LeagueDropdown
                     label="League"
