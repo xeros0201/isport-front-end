@@ -12,37 +12,59 @@
   font-weight: bold;
   margin-right: 10px;
   border: 3px solid $black;
-  padding: 14px 16px;
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: center;
   white-space: nowrap;
+
+  .icon {
+    margin-right: 4px;
+    margin-left: -4px;
+  }
   
   &--active {
     &:hover {
       opacity: 0.9;
     }
   }
+
+  // Loading
+
   .spinner {
     display: none;
   }
+
   &--loading {
     @include disabled;
     .spinner {
-      display: inline-block;
-      width: auto;
-      height: 50px;
-      min-height: auto;
-      width: 50px;
-      left: 0%;
-      transform: scale(0.3);
-  
-      &__bar::after {
-        background-color: white;
-      }
+      display: flex;
+      margin-right: 8px;
     }
   }
+
+  // Sizes
+
+  &--small {
+    font-size: 12px;
+    padding: 8px 10px;
+    max-height: 32px;
+  }
+
+  &--medium {
+    font-size: 13px;
+    padding: 14px 16px;
+    max-height: 45px;
+  }
+
+  &--large {
+    font-size: 15px;
+    padding: 16px 18px;
+    max-height: 57px;
+    border-radius: 29px;
+  }
+
+  // Types
 
   &--primary {
     color: $white;
@@ -62,23 +84,26 @@
     border-color: $red;
   }
 
-  &--fullwidth {
-    display: block;
-    width: 100%;
-    margin-right: 0px;
-  }
-
   &--transparent {
     color: $black;
     border: none;
     background-color: $transparent;
   }
 
-  &--rounded {
-    border-radius: 25px;
-  }
-
   &--disabled {
     @include disabled; 
   } 
+
+  // Fullwidth
+
+  &--fullwidth {
+    width: 100%;
+    margin-right: 0px;
+  }
+
+  // Rounded
+
+  &--rounded {
+    border-radius: 30px;
+  }
 }
