@@ -15,7 +15,6 @@ const PublicTemplate = () => {
         ]}
       />
       <Container>
-        <UserForm />
         <Outlet />
       </Container>
       <Footer />
