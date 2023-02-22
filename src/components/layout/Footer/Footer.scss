@@ -4,16 +4,22 @@
 .footer {
     background-color: $black;
     color: $white;
-    padding: 20px;
     min-height: $footer-vertical-height;
 
     .footer__container {
         @include container;
         flex-direction: row;
         justify-content: space-between;
-    }
-    
-    .footer__logo {
+        align-items: center;
         
+        .footer__logo {
+            flex: 0;
+            padding: 10px;
+            padding-left: 0;
+            height: $footer-vertical-height;
+            padding: 20px 0;
+            padding-right: 10px;
+            cursor: pointer;
+        }
     }
 }
