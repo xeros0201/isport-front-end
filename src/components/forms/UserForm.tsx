@@ -4,7 +4,7 @@ import { useQuery } from "react-query";
 import { useNavigate } from "react-router-dom";
 import { createLeague, getLeague, updateLeague } from "../../api/leagues";
 import { Button, Spinner } from "../common";
-import { InputError, TextInput } from "../input";
+import { CheckboxInput, InputError, TextInput } from "../input";
 import { Form } from "../layout";
 import "./Form.scss";
 
@@ -13,6 +13,7 @@ interface UserFormValues {
   firstName: string;
   lastName: string;
   password: string;
+  status: "true" | ""
 }
 
 const UserForm = ({ id }: FormProps) => {
@@ -26,6 +27,7 @@ const UserForm = ({ id }: FormProps) => {
     firstName: "",
     lastName: "",
     password: "",
+    status: "",
   };
 
   // Setup submit handler
@@ -42,7 +44,7 @@ const UserForm = ({ id }: FormProps) => {
   const validate = (values: UserFormValues) => {
     const errors: { [key: string]: string } = {};
     if (!values.email) {
-      errors.name = "Required";
+      errors.email = "Required";
     }
     if (!values.firstName) {
       errors.firstName = "Required";
@@ -117,6 +119,13 @@ const UserForm = ({ id }: FormProps) => {
         error={formik.errors.password}
         required
         type="password"
+      />
+      <CheckboxInput
+        label={"Status"}
+        checkboxLabel={"Activated"}
+        value={formik.values.status}
+        onChange={formik.handleChange("status")}
+        required
       />
       <Button
         label={initialValues ? "Save" : "Add League"}
