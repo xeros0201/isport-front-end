@@ -1,0 +1,29 @@
+@import "react-datepicker/dist/react-datepicker.css";
+@import "../../../styles/mixins";
+
+.dateinput {
+  @include input-wrap;
+
+  &__input-wrap {
+    position: relative;
+  }
+  &__input {
+    @include input;
+    padding-right: 40px;
+  }
+  .icon {
+    position: absolute;
+    bottom: 12px;
+    right: 12px;
+  }
+}
+
+.react-datepicker-popper {
+  transition: 0s;
+}
+
+.react-datepicker__triangle{
+  left: 50% !important;
+  transform: none !important;
+  z-index: 1;
+}

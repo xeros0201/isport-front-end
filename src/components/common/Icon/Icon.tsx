@@ -18,7 +18,7 @@ const Icon = ({ name, ...props }: IconProps) => {
   return (
     reactIcon[name]({
       ...props,
-      className: 'icon',
+      className: props.className + ' icon',
       fontSize: 18
     })
   );
