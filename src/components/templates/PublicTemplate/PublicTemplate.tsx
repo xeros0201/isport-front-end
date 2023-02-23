@@ -15,7 +15,6 @@ const PublicTemplate = () => {
         ]}
       />
       <Container>
-        <PlayerForm />
         <Outlet />
       </Container>
       <Footer />
