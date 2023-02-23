@@ -1,5 +1,5 @@
 import { Outlet, useNavigate } from "react-router-dom";
-import { Checkbox } from "../../input";
+import PlayerForm from "../../forms/PlayerForm";
 import { Container, Footer, Header } from "../../layout";
 
 const PublicTemplate = () => {
@@ -15,6 +15,7 @@ const PublicTemplate = () => {
         ]}
       />
       <Container>
+        <PlayerForm />
         <Outlet />
       </Container>
       <Footer />
