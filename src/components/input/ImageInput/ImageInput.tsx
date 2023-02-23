@@ -4,20 +4,18 @@ import ImageUploading, { ImageListType } from "react-images-uploading";
 import { FaFontAwesome, FaPaperclip } from "react-icons/fa";
 import { Button, Spinner } from "../../common";
 import { useState } from "react";
-interface ImageInputTypes
-  extends ImageInputProps,
-    FocusProps<HTMLInputElement> {
-  /**
-   * The type of text input. The default is 'text'.
-   */
-  type?: "text";
-  /**
-   * Text to be shown inside the input field when it is empty.
-   */
+
+interface ImageInputTypes {
+  label?: string;
+
+  touched?: boolean;
+
+  error?: string;
+
+  required?: boolean;
+
   placeholder?: string;
-  /**
-   *
-   */
+
   rounded?: boolean;
 
   onChange: (
@@ -39,21 +37,61 @@ function ImageInput({
   onChange,
   touched,
   error,
-  // type = "text",
   required,
-  // onFocus,
-  // onBlur,
-  // placeholder = "",
-  // disabled = false,
-  // rounded = false,
   maxNumber,
 }: ImageInputTypes): JSX.Element {
   // const maxNumber = 69;
 
   const [loading, setLoading] = useState(false);
 
+  const renderLoading = () => {
+    return (
+      <div className="wrapper">
+        <Spinner />
+        <p>Loading ...</p>
+      </div>
+    );
+  };
+  const renderEmpty = (
+    isDragging: boolean,
+    onImageUpload: () => void,
+    dragProps: any
+  ) => {
+    return (
+      <div
+        className="wrapper"
+        style={isDragging ? { color: "red" } : undefined}
+        onClick={onImageUpload}
+        {...dragProps}
+      >
+        <FaPaperclip style={{ marginTop: 15, marginRight: 10 }} />
+        <p>
+          Drop your file here or{" "}
+          <span style={{ color: "#2596be" }}>Browse</span>
+        </p>
+      </div>
+    );
+  };
+  const renderWithValue = (imageList: ImageListType, onImageRemove:(index: number) => void) => {
+    return (
+      <div className="wrapper preview">
+      <img src={imageList[0].dataURL} alt="" width="100" />
+      <div className="info">
+        <div style={{ paddingBottom: 6 }}>{imageList[0].file?.name}</div>
+        <div>{imageList[0].file?.size} kb</div>
+      </div>
+      <Button
+        type="danger"
+        label="Delete"
+        onClick={() => onImageRemove(0)}
+        icon="IoTrash"
+      />
+    </div>
+    );
+  };
+
   return (
-    <div className="imagetinput">
+    <div className="image-input">
       <InputLabel label={label} required={required} />
       <div className="App">
         <ImageUploading
@@ -89,42 +127,11 @@ function ImageInput({
             // write your building UI
             <div className="upload__image-wrapper">
               {loading ? (
-                <div className="image-input">
-                  <Spinner />
-                  <p>Loading ...</p>
-                </div>
+                renderLoading()
               ) : imageList.length === 0 ? (
-                <div
-                  className="image-input"
-                  style={isDragging ? { color: "red" } : undefined}
-                  onClick={onImageUpload}
-                  {...dragProps}
-                >
-                  <FaPaperclip style={{ marginTop: 15, marginRight: 10 }} />
-                  <p>
-                    Drop your file here or{" "}
-                    <span style={{ color: "#2596be" }}>Browse</span>
-                  </p>
-                </div>
+                renderEmpty(isDragging, onImageUpload, dragProps)
               ) : (
-                <div className="image-input preview">
-                  <img src={imageList[0].dataURL} alt="" width="100" />
-                  <div className="info">
-                    <div style={{ paddingBottom: 6 }}>
-                      {imageList[0].file?.name}
-                    </div>
-                    <div>{imageList[0].file?.size} kb</div>
-                  </div>
-                  <Button
-                    type="danger"
-                    label="Delete"
-                    onClick={() => onImageRemove(0)}
-                    className="btn"
-                    icon={
-                      "IoTrash"
-                    }
-                  />
-                </div>
+                renderWithValue(imageList, onImageRemove)
               )}
             </div>
           )}

@@ -6,12 +6,10 @@ import { DateInput, CheckboxInput, TextInput } from "../../../components/input";
 import { Form, Page } from "../../../components/layout";
 import { ImageListType } from "react-images-uploading";
 import ImageInput from "../../../components/input/ImageInput/ImageInput";
+import LeagueForm from "../../../components/forms/LeagueForm";
 
 const Test = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
-
-  const [images, setImages] = useState<ImageListType>([]);
-
   const formik = useFormik({
     initialValues: {
       text1: "",
@@ -19,6 +17,7 @@ const Test = () => {
       date: new Date().toISOString(),
       league: "",
       active: "true",
+      logo: null,
     },
     onSubmit: (values) => {
       setIsSubmitting(true);
@@ -70,9 +69,22 @@ const Test = () => {
           onChange={formik.handleChange("active")}
         />
         <ImageInput
-          values={images}
+          label="123"
+          values={formik.values.logo !== null ? [formik.values.logo] : []}
+          // error="123"
+          // touched={true}
+          error={formik.errors.logo}
+          touched={formik.touched.logo}
           onChange={(values: ImageListType): void => {
-            setImages(values);
+            // setImages(values);
+
+            if (values.length === 0) {
+              formik.setFieldValue("logo", null);
+            } else {
+              formik.setFieldValue("logo", values[0]);
+            }
+
+            formik.handleChange("logo");
           }}
         />
       </Form>
@@ -82,8 +94,8 @@ const Test = () => {
         isLoading={isSubmitting}
         isSubmit
       />
-      <br /> 
-      {JSON.stringify(formik.values)}
+      <br />
+      {/* {JSON.stringify(formik.values)} */}
     </Page>
   );
 };
