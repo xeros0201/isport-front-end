@@ -12,6 +12,7 @@ const MatchList = () => {
                 <Button
                     label="New Match"
                     onClick={() => navigate('/admin/matches/new')}
+                    icon="IoAdd"
                 />
             </Row>
         </Page>

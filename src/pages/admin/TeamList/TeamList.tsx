@@ -12,6 +12,7 @@ const TeamList = () => {
                 <Button
                     label="New Team"
                     onClick={() => navigate('/admin/teams/new')}
+                    icon="IoAdd"
                 />
             </Row>
         </Page>

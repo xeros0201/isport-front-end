@@ -12,9 +12,10 @@ const PlayerEdit = () => {
     return (
         <Page title="Edit Player">
             <Button
-                label="< Players"
+                label="Players"
                 onClick={() => navigate('/admin/players')}
                 type="transparent"
+                icon="IoChevronBackOutline"
             />
             <h1>Edit Player</h1>
         </Page>

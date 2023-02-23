@@ -15,7 +15,6 @@ const PublicTemplate = () => {
         ]}
       />
       <Container>
-        <SeasonForm />
         <Outlet />
       </Container>
       <Footer />

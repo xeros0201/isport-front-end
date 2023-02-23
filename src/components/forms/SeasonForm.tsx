@@ -1,16 +1,17 @@
 import { useFormik } from "formik";
-import { Form } from "../layout";
+import { Form, Row } from "../layout";
 import { useState } from "react";
 import { useQuery } from "react-query";
 import { useNavigate } from "react-router-dom";
 import { Button, Spinner } from "../common";
-import { InputError, TextInput } from "../input";
+import { DateInput, InputError, TextInput } from "../input";
 import DropdownInput from "../input/DropdownInput/DropdownInput";
 
 interface SeasonValues {
   seasonName: "";
   startDay: "";
   endDay: "";
+  league: "";
 }
 
 const SeasonForm = ({ id }: FormProps) => {
@@ -28,6 +29,7 @@ const SeasonForm = ({ id }: FormProps) => {
     seasonName: "",
     startDay: "",
     endDay: "",
+    league: "",
   };
 
   // Setup submit handler
@@ -44,6 +46,9 @@ const SeasonForm = ({ id }: FormProps) => {
     }
     if (!values.endDay) {
       errors.endDay = "Required";
+    }
+    if (!values.league) {
+      errors.league = "Required";
     }
     return errors;
   };
@@ -73,14 +78,39 @@ const SeasonForm = ({ id }: FormProps) => {
         value={formik.values.seasonName}
         onChange={formik.handleChange("seasonName")}
         touched={formik.touched.seasonName}
+        error={formik.errors.seasonName}
+        required
       />
+      <Row>
+        <DateInput
+          label="Start Date"
+          onChange={function (value: string): void {
+            throw new Error("Function not implemented.");
+          }}
+          touched={formik.touched.startDay}
+          error={formik.errors.startDay}
+          required
+        />
+        <DateInput
+          label="End Date"
+          onChange={function (value: string): void {
+            throw new Error("Function not implemented.");
+          }}
+          touched={formik.touched.endDay}
+          error={formik.errors.endDay}
+          required
+        />
+      </Row>
       <DropdownInput
         label="League"
-        placeholder="Select the League"
+        placeholder="Select league..."
         options={[]}
         onChange={function (value: string): void {
           throw new Error("Function not implemented.");
         }}
+        touched={formik.touched.league}
+        error={formik.errors.league}
+        required
         asInput
       />
       <Button
