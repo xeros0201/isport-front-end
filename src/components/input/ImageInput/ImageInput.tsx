@@ -40,7 +40,6 @@ function ImageInput({
   required,
   maxNumber,
 }: ImageInputTypes): JSX.Element {
-  // const maxNumber = 69;
 
   const [loading, setLoading] = useState(false);
 
