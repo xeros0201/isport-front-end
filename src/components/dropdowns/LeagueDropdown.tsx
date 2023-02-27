@@ -27,9 +27,6 @@ const LeagueDropdown = ({
         }));
     }, [data]);
 
-    // Render spinner if data is being fetched
-    if (isLoading) return <Spinner />;
-
     // If error fetching data
     if (fetchError) return <InputError error="Error fetching leagues" touched />;
 
@@ -45,6 +42,7 @@ const LeagueDropdown = ({
             options={leagueOptions}
             placeholder="Select League"
             asInput={asInput}
+            isFetching={isLoading}
         />
     );
 };
