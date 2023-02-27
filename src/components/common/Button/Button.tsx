@@ -1,4 +1,3 @@
-import { ReactNode } from "react";
 import classNames from "classnames";
 import Icon from "../Icon/Icon";
 import Spinner from "../Spinner/Spinner";
@@ -37,10 +36,6 @@ type ButtonProps = {
    * Whether the button has rounded corners.
    */
   rounded?: boolean;
-
-  // icon?: ReactNode;
-  
-  className?: string;
   /**
    * Modify button size
    */
@@ -63,8 +58,6 @@ const Button = ({
   isSubmit = false,
   isDisabled = false,
   rounded = true,
-  // icon,
-  className,
   size = "medium",
   icon
 }: ButtonProps) => {

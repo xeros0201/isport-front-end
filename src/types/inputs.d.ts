@@ -95,7 +95,7 @@ declare global {
     /**
      * Whether options are still being fetched.
      */
-    fetching?: boolean;
+    isFetching?: boolean;
   }
 
   export interface ImplementedDropdownProps extends InputProps, AsInputProps {}

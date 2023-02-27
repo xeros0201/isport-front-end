@@ -113,7 +113,7 @@ function ImageInput({
               onChange('');
             }
             setLoading(false);
-          }, 500);
+          }, 1000);
         }}
         maxNumber={maxNumber}
         acceptType={["png", "jpeg", "jpg"]}
