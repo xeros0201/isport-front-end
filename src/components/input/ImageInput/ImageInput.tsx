@@ -1,30 +1,15 @@
 import "./ImageInput.scss";
 import { InputError, InputLabel } from "../../input";
 import ImageUploading, { ImageListType } from "react-images-uploading";
-import { FaFontAwesome, FaPaperclip } from "react-icons/fa";
+import { FaPaperclip } from "react-icons/fa";
 import { Button, Spinner } from "../../common";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import classNames from "classnames";
 
-interface ImageInputTypes {
-  label?: string;
-
+interface ImageInputProps extends InputProps {
   touched?: boolean;
-
   error?: string;
-
   required?: boolean;
-
-  placeholder?: string;
-
-  rounded?: boolean;
-
-  onChange: (
-    values: ImageListType,
-    addUpdatedIndex: number[] | undefined
-  ) => void;
-
-  values: ImageListType;
-
   maxNumber?: number;
 }
 
@@ -33,25 +18,40 @@ interface ImageInputTypes {
  */
 function ImageInput({
   label,
-  values,
+  value,
   onChange,
   touched,
   error,
   required,
   maxNumber,
-}: ImageInputTypes): JSX.Element {
-  // const maxNumber = 69;
-
+}: ImageInputProps): JSX.Element {
+  const [imageList, setImageList] = useState<ImageListType>([]);
+  
+  // Temporary - for mocking async upload delay
   const [loading, setLoading] = useState(false);
+  // Temporary - for converting a test image into the necessary format
+  useEffect(() => {
+    if (value) {
+      fetch('/public/isports.png')
+        .then(res => res.blob())
+        .then(blob => {
+          setImageList([{
+            dataURL: "/public/isports.png",
+            file: new File([blob], "/public/isports.png", { type: "image/png" })
+          }]);
+        });
+    }
+  }, []);
 
   const renderLoading = () => {
     return (
-      <div className="wrapper">
+      <div className="imageinput__wrap">
         <Spinner />
         <p>Loading ...</p>
       </div>
     );
   };
+
   const renderEmpty = (
     isDragging: boolean,
     onImageUpload: () => void,
@@ -59,84 +59,84 @@ function ImageInput({
   ) => {
     return (
       <div
-        className="wrapper"
-        style={isDragging ? { color: "red" } : undefined}
+        className={classNames({
+          "imageinput__wrap": true,
+          "imageinput__wrap--empty": true,
+          "imageinput__wrap--dragging": isDragging,
+        })}
         onClick={onImageUpload}
         {...dragProps}
       >
-        <FaPaperclip style={{ marginTop: 15, marginRight: 10 }} />
         <p>
+          <FaPaperclip style={{ marginRight: 4, fontSize: 16 }} />
           Drop your file here or{" "}
           <span style={{ color: "#2596be" }}>Browse</span>
         </p>
       </div>
     );
   };
+  
   const renderWithValue = (imageList: ImageListType, onImageRemove:(index: number) => void) => {
     return (
-      <div className="wrapper preview">
-      <img src={imageList[0].dataURL} alt="" width="100" />
-      <div className="info">
-        <div style={{ paddingBottom: 6 }}>{imageList[0].file?.name}</div>
-        <div>{imageList[0].file?.size} kb</div>
+      <div className="imageinput__wrap imageinput__wrap--with-value">
+        <div className="imageinput__image-wrap">
+          <img src={imageList[0].dataURL} alt="" width="100" />
+        </div>
+        <div className="imageinput__info">
+          <div style={{ paddingBottom: 6 }}>{imageList[0].file?.name}</div>
+          <div>{imageList[0].file?.size} kb</div>
+        </div>
+        <Button
+          type="danger"
+          label="Delete"
+          onClick={() => onImageRemove(0)}
+          icon="IoTrash"
+        />
       </div>
-      <Button
-        type="danger"
-        label="Delete"
-        onClick={() => onImageRemove(0)}
-        icon="IoTrash"
-      />
-    </div>
     );
   };
 
   return (
-    <div className="image-input">
+    <div className="imageinput">
       <InputLabel label={label} required={required} />
-      <div className="App">
-        <ImageUploading
-          multiple
-          value={values}
-          onChange={(
-            value: ImageListType,
-            addUpdatedIndex?: number[] | undefined
-          ) => {
-            setLoading(true);
-
-            setTimeout(
-              () => {
-                onChange(value, addUpdatedIndex);
-
-                setLoading(false);
-              },
-              value.length === 0 ? 500 : 2000
-            );
-          }}
-          maxNumber={maxNumber}
-          acceptType={["png", "jpeg", "jpg"]}
-        >
-          {({
-            imageList,
-            onImageUpload,
-            // onImageRemoveAll,
-            // onImageUpdate,
-            onImageRemove,
-            isDragging,
-            dragProps,
-          }) => (
-            // write your building UI
-            <div className="upload__image-wrapper">
-              {loading ? (
-                renderLoading()
-              ) : imageList.length === 0 ? (
-                renderEmpty(isDragging, onImageUpload, dragProps)
-              ) : (
-                renderWithValue(imageList, onImageRemove)
-              )}
-            </div>
-          )}
-        </ImageUploading>
-      </div>
+      <ImageUploading
+        multiple
+        value={imageList}
+        onChange={(value: ImageListType) => {
+          setLoading(true);
+          setTimeout(() => {
+            if (value.length > 0) {
+              setImageList(value);
+              onChange('value');
+            } else {
+              setImageList([]);
+              onChange('');
+            }
+            setLoading(false);
+          }, 500);
+        }}
+        maxNumber={maxNumber}
+        acceptType={["png", "jpeg", "jpg"]}
+      >
+        {({
+          imageList,
+          onImageUpload,
+          onImageRemove,
+          isDragging,
+          dragProps,
+        }) => (
+          // write your building UI
+          <div className="upload__image-wrapper">
+            {loading ? (
+              renderLoading()
+            ) : imageList.length === 0 ? (
+              renderEmpty(isDragging, onImageUpload, dragProps)
+            ) : (
+              renderWithValue(imageList, onImageRemove)
+            )}
+          </div>
+        )}
+      </ImageUploading>
       <InputError error={error} touched={touched} />
     </div>
   );

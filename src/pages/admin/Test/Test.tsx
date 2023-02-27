@@ -17,7 +17,8 @@ const Test = () => {
       date: new Date().toISOString(),
       league: "",
       active: "true",
-      logo: null,
+      logo1: "value",
+      logo2: "",
     },
     onSubmit: (values) => {
       setIsSubmitting(true);
@@ -69,23 +70,18 @@ const Test = () => {
           onChange={formik.handleChange("active")}
         />
         <ImageInput
-          label="123"
-          values={formik.values.logo !== null ? [formik.values.logo] : []}
-          // error="123"
-          // touched={true}
-          error={formik.errors.logo}
-          touched={formik.touched.logo}
-          onChange={(values: ImageListType): void => {
-            // setImages(values);
-
-            if (values.length === 0) {
-              formik.setFieldValue("logo", null);
-            } else {
-              formik.setFieldValue("logo", values[0]);
-            }
-
-            formik.handleChange("logo");
-          }}
+          label="Prefilled logo"
+          value={formik.values.logo1}
+          onChange={formik.handleChange("logo1")}
+          error={formik.errors.logo1}
+          touched={formik.touched.logo1}
+        />
+        <ImageInput
+          label="Empty logo"
+          value={formik.values.logo2}
+          onChange={formik.handleChange("logo2")}
+          error={formik.errors.logo2}
+          touched={formik.touched.logo2}
         />
       </Form>
       <Button

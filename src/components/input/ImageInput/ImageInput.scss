@@ -1,39 +1,61 @@
 @import "../../../styles/variables";
 @import "../../../styles/mixins";
 
-.image-input {
+.imageinput {
   @include input-wrap;
 
-  .wrapper {
-    border: 1px dashed gray;
-    width: 50%;
-    padding: 20px 20px;
-    margin-top: $margin-top-small;
-    background-color: white;
+  .imageinput__wrap {
+    @include input;
+    max-width: 480px;
+    min-height: 100px;
     text-align: center;
     display: flex;
     justify-content: center;
+    padding: $padding-input;
+    align-items: center;
 
-    &.preview {
-      display: "flex";
-      align-items: center;
+    // Replace margins of children
+    > * {
+      margin: 0 !important;
+    }
+    > :not(:last-child) {
+      margin-right: $margin-between !important;
     }
 
-    .info {
+    .imageinput__image-wrap {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex: 0;
+      width: 70px;
+      height: 70px;
+      flex-direction: row;
+      text-align: center;
+      background-color: $grey-light;      
+
+      img {
+        max-width: 70px;
+        max-height: 70px;
+      }
+    }
+
+    .imageinput__info {
       flex: 1;
       display: flex;
       flex-direction: column;
       align-items: start;
-      padding-left: 16px;
       font-size: 14px;
-      color: #666;
+      color: $grey-dark;
     }
+  }
 
-    .btn {
-      margin-top: 0;
-      padding: 10px 16px;
-      font-size: 14px;
-    }
+  .imageinput__wrap--empty {
+    cursor: pointer;
+    border-style: dashed;
+  }
+
+  .imageinput__wrap--dragging {
+    background-color: rgba(0, 255, 0, 0.1);
   }
 }
 
