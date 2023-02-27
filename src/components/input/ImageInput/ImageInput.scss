@@ -1,0 +1,63 @@
+@import "../../../styles/variables";
+@import "../../../styles/mixins";
+
+.imageinput {
+  @include input-wrap;
+
+  .imageinput__wrap {
+    @include input;
+    max-width: 480px;
+    min-height: 100px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    padding: $padding-input;
+    align-items: center;
+
+    // Replace margins of children
+    > * {
+      margin: 0 !important;
+    }
+    > :not(:last-child) {
+      margin-right: $margin-between !important;
+    }
+
+    .imageinput__image-wrap {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex: 0;
+      width: 70px;
+      height: 70px;
+      flex-direction: row;
+      text-align: center;
+      background-color: $grey-light;      
+
+      img {
+        max-width: 70px;
+        max-height: 70px;
+      }
+    }
+
+    .imageinput__info {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: start;
+      font-size: 14px;
+      color: $grey-dark;
+    }
+  }
+
+  .imageinput__wrap--empty {
+    cursor: pointer;
+    border-style: dashed;
+  }
+
+  .imageinput__wrap--dragging {
+    background-color: rgba(0, 255, 0, 0.1);
+  }
+}
+
+// Block Element Modifier
+// (BEM) is a methodology that helps you to create reusable components and code sharing in front-end development. BEM is a naming convention for classes in HTML and CSS. The name of each class must be meaningful and easy to read. BEM is a way to name classes in a consistent and predictable way. It helps to work with developers and front-end developers in a team.
