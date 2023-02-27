@@ -1,4 +1,8 @@
+@import '../../../styles/variables';
+
 .form {
+  max-width: $form-width-max;
+
   // Links inside form
   a {
     text-decoration: underline;
