@@ -1,7 +1,5 @@
-import * as React from 'react';
-import { useContext, useEffect } from 'react';
 import { Navigate } from 'react-router-dom';
-import { AuthContext } from '../contexts/AuthContext';
+import { useCheckAuth } from '.././../hooks';
 
 interface RequireAuthProps {
     children: React.ReactElement;
@@ -16,19 +14,14 @@ interface RequireAuthProps {
  *
  * Source: https://ui.dev/react-router-protected-routes-authentication
  */
-function RequireAuth({ children, secured, redirectTo }: RequireAuthProps): React.ReactElement {
-    const { isAuthed, checkAuth } = useContext(AuthContext);
-    useEffect(() => {
-        // checks auth on backend, if there is issue in non-dev env check function
-        checkAuth();
-    }, [redirectTo]);
-    if (isAuthed || secured === false) {
-        return children;
-    } else if (isAuthed === false) {
-        return <Navigate to="/login" replace />;
-    }
+function RequireAuth({ children, secured, redirectTo }: RequireAuthProps) {
+    const { isCheckingAuth, isAuthed } = useCheckAuth();
 
-    return <div />;
+    if (!secured) return children;
+    if (isCheckingAuth) return <></>;
+    if (isAuthed) return children;
+
+    return <Navigate to={import.meta.env.VITE_LOGIN_ROUTE} replace />
 }
 
 export default RequireAuth;

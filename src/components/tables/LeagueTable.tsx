@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { Table, Tbody, Td, Th, Thead, Tr } from "../../components/layout/Table";
-import { Button, Spinner } from "../common";
+import { Button, Logo, Spinner } from "../common";
+import { DateTime } from "luxon";
 import {
     ColumnDef,
     flexRender,
@@ -25,9 +26,31 @@ const LeagueTable = ({ data, isLoading = false }: LeagueTableProps) => {
           {
             header: "League Name",
             footer: (props) => props.column.id,
-            cell: (info) => info.getValue(),
+            cell: (info) => <p>{info.getValue() as string}</p>,
             sortingFn: "alphanumeric",
             accessorFn: (row) => row.name,
+            enableSorting: true,
+          },
+          {
+            header: "League Logo",
+            footer: (props) => props.column.id,
+            cell: (info) => (
+                <Logo url="/public/league-logo.png" />
+            ),
+            accessorFn: (row) => row.name,
+            enableSorting: false
+          },
+          {
+            header: "Date Created",
+            footer: (props) => props.column.id,
+            cell: ({ getValue }) => {
+                const dateTime = DateTime
+                    .fromISO(getValue() as string)
+                    .toLocaleString(DateTime.DATETIME_SHORT);
+                return <p>{dateTime}</p>
+            },
+            sortingFn: "datetime",
+            accessorFn: (row) => row.createdDate,
             enableSorting: true,
           },
           {
