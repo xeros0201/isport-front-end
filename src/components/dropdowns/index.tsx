@@ -1,3 +1,4 @@
 import LeagueDropdown from "./LeagueDropdown";
+import NavigationDropdown from "./NavigationDropdown";
 
-export { LeagueDropdown };
+export { LeagueDropdown, NavigationDropdown };

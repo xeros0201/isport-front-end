@@ -1,5 +1,7 @@
 import { Outlet, useNavigate } from "react-router-dom";
+import { NavigationDropdown } from "../../dropdowns";
 import { Container, Footer, Header } from "../../layout";
+const adminPrefix = import.meta.env.VITE_ADMIN_PREFIX;
 
 const AdminTemplate = () => {
   const navigate = useNavigate();
@@ -7,13 +9,15 @@ const AdminTemplate = () => {
   return (
     <div>
       <Header links={[
-        { label: 'Leagues', onClick: () => navigate("/admin/leagues") },
-        { label: 'Seasons', onClick: () => navigate("/admin/seasons") },
-        { label: 'Teams', onClick: () => navigate("/admin/teams") },
-        { label: 'Players', onClick: () => navigate("/admin/players") },
-        { label: 'Matches', onClick: () => navigate("/admin/matches") },
-        { label: 'Users', onClick: () => navigate("/admin/users") },
-      ]} />
+        { label: 'Leagues', to: `${adminPrefix}/leagues` },
+        { label: 'Seasons', to: `${adminPrefix}/seasons` },
+        { label: 'Teams', to: `${adminPrefix}/teams` },
+        { label: 'Players', to: `${adminPrefix}/players` },
+        { label: 'Matches', to: `${adminPrefix}/matches` },
+        { label: 'Users', to: `${adminPrefix}/users` },
+      ]}>
+        <NavigationDropdown />
+      </Header>
       <Container>
         <Outlet />
       </Container>

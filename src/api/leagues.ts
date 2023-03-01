@@ -1,4 +1,4 @@
-import axios from "./axios";
+import axios, { authConfig } from "./axios";
 
 /**
  * Fetches all leagues.
@@ -20,7 +20,8 @@ export const getLeague = async (id: number): Promise<League> => {
  * Creates new league.
  */
 export const createLeague = async (league: { name: string }): Promise<League> => {
-    const response = await axios.post<League>('/leagues', { ...league, sportId: 1 });
+    const sportId =  +import.meta.env.VITE_ISPORTS_AFL_ID;
+    const response = await axios.post<League>('/leagues', {...league, sportId}, authConfig);
     return response.data;
 }
 
@@ -28,6 +29,6 @@ export const createLeague = async (league: { name: string }): Promise<League> =>
  * Updates existing league.
  */
 export const updateLeague = async (id: number, league: { name: string }): Promise<League> => {
-    const response = await axios.patch<League>('/leagues/${id}', league);
+    const response = await axios.patch<League>('/leagues/${id}', league, authConfig);
     return response.data;
 }

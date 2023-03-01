@@ -2,7 +2,7 @@ import "./ImageInput.scss";
 import { InputError, InputLabel } from "../../input";
 import ImageUploading, { ImageListType } from "react-images-uploading";
 import { FaPaperclip } from "react-icons/fa";
-import { Button, Spinner } from "../../common";
+import { Button, Logo, Spinner } from "../../common";
 import { useEffect, useState } from "react";
 import classNames from "classnames";
 
@@ -36,7 +36,7 @@ function ImageInput({
         .then(res => res.blob())
         .then(blob => {
           setImageList([{
-            dataURL: "/public/isports.png",
+            dataURL: "/public/league-logo.png",
             file: new File([blob], "/public/isports.png", { type: "image/png" })
           }]);
         });
@@ -79,9 +79,9 @@ function ImageInput({
   const renderWithValue = (imageList: ImageListType, onImageRemove:(index: number) => void) => {
     return (
       <div className="imageinput__wrap imageinput__wrap--with-value">
-        <div className="imageinput__image-wrap">
-          <img src={imageList[0].dataURL} alt="" width="100" />
-        </div>
+        {imageList[0].dataURL &&
+          <Logo url={imageList[0].dataURL} isSquare />
+        }
         <div className="imageinput__info">
           <div style={{ paddingBottom: 6 }}>{imageList[0].file?.name}</div>
           <div>{imageList[0].file?.size} kb</div>
@@ -91,6 +91,7 @@ function ImageInput({
           label="Delete"
           onClick={() => onImageRemove(0)}
           icon="IoTrash"
+          size="small"
         />
       </div>
     );

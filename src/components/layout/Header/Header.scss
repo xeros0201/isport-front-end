@@ -9,6 +9,7 @@
         @include container;
         flex-direction: row;
         justify-content: space-between;
+        align-items: center;
 
         .header__logo {
             flex: 0;
@@ -55,6 +56,12 @@
                     }
                 }
             }
+        }
+        
+        .dropdowninput {
+            margin: 0 !important;
+            .Dropdown-placeholder {color: $white }
+            .Dropdown-control { margin: 0 !important; }
         }
     }
 
