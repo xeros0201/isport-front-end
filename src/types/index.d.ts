@@ -19,10 +19,16 @@ declare global {
     role: Role;
   }
 
+  interface Sport {
+    id: number;
+    name: string;
+  }
+
   interface League {
     id: number;
     logo: string;
     sportId: number;
+    sport: Sport
     name: string;
     createdDate: Date;
     updatedDate: Date;

@@ -29,6 +29,6 @@ export const createLeague = async (league: { name: string }): Promise<League> =>
  * Updates existing league.
  */
 export const updateLeague = async (id: number, league: { name: string }): Promise<League> => {
-    const response = await axios.patch<League>('/leagues/${id}', league, authConfig);
+    const response = await axios.patch<League>(`/leagues/${id}`, league, authConfig);
     return response.data;
 }

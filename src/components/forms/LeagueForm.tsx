@@ -27,9 +27,9 @@ const LeagueForm = ({ id }: FormProps) => {
   );
 
   // Setup initial values
-  const initialValues: LeagueFormValues = data ?? {
-    name: "",
-    logo: "",
+  const initialValues: LeagueFormValues = {
+    name: data?.name ?? "",
+    logo: data?.logo ?? "",
   };
 
   // Setup submit handler
@@ -58,9 +58,6 @@ const LeagueForm = ({ id }: FormProps) => {
     const errors: { [key: string]: string } = {};
     if (!values.name) {
       errors.name = "Required";
-    }
-    if (values.logo.length === 0) {
-      errors.logo = "Required";
     }
     return errors;
   };
@@ -95,7 +92,6 @@ const LeagueForm = ({ id }: FormProps) => {
       />
       <ImageInput
         label="League Logo"
-        required
         onChange={formik.handleChange("logo")}
         value={formik.values.logo}
         touched={formik.touched.logo}

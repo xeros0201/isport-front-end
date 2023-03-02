@@ -1,25 +1,24 @@
-import { NavLink, useLocation } from "react-router-dom";
 import "./Header.scss";
+import { NavLink, useLocation } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { NavigationDropdown } from "../../dropdowns";
-
-interface RouteLink {
-  label: string;
-  to: string;
-}
-interface onClickLink {
-  label: string;
-  onClick: () => void;
-}
+import { useComponentDimensions } from "../../../hooks";
+const defaultAdminPage = import.meta.env.VITE_DEFAULT_ADMIN_ROUTE
 
 interface HeaderProps {
-  links: (RouteLink | onClickLink)[];
+  menu: Menu;
   children?: React.ReactNode | React.ReactNode[];
+  collapseWidth?: number
 }
 
-const Header = ({ links, children }: HeaderProps) => {
+const Header = ({ menu, children, collapseWidth = 630 }: HeaderProps) => {
   const navigate = useNavigate();
   const location = useLocation();
+  const {
+    ref: containerRef,
+    width: containerWidth,
+    height: containerHeight,
+  } = useComponentDimensions();
 
   const { pathname } = location;
 
@@ -30,38 +29,47 @@ const Header = ({ links, children }: HeaderProps) => {
     if (adminPathname.includes(routeToCheck) && routeToCheck !== '/') return true;
   }
 
+  const renderDesktopNav = () => {
+    return (
+      <nav className="header__nav-desktop">
+        <ul>
+          {menu.map((link, index) => (
+            <li key={index}>
+                <NavLink
+                  to={link.path}
+                  className={() =>
+                    isCurrentRoute(link.path)
+                      ? "header__navlink header__navlink--active"
+                      : "header__navlink"
+                  }
+                >
+                  {link.label}
+                </NavLink>
+            </li>
+          ))}
+        </ul>
+      </nav>
+    );
+  }
+
+  const renderMobileNav = () => {
+    return (
+      <div className="header__nav-mobile">
+        <NavigationDropdown menu={menu} />
+      </div>
+    )
+  }
+
   return (
     <div className="header">
-      <div className="header__container">
-        <img
-          className="header__logo"
-          src="/public/isports.png"
-          onClick={() => navigate("/admin/leagues")}
-        />
-        <nav className="header__nav">
-          <ul>
-            {links.map((link, index) => (
-              <li key={index}>
-                {"to" in link ? (
-                  <NavLink
-                    to={link.to}
-                    className={() =>
-                      isCurrentRoute(link.to)
-                        ? "header__navlink header__navlink--active"
-                        : "header__navlink"
-                    }
-                  >
-                    {link.label}
-                  </NavLink>
-                ) : (
-                  <a className="header__navlink" onClick={link.onClick}>
-                    {link.label}
-                  </a>
-                )}
-              </li>
-            ))}
-          </ul>
-        </nav>
+      <div className="header__container" ref={containerRef}>
+        <div className="header__logo" onClick={() => navigate(defaultAdminPage)}>
+          <img src="/public/isports.png" />
+        </div>
+        {containerWidth > collapseWidth 
+          ? renderDesktopNav()
+          : renderMobileNav()
+        }
         {children}
       </div>
     </div>
