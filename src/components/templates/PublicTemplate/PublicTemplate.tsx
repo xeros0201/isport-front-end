@@ -1,19 +1,19 @@
-import { Outlet, useNavigate } from "react-router-dom";
-import SeasonForm from "../../forms/SeasonForm";
+import { Outlet } from "react-router-dom";
 import { Container, Footer, Header } from "../../layout";
+import { AccountDropdown } from "../../dropdowns";
+
+const publicMenu: Menu = [
+  { label: 'Fixtures & Results', path: '/' },
+  { label: 'Teams & Players Statistics', path: '/team-stats' },
+  { label: 'Leaderboards', path: '/leaderboard' },
+]
 
 const PublicTemplate = () => {
-  const navigate = useNavigate();
-
   return (
     <div>
-      <Header
-        links={[
-          { label: 'Fixtures & Results', to: '/' },
-          { label: 'Teams & Players Statistics', to: '/team-stats' },
-          { label: 'Leaderboards', to: 'leaderboard' },
-        ]}
-      />
+      <Header menu={publicMenu} collapseWidth={700} >
+        <AccountDropdown />
+      </Header>
       <Container>
         <Outlet />
       </Container>

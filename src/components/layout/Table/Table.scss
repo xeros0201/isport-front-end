@@ -49,6 +49,7 @@ $table-cell-padding-compact: 5px 10px;
 
             .td {
                 padding: $table-cell-padding-standard;
+                .logo { text-align: center; }
 
                 &:not(:last-child) {
                     border-right: $table-border-style;

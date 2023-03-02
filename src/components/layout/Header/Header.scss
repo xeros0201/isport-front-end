@@ -9,17 +9,24 @@
         @include container;
         flex-direction: row;
         justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
 
         .header__logo {
-            flex: 0;
+            flex: 1;
             padding: 10px;
             padding-left: 0;
             height: $menu-vertical-height;
             padding: 20px 0;
             cursor: pointer;
+
+            img {
+                height: 100%;
+                width: auto;
+            }
         }
     
-        .header__nav {
+        .header__nav-desktop {
             flex: 1;
             display: flex;
             flex-direction: row;
@@ -55,6 +62,17 @@
                     }
                 }
             }
+        }
+
+        .header__nav-mobile {
+            display: flex;
+            justify-content: flex-end;
+        }
+        
+        .dropdowninput {
+            margin: 0 !important;
+            .Dropdown-placeholder {color: $white }
+            .Dropdown-control { margin: 0 !important; }
         }
     }
 

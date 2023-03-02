@@ -64,7 +64,7 @@
 @mixin input-wrap {
   display: flex;
   flex-direction: column;
-  margin-top: $margin-top-medium;
+  margin-top: $margin-top-medium !important;
 }
 
 @mixin input {
