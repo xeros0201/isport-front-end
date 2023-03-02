@@ -1,67 +1,39 @@
+import { useMemo, useState } from "react";
 import { DropdownInput } from "../input";
-import { useEffect, useState, useMemo } from "react";
+import { useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { logout } from "../../api/auth";
-import { useCheckAuth, useForceRerender } from "../../hooks";
 
-enum OPTION {
-    WEB_PORTAL = "Web Portal",
-    ADMIN_PORTAL = "Admin Portal",
-    LOGOUT = "Logout",
+interface NavigationDropdownProps {
+    menu: Menu;
 }
 
-const NavigationDropdown = () => {
-    const [value, setValue] = useState("");
-    const { isCheckingAuth, isAuthed, user } = useCheckAuth();
-    const forceRerender = useForceRerender();
-    const navigate = useNavigate();
+const NavigationDropdown = ({ menu }: NavigationDropdownProps) => {
+    const [value, setValue] = useState(menu[0].path);
     const location = useLocation();
+    const navigate = useNavigate();
 
-    // Prevent dropdown value from changing
-    const ACCOUNT_NAME = `${user?.firstName} ${user?.lastName}`;
-    useEffect(() => {
-        if (value !== ACCOUNT_NAME) setValue(ACCOUNT_NAME)
-    }, [value]);
-
-    // Filter options based on admin/public route
+    // Convert menu to input options
     const options = useMemo(() => {
+        return menu.map(({ label, path }) => ({
+            value: path,
+            label,
+        }));
+    }, []);
+    
+    // Update value if location changes
+    useEffect(() => {
         const { pathname } = location;
-        const isAdminRoute = pathname.startsWith(import.meta.env.VITE_ADMIN_PREFIX);
-        return [
-            isAdminRoute
-                ? { value: OPTION.WEB_PORTAL, label: OPTION.WEB_PORTAL }
-                : { value: OPTION.ADMIN_PORTAL, label: OPTION.ADMIN_PORTAL },
-            { value: OPTION.LOGOUT, label: OPTION.LOGOUT },
-        ];
+        const newValue = options.find(({ value }) => value === pathname)?.value;
+        if (newValue) setValue(newValue);
     }, [location]);
-
-    // Handle option selection
-    const handleChange = (value: string) => {
-        switch (value) {
-            case OPTION.WEB_PORTAL:
-                navigate(import.meta.env.VITE_DEFAULT_PUBLIC_ROUTE)
-                break;
-            case OPTION.ADMIN_PORTAL:
-                navigate(import.meta.env.VITE_DEFAULT_ADMIN_ROUTE);
-                break;
-            case OPTION.LOGOUT:
-                logout().then(() => navigate(import.meta.env.VITE_LOGIN_ROUTE));
-                break;
-            default:
-                break;
-        }
-        forceRerender();
-    };
-
-    // Do not show component if user is not authed
-    if (isCheckingAuth || !isAuthed) return null;
 
     return (
         <DropdownInput
-            value={ACCOUNT_NAME}
+            onChange={(path) => navigate(path)}
             options={options}
-            onChange={handleChange}
+            value={value}
         />
+
     );
 };
 
