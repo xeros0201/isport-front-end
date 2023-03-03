@@ -32,7 +32,23 @@ declare global {
     name: string;
     createdDate: Date;
     updatedDate: Date;
+    createdUserId: string;
+    updatedUserId: string;
   }
+
+  interface Season {
+    id: number;
+    name: string;
+    startDate: string;
+    endDate: string;
+    leagueId: number;
+    createdDate: string;
+    createdUserId: string;
+    updatedDate: string;
+    updatedUserId: string;
+    league: League;
+  }
+
 }
 
 export {};

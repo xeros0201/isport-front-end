@@ -44,6 +44,7 @@
                     display: inline-block;
 
                     .header__navlink {
+                        font-size: $font-size-menu;
                         height: $menu-vertical-height;
                         cursor: pointer;
                         display: table-cell;

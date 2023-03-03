@@ -22,7 +22,7 @@ const LoginForm = () => {
             setIsSubmitting(true);
             login({ email, password })
                 .then(() => navigate('/admin/leagues'))
-                .catch((error) => setError(error.message))
+                .catch((error) => setError('Authentication failed.'))
                 .finally(() => setIsSubmitting(false));
         }
     });

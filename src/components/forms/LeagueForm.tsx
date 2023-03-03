@@ -2,17 +2,12 @@ import { useFormik } from "formik";
 import { useState } from "react";
 import { useQuery } from "react-query";
 import { useNavigate } from "react-router-dom";
-import { createLeague, getLeague, updateLeague } from "../../api/leagues";
+import { createLeague, getLeague, LeagueFormValues, updateLeague } from "../../api/leagues";
 import { Button, Spinner } from "../common";
 import { InputError, TextInput } from "../input";
 import ImageInput from "../input/ImageInput/ImageInput";
 import { Form } from "../layout";
 const adminPrefix = import.meta.env.VITE_ADMIN_PREFIX;
-
-interface LeagueFormValues {
-  name: string;
-  logo: string;
-}
 
 const LeagueForm = ({ id }: FormProps) => {
   const [isSubmitting, setIsSubmitting] = useState(false);

@@ -1,5 +1,10 @@
 import axios, { authConfig } from "./axios";
 
+export interface LeagueFormValues {
+  name: string;
+  logo: string;
+}
+
 /**
  * Fetches all leagues.
  */
