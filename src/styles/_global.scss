@@ -1,5 +1,5 @@
 @import "./variables";
-
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
 /* Import fonts */
 
 
@@ -9,7 +9,7 @@
 *::after {
   box-sizing: border-box;
   transition: 0.5s;
-//   font-family: "Montserrat";
+  font-family: 'Montserrat', sans-serif;
 }
 
 /* Minimum height is height of window */
