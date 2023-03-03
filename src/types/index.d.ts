@@ -10,7 +10,11 @@ declare global {
     sportId: number;
     name: string;
   };
-
+  interface Team {
+    id: number;
+    sportId: number;
+    name: string;
+  };
 }
 
 export {};
