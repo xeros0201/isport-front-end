@@ -2,8 +2,7 @@ import { useMemo } from "react";
 import { useQuery } from "react-query";
 import { getLeagues } from "../../api/leagues";
 import { Spinner } from "../common";
-import { InputError } from "../input";
-import DropdownInput from "../input/DropdownInput/DropdownInput";
+import { InputError, DropdownInput } from "../input";
 
 const LeagueDropdown = ({
     value,

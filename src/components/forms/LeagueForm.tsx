@@ -1,18 +1,13 @@
 import { useFormik } from "formik";
 import { useState } from "react";
-import { ImageListType, ImageType } from "react-images-uploading";
 import { useQuery } from "react-query";
 import { useNavigate } from "react-router-dom";
-import { createLeague, getLeague, updateLeague } from "../../api/leagues";
+import { createLeague, getLeague, LeagueFormValues, updateLeague } from "../../api/leagues";
 import { Button, Spinner } from "../common";
 import { InputError, TextInput } from "../input";
 import ImageInput from "../input/ImageInput/ImageInput";
 import { Form } from "../layout";
-
-interface LeagueFormValues {
-  name: string;
-  logo: ImageListType;
-}
+const adminPrefix = import.meta.env.VITE_ADMIN_PREFIX;
 
 const LeagueForm = ({ id }: FormProps) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -27,15 +22,13 @@ const LeagueForm = ({ id }: FormProps) => {
   );
 
   // Setup initial values
-  const initialValues: LeagueFormValues = data ?? {
-    name: "",
-    logo: [],
+  const initialValues: LeagueFormValues = {
+    name: data?.name ?? "",
+    logo: data?.logo ?? "",
   };
 
   // Setup submit handler
   const onSubmit = async (values: LeagueFormValues) => {
-    console.log(values);
-
     const update = async () => {
       if (!id) return;
       await updateLeague(id, values);
@@ -43,11 +36,15 @@ const LeagueForm = ({ id }: FormProps) => {
     };
     const create = async () => {
       await createLeague(values);
-      navigate("/admin/leagues");
+      navigate(`${adminPrefix}/leagues`);
     };
 
     setIsSubmitting(true);
-    !!id ? await update() : await create();
+    try {
+      !!id ? await update() : await create();
+    } catch (error) {
+      alert(JSON.stringify(error))
+    }
     setIsSubmitting(false);
   };
 
@@ -56,9 +53,6 @@ const LeagueForm = ({ id }: FormProps) => {
     const errors: { [key: string]: string } = {};
     if (!values.name) {
       errors.name = "Required";
-    }
-    if (values.logo.length === 0) {
-      errors.logo = "Required";
     }
     return errors;
   };
@@ -92,24 +86,14 @@ const LeagueForm = ({ id }: FormProps) => {
         required
       />
       <ImageInput
-      
-      label="123312"
-      required
-        onChange={(
-          values: ImageListType,
-          addUpdatedIndex: number[] | undefined
-        ) => {
-          //   formik.values.logo = values;
-          formik.setFieldValue("logo", values);
-
-          formik.handleChange("logo");
-        }}
-        values={formik.values.logo}
-        touched={formik.touched.logo?.length === 0}
+        label="League Logo"
+        onChange={formik.handleChange("logo")}
+        value={formik.values.logo}
+        touched={formik.touched.logo}
         error={formik.errors.logo as string}
       />
       <Button
-        label={initialValues ? "Save" : "Add League"}
+        label={id ? "Save" : "Add League"}
         onClick={() => formik.submitForm()}
         isSubmit
       />

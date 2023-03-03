@@ -9,7 +9,8 @@
 *::after {
   box-sizing: border-box;
   transition: 0.5s;
-//   font-family: "Montserrat";
+  // font-family: "Montserrat";
+  font-family: 'Verdana';
 }
 
 /* Minimum height is height of window */
@@ -24,7 +25,9 @@ body,
 }
 
 /* Typography */
-
+* { font-size: $font-size-p; }
+h1 { font-size: $font-size-h1; }
+small { font-size: $font-size-small; }
 
 /* Inputs */
 fieldset {

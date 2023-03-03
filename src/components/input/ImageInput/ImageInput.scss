@@ -22,23 +22,6 @@
       margin-right: $margin-between !important;
     }
 
-    .imageinput__image-wrap {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      flex: 0;
-      width: 70px;
-      height: 70px;
-      flex-direction: row;
-      text-align: center;
-      background-color: $grey-light;      
-
-      img {
-        max-width: 70px;
-        max-height: 70px;
-      }
-    }
-
     .imageinput__info {
       flex: 1;
       display: flex;
@@ -51,6 +34,7 @@
 
   .imageinput__wrap--empty {
     cursor: pointer;
+    max-width: none;
     border-style: dashed;
   }
 
