@@ -3,7 +3,6 @@
 
 .dateinput {
   @include input-wrap;
-  padding-top: $margin-top-small * 2;
 
   &__input-wrap {
     position: relative;
