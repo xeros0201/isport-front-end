@@ -12,7 +12,7 @@ import { Form } from "../layout";
 import "./Form.scss";
 const adminPrefix = import.meta.env.VITE_ADMIN_PREFIX;
 
-const UserForm = ({ id }: FormProps) => {
+const UserForm = ({ id }: { id: string }) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const navigate = useNavigate();
 
@@ -20,7 +20,7 @@ const UserForm = ({ id }: FormProps) => {
   const { isLoading, data, refetch, error } = useQuery(
     ["getUser", {}],
     async () => {
-      if (id) return getUser(+id);
+      if (id) return getUser(id);
     }
   );
 
@@ -32,7 +32,7 @@ const UserForm = ({ id }: FormProps) => {
     password: "",
     status: data?.active ? "true" : "",
   };
-
+  
   // Setup submit handler
   const onSubmit = async (values: UserFormValues) => {
     const update = async () => {

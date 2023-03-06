@@ -8,20 +8,19 @@ export interface UserFormValues {
   status: "true" | ""
 }
 
-
 /**
  * Fetches all users.
  */
 export const getUsers = async (): Promise<User[]> => {
-  const response = await axios.get<User[]>("/users");
+  const response = await axios.get<User[]>("/users", authConfig);
   return response.data;
 };
 
 /**
  * Fetches user that matches id.
  */
-export const getUser = async (id: number): Promise<User> => {
-  const response = await axios.get<User>(`/users/${id}`);
+export const getUser = async (id: string): Promise<User> => {
+  const response = await axios.get<User>(`/users/${id}`, authConfig);
   return response.data;
 };
 
@@ -36,7 +35,7 @@ export const createUser = async (user: UserFormValues): Promise<User> => {
 /**
  * Updates existing user.
  */
-export const updateUser = async (id: number, user: UserFormValues): Promise<any> => {
+export const updateUser = async (id: string, user: UserFormValues): Promise<any> => {
   const response = await axios.put<any>(`/users/${id}`, { ...user, active: !!user?.status }, authConfig);
   return response.data;
 };
