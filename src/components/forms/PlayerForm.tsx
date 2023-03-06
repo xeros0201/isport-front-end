@@ -28,7 +28,8 @@ const PlayerForm = ({ id }: FormProps) => {
   const initialValues: PlayerFormValues = {
     name: data?.name ?? "",
     playerNumber: data?.playerNumber.toString() ??  "",
-    teamId: data?.teamId.toString() ?? "",
+    // TODO: Waiting team api
+    // teamId: data?.teamId.toString() ?? "",
     leagueId: data?.leagueId.toString() ?? "",
   };
 
@@ -62,8 +63,8 @@ const PlayerForm = ({ id }: FormProps) => {
     if (!values.playerNumber) {
       errors.playerNumber = "Required";
     }
-    if (!values.teamId) {
-      errors.teamId = "Required";
+    if (!values.leagueId) {
+      errors.leagueId = "Required";
     }
     return errors;
   };

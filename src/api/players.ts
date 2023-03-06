@@ -3,7 +3,8 @@ import axios, { authConfig } from "./axios";
 export interface PlayerFormValues {
   name: string;
   playerNumber: string;
-  teamId: string;
+  // TODO: Waiting team api
+  // teamId: string;
   leagueId: string;
 }
 
