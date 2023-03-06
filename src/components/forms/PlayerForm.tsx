@@ -18,7 +18,7 @@ const PlayerForm = ({ id }: FormProps) => {
 
   // Setup react-query for fetching data
   const { isLoading, data, refetch, error } = useQuery(
-    ["getPlayer", { id }],
+    ["getPlayer", {}],
     async () => {
       if (id) return getPlayer(+id);
     }
@@ -41,7 +41,7 @@ const PlayerForm = ({ id }: FormProps) => {
     };
     const create = async () => {
       await createPlayer(values);
-      navigate(`${adminPrefix}/seasons`);
+      navigate(`${adminPrefix}/players`);
     };
 
     setIsSubmitting(true);
