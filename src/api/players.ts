@@ -1,47 +1,40 @@
-import axios from "./axios";
+import axios, { authConfig } from "./axios";
+
+export interface PlayerFormValues {
+  name: string;
+  playerNumber: string;
+  teamId: string;
+  leagueId: string;
+}
 
 /**
  * Fetches all player.
- * TODO: replace any type
  */
-export const getPlayers = async (): Promise<any[]> => {
-  const response = await axios.get<any[]>("/players");
+export const getPlayers = async (): Promise<Player[]> => {
+  const response = await axios.get<Player[]>("/players");
   return response.data;
 };
 
 /**
  * Fetches player that matches id.
- * TODO: replace any type
  */
-export const getPlayer = async (id: number): Promise<any> => {
-  const response = await axios.get<any>(`/players/${id}`);
+export const getPlayer = async (id: number): Promise<Player> => {
+  const response = await axios.get<Player>(`/players/${id}`);
   return response.data;
 };
 
 /**
  * Creates new player.
- * TODO: replace any type
  */
-export const createPlayer = async (player: {
-  playerName: string;
-  playerNumber: string;
-  team: string;
-  league: string;
-}): Promise<any> => {
-  const response = await axios.post<any>("/players", { ...player });
+export const createPlayer = async ( player: PlayerFormValues ): Promise<Player> => {
+  const response = await axios.post<Player>("/players", player, authConfig);
   return response.data;
 };
 
 /**
  * Updates existing player.
- * TODO: replace any type
  */
-export const updatePlayer = async (player: {
-  playerName: string;
-  playerNumber: string;
-  team: string;
-  league: string;
-}): Promise<any> => {
-  const response = await axios.patch<any>("/players/${id}", player);
+export const updatePlayer = async (id: number, player: PlayerFormValues): Promise<Player> => {
+  const response = await axios.patch<Player>(`/players/${id}`, player, authConfig);
   return response.data;
 };

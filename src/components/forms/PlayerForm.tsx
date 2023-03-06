@@ -2,19 +2,15 @@ import { useFormik } from "formik";
 import { useState } from "react";
 import { useQuery } from "react-query";
 import { useNavigate } from "react-router-dom";
-import { createLeague, getLeague, updateLeague } from "../../api/leagues";
-import { getPlayer } from "../../api/players";
+import { 
+  createPlayer, getPlayer, 
+  PlayerFormValues, updatePlayer 
+} from "../../api/players";
 import { Button, Spinner } from "../common";
+import { LeagueDropdown } from "../dropdowns";
 import { InputError, TextInput } from "../input";
-import DropdownInput from "../input/DropdownInput/DropdownInput";
 import { Form } from "../layout";
-
-interface PlayerFormValues {
-  playerName: string;
-  playerNumber: string;
-  team: string;
-  league: string;
-}
+const adminPrefix = import.meta.env.VITE_ADMIN_PREFIX;
 
 const PlayerForm = ({ id }: FormProps) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -29,30 +25,45 @@ const PlayerForm = ({ id }: FormProps) => {
   );
 
   // Setup initial values
-  const initialValues: PlayerFormValues = data ?? {
-    playerName: "",
-    playerNumber: "",
-    team: "",
-    league: "",
+  const initialValues: PlayerFormValues = {
+    name: data?.name ?? "",
+    playerNumber: data?.playerNumber.toString() ??  "",
+    teamId: data?.teamId.toString() ?? "",
+    leagueId: data?.leagueId.toString() ?? "",
   };
 
   // Setup submit handler
-  const onSubmit = async (values: PlayerFormValues) => {};
+  const onSubmit = async (values: PlayerFormValues) => {
+    const update = async () => {
+      if (!id) return;
+      await updatePlayer(id, values);
+      refetch();
+    };
+    const create = async () => {
+      await createPlayer(values);
+      navigate(`${adminPrefix}/seasons`);
+    };
+
+    setIsSubmitting(true);
+    try {
+      !!id ? await update() : await create();
+    } catch (error) {
+      alert(JSON.stringify(error))
+    }
+    setIsSubmitting(false);
+  };
 
   // Setup validation
   const validate = (values: PlayerFormValues) => {
     const errors: { [key: string]: string } = {};
-    if (!values.playerName) {
-      errors.playerName = "Required";
+    if (!values.name) {
+      errors.name = "Required";
     }
     if (!values.playerNumber) {
       errors.playerNumber = "Required";
     }
-    if (!values.team) {
-      errors.team = "Required";
-    }
-    if (!values.league) {
-      errors.league = "Required";
+    if (!values.teamId) {
+      errors.teamId = "Required";
     }
     return errors;
   };
@@ -80,10 +91,10 @@ const PlayerForm = ({ id }: FormProps) => {
       <TextInput
         label="Player Name"
         placeholder="Type player name..."
-        value={formik.values.playerName}
+        value={formik.values.name}
         onChange={formik.handleChange("playerName")}
-        touched={formik.touched.playerName}
-        error={formik.errors.playerName}
+        touched={formik.touched.name}
+        error={formik.errors.name}
         required
       />
       <TextInput
@@ -95,7 +106,8 @@ const PlayerForm = ({ id }: FormProps) => {
         error={formik.errors.playerNumber}
         required
       />
-      <DropdownInput
+      // TODO: Waiting team form api make team dropdown (processing).
+      {/* <DropdownInput
         options={[]}
         label="Team"
         placeholder="Select team..."
@@ -106,16 +118,13 @@ const PlayerForm = ({ id }: FormProps) => {
         error={formik.errors.team}
         required
         asInput
-      />
-      <DropdownInput
-        options={[]}
+      /> */}
+      <LeagueDropdown
         label="League"
-        placeholder="Select league..."
-        onChange={function (value: string): void {
-          throw new Error("Function not implemented.");
-        }}
-        touched={formik.touched.league}
-        error={formik.errors.league}
+        value={formik.values.leagueId}
+        onChange={formik.handleChange("leagueId")}
+        touched={formik.touched.leagueId}
+        error={formik.errors.leagueId}
         required
         asInput
       />
