@@ -19,7 +19,7 @@ const UserEdit = () => {
         icon="IoChevronBackOutline"
       />
       <h1>Edit User</h1>
-      {id && <UserForm id={+id} />}
+      {id && <UserForm id={id} />}
     </Page>
   );
 };

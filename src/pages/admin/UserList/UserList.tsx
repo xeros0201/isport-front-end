@@ -1,9 +1,11 @@
 import { Page, Row } from "../../../components/layout";
-import { Button, Icon } from "../../../components/common";
+import { Button } from "../../../components/common";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { useQuery } from "react-query";
 import { getUsers } from "../../../api/users";
+import { TextInput } from "../../../components/input";
+import { UserTable } from "../../../components/tables";
 
 const UserList = () => {
     const [query, setQuery] = useState('');
@@ -12,6 +14,12 @@ const UserList = () => {
     const { isLoading, data: users } = useQuery(
         ["getUsers"], async () => await getUsers()
     );
+
+    // Filter data to match query  
+    const filteredUsers = useMemo(() => {
+        if (!users) return [];
+        return users.filter((user: any) => user.email);
+    }, [users, query]);    
     
     const navigate = useNavigate();
 
@@ -25,6 +33,14 @@ const UserList = () => {
                     icon="IoAdd"
                 />
             </Row>
+            <TextInput
+                placeholder="Search..."
+                value={query}
+                onChange={setQuery}
+                icon="IoSearch"
+                rounded
+            />
+            <UserTable data={filteredUsers} isLoading={isLoading} />
         </Page>
     );
 };
