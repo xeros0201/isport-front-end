@@ -48,15 +48,6 @@ declare global {
     updatedUserId: string;
     league: League;
   }
-
-  interface User {
-    id: string;
-    email: string;
-    firstName: string;
-    lastName: string;
-    active: boolean;
-    role: string;
-  }
 }
 
 export {};
