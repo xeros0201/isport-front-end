@@ -1,59 +1,79 @@
-import { NavLink } from 'react-router-dom';
-import './Header.scss';
-import { useNavigate } from 'react-router-dom';
-
-interface RouteLink {
-    label: string;
-    to: string;
-}
-interface onClickLink {
-    label: string;
-    onClick: () => void;
-}
+import "./Header.scss";
+import { NavLink, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { NavigationDropdown } from "../../dropdowns";
+import { useComponentDimensions } from "../../../hooks";
+const defaultAdminPage = import.meta.env.VITE_DEFAULT_ADMIN_ROUTE
 
 interface HeaderProps {
-    links: (RouteLink | onClickLink)[];
+  menu: Menu;
+  children?: React.ReactNode | React.ReactNode[];
+  collapseWidth?: number
 }
 
-const Header = ({ links }: HeaderProps) => {
-    const navigate = useNavigate();
+const Header = ({ menu, children, collapseWidth = 630 }: HeaderProps) => {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const {
+    ref: containerRef,
+    width: containerWidth,
+    height: containerHeight,
+  } = useComponentDimensions();
 
+  const { pathname } = location;
+
+  const isCurrentRoute = (routeToCheck: string) => {
+    const adminPathname = `${import.meta.env.VITE_ADMIN_PREFIX}${pathname}`;
+    if (pathname === routeToCheck && routeToCheck === '/') return true;
+    if (pathname.includes(routeToCheck) && routeToCheck !== '/') return true;
+    if (adminPathname.includes(routeToCheck) && routeToCheck !== '/') return true;
+  }
+
+  const renderDesktopNav = () => {
     return (
-        <div className="header">
-            <div className="header__container">
-                <img
-                    className="header__logo"
-                    src="/public/isports.png"
-                    onClick={() => navigate('/admin/leagues')}
-                />
-                <nav className="header__nav">
-                    <ul>
-                        {links.map((link, index) => (
-                            <li key={index}>
-                                {('to' in link)
-                                    ? (
-                                        <NavLink to={link.to} className={({ isActive }) => (
-                                            isActive
-                                                ? "header__navlink header__navlink--active"
-                                                : "header__navlink"
-                                        )}>
-                                            {link.label}
-                                        </NavLink>
-                                    )
-                                    : (
-                                        <a className="header__navlink" onClick={link.onClick}>
-                                            {link.label}
-                                        </a>
-                                    )
-                                }
-                                
-                            </li>
-                        ))}
-                    </ul>
-                </nav>
-            </div>
-        </div>
+      <nav className="header__nav-desktop">
+        <ul>
+          {menu.map((link, index) => (
+            <li key={index}>
+                <NavLink
+                  to={link.path}
+                  className={() =>
+                    isCurrentRoute(link.path)
+                      ? "header__navlink header__navlink--active"
+                      : "header__navlink"
+                  }
+                >
+                  {link.label}
+                </NavLink>
+            </li>
+          ))}
+        </ul>
+      </nav>
     );
-}
+  }
+
+  const renderMobileNav = () => {
+    return (
+      <div className="header__nav-mobile">
+        <NavigationDropdown menu={menu} />
+      </div>
+    )
+  }
+
+  return (
+    <div className="header">
+      <div className="header__container" ref={containerRef}>
+        <div className="header__logo" onClick={() => navigate(defaultAdminPage)}>
+          <img src="/public/isports.png" />
+        </div>
+        {containerWidth > collapseWidth 
+          ? renderDesktopNav()
+          : renderMobileNav()
+        }
+        {children}
+      </div>
+    </div>
+  );
+};
 
 export default Header;
