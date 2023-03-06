@@ -92,7 +92,7 @@ const PlayerForm = ({ id }: FormProps) => {
         label="Player Name"
         placeholder="Type player name..."
         value={formik.values.name}
-        onChange={formik.handleChange("playerName")}
+        onChange={formik.handleChange("name")}
         touched={formik.touched.name}
         error={formik.errors.name}
         required
@@ -106,7 +106,7 @@ const PlayerForm = ({ id }: FormProps) => {
         error={formik.errors.playerNumber}
         required
       />
-      // TODO: Waiting team form api make team dropdown (processing).
+      {/* // TODO: Waiting team form api make team dropdown (processing). */}
       {/* <DropdownInput
         options={[]}
         label="Team"
