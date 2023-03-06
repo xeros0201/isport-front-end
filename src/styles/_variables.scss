@@ -11,11 +11,13 @@ $grey-dark: #525252;
 $transparent: transparent;
 
 /* Typography */
-$font-size-default: 16px;
-$font-size-h1: 34px;
+$font-size-default: 14px;
+$font-size-h1: 22px;
 $font-size-h2: 27px;
 $font-size-h3: 20px;
 $font-size-h4: 18px;
+$font-size-small: 12px;
+$font-size-menu: $font-size-default;
 $font-size-p: $font-size-default;
 $font-size-label: $font-size-default;
 
@@ -27,6 +29,7 @@ $border-width-thick: 5px;
 
 /* Layout */
 $container-width-max: 1300px;
+$form-width-max: 600px;
 $container-horizontal-padding: 20px;
 $page-vertical-padding: 40px;
 

@@ -27,7 +27,7 @@ function DropdownInput({
   disabled,
   error,
   touched,
-  fetching,
+  isFetching,
   asInput = false,
 }: DropdownInputProps) {
   const asInputClass = `dropdowninput--${
@@ -36,7 +36,7 @@ function DropdownInput({
   return (
     <div className={`dropdowninput ${asInputClass}`}>
       {asInput && <InputLabel label={label} required={required} />}
-      {!fetching && (
+      {!isFetching && (
         <ReactDropdown
           className="reactdropdown"
           options={options}
@@ -46,7 +46,7 @@ function DropdownInput({
           disabled={disabled}
         />
       )}
-      {fetching && (
+      {isFetching && (
         <div className="dropdowninput__spinner">
           <Spinner size="tiny" />
         </div>

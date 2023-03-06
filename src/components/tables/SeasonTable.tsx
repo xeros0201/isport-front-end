@@ -11,20 +11,21 @@ import {
     useReactTable,
   } from "@tanstack/react-table";
 import { useMemo, useState } from "react";
+import { Row } from "../layout";
 
-interface LeagueTableProps {
-    data: League[];
+interface SeasonTableProps {
+    data: Season[];
     isLoading?: boolean;
 }
 
-const LeagueTable = ({ data, isLoading = false }: LeagueTableProps) => {
+const SeasonTable = ({ data, isLoading = false }: SeasonTableProps) => {
     const navigate = useNavigate();
 
     // Setup columns
-    const columns = useMemo<ColumnDef<League>[]>(
+    const columns = useMemo<ColumnDef<Season>[]>(
         () => [
           {
-            header: "League Name",
+            header: "Season Name",
             footer: (props) => props.column.id,
             cell: (info) => <p>{info.getValue() as string}</p>,
             sortingFn: "alphanumeric",
@@ -32,13 +33,43 @@ const LeagueTable = ({ data, isLoading = false }: LeagueTableProps) => {
             enableSorting: true,
           },
           {
-            header: "League Logo",
+            header: "Start Date",
+            footer: (props) => props.column.id,
+            cell: ({ getValue }) => {
+                const dateTime = DateTime
+                    .fromISO(getValue() as string)
+                    .toISODate();
+                return <p>{dateTime}</p>
+            },
+            sortingFn: "datetime",
+            accessorFn: (row) => row.startDate,
+            enableSorting: true,
+          },
+          {
+            header: "End Date",
+            footer: (props) => props.column.id,
+            cell: ({ getValue }) => {
+                const dateTime = DateTime
+                    .fromISO(getValue() as string)
+                    .toISODate();
+                return <p>{dateTime}</p>
+            },
+            sortingFn: "datetime",
+            accessorFn: (row) => row.endDate,
+            enableSorting: true,
+          },
+          {
+            header: "League Name",
             footer: (props) => props.column.id,
             cell: (info) => (
-                <Logo url="/public/league-logo.png" />
+                <div style={{ display: 'flex', alignItems: 'center' }}>
+                    <Logo url="/public/league-logo.png" height={40} />
+                    <p style={{ marginLeft: 10 }}>{info.getValue() as string}</p>
+                </div>
             ),
-            accessorFn: (row) => row.name,
-            enableSorting: false
+            sortingFn: "text",
+            accessorFn: (row) => row.league.name,
+            enableSorting: true
           },
           {
             header: "Date Created",
@@ -62,7 +93,7 @@ const LeagueTable = ({ data, isLoading = false }: LeagueTableProps) => {
                     type="secondary"
                     icon="IoPencilOutline"
                     size="small"
-                    onClick={() => navigate(`/admin/leagues/edit?id=${info.getValue()}`)}
+                    onClick={() => navigate(`/admin/seasons/edit?id=${info.getValue()}`)}
                 />
             ),
             sortingFn: "text",
@@ -89,7 +120,7 @@ const LeagueTable = ({ data, isLoading = false }: LeagueTableProps) => {
     if (isLoading) return <Spinner size="large" />
 
     // If no data
-    if (!isLoading && !data.length) return <p>No leagues found</p>;
+    if (!isLoading && !data.length) return <p>No seasons found</p>;
 
     return (
         <Table >
@@ -125,4 +156,4 @@ const LeagueTable = ({ data, isLoading = false }: LeagueTableProps) => {
     )
 };
 
-export default LeagueTable;
+export default SeasonTable;

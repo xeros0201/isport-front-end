@@ -24,9 +24,11 @@ const Table = ({
     }), [compact, striped, hasFirstColumn]);
 
     return (
-        <table className={tableClasses}>
-            {children}
-        </table>
+        <div style={{ overflow: 'auto' }}>
+            <table className={tableClasses}>
+                {children}
+            </table>
+        </div>
     );
 };
 

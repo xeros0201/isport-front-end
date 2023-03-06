@@ -1,52 +1,42 @@
-import axios from "./axios";
+import axios, { authConfig } from "./axios";
+
+export interface UserFormValues {
+  email: string;
+  firstName: string;
+  lastName: string;
+  password: string;
+  status: "true" | ""
+}
+
 
 /**
  * Fetches all users.
- * TODO: add interface replace any
  */
-export const getUsers = async (): Promise<any[]> => {
-  const response = await axios.get<any[]>("/users");
+export const getUsers = async (): Promise<User[]> => {
+  const response = await axios.get<User[]>("/users");
   return response.data;
 };
 
 /**
  * Fetches user that matches id.
- * TODO: add interface replace any
  */
-export const getUser = async (id: number): Promise<any> => {
-  const response = await axios.get<any>(`/users/${id}`);
+export const getUser = async (id: number): Promise<User> => {
+  const response = await axios.get<User>(`/users/${id}`);
   return response.data;
 };
 
 /**
  * Creates new user.
- * TODO: add interface replace any
  */
-export const createUser = async (user: {
-  email: string;
-  password: string;
-  firstName: string;
-  lastName: string;
-  active: boolean;
-}): Promise<any> => {
-  const response = await axios.post<any>("/users", { ...user });
+export const createUser = async (user: UserFormValues): Promise<User> => {
+  const response = await axios.post<User>("/users", { ...user, active: !!user?.status }, authConfig);
   return response.data;
 };
 
 /**
  * Updates existing user.
- * TODO: add interface replace any
  */
-export const updateUser = async (
-  id: number,
-  user: {
-    email: string;
-    password: string;
-    firstName: string;
-    lastName: string;
-    active: boolean;
-  }
-): Promise<any> => {
-  const response = await axios.put<any>(`/users/${id}`, user);
+export const updateUser = async (id: number, user: UserFormValues): Promise<any> => {
+  const response = await axios.put<any>(`/users/${id}`, { ...user, active: !!user?.status }, authConfig);
   return response.data;
 };
