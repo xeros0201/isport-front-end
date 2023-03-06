@@ -1,4 +1,4 @@
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 // import RequireAuth from './RequireAuth';
 import MatchReport from '../../pages/public/MatchReport/MatchReport';
 import FourOhFour from '../../pages/public/FourOhFour/FourOhFour';
@@ -24,6 +24,8 @@ import MatchList from '../../pages/admin/MatchList/MatchList';
 import MatchCreate from '../../pages/admin/MatchCreate/MatchCreate';
 import MatchEdit from '../../pages/admin/MatchEdit/MatchEdit';
 import Test from '../../pages/admin/Test/Test';
+import RequireAuth from './RequireAuth';
+const adminPrefix = import.meta.env.VITE_ADMIN_PREFIX;
 
 export interface RouteConfig {
     path: string;
@@ -37,13 +39,6 @@ export interface RouteConfig {
  * List of routes used in the admin app.
  */
 export const adminRoutes: RouteConfig[] = [
-    {
-        path: 'login',
-        name: 'Login',
-        exact: true,
-        Component: AdminLogin,
-        secured: false
-    },
     {
         path: 'leagues',
         name: 'LeagueList',
@@ -163,6 +158,13 @@ export const adminRoutes: RouteConfig[] = [
  */
 export const publicRoutes: RouteConfig[] = [
     {
+        path: 'login',
+        name: 'Login',
+        exact: true,
+        Component: AdminLogin,
+        secured: false
+    },
+    {
         path: '/',
         name: 'Fixtures',
         exact: true,
@@ -191,7 +193,7 @@ export const publicRoutes: RouteConfig[] = [
         secured: false
     },
     {
-        path: 'leaderboard',
+        path: '/leaderboard',
         name: 'MatchReport',
         exact: true,
         Component: Leaderboard,
@@ -201,7 +203,7 @@ export const publicRoutes: RouteConfig[] = [
         path: '*',
         name: 'FourOhFour',
         exact: false,
-        Component: FourOhFour,
+        Component: () => <Navigate to={import.meta.env.VITE_DEFAULT_PUBLIC_ROUTE} replace />,
         secured: false
     }
 ];
@@ -213,15 +215,15 @@ function Routing() {
     return <>
         <Routes>
             {/* Admin pages */}
-            <Route path="admin" element={<AdminTemplate />}>
+            <Route path={adminPrefix} element={<AdminTemplate />}>
                 {adminRoutes.map(({ path, Component, secured }) => (
                 <Route
                     key={path}
                     path={path}
                     element={
-                        // <RequireAuth secured={secured} redirectTo={path}>
+                        <RequireAuth secured={secured} redirectTo={path}>
                             <Component />
-                        // </RequireAuth>
+                        </RequireAuth>
                     }
                 />
                 ))}

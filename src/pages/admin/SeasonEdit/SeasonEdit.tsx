@@ -1,6 +1,7 @@
 import { Page } from "../../../components/layout";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Button } from "../../../components/common";
+import { SeasonForm } from "../../../components/forms";
 
 const SeasonEdit = () => {
     const navigate = useNavigate();
@@ -18,6 +19,7 @@ const SeasonEdit = () => {
                 icon="IoChevronBackOutline"
             />
             <h1>Edit Season</h1>
+            {id && <SeasonForm id={+id} />}
         </Page>
     );
 };
