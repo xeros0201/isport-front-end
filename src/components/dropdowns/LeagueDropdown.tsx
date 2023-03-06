@@ -2,8 +2,7 @@ import { useMemo } from "react";
 import { useQuery } from "react-query";
 import { getLeagues } from "../../api/leagues";
 import { Spinner } from "../common";
-import { InputError } from "../input";
-import DropdownInput from "../input/DropdownInput/DropdownInput";
+import { InputError, DropdownInput } from "../input";
 
 const LeagueDropdown = ({
     value,
@@ -27,9 +26,6 @@ const LeagueDropdown = ({
         }));
     }, [data]);
 
-    // Render spinner if data is being fetched
-    if (isLoading) return <Spinner />;
-
     // If error fetching data
     if (fetchError) return <InputError error="Error fetching leagues" touched />;
 
@@ -45,6 +41,7 @@ const LeagueDropdown = ({
             options={leagueOptions}
             placeholder="Select League"
             asInput={asInput}
+            isFetching={isLoading}
         />
     );
 };
