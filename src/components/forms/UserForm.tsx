@@ -2,41 +2,55 @@ import { useFormik } from "formik";
 import { useState } from "react";
 import { useQuery } from "react-query";
 import { useNavigate } from "react-router-dom";
-import { createLeague, getLeague, updateLeague } from "../../api/leagues";
+import { 
+  createUser, getUser, 
+  updateUser, UserFormValues 
+} from "../../api/users";
 import { Button, Spinner } from "../common";
 import { CheckboxInput, InputError, TextInput } from "../input";
 import { Form } from "../layout";
 import "./Form.scss";
-
-interface UserFormValues {
-  email: string;
-  firstName: string;
-  lastName: string;
-  password: string;
-  status: "true" | ""
-}
+const adminPrefix = import.meta.env.VITE_ADMIN_PREFIX;
 
 const UserForm = ({ id }: FormProps) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const navigate = useNavigate();
 
+  // Setup react-query for fetching data
+  const { isLoading, data, refetch, error } = useQuery(
+    ["getUser", {}],
+    async () => {
+      if (id) return getUser(+id);
+    }
+  );
+
   // Setup initial values
-  // TODO: add init data
   const initialValues: UserFormValues = {
-    email: "",
-    firstName: "",
-    lastName: "",
+    email: data?.email ?? "",
+    firstName: data?.firstName ?? "",
+    lastName: data?.lastName ?? "",
     password: "",
-    status: "",
+    status: data?.active ? "true" : "",
   };
 
   // Setup submit handler
   const onSubmit = async (values: UserFormValues) => {
-    const update = async () => {};
-    const create = async () => {};
+    const update = async () => {
+      if (!id) return;
+      await updateUser(id, values);
+      refetch();
+    };
+    const create = async () => {
+      await createUser(values);
+      navigate(`${adminPrefix}/seasons`);
+    };
 
     setIsSubmitting(true);
-    !!id ? await update() : await create();
+    try {
+      !!id ? await update() : await create();
+    } catch (error) {
+      alert(JSON.stringify(error))
+    }
     setIsSubmitting(false);
   };
 
@@ -67,15 +81,13 @@ const UserForm = ({ id }: FormProps) => {
   });
 
   // If fetching data for provided id, show loading
-  // TODO: add loading
-  if (id && false) return <Spinner />;
+  if (id && isLoading) return <Spinner />;
 
   // If submitting, show loading
   if (isSubmitting) return <Spinner size="large" />;
 
   // If error fetching data, show error
-  // TODO: add error
-  if (false) return <InputError error="Failed to load form" touched={true} />;
+  if (error) return <InputError error="Failed to load form" touched={true} />;
 
   // Otherwise show form
   return (
@@ -128,7 +140,7 @@ const UserForm = ({ id }: FormProps) => {
         required
       />
       <Button
-        label={initialValues ? "Save" : "Add League"}
+        label={initialValues ? "Save" : "Add User"}
         onClick={() => formik.submitForm()}
         isSubmit
       />
