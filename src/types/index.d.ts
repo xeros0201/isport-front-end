@@ -49,6 +49,13 @@ declare global {
     league: League;
   }
 
+  interface Team {
+    id: number;
+    name: string;
+    logo: string;
+    seasonId: number;
+    season: Season;
+  }
 }
 
 export {};
