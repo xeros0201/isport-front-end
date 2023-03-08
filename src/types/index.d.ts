@@ -49,6 +49,34 @@ declare global {
     league: League;
   }
 
+  interface Location {
+    id: string;
+    name: string;
+  }
+
+  interface Team {
+    id: number;
+    name: string;
+    logo: string;
+    seasonId: number;
+  }
+
+  interface Match {
+    id: number;
+    seasonId: number;
+    homeTeamId: number | null;
+    homeTeamCsv: string | null;
+    awayTeamId: number | null;
+    awayTeamCsv: string | null;
+    round: number;
+    date: string;
+    teamId: number;
+    locationId: number;
+    awayTeam: Team;
+    homeTeam: Team;
+    location: Location;
+  }
+
 }
 
 export {};

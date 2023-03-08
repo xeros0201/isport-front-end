@@ -31,7 +31,7 @@ type LogoProps = {
 
 const Logo = ({
   url,
-  height = 64,
+  height = 54,
   alt = "img",
   isSquare = false,
   label
