@@ -27,9 +27,14 @@ interface RowProps {
    * 
    */
   rowMarginTop?: number;
+  /**
+   * default is 0 if no specified configuration for each row item => no need wrapping each row item in a `RowItem` component
+   * value is 1 if there is specified configuration for each row item => need wrapping each row item in a `RowItem` component
+   */
+  rowType?: number;
 }
 
-const Row = ({ children, alignItems, removeSpacing, noFlex, disableWrapping, rowMarginTop }: RowProps) => {
+const Row = ({ children, alignItems, removeSpacing, noFlex, disableWrapping, rowMarginTop, rowType = 0 }: RowProps) => {
   /**
    * Convert the children to an array to make them
    * easier to work with.
@@ -42,8 +47,10 @@ const Row = ({ children, alignItems, removeSpacing, noFlex, disableWrapping, row
   return (
     <div className={`row ${spacingModifier} ${wrappingModifer} `} style={{ alignItems, marginTop: `${!!rowMarginTop ? rowMarginTop : 0}px` }}>
       {childrenArray.map((child) => {
-        // return <div className="row__item" style={{ flex: noFlex ? 0 : 1 }}>{child}</div>;
-        return <>{child}</>;
+        if (rowType == 0)
+          return <div className="row__item" style={{ flex: noFlex ? 0 : 1 }}>{child}</div>;
+        else
+          return <>{child}</>;
       })}
     </div>
   );

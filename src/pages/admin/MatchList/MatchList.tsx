@@ -28,7 +28,7 @@ const MatchList = () => {
 
     return (
         <Page title="Matches">
-            <Row alignItems='center' disableWrapping noFlex >
+            <Row alignItems='center' disableWrapping noFlex rowType={1} >
                 <RowItem noFlex>
                     <h1>Matches</h1>
                 </RowItem>
@@ -40,7 +40,7 @@ const MatchList = () => {
                     />
                 </RowItem>
             </Row>
-            <Row removeSpacing rowMarginTop={20}>
+            <Row removeSpacing rowMarginTop={20} rowType={1}>
                 <RowItem flexGrow={8}>
                     <TextInput
                         placeholder="Search..."
@@ -64,30 +64,6 @@ const MatchList = () => {
                     />
                 </RowItem>
             </Row>
-            {/* <div className="row">
-                <div style={{flex: 8}}>
-                    <TextInput
-                        placeholder="Search..."
-                        value={query}
-                        onChange={setQuery}
-                        icon="IoSearch"
-                        rounded
-                        noMargin
-                    />
-                </div>
-                <div style={{flex: 1}}>
-                    <LeagueDropdown
-                        value={"League"}
-                        onChange={() => {}}
-                    />
-                </div>
-                <div style={{flex: 1}}>
-                    <SeasonDropdown
-                        value={"Season"}
-                        onChange={() => {}}
-                    />
-                </div>
-            </div> */}
             <MatchTable data={filteredMatches} isLoading={isLoading} />
         </Page>
     );
