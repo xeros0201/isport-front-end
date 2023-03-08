@@ -23,9 +23,13 @@ interface RowProps {
    * 
    */
   disableWrapping?: boolean;
+  /**
+   * 
+   */
+  rowMarginTop?: number;
 }
 
-const Row = ({ children, alignItems, removeSpacing, noFlex, disableWrapping }: RowProps) => {
+const Row = ({ children, alignItems, removeSpacing, noFlex, disableWrapping, rowMarginTop }: RowProps) => {
   /**
    * Convert the children to an array to make them
    * easier to work with.
@@ -36,9 +40,10 @@ const Row = ({ children, alignItems, removeSpacing, noFlex, disableWrapping }: R
   const wrappingModifer = disableWrapping ? "row--disallow-wrapping" : "";
 
   return (
-    <div className={`row ${spacingModifier} ${wrappingModifer}`} style={{ alignItems }}>
+    <div className={`row ${spacingModifier} ${wrappingModifer} `} style={{ alignItems, marginTop: `${!!rowMarginTop ? rowMarginTop : 0}px` }}>
       {childrenArray.map((child) => {
-        return <div className="row__item" style={{ flex: noFlex ? 0 : 1 }}>{child}</div>;
+        // return <div className="row__item" style={{ flex: noFlex ? 0 : 1 }}>{child}</div>;
+        return <>{child}</>;
       })}
     </div>
   );

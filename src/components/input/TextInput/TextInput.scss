@@ -4,6 +4,10 @@
 .textinput {
   @include input-wrap;
 
+  &--no-margin {
+    margin: 0px !important;
+  }
+
   .textinput__input-wrap {
     position: relative;
 
@@ -12,6 +16,10 @@
   
         &--rounded {
           @include input-rounded;
+        }
+
+        &--no-margin {
+          margin: 0px !important;
         }
     }
   

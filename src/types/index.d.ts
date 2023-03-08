@@ -1,3 +1,4 @@
+import { DateTime } from "luxon";
 import * as reactIcon from "react-icons/all";
 import { _ReactIcon } from "../components/common/Icon/Icon";
 import { Role } from "./enums";
@@ -49,6 +50,30 @@ declare global {
     league: League;
   }
 
+  interface Team {
+    id: number;
+    name: string;
+    logo: string;
+    seasonId: number;
+  }
+
+  interface Match {
+    id: number;
+    leagueId: number;
+    leagueName: string;
+    seasonId: number;
+    seasonName: string;
+    homeTeamId: number;
+    homeTeamName: string;
+    homeTeamCsv: string;
+    awayTeamId: number;
+    awayTeamName: string;
+    awayTeamCsv: string;
+    round: number;
+    date: Date;
+    teamId: number;
+    locationId: number;
+  }
 }
 
 export {};

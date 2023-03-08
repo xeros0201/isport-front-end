@@ -20,6 +20,10 @@ interface TextInputProps extends InputProps, FocusProps<HTMLInputElement> {
    * The icon to be shown inside the input field.
    */
   icon?: ReactIcon;
+  /**
+   * 
+   */
+  noMargin?: boolean;
 }
 
 /**
@@ -38,12 +42,14 @@ const TextInput = ({
   placeholder = "",
   disabled = false,
   rounded = false,
-  icon
+  icon,
+  noMargin = false,
 }: TextInputProps) => {
   return (
     <div className={classNames({
       'textinput': true,
-      'textinput--has-icon': icon
+      'textinput--has-icon': icon,
+      'textinput--no-margin': noMargin,
     })}>
       <InputLabel label={label} required={required} />
       <div className="textinput__input-wrap">
@@ -52,7 +58,8 @@ const TextInput = ({
           onBlur={onBlur}
           className={classNames({
             'textinput__input': true,
-            'textinput__input--rounded': rounded
+            'textinput__input--rounded': rounded,
+            'textinput__input--no-margin': noMargin,
           })}
           type={type}
           value={value}
