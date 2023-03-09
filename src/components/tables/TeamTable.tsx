@@ -34,7 +34,9 @@ const TeamTable = ({ data, isLoading = false }: TeamTableProps) => {
           {
             header: "Team Logo",
             footer: (props) => props.column.id,
-            cell: (info) => <p>{info.getValue() as string}</p>,
+            cell: (info) => (
+                <Logo url="/public/league-logo.png" height={40} />
+            ),
             sortingFn: "alphanumeric",
             accessorFn: (row) => row.logo,
             enableSorting: false,
@@ -42,7 +44,12 @@ const TeamTable = ({ data, isLoading = false }: TeamTableProps) => {
           {
             header: "League",
             footer: (props) => props.column.id,
-            cell: (info) => <p>{info.getValue() as string}</p>,
+            cell: (info) => (
+                <div style={{ display: 'flex', alignItems: 'center' }}>
+                    <Logo url="/public/league-logo.png" height={40} />
+                    <p style={{ marginLeft: 10 }}>{info.getValue() as string}</p>
+                </div>
+            ),
             sortingFn: "alphanumeric",
             accessorFn: (row) => row.season.league.name,
             enableSorting: true,
@@ -83,7 +90,7 @@ const TeamTable = ({ data, isLoading = false }: TeamTableProps) => {
     if (isLoading) return <Spinner size="large" />
 
     // If no data
-    if (!isLoading && !data.length) return <p>No matches found</p>;
+    if (!isLoading && !data.length) return <p>No teams found</p>;
 
     return (
         <Table >
