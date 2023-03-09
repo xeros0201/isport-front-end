@@ -5,7 +5,7 @@ export interface UserFormValues {
   firstName: string;
   lastName: string;
   password: string;
-  status: "true" | ""
+  active: "true" | ""
 }
 
 /**
@@ -28,7 +28,7 @@ export const getUser = async (id: string): Promise<User> => {
  * Creates new user.
  */
 export const createUser = async (user: UserFormValues): Promise<User> => {
-  const response = await axios.post<User>("/users", { ...user, active: !!user?.status }, authConfig);
+  const response = await axios.post<User>("/users", { ...user, active: !!user?.active }, authConfig);
   return response.data;
 };
 
@@ -36,6 +36,6 @@ export const createUser = async (user: UserFormValues): Promise<User> => {
  * Updates existing user.
  */
 export const updateUser = async (id: string, user: UserFormValues): Promise<any> => {
-  const response = await axios.put<any>(`/users/${id}`, { ...user, active: !!user?.status }, authConfig);
+  const response = await axios.put<any>(`/users/${id}`, { ...user, active: !!user?.active }, authConfig);
   return response.data;
 };
