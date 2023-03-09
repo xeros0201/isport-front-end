@@ -55,6 +55,7 @@ declare global {
     name: string,
     playerNumber: number,
     leagueId: number,
+    createdDate: string,
     team?: {
       id: number,
       name: string,
