@@ -23,7 +23,7 @@ export const getMatches = async (): Promise<Match[]> => {
 };
 
 /**
- * Fetches league that matches id.
+ * Fetches match that matches id.
  */
 export const getMatch = async (id: number): Promise<Match> => {
   const response = await axios.get<Match>(`/matches/${id}`);
@@ -31,7 +31,7 @@ export const getMatch = async (id: number): Promise<Match> => {
 };
 
 /**
- * Creates new league.
+ * Creates new match.
  */
 interface CreateMatchFormValues {
   homeTeamCsv: File | string;
@@ -64,7 +64,7 @@ export const createMatch = async (
 };
 
 /**
- * Updates existing league.
+ * Updates existing match.
  */
 interface UpdateMatchFormValues {
   homeTeamCsv: File | string;
