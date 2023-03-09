@@ -28,12 +28,23 @@ function CSVPreview({ data, teamId }: CSVPreviewProps) {
 
   // initiate or reset selectedPlayers
   useEffect(() => {
-    setSelectedPlayers(
-      Object.values(data || {}).reduce(
-        (obj, item) => ({ ...obj, [item.Code]: undefined }),
+    const refPlayers: { [key: string]: Player } =
+      players?.reduce(
+        (obj, item) => ({ ...obj, [item.playerNumber]: item }),
         {}
-      )
-    );
+      ) || {};
+    const _selectedPlayers = Object.values(data || {}).reduce((obj, item) => {
+      const { Code } = item;
+      const _code = Code.split(" ")[0];
+
+      const playerNumber = +_code.slice(1);
+      return {
+        ...obj,
+        [item.Code]: refPlayers[playerNumber]?.id.toString() || undefined,
+      };
+    }, {});
+
+    setSelectedPlayers(_selectedPlayers);
   }, [data, players]);
 
   // generate list codes
