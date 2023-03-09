@@ -5,6 +5,6 @@ export const authConfig = {
     withCredentials: true,
 }
 
-const axios = _axios.create({ baseURL: 'http://api.isports.local:3000/api' });
+const axios = _axios.create({ baseURL: API });
 
 export default axios;
