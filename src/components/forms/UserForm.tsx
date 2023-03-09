@@ -8,8 +8,7 @@ import {
 } from "../../api/users";
 import { Button, Spinner } from "../common";
 import { CheckboxInput, InputError, TextInput } from "../input";
-import { Form } from "../layout";
-import "./Form.scss";
+import { Form, Row } from "../layout";
 const adminPrefix = import.meta.env.VITE_ADMIN_PREFIX;
 
 const UserForm = ({ id }: UserFormProps) => {
@@ -66,9 +65,12 @@ const UserForm = ({ id }: UserFormProps) => {
     if (!values.lastName) {
       errors.lastName = "Required";
     }
-    if (!values.password) {
-      errors.password = "Required";
+    if (!id) {
+      if ( !values.password) {
+        errors.password = "Required";
+      }
     }
+    
     return errors;
   };
 
@@ -101,7 +103,7 @@ const UserForm = ({ id }: UserFormProps) => {
         error={formik.errors.email}
         required
       />
-      <div className="make-row">
+      <Row>
         <TextInput
           label="First Name"
           placeholder="Type first name..."
@@ -111,7 +113,6 @@ const UserForm = ({ id }: UserFormProps) => {
           error={formik.errors.firstName}
           required
         />
-        <div className="make-row--space" />
         <TextInput
           label="Last Name"
           placeholder="Type last name..."
@@ -121,7 +122,7 @@ const UserForm = ({ id }: UserFormProps) => {
           error={formik.errors.lastName}
           required
         />
-      </div>
+      </Row>
       <TextInput
         label="Password"
         placeholder="Type password..."
@@ -129,7 +130,7 @@ const UserForm = ({ id }: UserFormProps) => {
         onChange={formik.handleChange("password")}
         touched={formik.touched.password}
         error={formik.errors.password}
-        required
+        required={!id ? true : false}
         type="password"
       />
       <CheckboxInput
