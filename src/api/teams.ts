@@ -1,4 +1,4 @@
-import axios, { authConfig } from "./axios";
+import axios from "./axios";
 
 export interface TeamFormValues {
   name: string;
