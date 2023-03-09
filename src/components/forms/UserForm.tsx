@@ -12,7 +12,7 @@ import { Form } from "../layout";
 import "./Form.scss";
 const adminPrefix = import.meta.env.VITE_ADMIN_PREFIX;
 
-const UserForm = ({ id }: { id: string }) => {
+const UserForm = ({ id }: UserFormProps) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const navigate = useNavigate();
 
@@ -30,7 +30,7 @@ const UserForm = ({ id }: { id: string }) => {
     firstName: data?.firstName ?? "",
     lastName: data?.lastName ?? "",
     password: "",
-    status: data?.active ? "true" : "",
+    active: data?.active === false ? "" : "true"
   };
   
   // Setup submit handler
@@ -42,7 +42,7 @@ const UserForm = ({ id }: { id: string }) => {
     };
     const create = async () => {
       await createUser(values);
-      navigate(`${adminPrefix}/seasons`);
+      navigate(`${adminPrefix}/users`);
     };
 
     setIsSubmitting(true);
@@ -135,7 +135,7 @@ const UserForm = ({ id }: { id: string }) => {
       <CheckboxInput
         label={"Status"}
         checkboxLabel={"Activated"}
-        value={formik.values.status}
+        value={formik.values.active}
         onChange={formik.handleChange("status")}
         required
       />
