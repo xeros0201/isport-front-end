@@ -1,0 +1,26 @@
+@import "../../../styles/variables";
+
+.roundinput {
+    display: flex;
+    flex-direction: row;
+
+    &__option {
+        background-color: $cyan;
+        color: $black;
+        padding: $padding-input 0px;
+        text-align: center;
+        flex: 1;
+        cursor: pointer;
+
+        &--selected {
+            background-color: $black;
+            color: $white;
+        }
+
+        &--disabled {
+            background-color: $grey-mid;
+            color: $white;
+            cursor: auto;
+        }
+    }
+}

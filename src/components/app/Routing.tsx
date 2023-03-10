@@ -23,6 +23,9 @@ import PlayerEdit from '../../pages/admin/PlayerEdit/PlayerEdit';
 import MatchList from '../../pages/admin/MatchList/MatchList';
 import MatchCreate from '../../pages/admin/MatchCreate/MatchCreate';
 import MatchEdit from '../../pages/admin/MatchEdit/MatchEdit';
+import UserList from '../../pages/admin/UserList/UserList';
+import UserEdit from '../../pages/admin/UserEdit/UserEdit';
+import UserCreate from '../../pages/admin/UserCreate/UserCreate';
 import Test from '../../pages/admin/Test/Test';
 import RequireAuth from './RequireAuth';
 const adminPrefix = import.meta.env.VITE_ADMIN_PREFIX;
@@ -142,6 +145,27 @@ export const adminRoutes: RouteConfig[] = [
         name: 'MatchEdit',
         exact: true,
         Component: MatchEdit,
+        secured: true
+    },
+    {
+        path: 'users/create',
+        name: 'UserCreate',
+        exact: true,
+        Component: UserCreate,
+        secured: true
+    },
+    {
+        path: 'users/edit',
+        name: 'UserEdit',
+        exact: true,
+        Component: UserEdit,
+        secured: true
+    },
+    {
+        path: 'users',
+        name: 'UserList',
+        exact: true,
+        Component: UserList,
         secured: true
     },
     {

@@ -41,6 +41,7 @@ const CheckboxInput = ({
           type="checkbox"
           checked={!!value}
         />
+        <span className="checkmark"></span>
         <span className="checkbox__label">{checkboxLabel}</span>
       </div>
       <InputError error={error} touched={touched} />
