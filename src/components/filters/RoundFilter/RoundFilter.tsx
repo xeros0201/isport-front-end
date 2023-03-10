@@ -1,32 +1,27 @@
 import "./roundfilter.scss";
-import { useEffect, useState } from "react";
 import { Logo } from "../../common";
 import { LeagueDropdown, SeasonDropdown } from "../../dropdowns";
 import { Row } from "../../layout";
 import "./RoundFilter.scss";
 import { RoundInput } from "../../input";
 
-export interface RoundFilterType {
+interface RoundFilterProps {
     leagueId: string;
     seasonId: string;
     round: string;
-    onLeagueChange: () => void;
-    onSeasonChange: () => void;
-    onRoundChange: () => void;
+    onLeagueChange: (value: string) => void;
+    onSeasonChange: (value: string) => void;
+    onRoundChange: (value: string) => void;
 }
 
-interface RoundFilterProps {
-    onChange: (value: RoundFilterType) => void;
-}
-
-const RoundFilter = ({ onChange }: RoundFilterProps) => {
-    const [leagueId, setLeagueId] = useState('');
-    const [seasonId, setSeasonId] = useState('');
-    const [round, setRound] = useState('');
-
-    useEffect(() => {
-        onChange({ leagueId, seasonId, round });
-    }, [leagueId, seasonId, round]);
+const RoundFilter = ({
+    leagueId,
+    seasonId,
+    round,
+    onLeagueChange,
+    onSeasonChange,
+    onRoundChange,
+}: RoundFilterProps) => {
 
     return (
         <div className="roundfilter">
@@ -35,17 +30,17 @@ const RoundFilter = ({ onChange }: RoundFilterProps) => {
                 <Row noFlex removeSpacing>
                     <LeagueDropdown
                         value={leagueId}
-                        onChange={setLeagueId}
+                        onChange={onLeagueChange}
                     />
                     <SeasonDropdown
                         leagueId={leagueId}
                         value={seasonId}
-                        onChange={setSeasonId}
+                        onChange={onSeasonChange}
                     />
                 </Row>
             </Row>
             <RoundInput
-                onChange={setRound}
+                onChange={onRoundChange}
                 value={round}
                 seasonId={seasonId}
             />

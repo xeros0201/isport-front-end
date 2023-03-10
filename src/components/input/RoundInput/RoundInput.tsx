@@ -39,6 +39,7 @@ const RoundInput = ({
 
     // Fetch as soon as a seasonId is provided
     useEffect(() => {
+        if (!seasonId) return;
         console.log('seasonId', seasonId);
         onChange('');
         refetch();

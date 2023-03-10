@@ -1,26 +1,22 @@
-import { useState } from "react";
-import { useLocation } from "react-router-dom";
 import { RoundFilter } from "../../../components/filters";
-import { RoundFilterType } from "../../../components/filters/RoundFilter/RoundFilter";
 import { Page } from "../../../components/layout";
-
+import useSearchParamsState from "../../../hooks/useSearchParamsState";
 
 const Fixtures = () => {
-  const [filter, setFilter] = useState<RoundFilterType>({
-    leagueId: "",
-    seasonId: "",
-    round: "",
-  });
-
-  // Get id from url
-  const location = useLocation();
-  const leagueId = new URLSearchParams(location.search).get('leagueId');
-  const seasonId = new URLSearchParams(location.search).get('seasonId');
-  const round = new URLSearchParams(location.search).get('round');
+  const [leagueId, setLeagueId] = useSearchParamsState("leagueId", "");
+  const [seasonId, setSeasonId] = useSearchParamsState("seasonId", "");
+  const [round, setRound] = useSearchParamsState("round", "");
 
   return (
-    <Page title="Fixtures" >
-      <RoundFilter onChange={setFilter} />
+    <Page title="Fixtures">
+      <RoundFilter
+        leagueId={leagueId}
+        onLeagueChange={setLeagueId}
+        seasonId={seasonId}
+        onSeasonChange={setSeasonId}
+        round={round}
+        onRoundChange={setRound}
+      />
       <h1>Fixtures</h1>
     </Page>
   );
