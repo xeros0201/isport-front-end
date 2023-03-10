@@ -1,23 +1,18 @@
 import { useFormik } from "formik";
 import { useState } from "react";
-import { ImageListType, ImageType } from "react-images-uploading";
+import { ImageListType } from "react-images-uploading";
 import { useQuery } from "react-query";
 import { useNavigate } from "react-router-dom";
-import { createLeague, getLeague, updateLeague } from "../../api/leagues";
 import { createTeam, getTeam, updateTeam } from "../../api/teams";
 
 import { Button, Spinner } from "../common";
-import LeagueDropdown from "../dropdowns/LeagueDropdown";
+import { LeagueDropdown } from "../dropdowns";
 import { InputError, TextInput } from "../input";
 import DropdownInput from "../input/DropdownInput/DropdownInput";
 import ImageInput from "../input/ImageInput/ImageInput";
 import { Form } from "../layout";
 
 interface TeamFormValues {
-  name: string;
-  logo: ImageListType;
-}
-interface LeagueFormValues {
   name: string;
   logo: ImageListType;
 }
@@ -42,8 +37,6 @@ const TeamForm = ({ id }: FormProps) => {
 
   // Setup submit handler
   const onSubmit = async (values: TeamFormValues) => {
-    console.log(values);
-
     const update = async () => {
       if (!id) return;
       await updateTeam(id, values);
@@ -116,7 +109,7 @@ const TeamForm = ({ id }: FormProps) => {
         touched={formik.touched.logo?.length === 0}
         error={formik.errors.logo as string}
       />
-      <DropdownInput
+      {/* <DropdownInput
         label="League "
         required
         placeholder="Select Leagues..."
@@ -132,7 +125,8 @@ const TeamForm = ({ id }: FormProps) => {
         ]}
         onChange={(value) => {}}
         asInput={true}
-      />
+      /> */}
+      <LeagueDropdown onChange={() => {}} />
       <Button
         label={initialValues ? "Save" : "Add League"}
         onClick={() => formik.submitForm()}

@@ -51,7 +51,7 @@ declare global {
 
   interface Team {
     id: number;
-    sportId: number;
+    logo: string;
     name: string;
   }
 }
