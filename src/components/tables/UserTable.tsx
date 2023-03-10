@@ -62,10 +62,10 @@ const UserTable = ({ data, isLoading = false }: UserTableProps) => {
                 const dateTime = DateTime
                     .fromISO(getValue() as string)
                     .toLocaleString(DateTime.DATETIME_SHORT);
-                return <p>{`dateTime`}</p>
+                return <p>{dateTime}</p>
             },
             sortingFn: "datetime",
-            accessorFn: (row) => "",
+            accessorFn: (row) => row.createdDate,
             enableSorting: true,
           },
           {

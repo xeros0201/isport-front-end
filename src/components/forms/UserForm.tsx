@@ -1,6 +1,6 @@
 import { useFormik } from "formik";
 import { useState } from "react";
-import { useQuery } from "react-query";
+import { useQuery, useQueryClient } from "react-query";
 import { useNavigate } from "react-router-dom";
 import { 
   createUser, getUser, 
@@ -14,6 +14,7 @@ const adminPrefix = import.meta.env.VITE_ADMIN_PREFIX;
 const UserForm = ({ id }: UserFormProps) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
 
   // Setup react-query for fetching data
   const { isLoading, data, refetch, error } = useQuery(
@@ -50,6 +51,8 @@ const UserForm = ({ id }: UserFormProps) => {
     } catch (error) {
       alert(JSON.stringify(error))
     }
+    queryClient.invalidateQueries(['checkAuth']);
+    queryClient.invalidateQueries(['getUsers']);
     setIsSubmitting(false);
   };
 
@@ -137,7 +140,7 @@ const UserForm = ({ id }: UserFormProps) => {
         label={"Status"}
         checkboxLabel={"Activated"}
         value={formik.values.active}
-        onChange={formik.handleChange("status")}
+        onChange={formik.handleChange("active")}
         required
       />
       <Button
