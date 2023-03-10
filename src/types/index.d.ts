@@ -17,6 +17,10 @@ declare global {
     lastName: string;
     active: boolean;
     role: Role;
+    createdDate: string;
+    createdUserId: string;
+    updatedDate: string;
+    updatedUserId: string;
   }
 
   interface Sport {
@@ -30,9 +34,9 @@ declare global {
     sportId: number;
     sport: Sport
     name: string;
-    createdDate: Date;
-    updatedDate: Date;
+    createdDate: string;
     createdUserId: string;
+    updatedDate: string;
     updatedUserId: string;
   }
 

@@ -15,7 +15,7 @@ const adminMenu: Menu = [
 const AdminTemplate = () => {
   return (
     <div>
-      <Header menu={adminMenu} collapseWidth={630}>
+      <Header menu={adminMenu} collapseWidth={680}>
         <AccountDropdown />
       </Header>
       <Container>
