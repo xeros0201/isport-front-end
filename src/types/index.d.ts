@@ -63,6 +63,7 @@ declare global {
     name: string;
     logo: string;
     seasonId: number;
+    season: Season;
   }
 
   interface Match {
