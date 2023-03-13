@@ -32,7 +32,7 @@ declare global {
     id: number;
     logo: string;
     sportId: number;
-    sport: Sport
+    sport: Sport;
     name: string;
     createdDate: string;
     createdUserId: string;
@@ -80,7 +80,11 @@ declare global {
     homeTeam: Team;
     location: Location;
   }
-
+  interface ScoreDistribution {
+    name: string;
+    homeScore: number;
+    awayScore: number;
+  }
 }
 
 export {};
