@@ -111,7 +111,7 @@ const TeamForm = ({ id }: FormProps) => {
       />
       <LeagueDropdown onChange={() => {}} asInput={true}  />
       <Button
-        label={initialValues ? "Save" : "Add League"}
+        label={id ? "Save" : "Add Team"}
         onClick={() => formik.submitForm()}
         isSubmit
       />
