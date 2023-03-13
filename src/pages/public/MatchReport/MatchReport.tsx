@@ -6,7 +6,6 @@ const MatchReport = () => {
   return (
     <div>
       <h1>Match Report</h1>
-      <TeamForm/>
     </div>
   );
 };

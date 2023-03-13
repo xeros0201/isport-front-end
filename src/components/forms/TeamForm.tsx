@@ -109,24 +109,7 @@ const TeamForm = ({ id }: FormProps) => {
         touched={formik.touched.logo?.length === 0}
         error={formik.errors.logo as string}
       />
-      {/* <DropdownInput
-        label="League "
-        required
-        placeholder="Select Leagues..."
-        options={[
-          {
-            label: "Manchester United",
-            value: "1",
-          },
-          {
-            label: "Song Lam Nghe An",
-            value: "2",
-          },
-        ]}
-        onChange={(value) => {}}
-        asInput={true}
-      /> */}
-      <LeagueDropdown onChange={() => {}} />
+      <LeagueDropdown onChange={() => {}} asInput={true}  />
       <Button
         label={initialValues ? "Save" : "Add League"}
         onClick={() => formik.submitForm()}
