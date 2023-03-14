@@ -1,6 +1,5 @@
 import { useNavigate } from "react-router";
 import { Row } from "../../layout";
-import RowItem from "../../layout/Row/RowItem";
 import Button from "../Button/Button";
 import Icon from "../Icon/Icon";
 import Logo from "../Logo/Logo";
@@ -27,56 +26,51 @@ const MatchFixtures = ({
 
     return (
         <div className="match-fixture">
-            <Row isWrapRowItem={true} alignItems={"center"}>
+            <Row isWrapRowItem alignItems={"center"}>
                 {/* Home Team */}
-                <RowItem><Logo url={`${fixture.awayTeamLogo}`}/></RowItem>
-                <RowItem>
-                    <span className={`score ${isWinner(fixture.homeTeamName)}`}>
-                        {fixture.homeTeamName}
-                    </span>
-                </RowItem>
-                <RowItem>
-                    <span className={`score ${isWinner(fixture.homeTeamName)}`}>
-                        {`${fixture.homeTeamScorePrimary} (${fixture.homeTeamScoreSecondary})`}
-                    </span>
-                </RowItem>
+                <Logo url={`${fixture.awayTeamLogo}`}/>
+                
+                <div className={`score ${isWinner(fixture.homeTeamName)}`}>
+                    {fixture.homeTeamName}
+                </div>
+            
+                <div className={`score ${isWinner(fixture.homeTeamName)}`}>
+                    {`${fixture.homeTeamScorePrimary} (${fixture.homeTeamScoreSecondary})`}
+                </div>
+                
 
                 {/* Away Team */}
-                <RowItem><Logo url={`${fixture.awayTeamLogo}`}/></RowItem>
-                <RowItem>
-                    <span className={`score ${isWinner(fixture.awayTeamName)}`}>
-                        {fixture.awayTeamName}
-                    </span>
-                </RowItem>
-                <RowItem>
-                    <span className={`score ${isWinner(fixture.awayTeamName)}`}>
-                        {`${fixture.awayTeamScorePrimary} (${fixture.awayTeamScoreSecondary})`}
-                    </span>
-                </RowItem>
-
+                <Logo url={`${fixture.awayTeamLogo}`}/>
+                
+                <div className={`score ${isWinner(fixture.awayTeamName)}`}>
+                    {fixture.awayTeamName}
+                </div>
+            
+                <div className={`score ${isWinner(fixture.awayTeamName)}`}>
+                    {`${fixture.awayTeamScorePrimary} (${fixture.awayTeamScoreSecondary})`}
+                </div>
+                
                 {/* Other info */}
-                <RowItem>
-                    <span className="time" >
-                        <Icon className="time__icon" name={"IoTimeOutline"} />
-                        <span className="time__info">{fixture.matchTime}</span>
-                    </span>
-                </RowItem>
-                <RowItem flexGrow={2}>
-                    <span className="location" >
-                        <Icon className="location__icon" name={"IoLocationOutline"} />
-                        <span className="location__info">{fixture.location}</span>
-                    </span>
-                </RowItem>
-
+                <div className="time" >
+                    <Icon className="time__icon" name={"IoTimeOutline"} />
+                    <div className="time__info">{fixture.matchTime}</div>
+                </div>
+                
+                <div className="location" >
+                    <Icon className="location__icon" name={"IoLocationOutline"} />
+                    <div className="location__info">{fixture.location}</div>
+                </div>
+                
                 {/* Action */}
-                <RowItem>
+                <div className="report-button">
                     <Button
                         label="Match Report"
                         type="white"
                         size="small"
                         onClick={() => navigate(`/admin/match-report`)}
                     />
-                </RowItem>
+                </div>
+                
             </Row>
         </div>
     )
