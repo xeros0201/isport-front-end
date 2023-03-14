@@ -28,10 +28,10 @@ interface RowProps {
    * default is 0 if no specified configuration for each row item => no need wrapping each row item in a `RowItem` component
    * value is 1 if there is specified configuration for each row item => need wrapping each row item in a `RowItem` component
    */
-    rowType?: number;
+    isWrapRowItem?: boolean;
 }
 
-const Row = ({ children, alignItems, removeSpacing, noFlex, disableWrapping, rowType }: RowProps) => {
+const Row = ({ children, alignItems, removeSpacing, noFlex, disableWrapping, isWrapRowItem = false}: RowProps) => {
   /**
    * Convert the children to an array to make them
    * easier to work with.
@@ -48,7 +48,7 @@ const Row = ({ children, alignItems, removeSpacing, noFlex, disableWrapping, row
   return (
     <div className={rowClasses} style={{ alignItems }}>
       {childrenArray.map((child) => {
-        if (rowType == 0)
+        if (!isWrapRowItem)
           return <div className="row__item" >{child}</div>;
         else
           return <>{child}</>;

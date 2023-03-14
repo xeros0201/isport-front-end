@@ -27,7 +27,7 @@ const MatchFixtures = ({
 
     return (
         <div className="match-fixture">
-            <Row rowType={1} alignItems={"center"}>
+            <Row isWrapRowItem={true} alignItems={"center"}>
                 {/* Home Team */}
                 <RowItem><Logo url={`${fixture.awayTeamLogo}`}/></RowItem>
                 <RowItem>
