@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from "react";
+import { useMemo } from "react";
 import { useQuery } from "react-query";
 import { getPlayers } from "../../../api/players";
 import { getTeams } from "../../../api/teams";
@@ -30,6 +30,15 @@ const TeamStats = () => {
       return {
         ...item,
         properties: {
+          disposal: {
+            d: Math.floor(Math.random() * 10),
+            e: Math.floor(Math.random() * 10),
+            ie: Math.floor(Math.random() * 10)
+          },
+          clearances: {
+            clr_bu: Math.floor(Math.random() * 10),
+            clr_csb: Math.floor(Math.random() * 10)
+          },
           goals: Math.floor(Math.random() * 10)
         }
       }
@@ -41,7 +50,24 @@ const TeamStats = () => {
 
       if (teamIndex === -1) {
         // If the team doesn't exist, create a new team object
-        let newTeam: TeamAverage = { id: player.team.name, players: [player], properties: { goals: 1 }, name: player.team.name, player_number: 0 };
+        let newTeam: TeamAverage = { 
+          id: player.team.name, 
+          players: [player], 
+          properties: { 
+            // goals: 1, 
+            disposal: {
+              d: 2,
+              e: 3,
+              ie: 4
+            },
+            clearances: {
+              clr_bu: 1,
+              clr_csb: 2
+            }
+          }, 
+          name: player.team.name, 
+          player_number: 0 
+        };
         acc.push(newTeam);
       } else {
         // If the team exists, add the player to the players array

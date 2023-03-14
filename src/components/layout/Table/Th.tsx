@@ -5,9 +5,10 @@ interface ThProps {
     children: React.ReactNode | React.ReactNode[];
     onClick?: (event: unknown) => void;
     sorted?: SortDirection | false;
+    colSpan?: number;
 }
 
-const Th = ({ children, onClick, sorted }: ThProps) => {
+const Th = ({ children, colSpan, onClick, sorted }: ThProps) => {
     const renderArrow = () => {
         switch (sorted) {
             case 'asc':
@@ -25,7 +26,7 @@ const Th = ({ children, onClick, sorted }: ThProps) => {
     });
 
     return (
-        <th className={thClasses} onClick={onClick}>
+        <th className={thClasses} onClick={onClick} colSpan={colSpan}>
             {children} {renderArrow()}
         </th>
     )
