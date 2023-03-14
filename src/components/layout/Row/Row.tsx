@@ -24,14 +24,14 @@ interface RowProps {
    * Prevents the rows from wrapping on smaller screens.
    */
   disableWrapping?: boolean;
-    /**
-   * default is 0 if no specified configuration for each row item => no need wrapping each row item in a `RowItem` component
-   * value is 1 if there is specified configuration for each row item => need wrapping each row item in a `RowItem` component
+  /**
+   * default value is true if no need to set width ratio for each row item
+   * value is false if need to set width ratio each row item
    */
     isWrapRowItem?: boolean;
 }
 
-const Row = ({ children, alignItems, removeSpacing, noFlex, disableWrapping, isWrapRowItem = false}: RowProps) => {
+const Row = ({ children, alignItems, removeSpacing, noFlex, disableWrapping, isWrapRowItem = true}: RowProps) => {
   /**
    * Convert the children to an array to make them
    * easier to work with.
@@ -48,7 +48,7 @@ const Row = ({ children, alignItems, removeSpacing, noFlex, disableWrapping, isW
   return (
     <div className={rowClasses} style={{ alignItems }}>
       {childrenArray.map((child) => {
-        if (!isWrapRowItem)
+        if (isWrapRowItem)
           return <div className="row__item" >{child}</div>;
         else
           return <>{child}</>;
