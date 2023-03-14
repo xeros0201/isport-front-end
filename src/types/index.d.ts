@@ -82,6 +82,19 @@ declare global {
     location: Location;
   }
 
+  interface MatchFixture {
+    homeTeamLogo: string,
+    homeTeamName: string;
+    homeTeamScorePrimary: number;
+    homeTeamScoreSecondary: number;
+    awayTeamLogo: string,
+    awayTeamName: string;
+    awayTeamScorePrimary: number;
+    awayTeamScoreSecondary: number;
+    matchTime: string;
+    location: string;
+  }
+
 }
 
 export {};

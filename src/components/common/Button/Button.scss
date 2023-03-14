@@ -90,6 +90,11 @@
     background-color: $transparent;
   }
 
+  &--white {
+    color: $black;
+    background-color: $white;
+  }
+
   &--disabled {
     @include disabled; 
   } 
