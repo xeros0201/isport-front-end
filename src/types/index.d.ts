@@ -65,6 +65,16 @@ declare global {
     seasonId: number;
   }
 
+  interface Player {
+    id: number;
+    name: string;
+    team_id: number;
+    player_number: number;
+    properties?: {
+      goals: number
+    }
+  }
+
   interface Match {
     id: number;
     seasonId: number;

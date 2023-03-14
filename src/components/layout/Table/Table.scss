@@ -90,3 +90,15 @@ $table-cell-padding-compact: 5px 10px;
         }
     }
 }
+
+.table--has-first-column {
+  .tbody {
+    .tr {
+      .td {
+        &:first-child {
+          background-color: grey;
+        }
+      }
+    }
+  }
+}
