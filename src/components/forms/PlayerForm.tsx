@@ -7,7 +7,7 @@ import {
   PlayerFormValues, updatePlayer 
 } from "../../api/players";
 import { Button, Spinner } from "../common";
-import { LeagueDropdown } from "../dropdowns";
+import { LeagueDropdown, SeasonDropdown, TeamDropdown } from "../dropdowns";
 import { InputError, TextInput } from "../input";
 import { Form } from "../layout";
 const adminPrefix = import.meta.env.VITE_ADMIN_PREFIX;
@@ -28,9 +28,9 @@ const PlayerForm = ({ id }: FormProps) => {
   const initialValues: PlayerFormValues = {
     name: data?.name ?? "",
     playerNumber: data?.playerNumber.toString() ??  "",
-    // TODO: Waiting team api
-    // teamId: data?.teamId.toString() ?? "",
+    teamId: data?.teamId.toString() ?? "",
     leagueId: data?.leagueId.toString() ?? "",
+    seasonId: "",
   };
 
   // Setup submit handler
@@ -65,6 +65,9 @@ const PlayerForm = ({ id }: FormProps) => {
     }
     if (!values.leagueId) {
       errors.leagueId = "Required";
+    }
+    if (!values.teamId) {
+      errors.teamId = "Required";
     }
     return errors;
   };
@@ -107,25 +110,34 @@ const PlayerForm = ({ id }: FormProps) => {
         error={formik.errors.playerNumber}
         required
       />
-      {/* // TODO: Waiting team form api make team dropdown (processing). */}
-      {/* <DropdownInput
-        options={[]}
-        label="Team"
-        placeholder="Select team..."
-        onChange={function (value: string): void {
-          throw new Error("Function not implemented.");
-        }}
-        touched={formik.touched.team}
-        error={formik.errors.team}
-        required
-        asInput
-      /> */}
       <LeagueDropdown
         label="League"
         value={formik.values.leagueId}
         onChange={formik.handleChange("leagueId")}
         touched={formik.touched.leagueId}
         error={formik.errors.leagueId}
+        required
+        asInput
+      />
+      {formik.values.leagueId && <SeasonDropdown
+        label="Season"
+        leagueId={formik.values.leagueId}
+        value={formik.values.seasonId}
+        onChange={formik.handleChange("seasonId")}
+        error={formik.errors.seasonId}
+        touched={formik.touched.seasonId}
+        requireLeague
+        required
+        asInput
+      />}
+      <TeamDropdown
+        label="Team"
+        seasonId={formik.values.seasonId}
+        value={formik.values.teamId}
+        onChange={formik.handleChange("teamId")}
+        touched={formik.touched.teamId}
+        error={formik.errors.teamId}
+        requireSeason
         required
         asInput
       />

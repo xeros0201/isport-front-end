@@ -3,16 +3,16 @@ import axios, { authConfig } from "./axios";
 export interface PlayerFormValues {
   name: string;
   playerNumber: string;
-  // TODO: Waiting team api
-  // teamId: string;
+  teamId: string;
   leagueId: string;
+  seasonId: string;
 }
 
 /**
  * Fetches all player.
  */
 export const getPlayers = async (): Promise<Player[]> => {
-  const response = await axios.get<Player[]>("/players");
+  const response = await axios.get<Player[]>("/players", authConfig);
   return response.data;
 };
 
@@ -20,7 +20,7 @@ export const getPlayers = async (): Promise<Player[]> => {
  * Fetches player that matches id.
  */
 export const getPlayer = async (id: number): Promise<Player> => {
-  const response = await axios.get<Player>(`/players/${id}`);
+  const response = await axios.get<Player>(`/players/${id}`, authConfig);
   return response.data;
 };
 
