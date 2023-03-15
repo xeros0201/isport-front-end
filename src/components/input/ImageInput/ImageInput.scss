@@ -6,7 +6,7 @@
 
   .imageinput__wrap {
     @include input;
-    max-width: 360px;
+    max-width: $form-width-max;
     min-height: 100px;
     text-align: center;
     display: flex;

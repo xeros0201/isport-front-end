@@ -8,13 +8,10 @@
   }
 
   &--nospacing {
-    > * {
-      flex: 1;
-      flex-grow: 0;
-      
-      button {
-        white-space: nowrap;
-      }
-    }
+    > * { margin-right: 0 !important; }
+  }
+
+  &--no-flex {
+    > * { flex: 0; }
   }
 }

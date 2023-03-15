@@ -11,7 +11,7 @@ const publicMenu: Menu = [
 const PublicTemplate = () => {
   return (
     <div>
-      <Header menu={publicMenu} collapseWidth={700} >
+      <Header menu={publicMenu} collapseWidth={720} >
         <AccountDropdown />
       </Header>
       <Container>
