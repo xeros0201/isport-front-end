@@ -3,9 +3,13 @@
 
 .checkbox {
     @include input-wrap;
+    display: inline-block;
+    position: relative;
 
     .checkbox__input-wrap {
         cursor: pointer;
+        display: flex;
+        align-items: flex-end;
 
         .checkbox__input {
             cursor: pointer;
@@ -13,6 +17,52 @@
             width: $font-size-default;
             height: $font-size-default;
             margin-right: 6px;
+            margin-left: 0px;
         }
+    }
+
+    input {
+        cursor: pointer;
+        position: absolute;
+        opacity: 0;
+        height: 0;
+        width: 0;
+
+        &:checked {
+            ~ {
+                .checkmark {
+                    background-color: $white;
+
+                    &:after {
+                        display: block;
+                    }
+                }
+            }
+        }
+    }
+
+    .checkmark {
+        &:after {
+            height: 8px;
+            width: 12px;
+            border: solid $grey-mid;
+            border-width: 0 0 2.5px 2.5px;
+            transform: rotate(-45deg);
+        }
+    }
+}
+
+.checkmark {
+    height: 25px;
+    width: 25px;
+    border: 1px solid $grey-mid;
+    margin-top: 12px;
+    margin-right: 8px;
+
+
+    &:after {
+        content: "";
+        display: none;
+        margin: 6px;
     }
 }

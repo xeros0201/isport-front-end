@@ -1,7 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { Table, Tbody, Td, Th, Thead, Tr } from "../../components/layout/Table";
-import { Button, Logo, Spinner } from "../common";
-import { DateTime } from "luxon";
+import { Button, Spinner } from "../common";
 import {
     ColumnDef,
     flexRender,
@@ -11,65 +10,49 @@ import {
     useReactTable,
   } from "@tanstack/react-table";
 import { useMemo, useState } from "react";
-import { Row } from "../layout";
+import { DateTime } from "luxon";
 
-interface SeasonTableProps {
-    data: Season[];
+interface UserTableProps {
+    data: User[];
     isLoading?: boolean;
 }
 
-const SeasonTable = ({ data, isLoading = false }: SeasonTableProps) => {
+const UserTable = ({ data, isLoading = false }: UserTableProps) => {
     const navigate = useNavigate();
 
     // Setup columns
-    const columns = useMemo<ColumnDef<Season>[]>(
+    const columns = useMemo<ColumnDef<User>[]>(
         () => [
           {
-            header: "Season Name",
+            header: "Email",
             footer: (props) => props.column.id,
             cell: (info) => <p>{info.getValue() as string}</p>,
-            sortingFn: "alphanumeric",
-            accessorFn: (row) => row.name,
-            enableSorting: true,
-          },
-          {
-            header: "Start Date",
-            footer: (props) => props.column.id,
-            cell: ({ getValue }) => {
-                const dateTime = DateTime
-                    .fromISO(getValue() as string)
-                    .toISODate();
-                return <p>{dateTime}</p>
-            },
-            sortingFn: "datetime",
-            accessorFn: (row) => row.startDate,
-            enableSorting: true,
-          },
-          {
-            header: "End Date",
-            footer: (props) => props.column.id,
-            cell: ({ getValue }) => {
-                const dateTime = DateTime
-                    .fromISO(getValue() as string)
-                    .toISODate();
-                return <p>{dateTime}</p>
-            },
-            sortingFn: "datetime",
-            accessorFn: (row) => row.endDate,
-            enableSorting: true,
-          },
-          {
-            header: "League Name",
-            footer: (props) => props.column.id,
-            cell: (info) => (
-                // <div style={{ display: 'flex', alignItems: 'center' }}>
-                //     <Logo url="/public/league-logo.png" height={40} />
-                //     <p style={{ marginLeft: 10 }}>{info.getValue() as string}</p>
-                // </div>
-                <Logo url="/public/league-logo.png" height={40} label={info.getValue() as string} />
-            ),
             sortingFn: "text",
-            accessorFn: (row) => row.league.name,
+            accessorFn: (row) => row.email,
+            enableSorting: true,
+          },
+          {
+            header: "First Name",
+            footer: (props) => props.column.id,
+            cell: (info) => <p>{info.getValue() as string}</p>,
+            sortingFn: "text",
+            accessorFn: (row) => row.firstName,
+            enableSorting: true,
+          },
+          {
+            header: "Last Name",
+            footer: (props) => props.column.id,
+            cell: (info) => <p>{info.getValue() as string}</p>,
+            sortingFn: "text",
+            accessorFn: (row) => row.lastName,
+            enableSorting: true,
+          },
+          {
+            header: "Status",
+            footer: (props) => props.column.id,
+            cell: (info) => <p>{info.getValue() ? "Active" : "Deactive"}</p>,
+            sortingFn: "alphanumeric",
+            accessorFn: (row) => row.active,
             enableSorting: true
           },
           {
@@ -94,7 +77,7 @@ const SeasonTable = ({ data, isLoading = false }: SeasonTableProps) => {
                     type="secondary"
                     icon="IoPencilOutline"
                     size="small"
-                    onClick={() => navigate(`/admin/seasons/edit?id=${info.getValue()}`)}
+                    onClick={() => navigate(`/admin/users/edit?id=${info.getValue()}`)}
                 />
             ),
             sortingFn: "text",
@@ -121,7 +104,7 @@ const SeasonTable = ({ data, isLoading = false }: SeasonTableProps) => {
     if (isLoading) return <Spinner size="large" />
 
     // If no data
-    if (!isLoading && !data.length) return <p>No seasons found</p>;
+    if (!isLoading && !data.length) return <p>No users found</p>;
 
     return (
         <Table >
@@ -157,4 +140,4 @@ const SeasonTable = ({ data, isLoading = false }: SeasonTableProps) => {
     )
 };
 
-export default SeasonTable;
+export default UserTable;
