@@ -1,7 +1,10 @@
-import { ColumnDef, ExpandedState, flexRender, getCoreRowModel, getExpandedRowModel, getGroupedRowModel, getSortedRowModel, GroupingState, SortingState, useReactTable } from "@tanstack/react-table";
-import { useEffect, useMemo, useState } from "react";
+import { CellContext, ColumnDef, ExpandedState, flexRender, getCoreRowModel, getExpandedRowModel, getGroupedRowModel, getSortedRowModel, GroupingState, HeaderContext, SortingState, useReactTable } from "@tanstack/react-table";
+import classNames from "classnames";
+import { useMemo, useState } from "react";
+import { Icon, Spinner } from "../common";
 import { Table } from "../layout"
 import { Tbody, Td, Th, Thead, Tr } from "../layout/Table"
+import './AveragesTable.scss';
 
 interface TeamAverage extends Omit<Player, 'team_id'> {
   players: TeamAverage[];
@@ -13,15 +16,38 @@ interface Props {
 }
 
 const AveragesTable = ({ data, isLoading }: Props) => {
+  const propertiesColumn = data && Object.entries(data[0]?.properties ?? {}).map(([key, value]) => {
+    return (
+      {
+        header: key.charAt(0).toUpperCase() + key.slice(1),
+        footer: (props: HeaderContext<TeamAverage, unknown>) => props.column.id,
+        columns: Object.keys(value).map((key2) => (
+          {
+            header: key2.toUpperCase(),
+            cell: ({ getValue }: CellContext<TeamAverage, any>) => {
+              return (
+                <div style={{ display: 'flex', justifyContent: 'center' }}>{getValue() as string}</div>
+              )
+            },
+            sortingFn: "alphanumeric",
+            accessorFn: (row: TeamAverage) => row.properties[key][key2],
+          })
+        )
+      }
+    )
+  })
+  console.log('propertiesColumn', propertiesColumn);
 
   // Setup columns
   const columns = useMemo<ColumnDef<TeamAverage>[]>(
     () => [
       {
         header: "Team",
+        footer: props => props.column.id,
         columns: [
           {
             header: "Team Name",
+            footer: props => props.column.id,
             cell: ({ row, getValue }) => {
               return (
                 <div style={{
@@ -31,89 +57,31 @@ const AveragesTable = ({ data, isLoading }: Props) => {
                     && <button
                       {...{
                         onClick: row.getToggleExpandedHandler(),
-                        style: { cursor: 'pointer' },
+                        style: { cursor: 'pointer', background: 'none', border: 'none' },
                       }}
                     >
-                      {row.getIsExpanded() ? '-' : '+'}
+                      {row.getIsExpanded()
+                        ? <Icon
+                          name='IoRemoveCircleOutline'
+                        />
+                        : <Icon
+                          name='IoAddCircleOutline'
+                        />
+                      }
                     </button>
                   }
-                  <div style={{ display: 'flex', justifyContent: 'center'}}>{getValue() as string}</div>
+                  <div style={{ display: 'flex', justifyContent: 'center' }}>{getValue() as string}</div>
                 </div>
               )
             },
             sortingFn: "alphanumeric",
             accessorFn: (row) => row.id,
-            enableSorting: true,
           },
         ]
       },
-      {
-        header: "Disposals",
-        columns: [
-          {
-            header: "D",
-            cell: ({ getValue }) => {
-              return (
-                <div style={{ display: 'flex', justifyContent: 'center'}}>{getValue() as string}</div>
-              )
-            },
-            sortingFn: "alphanumeric",
-            accessorFn: (row) => row.properties?.disposal.d,
-            enableSorting: true,
-          },
-          {
-            header: "E",
-            cell: ({ getValue }) => {
-              return (
-                <div style={{ display: 'flex', justifyContent: 'center'}}>{getValue() as string}</div>
-              )
-            },
-            sortingFn: "alphanumeric",
-            accessorFn: (row) => row.properties?.disposal.e,
-            enableSorting: true,
-          },
-          {
-            header: "IE",
-            cell: ({ getValue }) => {
-              return (
-                <div style={{ display: 'flex', justifyContent: 'center'}}>{getValue() as string}</div>
-              )
-            },
-            sortingFn: "alphanumeric",
-            accessorFn: (row) => row.properties?.disposal.ie,
-            enableSorting: true,
-          },
-        ]
-      },
-      {
-        header: "Clearances",
-        columns: [
-          {
-            header: "CLR BU",
-            cell: ({ getValue }) => {
-              return (
-                <div style={{ display: 'flex', justifyContent: 'center'}}>{getValue() as string}</div>
-              )
-            },
-            sortingFn: "alphanumeric",
-            accessorFn: (row) => row.properties?.clearances.clr_bu,
-            enableSorting: true,
-          },
-          {
-            header: "CLR CSB",
-            cell: ({ getValue }) => {
-              return (
-                <div style={{ display: 'flex', justifyContent: 'center'}}>{getValue() as string}</div>
-              )
-            },
-            sortingFn: "alphanumeric",
-            accessorFn: (row) => row.properties?.clearances.clr_csb,
-            enableSorting: true,
-          },
-        ]
-      }
+      ...propertiesColumn
     ],
-    []
+    [propertiesColumn]
   );
 
   const [sorting, setSorting] = useState<SortingState>([]);
@@ -135,9 +103,8 @@ const AveragesTable = ({ data, isLoading }: Props) => {
     state: { expanded, grouping, sorting },
   })
 
-  useEffect(() => {
-    console.log('data', data);
-  }, [data]);
+  if (isLoading) return <Spinner size="large" />
+  if (!isLoading && !data.length) return <p>No Averages found</p>;
 
   return (
     <Table
@@ -150,15 +117,24 @@ const AveragesTable = ({ data, isLoading }: Props) => {
           return (
             <Tr key={headerGroup.id}>
               {headerGroup.headers.map((header) => {
-
-                const onClickIfSortable = header.column.getCanSort()
-                  ? header.column.getToggleSortingHandler()
-                  : undefined;
+                const isSorted = header.column.getIsSorted();
+                const canSort = header.column.getCanSort()
 
                 return (
-                  <Th key={header.id} onClick={onClickIfSortable} sorted={header.column.getIsSorted()} colSpan={header.colSpan}>
+                  <Th
+                    key={header.id}
+                    colSpan={header.colSpan}
+                  >
                     {header.isPlaceholder ? null : (
-                      <div style={{ display: 'flex', justifyContent: 'center'}}>
+                      <div
+                        style={{ display: 'flex', justifyContent: 'center', flexDirection: 'row' }}
+                        onClick={header.column.getToggleSortingHandler()}
+                        className={
+                          classNames({
+                            'sortCell': canSort
+                          })
+                        }
+                      >
                         {
                           header.column.getCanGroup()
                             ? flexRender(
@@ -167,9 +143,10 @@ const AveragesTable = ({ data, isLoading }: Props) => {
                             )
                             : null
                         }
+                        {isSorted === 'asc' && <Icon name="IoCaretUp" />}
+                        {isSorted === 'desc' && <Icon name="IoCaretDown" />}
                       </div>
-                    )
-                    }
+                    )}
                   </Th>
                 )
               })}

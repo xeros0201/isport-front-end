@@ -65,23 +65,24 @@ declare global {
     seasonId: number;
   }
 
+  interface PlayerProperties {
+    disposal: {
+      d: number
+      e: number
+      ie: number
+    },
+    clearances: {
+      clr_bu: number
+      clr_csb: number
+    },
+  }
+
   interface Player {
     id: number;
     name: string;
     team_id: number;
     player_number: number;
-    properties?: {
-      disposal: {
-        d: number
-        e: number
-        ie: number
-      },
-      clearances: {
-        clr_bu: number
-        clr_csb: number
-      },
-      goals: number
-    }
+    properties: PlayerProperties;
   }
 
   interface Match {

@@ -97,6 +97,10 @@ $table-cell-padding-compact: 5px 10px;
       .td {
         &:first-child {
           background-color: grey;
+          color: lightgrey;
+          button {
+            color: lightgrey
+          }
         }
       }
     }
