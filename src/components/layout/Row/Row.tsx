@@ -1,5 +1,6 @@
 import "./Row.scss";
 import React, { CSSProperties } from "react";
+import classNames from "classnames";
 
 interface RowProps {
   /**
@@ -20,37 +21,29 @@ interface RowProps {
    */
   noFlex?: boolean;
   /**
-   * 
+   * Prevents the rows from wrapping on smaller screens.
    */
   disableWrapping?: boolean;
-  /**
-   * 
-   */
-  rowMarginTop?: number;
-  /**
-   * default is 0 if no specified configuration for each row item => no need wrapping each row item in a `RowItem` component
-   * value is 1 if there is specified configuration for each row item => need wrapping each row item in a `RowItem` component
-   */
-  rowType?: number;
 }
 
-const Row = ({ children, alignItems, removeSpacing, noFlex, disableWrapping, rowMarginTop, rowType = 0 }: RowProps) => {
+const Row = ({ children, alignItems, removeSpacing, noFlex, disableWrapping }: RowProps) => {
   /**
    * Convert the children to an array to make them
    * easier to work with.
    */
   const childrenArray = React.Children.toArray(children);
-
-  const spacingModifier = removeSpacing ? "row--nospacing" : "";
-  const wrappingModifer = disableWrapping ? "row--disallow-wrapping" : "";
+  
+  const rowClasses = classNames({
+    "row": true,
+    "row--nospacing": removeSpacing,
+    "row--disallow-wrapping": disableWrapping,
+    "row--no-flex": noFlex,
+  })
 
   return (
-    <div className={`row ${spacingModifier} ${wrappingModifer} `} style={{ alignItems, marginTop: `${!!rowMarginTop ? rowMarginTop : 0}px` }}>
+    <div className={rowClasses} style={{ alignItems }}>
       {childrenArray.map((child) => {
-        if (rowType == 0)
-          return <div className="row__item" style={{ flex: noFlex ? 0 : 1 }}>{child}</div>;
-        else
-          return <>{child}</>;
+        return <div className="row__item">{child}</div>;
       })}
     </div>
   );

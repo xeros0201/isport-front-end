@@ -7,7 +7,6 @@ import MatchTable from "../../../components/tables/MatchTable";
 import { useQuery } from "react-query";
 import { getMatches } from "../../../api/matches";
 import { LeagueDropdown, SeasonDropdown } from "../../../components/dropdowns";
-import RowItem from "../../../components/layout/Row/RowItem";
 
 const MatchList = () => {
     const navigate = useNavigate();
@@ -28,41 +27,31 @@ const MatchList = () => {
 
     return (
         <Page title="Matches">
-            <Row alignItems='center' disableWrapping noFlex rowType={1} >
-                <RowItem noFlex>
-                    <h1>Matches</h1>
-                </RowItem>
-                <RowItem noFlex>
-                    <Button
-                        label="New Match"
-                        onClick={() => navigate('/admin/matches/new')}
-                        icon="IoAdd"
-                    />
-                </RowItem>
+            <Row alignItems='center' disableWrapping noFlex >             
+                <h1>Matches</h1>         
+                <Button
+                    label="New Match"
+                    onClick={() => navigate('/admin/matches/new')}
+                    icon="IoAdd"
+                />
             </Row>
-            <Row removeSpacing rowMarginTop={20} rowType={1}>
-                <RowItem flexGrow={8}>
-                    <TextInput
-                        placeholder="Search..."
-                        value={query}
-                        onChange={setQuery}
-                        icon="IoSearch"
-                        rounded
-                        noMargin
-                    />
-                </RowItem>
-                <RowItem >
-                    <LeagueDropdown
-                        value={"League"}
-                        onChange={() => {}}
-                    />
-                </RowItem>
-                <RowItem >
-                    <SeasonDropdown
-                        value={"Season"}
-                        onChange={() => {}}
-                    />
-                </RowItem>
+            <Row removeSpacing>
+                <TextInput
+                    placeholder="Search..."
+                    value={query}
+                    onChange={setQuery}
+                    icon="IoSearch"
+                    rounded
+                    noMargin
+                />
+                <LeagueDropdown
+                    value={"League"}
+                    onChange={() => {}}
+                />
+                <SeasonDropdown
+                    value={"Season"}
+                    onChange={() => {}}
+                />
             </Row>
             <MatchTable data={filteredMatches} isLoading={isLoading} />
         </Page>
