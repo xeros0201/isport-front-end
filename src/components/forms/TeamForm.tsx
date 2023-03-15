@@ -1,24 +1,19 @@
 import { useFormik } from "formik";
 import { useState } from "react";
-import { ImageListType } from "react-images-uploading";
 import { useQuery } from "react-query";
 import { useNavigate } from "react-router-dom";
-import { createTeam, getTeam, updateTeam } from "../../api/teams";
+import { createTeam, getTeam, TeamFormValues, updateTeam } from "../../api/teams";
 
 import { Button, Spinner } from "../common";
-import { LeagueDropdown } from "../dropdowns";
+import { LeagueDropdown, SeasonDropdown } from "../dropdowns";
 import { InputError, TextInput } from "../input";
-import DropdownInput from "../input/DropdownInput/DropdownInput";
 import ImageInput from "../input/ImageInput/ImageInput";
 import { Form } from "../layout";
 
-interface TeamFormValues {
-  name: string;
-  logo: ImageListType;
-}
 
 const TeamForm = ({ id }: FormProps) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [leagueId, setLeagueId] = useState<string>("");
   const navigate = useNavigate();
 
   // Setup react-query for fetching data
@@ -30,9 +25,10 @@ const TeamForm = ({ id }: FormProps) => {
   );
 
   // Setup initial values
-  const initialValues: TeamFormValues = data ?? {
-    name: "",
-    logo: [],
+  const initialValues: TeamFormValues = {
+    name: data?.name ?? "",
+    logo: data?.logo ?? "",
+    seasonId: data?.seasonId ?? "",
   };
 
   // Setup submit handler
@@ -96,23 +92,31 @@ const TeamForm = ({ id }: FormProps) => {
       <ImageInput
         label="Team Logo"
         required
-        onChange={(
-          values: ImageListType,
-          addUpdatedIndex: number[] | undefined
-        ) => {
-          //   formik.values.logo = values;
-          formik.setFieldValue("logo", values);
-
-          formik.handleChange("logo");
-        }}
-        values={formik.values.logo}
-        touched={formik.touched.logo?.length === 0}
-        error={formik.errors.logo as string}
+        value={formik.values.logo}
+        onChange={formik.handleChange("logo")}
+        touched={formik.touched.logo}
+        error={formik.errors.logo}
       />
-      <LeagueDropdown onChange={() => {}} asInput={true}  />
+      <LeagueDropdown
+        label="League"
+        value={leagueId}
+        onChange={setLeagueId}
+        required
+        asInput
+      />
+      <SeasonDropdown
+        label="Season"
+        leagueId={leagueId}
+        value={formik.values.seasonId}
+        onChange={formik.handleChange("seasonId")}
+        error={formik.errors.seasonId}
+        touched={formik.touched.seasonId}
+        required
+        asInput
+      />
       <Button
         label={id ? "Save" : "Add Team"}
-        onClick={() => formik.submitForm()}
+        onClick={formik.submitForm}
         isSubmit
       />
     </Form>
