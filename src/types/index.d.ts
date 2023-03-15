@@ -32,7 +32,7 @@ declare global {
     id: number;
     logo: string;
     sportId: number;
-    sport: Sport
+    sport: Sport;
     name: string;
     createdDate: string;
     createdUserId: string;
@@ -62,7 +62,7 @@ declare global {
     id: number;
     name: string;
     logo: string;
-    seasonId: number;
+    seasonId: string;
   }
 
   interface Match {
