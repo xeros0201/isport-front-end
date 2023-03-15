@@ -1,7 +1,23 @@
+@import "../../../styles/variables";
+
 .logo {
     &--square {
         display: block;
         margin-left: auto;
         margin-right: auto;
+    }
+
+    &--with-label {
+        display: flex;
+        align-items: center;
+
+        .logo__img {
+            flex: 0;
+            margin-right: $margin-between;
+        }
+        .logo__label {
+            flex: 0;
+            white-space: nowrap;
+        }
     }
 }

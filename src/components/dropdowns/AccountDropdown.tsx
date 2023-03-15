@@ -11,6 +11,7 @@ enum OPTION {
 }
 
 const AccountDropdown = () => {
+    const [accountName, setAccountName] = useState("");
     const [value, setValue] = useState("");
     const { isCheckingAuth, isAuthed, user } = useCheckAuth();
     const forceRerender = useForceRerender();
@@ -18,10 +19,10 @@ const AccountDropdown = () => {
     const location = useLocation();
 
     // Prevent dropdown value from changing
-    const ACCOUNT_NAME = `${user?.firstName} ${user?.lastName}`;
     useEffect(() => {
-        if (value !== ACCOUNT_NAME) setValue(ACCOUNT_NAME)
-    }, [value]);
+        setAccountName(`${user?.firstName} ${user?.lastName}`);
+        if (value !== accountName) setValue(accountName)
+    }, [value, user]);
 
     // Filter options based on admin/public route
     const options = useMemo(() => {
@@ -58,7 +59,7 @@ const AccountDropdown = () => {
 
     return (
         <DropdownInput
-            value={ACCOUNT_NAME}
+            value={accountName}
             options={options}
             onChange={handleChange}
         />

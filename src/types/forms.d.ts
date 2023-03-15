@@ -5,6 +5,10 @@ declare global {
         onSuccessfulSubmit?: () => void;
     }
 
+    export interface UserFormProps extends FormProps{
+        id?: string;
+    }
+
 }
 
 export {};

@@ -7,6 +7,7 @@ type LogoProps = {
    */
   url: string;
   /**
+   * @optional
    * Image's height. default height is 32px
    */
   height?: number;
@@ -21,17 +22,24 @@ type LogoProps = {
    also align center.
    */
   isSquare?: boolean;
+  /**
+   * @optional
+   * Display a label next to the logo.
+   */
+  label?: string;
 };
 
 const Logo = ({
   url,
-  height = 64,
+  height = 54,
   alt = "img",
   isSquare = false,
+  label
 }: LogoProps) => {
   const logoClasses = classNames({
     "logo": true,
-    "logo--square": isSquare
+    "logo--square": isSquare,
+    "logo--with-label": label,
   });
 
   const logoStyles: React.CSSProperties = {
@@ -42,10 +50,14 @@ const Logo = ({
   return (
     <div className={logoClasses} style={logoStyles} >
       <img
+        className="logo__img"
         src={url}
         height={height}
         alt={alt}
       />
+      {label && (
+        <p className="logo__label">{label}</p>
+      )}
     </div>
   );
 };
