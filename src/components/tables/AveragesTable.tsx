@@ -1,10 +1,9 @@
 import { CellContext, ColumnDef, ExpandedState, flexRender, getCoreRowModel, getExpandedRowModel, getGroupedRowModel, getSortedRowModel, GroupingState, HeaderContext, SortingState, useReactTable } from "@tanstack/react-table";
-import classNames from "classnames";
 import { useMemo, useState } from "react";
 import { Icon, Spinner } from "../common";
 import { Table } from "../layout"
 import { Tbody, Td, Th, Thead, Tr } from "../layout/Table"
-import './AveragesTable.scss';
+import TFooter from "../layout/Table/TFooter";
 
 interface TeamAverage extends Omit<Player, 'team_id'> {
   players: TeamAverage[];
@@ -20,15 +19,11 @@ const AveragesTable = ({ data, isLoading }: Props) => {
     return (
       {
         header: key.charAt(0).toUpperCase() + key.slice(1),
-        footer: (props: HeaderContext<TeamAverage, unknown>) => props.column.id,
         columns: Object.keys(value).map((key2) => (
           {
+            footer: (props: HeaderContext<TeamAverage, unknown>) => props.column.id,
             header: key2.toUpperCase(),
-            cell: ({ getValue }: CellContext<TeamAverage, any>) => {
-              return (
-                <div style={{ display: 'flex', justifyContent: 'center' }}>{getValue() as string}</div>
-              )
-            },
+            cell: ({ getValue }: CellContext<TeamAverage, any>) => <p>{getValue() as string}</p>,
             sortingFn: "alphanumeric",
             accessorFn: (row: TeamAverage) => row.properties[key][key2],
           })
@@ -36,41 +31,31 @@ const AveragesTable = ({ data, isLoading }: Props) => {
       }
     )
   })
-  console.log('propertiesColumn', propertiesColumn);
 
   // Setup columns
   const columns = useMemo<ColumnDef<TeamAverage>[]>(
     () => [
       {
         header: "Team",
-        footer: props => props.column.id,
         columns: [
           {
             header: "Team Name",
             footer: props => props.column.id,
             cell: ({ row, getValue }) => {
               return (
-                <div style={{
-                  display: 'flex'
-                }}>
+                <div style={{ display: 'flex' }}>
                   {row.getCanExpand()
                     && <button
-                      {...{
-                        onClick: row.getToggleExpandedHandler(),
-                        style: { cursor: 'pointer', background: 'none', border: 'none' },
-                      }}
+                      onClick={() => row.getToggleExpandedHandler()}
+                      style={{ cursor: 'pointer', background: 'none', border: 'none' }}
                     >
                       {row.getIsExpanded()
-                        ? <Icon
-                          name='IoRemoveCircleOutline'
-                        />
-                        : <Icon
-                          name='IoAddCircleOutline'
-                        />
+                        ? <Icon name='IoRemoveCircleOutline' />
+                        : <Icon name='IoAddCircleOutline' />
                       }
                     </button>
                   }
-                  <div style={{ display: 'flex', justifyContent: 'center' }}>{getValue() as string}</div>
+                  {getValue() as string}
                 </div>
               )
             },
@@ -108,48 +93,33 @@ const AveragesTable = ({ data, isLoading }: Props) => {
 
   return (
     <Table
-      striped
-      hasFirstColumn
       compact
+      hasFirstColumn
+      striped
     >
       <Thead>
         {table.getHeaderGroups().map((headerGroup) => {
           return (
             <Tr key={headerGroup.id}>
-              {headerGroup.headers.map((header) => {
-                const isSorted = header.column.getIsSorted();
-                const canSort = header.column.getCanSort()
-
-                return (
-                  <Th
-                    key={header.id}
-                    colSpan={header.colSpan}
-                  >
-                    {header.isPlaceholder ? null : (
-                      <div
-                        style={{ display: 'flex', justifyContent: 'center', flexDirection: 'row' }}
-                        onClick={header.column.getToggleSortingHandler()}
-                        className={
-                          classNames({
-                            'sortCell': canSort
-                          })
-                        }
-                      >
-                        {
-                          header.column.getCanGroup()
-                            ? flexRender(
-                              header.column.columnDef.header,
-                              header.getContext()
-                            )
-                            : null
-                        }
-                        {isSorted === 'asc' && <Icon name="IoCaretUp" />}
-                        {isSorted === 'desc' && <Icon name="IoCaretDown" />}
-                      </div>
-                    )}
-                  </Th>
-                )
-              })}
+              {headerGroup.headers.map((header) => (
+                <Th
+                  key={header.id}
+                  colSpan={header.colSpan}
+                  onClick={header.column.getToggleSortingHandler()}
+                  propertyHeader={header.depth === 2}
+                  sorted={header.column.getIsSorted()}
+                >
+                  {header.isPlaceholder ? null : (
+                    header.column.getCanGroup()
+                      ? flexRender(
+                        header.column.columnDef.header,
+                        header.getContext()
+                      )
+                      : null
+                  )}
+                </Th>
+              )
+              )}
             </Tr>
           )
         })}
@@ -167,8 +137,21 @@ const AveragesTable = ({ data, isLoading }: Props) => {
           )
         })}
       </Tbody>
+      {/* <TFooter>
+        {table.getFooterGroups().map((footerGroups) => (
+          <Tr key={footerGroups.id}>
+            {footerGroups.headers.map((footer) => (
+              <Td>{footer.id}</Td>
+            ))}
+          </Tr>
+        ))}
+      </TFooter> */}
     </Table>
   )
 };
 
 export default AveragesTable;
+
+// TODO - better way of building the columns
+// TODO - totals
+// TODO - fix padding issue with sort

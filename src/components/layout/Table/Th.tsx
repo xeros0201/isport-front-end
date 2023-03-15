@@ -1,33 +1,42 @@
 import { SortDirection } from "@tanstack/react-table";
 import classNames from "classnames";
+import { Icon } from "../../common";
 
 interface ThProps {
     children: React.ReactNode | React.ReactNode[];
     onClick?: (event: unknown) => void;
+    propertyHeader?: boolean;
     sorted?: SortDirection | false;
     colSpan?: number;
 }
 
-const Th = ({ children, colSpan, onClick, sorted }: ThProps) => {
+const Th = ({ children, colSpan, onClick, propertyHeader = false, sorted }: ThProps) => {
     const renderArrow = () => {
         switch (sorted) {
             case 'asc':
-                return ' 🔼';
+                return <Icon name="IoCaretUp" />;
             case 'desc':
-                return ' 🔽';
+                return <Icon name="IoCaretDown" />;
             default:
-                return null;
+                return <></>;
         }
     }
 
     const thClasses = classNames({
         th: true,
         "th--clickable": onClick,
+        "th--property-header": propertyHeader
     });
 
     return (
         <th className={thClasses} onClick={onClick} colSpan={colSpan}>
-            {children} {renderArrow()}
+          <div style={{
+            display: 'flex',
+            justifyContent: 'center'
+          }}>
+            {children}
+            {renderArrow()}
+          </div>
         </th>
     )
 };
