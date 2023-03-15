@@ -17,6 +17,10 @@ declare global {
     lastName: string;
     active: boolean;
     role: Role;
+    createdDate: string;
+    createdUserId: string;
+    updatedDate: string;
+    updatedUserId: string;
   }
 
   interface Sport {
@@ -30,9 +34,9 @@ declare global {
     sportId: number;
     sport: Sport;
     name: string;
-    createdDate: Date;
-    updatedDate: Date;
+    createdDate: string;
     createdUserId: string;
+    updatedDate: string;
     updatedUserId: string;
   }
 
@@ -49,42 +53,32 @@ declare global {
     league: League;
   }
 
+  interface Location {
+    id: string;
+    name: string;
+  }
+
   interface Team {
     id: number;
     name: string;
     logo: string;
-    seasonId: number;
-    createdDate: Date;
-    updatedDate: Date;
-    createdUserId: string;
-    updatedUserId: string;
+    seasonId: string;
   }
 
   interface Match {
     id: number;
-    homeTeamCsv: string;
-    awayTeamCsv: string;
-    leagueId: string;
-    seasonId: string;
-    homeTeamId: string;
-    awayTeamId: string;
-    round: string;
-    type: string;
-    locationId: string;
+    seasonId: number;
+    homeTeamId: number | null;
+    homeTeamCsv: string | null;
+    awayTeamId: number | null;
+    awayTeamCsv: string | null;
+    round: number;
     date: string;
-    createdDate: Date;
-    updatedDate: Date;
-    createdUserId: string;
-    updatedUserId: string;
-  }
-
-  interface Location {
-    id: number;
-    name: string;
-    createdDate: Date;
-    updatedDate: Date;
-    createdUserId: string;
-    updatedUserId: string;
+    teamId: number;
+    locationId: number;
+    awayTeam: Team;
+    homeTeam: Team;
+    location: Location;
   }
 
   interface Player {

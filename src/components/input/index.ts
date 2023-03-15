@@ -4,6 +4,7 @@ import TextInput from "./TextInput/TextInput";
 import DateInput from "./DateInput/DateInput";
 import CheckboxInput from "./CheckboxInput/CheckboxInput";
 import DropdownInput from "./DropdownInput/DropdownInput";
+import RoundInput from "./RoundInput/RoundInput";
 
 export {
   InputError,
@@ -12,4 +13,5 @@ export {
   DateInput,
   CheckboxInput,
   DropdownInput,
+  RoundInput,
 };
