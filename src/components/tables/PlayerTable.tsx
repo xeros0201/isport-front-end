@@ -49,7 +49,7 @@ const PlayerTable = ({ data, isLoading = false }: PlayerTableProps) => {
           const name = info?.row?.original?.team?.name;
           return (
             <div style={{ display: "inline-flex", alignItems: "center" }}>
-              <Logo isSquare disableCenter height={42} url={logo} />
+              <Logo isSquare height={42} url={logo} />
               <span>{name as string}</span>
             </div>
           );

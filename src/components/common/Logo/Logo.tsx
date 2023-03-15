@@ -22,12 +22,6 @@ type LogoProps = {
    also align center.
    */
   isSquare?: boolean;
-  /** 
-   * 
-   * @optional
-   * disable center & full width
-  */
-  disableCenter?: boolean;
   /**
    * @optional
    * Display a label next to the logo.
@@ -40,8 +34,7 @@ const Logo = ({
   height = 54,
   alt = "img",
   isSquare = false,
-  disableCenter = false,
-  label,
+  label
 }: LogoProps) => {
   const logoClasses = classNames({
     "logo": true,
@@ -51,8 +44,7 @@ const Logo = ({
 
   const logoStyles: React.CSSProperties = {
     height: height,
-    width: isSquare ? height : 'auto',
-    display: disableCenter ? 'inline-flex' : 'flex'
+    width: isSquare ? height : 'auto'
   }
 
   return (
