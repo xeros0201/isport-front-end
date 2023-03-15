@@ -13,6 +13,10 @@ interface RowProps {
    */
   alignItems?: CSSProperties["alignContent"];
   /**
+   * How the items should be aligned vertically.
+   */
+  justifyContent?: CSSProperties["justifyContent"];
+  /**
    * Removes spacing between elements in the row
    */
   removeSpacing?: boolean;
@@ -31,7 +35,15 @@ interface RowProps {
     isWrapRowItem?: boolean;
 }
 
-const Row = ({ children, alignItems, removeSpacing, noFlex, disableWrapping, isWrapRowItem = true}: RowProps) => {
+const Row = ({
+    children,
+    alignItems,
+    justifyContent,
+    removeSpacing,
+    noFlex,
+    disableWrapping,
+    isWrapRowItem = true
+  }: RowProps) => {
   /**
    * Convert the children to an array to make them
    * easier to work with.
@@ -46,7 +58,7 @@ const Row = ({ children, alignItems, removeSpacing, noFlex, disableWrapping, isW
   })
 
   return (
-    <div className={rowClasses} style={{ alignItems }}>
+    <div className={rowClasses} style={{ alignItems, justifyContent }}>
       {childrenArray.map((child) => {
         if (isWrapRowItem)
           return <div className="row__item" >{child}</div>;

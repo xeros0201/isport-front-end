@@ -26,51 +26,52 @@ const MatchFixtures = ({
 
     return (
         <div className="match-fixture">
-            <Row isWrapRowItem={false} alignItems={"center"}>
+            <Row alignItems="center" noFlex>
                 {/* Home Team */}
-                <Logo url={`${fixture.awayTeamLogo}`}/>
+                <Row alignItems="center" justifyContent="flex-start" disableWrapping noFlex>
+                    <Logo url={`${fixture.awayTeamLogo}`}/>
+                    
+                    <div className={`score ${isWinner(fixture.homeTeamName)}`}>
+                        {fixture.homeTeamName}
+                    </div>
                 
-                <div className={`score ${isWinner(fixture.homeTeamName)}`}>
-                    {fixture.homeTeamName}
-                </div>
-            
-                <div className={`score ${isWinner(fixture.homeTeamName)}`}>
-                    {`${fixture.homeTeamScorePrimary} (${fixture.homeTeamScoreSecondary})`}
-                </div>
+                    <div className={`score ${isWinner(fixture.homeTeamName)}`}>
+                        {`${fixture.homeTeamScorePrimary} (${fixture.homeTeamScoreSecondary})`}
+                    </div>
+                </Row>
                 
 
                 {/* Away Team */}
-                <Logo url={`${fixture.awayTeamLogo}`}/>
+                <Row alignItems="center" justifyContent="flex-start" disableWrapping noFlex>
+                    <Logo url={`${fixture.awayTeamLogo}`}/>
+                    
+                    <div className={`score ${isWinner(fixture.awayTeamName)}`}>
+                        {fixture.awayTeamName}
+                    </div>
                 
-                <div className={`score ${isWinner(fixture.awayTeamName)}`}>
-                    {fixture.awayTeamName}
-                </div>
-            
-                <div className={`score ${isWinner(fixture.awayTeamName)}`}>
-                    {`${fixture.awayTeamScorePrimary} (${fixture.awayTeamScoreSecondary})`}
-                </div>
+                    <div className={`score ${isWinner(fixture.awayTeamName)}`}>
+                        {`${fixture.awayTeamScorePrimary} (${fixture.awayTeamScoreSecondary})`}
+                    </div>
+                </Row>
                 
                 {/* Other info */}
                 <div className="time" >
-                    <Icon className="time__icon" name={"IoTimeOutline"} />
+                    <Icon className="time__icon" name="IoTimeOutline" />
                     <div className="time__info">{fixture.matchTime}</div>
                 </div>
                 
                 <div className="location" >
-                    <Icon className="location__icon" name={"IoLocationOutline"} />
+                    <Icon className="location__icon" name="IoLocationOutline" />
                     <div className="location__info">{fixture.location}</div>
                 </div>
                 
                 {/* Action */}
-                <div className="report-button">
-                    <Button
-                        label="Match Report"
-                        type="white"
-                        size="small"
-                        onClick={() => navigate(`/admin/match-report`)}
-                    />
-                </div>
-                
+                <Button
+                    label="Match Report"
+                    type="outlined"
+                    size="small"
+                    onClick={() => navigate(`/admin/match-report`)}
+                />
             </Row>
         </div>
     )

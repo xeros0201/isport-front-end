@@ -1,11 +1,20 @@
 @import "../../../styles/variables";
+@import "../../../styles/mixins";
 
 .match-fixture {
     background: #fff;
     margin-bottom: 10px;
     padding: 10px 40px 10px 40px;
 
+    > .row {
+        margin-top: 0;
+        @include md-screen {
+            @include row-wrap;
+        }
+    }
+
     .score {
+        white-space: nowrap;
         &--winner {
             font-weight: bold;
         }
@@ -15,21 +24,24 @@
     }
 
     .time {
+        white-space: nowrap;
         display: flex;
         align-items: center;
 
         &__icon {
             margin-right: 5px;
+            min-width: 15px;
         }
     }
 
     .location {
         display: flex;
         align-items: center;
-        flex: 2;
+        flex: 1;
         
         &__icon {
             margin-right: 5px;
+            min-width: 15px;
         }
     }
 }
