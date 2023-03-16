@@ -32,15 +32,6 @@ export const getSeasonsByLeague = async (leagueId: number): Promise<Season[]> =>
 };
 
 /**
- * Get teams that belong to a season.
- */
-export const getTeamBySeasons = async (seasonId: number): Promise<Team[]> => {
-    const response = await axios.get<Team[]>(`/seasons/${seasonId}/teams`);
-    return response.data;
-};
-
-
-/**
  * Creates a season.
  */
 export const createSeasons = async (data: SeasonFormValues): Promise<Season[]> => {
