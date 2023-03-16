@@ -19,7 +19,7 @@ const PlayerEdit = () => {
                 icon="IoChevronBackOutline"
             />
             <h1>Edit Player</h1>
-            <PlayerForm />
+            {id && <PlayerForm id={+id} />}
         </Page>
     );
 };

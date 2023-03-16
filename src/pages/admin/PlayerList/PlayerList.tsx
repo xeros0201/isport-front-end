@@ -18,7 +18,7 @@ const PlayerList = () => {
     // Filter data to match query  
     const filteredPlayers = useMemo(() => {
         if (!players) return [];
-        return players.filter((league: any) => league.name.toLowerCase().includes(query.toLowerCase()));
+        return players.filter((player: any) => player.name.toLowerCase().includes(query.toLowerCase()));
     }, [players, query]);
 
     const navigate = useNavigate();

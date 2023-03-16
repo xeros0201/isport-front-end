@@ -48,25 +48,34 @@ const PlayerTable = ({ data, isLoading = false }: PlayerTableProps) => {
             info?.row?.original?.team?.logo ?? "/public/league-logo.png";
           const name = info?.row?.original?.team?.name;
           return (
-            <div style={{ display: "inline-flex", alignItems: "center" }}>
+            <Row  removeSpacing alignItems={'center'}>
               <Logo isSquare height={42} url={logo} />
               <span>{name as string}</span>
-            </div>
+            </Row>
           );
         },
         sortingFn: "alphanumeric",
         accessorFn: (row) => row?.team?.name,
         enableSorting: true,
       },
-      //   TODO: Waiting League field has been adding in BE
-      // {
-      //   header: "League",
-      //   footer: (props) => props.column.id,
-      //   cell: (info) => <p>{info.getValue() as string}</p>,
-      //   sortingFn: "text",
-      //   accessorFn: (row) => row.name,
-      //   enableSorting: true
-      // },
+      {
+        header: "League",
+        footer: (props) => props.column.id,
+        cell: (info) => {
+          const logo =
+            info?.row?.original?.team?.logo ?? "/public/league-logo.png";
+          const name = info?.row?.original?.team?.name;
+          return (
+            <Row  removeSpacing alignItems={'center'}>
+              <Logo isSquare height={42} url={logo} />
+              <span>{name as string}</span>
+            </Row>
+          );
+        },
+        sortingFn: "alphanumeric",
+        accessorFn: (row) => row?.team?.name,
+        enableSorting: true,
+      },
       {
         header: "Date Created",
         footer: (props) => props.column.id,
@@ -118,7 +127,7 @@ const PlayerTable = ({ data, isLoading = false }: PlayerTableProps) => {
   if (isLoading) return <Spinner size="large" />;
 
   // If no data
-  if (!isLoading && !data.length) return <p>No seasons found</p>;
+  if (!isLoading && !data.length) return <p>No players found</p>;
 
   return (
     <Table>

@@ -36,6 +36,6 @@ export const createPlayer = async ( player: PlayerFormValues ): Promise<Player> 
  * Updates existing player.
  */
 export const updatePlayer = async (id: number, player: PlayerFormValues): Promise<Player> => {
-  const response = await axios.patch<Player>(`/players/${id}`, player, authConfig);
+  const response = await axios.put<Player>(`/players/${id}`, player, authConfig);
   return response.data;
 };
