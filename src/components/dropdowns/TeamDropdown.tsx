@@ -1,6 +1,6 @@
 import { useEffect, useMemo } from "react";
 import { useQuery } from "react-query";
-import { getTeamBySeasons } from "../../api/seasons";
+import { getTeamBySeasons } from "../../api/teams";
 import { getTeams } from "../../api/teams";
 import { InputError, DropdownInput } from "../input";
 
@@ -31,7 +31,7 @@ const TeamDropdown = ({
     }
   );
 
-  // Fetch as soon as a leagueId is provided
+  // Fetch as soon as a seasonId is provided
   useEffect(() => {
     if (requireSeason && !seasonId) onChange('');
     if (!requireSeason && value) onChange(value);
