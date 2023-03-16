@@ -3,7 +3,7 @@ interface TFooterProps {
 }
 
 const TFooter = ({ children }: TFooterProps) => (
-  <tfoot className="thead">{children}</tfoot>
+  <tfoot className="tfoot">{children}</tfoot>
 );
 
 export default TFooter;

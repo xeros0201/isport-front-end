@@ -1,7 +1,6 @@
 import { useMemo } from "react";
 import { useQuery } from "react-query";
 import { getPlayers } from "../../../api/players";
-import { getTeams } from "../../../api/teams";
 import { RoundFilter } from "../../../components/filters";
 import { Page } from "../../../components/layout";
 import AveragesTable from "../../../components/tables/AveragesTable";
@@ -16,19 +15,17 @@ const TeamStats = () => {
   const [seasonId, setSeasonId] = useSearchParamsState("seasonId", "");
   const [round, setRound] = useSearchParamsState("round", "");
 
-  const { isLoading, data: teams } = useQuery(
-    ["getTeams"], async () => await getTeams()
-  );
-
-  const { isLoading: loading2, data: players } = useQuery(
+  const { isLoading, data: players } = useQuery(
     ["getPlayers"], async () => await getPlayers()
   );
 
+  // TODO - get averages from API
   const filteredPlayers = useMemo(() => {
     if (!players) return [];
-    const playersWithGoals = players.map((item) => {
+    const playersAverage: TeamAverage[] = players.map((item) => {
       return {
         ...item,
+        players: [],
         properties: {
           disposal: {
             d: Math.floor(Math.random() * 10),
@@ -39,21 +36,20 @@ const TeamStats = () => {
             clr_bu: Math.floor(Math.random() * 10),
             clr_csb: Math.floor(Math.random() * 10)
           },
-          goals: Math.floor(Math.random() * 10)
         }
       }
     });
-    
-    const teams = playersWithGoals.reduce((acc: TeamAverage[], player) => {
+
+    const teams = playersAverage.reduce((acc: TeamAverage[], player) => {
       // Check if the teamId already exists in the accumulator
-      let teamIndex = acc.findIndex(team => team.id === player.team.name );
+      let teamIndex = acc.findIndex(team => team.id === player.team.name);
 
       if (teamIndex === -1) {
         // If the team doesn't exist, create a new team object
-        let newTeam: TeamAverage = { 
-          id: player.team.name, 
-          players: [player], 
-          properties: { 
+        let newTeam: TeamAverage = {
+          id: player.team.name,
+          players: [player],
+          properties: {
             // goals: 1, 
             disposal: {
               d: 2,
@@ -64,9 +60,9 @@ const TeamStats = () => {
               clr_bu: 1,
               clr_csb: 2
             }
-          }, 
-          name: player.team.name, 
-          player_number: 0 
+          },
+          name: player.team.name,
+          player_number: 0
         };
         acc.push(newTeam);
       } else {
@@ -76,10 +72,28 @@ const TeamStats = () => {
 
       return acc;
     }, []);
-    console.log('teams',teams);
 
     return teams
   }, [players]);
+
+  // TODO - api for totals
+  const averageTotal: TeamAverage = {
+    id: -1,
+    name: 'Total',
+    player_number: 0,
+    players: [],
+    properties: {
+      disposal: {
+        d: 5,
+        e: 6,
+        ie: 7
+      },
+      clearances: {
+        clr_bu: 8,
+        clr_csb: 9
+      }
+    }
+  }
 
 
   return (
@@ -93,7 +107,7 @@ const TeamStats = () => {
         onRoundChange={setRound}
       />
       <h1>Team Stats</h1>
-      <AveragesTable data={filteredPlayers} isLoading={isLoading || loading2} />
+      <AveragesTable data={filteredPlayers} totals={averageTotal} isLoading={isLoading} />
     </Page>
   );
 };

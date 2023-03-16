@@ -24,7 +24,7 @@ $table-cell-padding-compact: 5px 10px;
           border-right: $table-border-style;
         }
 
-        > * {
+        >* {
           margin: 0;
         }
 
@@ -69,6 +69,24 @@ $table-cell-padding-compact: 5px 10px;
       }
     }
   }
+
+  .tfoot {
+    .tr {
+      .td {
+        background-color: $blue-light;
+        font-weight: bold;
+        padding: $table-cell-padding-standard;
+
+        &:not(:last-child) {
+          border-right: $table-border-style;
+        }
+
+        >* {
+          margin: 0;
+        }
+      }
+    }
+  }
 }
 
 .table--compact {
@@ -81,6 +99,14 @@ $table-cell-padding-compact: 5px 10px;
   }
 
   .tbody {
+    .tr {
+      .td {
+        padding: $table-cell-padding-compact;
+      }
+    }
+  }
+
+  .tfoot {
     .tr {
       .td {
         padding: $table-cell-padding-compact;
@@ -113,5 +139,11 @@ $table-cell-padding-compact: 5px 10px;
         }
       }
     }
+  }
+}
+
+.tr--expanded {
+  .td {
+    font-weight: bold;
   }
 }

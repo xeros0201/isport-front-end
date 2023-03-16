@@ -12,16 +12,17 @@ interface TeamAverage extends Omit<Player, 'team_id'> {
 interface Props {
   isLoading: boolean;
   data: TeamAverage[];
+  totals: TeamAverage;
 }
 
-const AveragesTable = ({ data, isLoading }: Props) => {
+const AveragesTable = ({ data, isLoading, totals }: Props) => {
   const propertiesColumn = data && Object.entries(data[0]?.properties ?? {}).map(([key, value]) => {
     return (
       {
         header: key.charAt(0).toUpperCase() + key.slice(1),
         columns: Object.keys(value).map((key2) => (
           {
-            footer: (props: HeaderContext<TeamAverage, unknown>) => props.column.id,
+            footer: () => totals.properties[key][key2],
             header: key2.toUpperCase(),
             cell: ({ getValue }: CellContext<TeamAverage, any>) => <p>{getValue() as string}</p>,
             sortingFn: "alphanumeric",
@@ -40,13 +41,13 @@ const AveragesTable = ({ data, isLoading }: Props) => {
         columns: [
           {
             header: "Team Name",
-            footer: props => props.column.id,
+            footer: () => totals.name,
             cell: ({ row, getValue }) => {
               return (
                 <div style={{ display: 'flex' }}>
                   {row.getCanExpand()
                     && <button
-                      onClick={() => row.getToggleExpandedHandler()}
+                      onClick={row.getToggleExpandedHandler()}
                       style={{ cursor: 'pointer', background: 'none', border: 'none' }}
                     >
                       {row.getIsExpanded()
@@ -127,7 +128,7 @@ const AveragesTable = ({ data, isLoading }: Props) => {
       <Tbody>
         {table.getRowModel().rows.map((row) => {
           return (
-            <Tr key={row.id}>
+            <Tr key={row.id} expanded={row.getIsExpanded()}>
               {row.getVisibleCells().map((cell) => (
                 <Td key={cell.id}>
                   {flexRender(cell.column.columnDef.cell, cell.getContext())}
@@ -137,15 +138,18 @@ const AveragesTable = ({ data, isLoading }: Props) => {
           )
         })}
       </Tbody>
-      {/* <TFooter>
+      <TFooter>
         {table.getFooterGroups().map((footerGroups) => (
           <Tr key={footerGroups.id}>
-            {footerGroups.headers.map((footer) => (
-              <Td>{footer.id}</Td>
-            ))}
+            {footerGroups.headers.map((footer) => {
+              if(footer.depth === 1) return null
+              return (
+                <Td>{flexRender(footer.column.columnDef.footer, footer.getContext())}</Td>
+              )
+            })}
           </Tr>
         ))}
-      </TFooter> */}
+      </TFooter>
     </Table>
   )
 };
