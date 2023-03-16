@@ -32,7 +32,7 @@ export const getSeasonsByLeague = async (leagueId: number): Promise<Season[]> =>
 };
 
 /**
- * Get seasons that belong to a league.
+ * Get teams that belong to a season.
  */
 export const getTeamBySeasons = async (seasonId: number): Promise<Team[]> => {
     const response = await axios.get<Team[]>(`/seasons/${seasonId}/teams`);
