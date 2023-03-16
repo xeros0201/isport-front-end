@@ -29,7 +29,7 @@ const PlayerForm = ({ id }: FormProps) => {
     name: data?.name ?? "",
     playerNumber: data?.playerNumber.toString() ??  "",
     teamId: data?.teamId.toString() ?? "",
-    leagueId: data?.leagueId.toString() ?? "",
+    leagueId: "",
     seasonId: "",
   };
 
