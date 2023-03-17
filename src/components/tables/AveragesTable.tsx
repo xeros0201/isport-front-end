@@ -5,14 +5,18 @@ import { Table } from "../layout"
 import { Tbody, Td, Th, Thead, Tr } from "../layout/Table"
 import TFooter from "../layout/Table/TFooter";
 
-interface TeamAverage extends Omit<Player, 'team_id'> {
-  players: TeamAverage[];
+export interface PlayerAverage extends Omit<Player, 'team_id'> {
+  team?: {
+    name: string;
+  }
+  players: PlayerAverage[];
+  properties: Record<string, Record<string, number>>
 }
 
 interface Props {
   isLoading: boolean;
-  data?: TeamAverage[];
-  totals?: TeamAverage;
+  data?: PlayerAverage[];
+  totals?: PlayerAverage;
 }
 
 const AveragesTable = ({ data, isLoading, totals }: Props) => {
@@ -24,9 +28,9 @@ const AveragesTable = ({ data, isLoading, totals }: Props) => {
           {
             footer: () => totals?.properties[key][key2],
             header: key2.toUpperCase(),
-            cell: ({ getValue }: CellContext<TeamAverage, any>) => <p>{getValue() as string}</p>,
+            cell: ({ getValue }: CellContext<PlayerAverage, any>) => <p>{getValue() as string}</p>,
             sortingFn: "alphanumeric",
-            accessorFn: (row: TeamAverage) => row.properties[key][key2],
+            accessorFn: (row: PlayerAverage) => row.properties[key][key2],
           })
         )
       }
@@ -34,7 +38,7 @@ const AveragesTable = ({ data, isLoading, totals }: Props) => {
   })
 
   // Setup columns
-  const columns = useMemo<ColumnDef<TeamAverage>[]>(
+  const columns = useMemo<ColumnDef<PlayerAverage>[]>(
     () => [
       {
         header: "Team",

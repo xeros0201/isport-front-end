@@ -1,7 +1,7 @@
 import axios from "./axios";
 
 /**
- * Fetches all teams.
+ * Fetches all players.
  */
 export const getPlayers = async (): Promise<Player[]> => {
   const response = await axios.get<Player[]>('/players');
@@ -9,7 +9,7 @@ export const getPlayers = async (): Promise<Player[]> => {
 };
 
 /**
-* Fetches team that matches id.
+* Fetches player that matches id.
 */
 export const getPlayer = async (id: number): Promise<Player> => {
   const response = await axios.get<Player>(`/players/${id}`);

@@ -70,7 +70,6 @@ declare global {
     name: string;
     team_id: number;
     playerNumber?: number;
-    properties: Record<string, Record<string, number>>;
   }
 
   interface Match {

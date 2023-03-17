@@ -3,16 +3,9 @@ import { useQuery } from "react-query";
 import { getPlayers } from "../../../api/players";
 import { RoundFilter } from "../../../components/filters";
 import { Page } from "../../../components/layout";
-import AveragesTable from "../../../components/tables/AveragesTable";
+import AveragesTable, { PlayerAverage } from "../../../components/tables/AveragesTable";
 import useSearchParamsState from "../../../hooks/useSearchParamsState";
 import { cloneDeep } from 'lodash';
-
-interface PlayerAverage extends Omit<Player, 'team_id'> {
-  team?: {
-    name: string;
-  }
-  players: PlayerAverage[];
-}
 
 interface TeamStatsProps {
   teamId: string;

@@ -18,7 +18,7 @@ const Th = ({ children, colSpan, onClick, propertyHeader = false, sorted }: ThPr
             case 'desc':
                 return <Icon name="IoCaretDown" />;
             default:
-                return <></>;
+                return null;
         }
     }
 
