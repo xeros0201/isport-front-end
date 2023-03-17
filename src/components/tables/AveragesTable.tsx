@@ -11,18 +11,18 @@ interface TeamAverage extends Omit<Player, 'team_id'> {
 
 interface Props {
   isLoading: boolean;
-  data: TeamAverage[];
-  totals: TeamAverage;
+  data?: TeamAverage[];
+  totals?: TeamAverage;
 }
 
 const AveragesTable = ({ data, isLoading, totals }: Props) => {
-  const propertiesColumn = data && Object.entries(data[0]?.properties ?? {}).map(([key, value]) => {
+  const propertiesColumn = Object.entries(data?.[0]?.properties ?? {}).map(([key, value]) => {
     return (
       {
         header: key.charAt(0).toUpperCase() + key.slice(1),
         columns: Object.keys(value).map((key2) => (
           {
-            footer: () => totals.properties[key][key2],
+            footer: () => totals?.properties[key][key2],
             header: key2.toUpperCase(),
             cell: ({ getValue }: CellContext<TeamAverage, any>) => <p>{getValue() as string}</p>,
             sortingFn: "alphanumeric",
@@ -41,10 +41,15 @@ const AveragesTable = ({ data, isLoading, totals }: Props) => {
         columns: [
           {
             header: "Team Name",
-            footer: () => totals.name,
+            footer: () => totals?.name,
             cell: ({ row, getValue }) => {
               return (
-                <div style={{ display: 'flex' }}>
+                <div
+                  style={{
+                    display: 'flex',
+                    paddingLeft: row.getCanExpand() ? 0 : '2rem'
+                  }}
+                >
                   {row.getCanExpand()
                     && <button
                       onClick={row.getToggleExpandedHandler()}
@@ -61,7 +66,7 @@ const AveragesTable = ({ data, isLoading, totals }: Props) => {
               )
             },
             sortingFn: "alphanumeric",
-            accessorFn: (row) => row.id,
+            accessorFn: (row) => `${row.playerNumber ?? ''} ${row.name}`,
           },
         ]
       },
@@ -76,7 +81,7 @@ const AveragesTable = ({ data, isLoading, totals }: Props) => {
 
   const table = useReactTable({
     columns,
-    data,
+    data: data ?? [],
     debugTable: true,
     getCoreRowModel: getCoreRowModel(),
     getExpandedRowModel: getExpandedRowModel(),
@@ -90,7 +95,7 @@ const AveragesTable = ({ data, isLoading, totals }: Props) => {
   })
 
   if (isLoading) return <Spinner size="large" />
-  if (!isLoading && !data.length) return <p>No Averages found</p>;
+  if (!isLoading && !data?.length) return <p>No Averages found</p>;
 
   return (
     <Table
@@ -99,8 +104,7 @@ const AveragesTable = ({ data, isLoading, totals }: Props) => {
       striped
     >
       <Thead>
-        {table.getHeaderGroups().map((headerGroup) => {
-          return (
+        {table.getHeaderGroups().map((headerGroup) => (
             <Tr key={headerGroup.id}>
               {headerGroup.headers.map((header) => (
                 <Th
@@ -123,11 +127,10 @@ const AveragesTable = ({ data, isLoading, totals }: Props) => {
               )}
             </Tr>
           )
-        })}
+        )}
       </Thead>
       <Tbody>
-        {table.getRowModel().rows.map((row) => {
-          return (
+        {table.getRowModel().rows.map((row) => (
             <Tr key={row.id} expanded={row.getIsExpanded()}>
               {row.getVisibleCells().map((cell) => (
                 <Td key={cell.id}>
@@ -136,26 +139,24 @@ const AveragesTable = ({ data, isLoading, totals }: Props) => {
               ))}
             </Tr>
           )
-        })}
+        )}
       </Tbody>
-      <TFooter>
-        {table.getFooterGroups().map((footerGroups) => (
-          <Tr key={footerGroups.id}>
-            {footerGroups.headers.map((footer) => {
-              if(footer.depth === 1) return null
-              return (
-                <Td>{flexRender(footer.column.columnDef.footer, footer.getContext())}</Td>
-              )
-            })}
-          </Tr>
-        ))}
-      </TFooter>
+      {totals
+        && <TFooter>
+          {table.getFooterGroups().map((footerGroups) => (
+            <Tr key={footerGroups.id}>
+              {footerGroups.headers.map((footer) => {
+                if (footer.depth === 1) return null
+                return (
+                  <Td>{flexRender(footer.column.columnDef.footer, footer.getContext())}</Td>
+                )
+              })}
+            </Tr>
+          ))}
+        </TFooter>
+      }
     </Table>
   )
 };
 
 export default AveragesTable;
-
-// TODO - better way of building the columns
-// TODO - totals
-// TODO - fix padding issue with sort

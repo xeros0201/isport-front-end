@@ -5,9 +5,18 @@ import { RoundFilter } from "../../../components/filters";
 import { Page } from "../../../components/layout";
 import AveragesTable from "../../../components/tables/AveragesTable";
 import useSearchParamsState from "../../../hooks/useSearchParamsState";
+import { cloneDeep } from 'lodash';
 
-interface TeamAverage extends Omit<Player, 'team_id'> {
-  players: TeamAverage[];
+interface PlayerAverage extends Omit<Player, 'team_id'> {
+  team?: {
+    name: string;
+  }
+  players: PlayerAverage[];
+}
+
+interface TeamStatsProps {
+  teamId: string;
+  players: PlayerAverage[]
 }
 
 const TeamStats = () => {
@@ -19,10 +28,10 @@ const TeamStats = () => {
     ["getPlayers"], async () => await getPlayers()
   );
 
-  // TODO - get averages from API
-  const filteredPlayers = useMemo(() => {
-    if (!players) return [];
-    const playersAverage: TeamAverage[] = players.map((item) => {
+  // TODO - update with averages API
+  const playersAverage = useMemo(() => {
+    if (!players || isLoading) return [];
+    return players.map((item) => {
       return {
         ...item,
         players: [],
@@ -39,65 +48,87 @@ const TeamStats = () => {
         }
       }
     });
-
-    const teams = playersAverage.reduce((acc: TeamAverage[], player) => {
-      // Check if the teamId already exists in the accumulator
-      let teamIndex = acc.findIndex(team => team.id === player.team.name);
-
-      if (teamIndex === -1) {
-        // If the team doesn't exist, create a new team object
-        let newTeam: TeamAverage = {
-          id: player.team.name,
-          players: [player],
-          properties: {
-            // goals: 1, 
-            disposal: {
-              d: 2,
-              e: 3,
-              ie: 4
-            },
-            clearances: {
-              clr_bu: 1,
-              clr_csb: 2
-            }
-          },
-          name: player.team.name,
-          player_number: 0
-        };
-        acc.push(newTeam);
-      } else {
-        // If the team exists, add the player to the players array
-        acc[teamIndex].players.push(player);
-      }
-
-      return acc;
-    }, []);
-
-    return teams
   }, [players]);
 
-  // TODO - api for totals
-  const averageTotal: TeamAverage = {
-    id: -1,
-    name: 'Total',
-    player_number: 0,
-    players: [],
-    properties: {
-      disposal: {
-        d: 5,
-        e: 6,
-        ie: 7
-      },
-      clearances: {
-        clr_bu: 8,
-        clr_csb: 9
+  const teamAverages = useMemo(() => {
+    if (isLoading) return;
+
+    const teamGrouping = playersAverage.reduce((accumulator: TeamStatsProps[], currentPlayer: PlayerAverage) => {
+      const team = accumulator.find(team => team.teamId === currentPlayer.team?.name);
+      if (team) {
+        team.players.push(currentPlayer);
+      } else {
+        accumulator.push({
+          teamId: currentPlayer.team?.name ?? '',
+          players: [currentPlayer]
+        });
+      }
+      return accumulator;
+    }, []);
+
+    return teamGrouping.map((team, ind) => {
+      const playersLength = team.players.length;
+
+      const playerProperties = team.players.map((player) => player.properties);
+
+      const propertyTotals: Record<string, Record<string, number>> = cloneDeep(playerProperties).reduce((accumulator, currentPlayer, i) => {
+        if (i === 0) return currentPlayer
+        Object.entries(currentPlayer).forEach(([groupKey, groupValue]) => {
+          Object.keys(groupValue).forEach((property) => {
+            accumulator[groupKey][property] += currentPlayer[groupKey][property]
+          })
+        })
+        return accumulator
+      }, {})
+
+      for (const key1 in propertyTotals) {
+        for (const innerKey in propertyTotals[key1]) {
+          propertyTotals[key1][innerKey] = Math.round((propertyTotals[key1][innerKey] / playersLength) * 100) / 100;
+        }
+      }
+
+      return {
+        id: ind,
+        name: team.teamId,
+        playerNumber: undefined,
+        players: team.players,
+        properties: propertyTotals
+      }
+    })
+  }, [playersAverage])
+
+  const totalAverages = useMemo(() => {
+    if (isLoading || !teamAverages) return;
+    const teamLength = teamAverages.length
+    const teamAverageProperties = teamAverages.map((team) => team.properties);
+
+    const teamTotals: Record<string, Record<string, number>> = cloneDeep(teamAverageProperties).reduce((accumulator, currentTeam, i) => {
+      if (i === 0) return currentTeam
+      Object.entries(currentTeam).forEach(([groupKey, groupValue]) => {
+        Object.keys(groupValue).forEach((property) => {
+          accumulator[groupKey][property] += currentTeam[groupKey][property]
+        })
+      })
+      return accumulator
+    }, {})
+
+    for (const key1 in teamTotals) {
+      for (const innerKey in teamTotals[key1]) {
+        teamTotals[key1][innerKey] = Math.round((teamTotals[key1][innerKey] / teamLength) * 100) / 100;
       }
     }
-  }
 
+    return {
+      id: 1,
+      name: 'Grand Total',
+      playerNumber: undefined,
+      players: [],
+      properties: teamTotals
+    }
+  }, [teamAverages])
 
   return (
-    <Page title="Team Stats">
+    <Page title="Team & Player Averages">
       <RoundFilter
         leagueId={leagueId}
         onLeagueChange={setLeagueId}
@@ -106,8 +137,12 @@ const TeamStats = () => {
         round={round}
         onRoundChange={setRound}
       />
-      <h1>Team Stats</h1>
-      <AveragesTable data={filteredPlayers} totals={averageTotal} isLoading={isLoading} />
+      <h1>Team & Player Averages</h1>
+      <AveragesTable
+        data={teamAverages}
+        isLoading={isLoading}
+        totals={totalAverages}
+      />
     </Page>
   );
 };

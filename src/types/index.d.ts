@@ -69,7 +69,7 @@ declare global {
     id: number;
     name: string;
     team_id: number;
-    player_number: number;
+    playerNumber?: number;
     properties: Record<string, Record<string, number>>;
   }
 
