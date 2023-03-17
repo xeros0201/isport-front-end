@@ -2,14 +2,18 @@ import { useFormik } from "formik";
 import { useState } from "react";
 import { useQuery } from "react-query";
 import { useNavigate } from "react-router-dom";
-import { createTeam, getTeam, TeamFormValues, updateTeam } from "../../api/teams";
+import {
+  createTeam,
+  getTeam,
+  TeamFormValues,
+  updateTeam,
+} from "../../api/teams";
 
 import { Button, Spinner } from "../common";
 import { LeagueDropdown, SeasonDropdown } from "../dropdowns";
 import { InputError, TextInput } from "../input";
 import ImageInput from "../input/ImageInput/ImageInput";
 import { Form } from "../layout";
-
 
 const TeamForm = ({ id }: FormProps) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -28,7 +32,7 @@ const TeamForm = ({ id }: FormProps) => {
   const initialValues: TeamFormValues = {
     name: data?.name ?? "",
     logo: data?.logo ?? "",
-    seasonId: data?.seasonId ?? "",
+    seasonId: data?.seasonId?.toString() ?? "",
   };
 
   // Setup submit handler

@@ -65,6 +65,13 @@ declare global {
     seasonId: string;
   }
 
+  interface Player {
+    id: number;
+    name: string;
+    team_id: number;
+    playerNumber?: number;
+  }
+
   interface Match {
     id: number;
     seasonId: number;
@@ -86,11 +93,10 @@ declare global {
     teamId: number;
     name: string;
     playerNumber: number;
-
-    createdDate: Date;
-    updatedDate: Date;
-    createdUserId: string;
-    updatedUserId: string;
+    leagueId: number;
+    createdDate: string;
+    team: Team;
+    league: League;
   }
 
   interface CSVRow {

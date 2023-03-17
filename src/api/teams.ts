@@ -31,10 +31,21 @@ export const getTeamPlayers = async (id: string): Promise<Player[]> => {
 };
 
 /**
+ * Get teams that belong to a season.
+ */
+export const getTeamBySeasons = async (seasonId: number): Promise<Team[]> => {
+  const response = await axios.get<Team[]>(`/seasons/${seasonId}/teams`);
+  return response.data;
+};
+
+/**
  * Creates new Team.
  */
 export const createTeam = async (team: TeamFormValues): Promise<Team> => {
-  const response = await axios.post<Team>("/teams", { ...team });
+  const response = await axios.post<Team>("/teams", {
+    ...team,
+    seasonId: +team.seasonId,
+  });
   return response.data;
 };
 
@@ -45,6 +56,6 @@ export const updateTeam = async (
   id: number,
   team: Partial<TeamFormValues>
 ): Promise<Team> => {
-  const response = await axios.patch<Team>(`/teams/${id}`, team);
+  const response = await axios.put<Team>(`/teams/${id}`, team);
   return response.data;
 };
