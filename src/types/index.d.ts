@@ -88,12 +88,8 @@ declare global {
     playerNumber: number,
     leagueId: number,
     createdDate: string,
-    team?: {
-      id: number,
-      name: string,
-      logo: any,
-      seasonId: number
-    }
+    team: Team;
+    league: League;
   }
 
 }
