@@ -81,6 +81,17 @@ declare global {
     location: Location;
   }
 
+  interface Player {
+    id: number,
+    teamId: number,
+    name: string,
+    playerNumber: number,
+    leagueId: number,
+    createdDate: string,
+    team: Team;
+    league: League;
+  }
+
 }
 
 export {};

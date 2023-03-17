@@ -23,6 +23,14 @@ export const getTeam = async (id: number): Promise<Team> => {
 };
 
 /**
+ * Get teams that belong to a season.
+ */
+export const getTeamBySeasons = async (seasonId: number): Promise<Team[]> => {
+    const response = await axios.get<Team[]>(`/seasons/${seasonId}/teams`);
+    return response.data;
+};
+
+/**
  * Creates new Team.
  */
 export const createTeam = async (team: TeamFormValues): Promise<Team> => {
