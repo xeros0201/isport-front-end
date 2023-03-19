@@ -1,5 +1,5 @@
 import { useFormik } from "formik";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 import { useNavigate } from "react-router-dom";
 import {
@@ -17,7 +17,6 @@ import { Form } from "../layout";
 
 const TeamForm = ({ id }: FormProps) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [leagueId, setLeagueId] = useState<string>("");
   const navigate = useNavigate();
 
   // Setup react-query for fetching data
@@ -32,6 +31,7 @@ const TeamForm = ({ id }: FormProps) => {
   const initialValues: TeamFormValues = {
     name: data?.name ?? "",
     logo: data?.logo ?? "",
+    leagueId: data?.season.league.id.toString() ?? "",
     seasonId: data?.seasonId?.toString() ?? "",
   };
 
@@ -103,14 +103,16 @@ const TeamForm = ({ id }: FormProps) => {
       />
       <LeagueDropdown
         label="League"
-        value={leagueId}
-        onChange={setLeagueId}
+        value={formik.values.leagueId}
+        onChange={formik.handleChange("leagueId")}
+        error={formik.errors.leagueId}
+        touched={formik.touched.leagueId}
         required
         asInput
       />
       <SeasonDropdown
         label="Season"
-        leagueId={leagueId}
+        leagueId={formik.values.leagueId}
         value={formik.values.seasonId}
         onChange={formik.handleChange("seasonId")}
         error={formik.errors.seasonId}

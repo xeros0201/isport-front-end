@@ -3,6 +3,7 @@ import axios from "./axios";
 export interface TeamFormValues {
   name: string;
   logo: string;
+  leagueId: string;
   seasonId: string;
 }
 
