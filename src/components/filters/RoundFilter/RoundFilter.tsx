@@ -25,7 +25,7 @@ const RoundFilter = ({
     return (
         <div className="roundfilter">
             <Row alignItems='center' noFlex>
-                <Logo url="/public/league-logo.png" label="Round 21 - 2022" />
+                <Logo url="/league-logo.png" label="Round 21 - 2022" />
                 <Row noFlex removeSpacing>
                     <LeagueDropdown
                         value={leagueId}

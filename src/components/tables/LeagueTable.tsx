@@ -35,7 +35,7 @@ const LeagueTable = ({ data, isLoading = false }: LeagueTableProps) => {
             header: "League Logo",
             footer: (props) => props.column.id,
             cell: (info) => (
-                <Logo url="/public/league-logo.png" />
+                <Logo url="/league-logo.png" />
             ),
             accessorFn: (row) => row.name,
             enableSorting: false
