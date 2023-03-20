@@ -4,10 +4,12 @@ import { getSeasons, getSeasonsByLeague } from "../../api/seasons";
 import { InputError, DropdownInput } from "../input";
 
 interface SeasonDropdown extends ImplementedDropdownProps {
-    leagueId: string;
+    requireLeague?: boolean;
+    leagueId?: string;
 }
 
 const SeasonDropdown = ({
+    requireLeague = false,
     leagueId,
     value,
     onChange,
@@ -19,19 +21,20 @@ const SeasonDropdown = ({
     asInput
 }: SeasonDropdown) => {
     const { error: fetchError, isLoading, data, refetch } = useQuery(
-        ['getSeasonsByLeague', { leagueId }],
+        ['getSeasonsByLeague', { leagueId, requireLeague }],
         async (): Promise<Season[]> => {
-            if (!leagueId) return [];
-            return getSeasonsByLeague(+leagueId);
-        },
-        { enabled: !!leagueId }
+            if (requireLeague && !leagueId) return [];
+            if (requireLeague && leagueId) return getSeasonsByLeague(+leagueId);
+            return getSeasons();
+        }
     );
 
     // Fetch as soon as a leagueId is provided
     useEffect(() => {
-        leagueId && refetch();
-        onChange('');
-    }, [leagueId]);
+        if (requireLeague && !leagueId) onChange('');
+        if (!requireLeague && value) onChange(value);
+        refetch();
+    }, [leagueId, requireLeague]);
 
     // Format season options so they are input compatible
     const seasonOptions: InputOption[] = useMemo(() => {
@@ -54,7 +57,7 @@ const SeasonDropdown = ({
             error={error}
             touched={touched}
             required={required}
-            disabled={disabled || !leagueId}
+            disabled={disabled || (requireLeague && !leagueId)}
             options={seasonOptions}
             placeholder="Select Season"
             asInput={asInput}

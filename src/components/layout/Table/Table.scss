@@ -5,88 +5,145 @@ $table-cell-padding-standard: 13px 26px;
 $table-cell-padding-compact: 5px 10px;
 
 .table {
-    border-spacing: 0;
-    border-collapse: collapse;
-    margin-top: $margin-top-medium;
-    width: 100%;
+  border-spacing: 0;
+  border-collapse: collapse;
+  margin-top: $margin-top-medium;
+  width: 100%;
 
-    .thead {
-        border: 1px solid $black;
-        background-color: $black;
-        color: $white;
+  .thead {
+    border: 1px solid $black;
+    background-color: $black;
+    color: $white;
 
-        .tr {
-            .th {
-                text-align: left;
-                padding: $table-cell-padding-standard;
+    .tr {
+      .th {
+        text-align: left;
+        padding: $table-cell-padding-standard;
 
-                &:not(:last-child) {
-                    border-right: $table-border-style;
-                }
-
-                > * {
-                    margin: 0;
-                }
-
-                &--clickable {
-                    cursor: pointer;
-                }
-            }
+        &:not(:last-child) {
+          border-right: $table-border-style;
         }
+
+        >* {
+          margin: 0;
+        }
+
+        &--clickable {
+          cursor: pointer;
+        }
+
+        &--property-header {
+          background-color: $cyan;
+          color: $black
+        }
+      }
     }
-    
-    .tbody {
-        background-color: $white;
-        border-left: $table-border-style;
-        border-right: $table-border-style;
+  }
+
+  .tbody {
+    background-color: $white;
+    border-left: $table-border-style;
+    border-right: $table-border-style;
+    border-bottom: $table-border-style;
+    color: $black;
+
+    .tr {
+      &:not(:last-child) {
         border-bottom: $table-border-style;
-        color: $black;
+      }
 
-        .tr {
-            &:not(:last-child) {
-                border-bottom: $table-border-style;
-            }
+      .td {
+        padding: $table-cell-padding-standard;
 
-            .td {
-                padding: $table-cell-padding-standard;
-                .logo { text-align: center; }
-
-                &:not(:last-child) {
-                    border-right: $table-border-style;
-                }
-
-                > * {
-                    margin: 0;
-                }
-            }
+        .logo {
+          text-align: center;
         }
+
+        &:not(:last-child) {
+          border-right: $table-border-style;
+        }
+
+        >* {
+          margin: 0;
+        }
+      }
     }
+  }
+
+  .tfoot {
+    .tr {
+      .td {
+        background-color: $blue-light;
+        font-weight: bold;
+        padding: $table-cell-padding-standard;
+
+        &:not(:last-child) {
+          border-right: $table-border-style;
+        }
+
+        >* {
+          margin: 0;
+        }
+      }
+    }
+  }
 }
 
 .table--compact {
-    .thead {
-        .tr {
-            .th {
-                padding: $table-cell-padding-compact;
-            }
-        }
+  .thead {
+    .tr {
+      .th {
+        padding: $table-cell-padding-compact;
+      }
     }
+  }
 
-    .tbody {
-        .tr {
-            .td {
-                padding: $table-cell-padding-compact;
-            }
-        }
+  .tbody {
+    .tr {
+      .td {
+        padding: $table-cell-padding-compact;
+      }
     }
+  }
+
+  .tfoot {
+    .tr {
+      .td {
+        padding: $table-cell-padding-compact;
+      }
+    }
+  }
 }
 
 .table--striped {
-    .tbody {
-        .tr {
-            &:nth-child(odd) {
-                background-color: $grey-light;
-            }
-        }
+  .tbody {
+    .tr {
+      &:nth-child(odd) {
+        background-color: $grey-light;
+      }
     }
+  }
+}
+
+.table--has-first-column {
+  .tbody {
+    .tr {
+      .td {
+        &:first-child {
+          background-color: $grey-mid;
+          color: $grey-light;
+
+          button {
+            color: $grey-light
+          }
+        }
+      }
+    }
+  }
+}
+
+.tr--expanded {
+  .td {
+    font-weight: bold;
+  }
 }

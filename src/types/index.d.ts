@@ -33,7 +33,7 @@ declare global {
     id: number;
     logo: string;
     sportId: number;
-    sport: Sport
+    sport: Sport;
     name: string;
     createdDate: string;
     createdUserId: string;
@@ -67,6 +67,13 @@ declare global {
     season: Season;
   }
 
+  interface Player {
+    id: number;
+    name: string;
+    team_id: number;
+    playerNumber?: number;
+  }
+
   interface AflResults {
     id: number;
     matchId: number;
@@ -91,6 +98,17 @@ declare global {
     homeTeam: Team;
     location: Location;
     aflResults: AflResults[];
+  }
+
+  interface Player {
+    id: number,
+    teamId: number,
+    name: string,
+    playerNumber: number,
+    leagueId: number,
+    createdDate: string,
+    team: Team;
+    league: League;
   }
 
 }
