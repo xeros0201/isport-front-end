@@ -1,8 +1,7 @@
-import { useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useQuery } from "react-query";
-import { getLocations } from "../../api/locations";
-import { Spinner } from "../common";
-import { InputError, DropdownInput } from "../input";
+import { createLocation, getLocations } from "../../api/locations";
+import { InputError, CreatableDropdownInput } from "../input";
 
 const LocationDropdown = ({
   value,
@@ -12,13 +11,13 @@ const LocationDropdown = ({
   label,
   required,
   disabled,
-  asInput,
 }: ImplementedDropdownProps) => {
   const {
     error: fetchError,
     isLoading,
     data,
   } = useQuery(["getLocations"], async () => getLocations());
+  const [options, setOptions] = useState<InputOption[]>([])
 
   // Format location options so they are input compatible
   const locationOptions: InputOption[] = useMemo(() => {
@@ -30,23 +29,32 @@ const LocationDropdown = ({
     }));
   }, [data]);
 
+  const handleCreateRequest = (value: string) => {
+    return createLocation(value)
+  }
+
+  useEffect(() => {
+    setOptions(locationOptions)
+  },[locationOptions]);
+
   // If error fetching data
   if (fetchError)
     return <InputError error="Error fetching locations" touched />;
 
   return (
-    <DropdownInput
-      label={label}
-      value={value}
-      onChange={onChange}
-      error={error}
-      touched={touched}
-      required={required}
+    <CreatableDropdownInput<Location>
       disabled={disabled}
-      options={locationOptions}
-      placeholder="Select Location"
-      asInput={asInput}
+      error={error}
+      handleCreateRequest={handleCreateRequest}
       isFetching={isLoading}
+      label={label}
+      onChange={onChange}
+      options={options}
+      placeholder="Select Location"
+      required={required}
+      setOptions={setOptions}
+      touched={touched}
+      value={value}
     />
   );
 };
