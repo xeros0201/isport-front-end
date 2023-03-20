@@ -62,7 +62,14 @@ declare global {
     id: number;
     name: string;
     logo: string;
-    seasonId: number;
+    seasonId: string;
+  }
+
+  interface Player {
+    id: number;
+    name: string;
+    team_id: number;
+    playerNumber?: number;
   }
 
   interface Match {
@@ -84,6 +91,17 @@ declare global {
     name: string;
     homeScore: number;
     awayScore: number;
+  }
+
+  interface Player {
+    id: number;
+    teamId: number;
+    name: string;
+    playerNumber: number;
+    leagueId: number;
+    createdDate: string;
+    team: Team;
+    league: League;
   }
 }
 

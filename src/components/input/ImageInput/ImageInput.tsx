@@ -32,12 +32,12 @@ function ImageInput({
   // Temporary - for converting a test image into the necessary format
   useEffect(() => {
     if (value) {
-      fetch('/public/isports.png')
+      fetch('/isports.png')
         .then(res => res.blob())
         .then(blob => {
           setImageList([{
-            dataURL: "/public/league-logo.png",
-            file: new File([blob], "/public/isports.png", { type: "image/png" })
+            dataURL: "/league-logo.png",
+            file: new File([blob], "/isports.png", { type: "image/png" })
           }]);
         });
     }

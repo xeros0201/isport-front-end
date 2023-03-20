@@ -9,6 +9,7 @@
   box-sizing: border-box;
   transition: 0.5s;
   font-family: "Montserrat", "Verdana", sans-serif;
+  -webkit-print-color-adjust: exact;
 }
 
 /* Minimum height is height of window */

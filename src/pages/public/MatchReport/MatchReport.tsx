@@ -1,6 +1,4 @@
-import { FaHeart, FaUser } from "react-icons/fa";
 import ScoreDistributionChart from "../../../components/charts/ScoreDistributionChart";
-import DateInput from "../../../components/input/DateInput/DateInput";
 
 const MatchReport = () => {
   return (

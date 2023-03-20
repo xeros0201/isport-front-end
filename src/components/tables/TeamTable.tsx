@@ -35,7 +35,7 @@ const TeamTable = ({ data, isLoading = false }: TeamTableProps) => {
             header: "Team Logo",
             footer: (props) => props.column.id,
             cell: (info) => (
-                <Logo url="/public/league-logo.png" height={40} />
+                <Logo url="/league-logo.png" height={40} />
             ),
             sortingFn: "alphanumeric",
             accessorFn: (row) => row.logo,
@@ -46,7 +46,7 @@ const TeamTable = ({ data, isLoading = false }: TeamTableProps) => {
             footer: (props) => props.column.id,
             cell: (info) => (
                 <div style={{ display: 'flex', alignItems: 'center' }}>
-                    <Logo url="/public/league-logo.png" height={40} />
+                    <Logo url="/league-logo.png" height={40} />
                     <p style={{ marginLeft: 10 }}>{info.getValue() as string}</p>
                 </div>
             ),
