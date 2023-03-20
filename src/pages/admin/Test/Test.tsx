@@ -5,6 +5,8 @@ import { LeagueDropdown } from "../../../components/dropdowns";
 import { DateInput, CheckboxInput, TextInput } from "../../../components/input";
 import { Form, Page, Row } from "../../../components/layout";
 import ImageInput from "../../../components/input/ImageInput/ImageInput";
+import TeamForm from "../../../components/forms/TeamForm";
+import DropdownInput from "../../../components/input/DropdownInput/DropdownInput";
 
 const Test = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -32,21 +34,21 @@ const Test = () => {
       <h3>This is a test form for testing</h3>
       <Form onSubmit={formik.submitForm}>
         <Row>
-            <TextInput
+          <TextInput
             label="Text 1"
             value={formik.values.text1}
             onChange={formik.handleChange("text1")}
             error={formik.errors.text1}
             touched={formik.touched.text1}
-            />
-            <TextInput
+          />
+          <TextInput
             label="Text 2"
             value={formik.values.text2}
             onChange={formik.handleChange("text2")}
             error={formik.errors.text2}
             touched={formik.touched.text2}
             icon="IoSearch"
-            />
+          />
         </Row>
         <DateInput
           label="Date"
@@ -90,8 +92,10 @@ const Test = () => {
         isLoading={isSubmitting}
         isSubmit
       />
+      <TeamForm />
       <br />
       {/* {JSON.stringify(formik.values)} */}
+      
     </Page>
   );
 };
