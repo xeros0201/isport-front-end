@@ -203,13 +203,6 @@ export const publicRoutes: RouteConfig[] = [
         secured: false
     },
     {
-        path: '/match-report',
-        name: 'MatchReport',
-        exact: true,
-        Component: MatchReport,
-        secured: false
-    },
-    {
         path: '/team-stats',
         name: 'TeamStats',
         exact: true,
