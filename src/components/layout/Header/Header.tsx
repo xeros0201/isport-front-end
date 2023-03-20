@@ -64,7 +64,7 @@ const Header = ({ menu, children, collapseWidth = 630 }: HeaderProps) => {
     <div className="header">
       <div className="header__container" ref={containerRef}>
         <div className="header__logo" onClick={() => navigate(defaultAdminPage)}>
-          <img src="/public/isports.png" />
+          <img src="/isports.png" />
         </div>
         {containerWidth > collapseWidth 
           ? renderDesktopNav()
