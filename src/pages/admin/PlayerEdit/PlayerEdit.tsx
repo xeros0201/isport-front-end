@@ -1,6 +1,7 @@
 import { Page } from "../../../components/layout";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Button } from "../../../components/common";
+import PlayerForm from "../../../components/forms/PlayerForm";
 
 const PlayerEdit = () => {
     const navigate = useNavigate();
@@ -18,6 +19,7 @@ const PlayerEdit = () => {
                 icon="IoChevronBackOutline"
             />
             <h1>Edit Player</h1>
+            {id && <PlayerForm id={+id} />}
         </Page>
     );
 };
