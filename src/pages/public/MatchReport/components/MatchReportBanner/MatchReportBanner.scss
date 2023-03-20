@@ -2,7 +2,7 @@
 @import "../../../../../styles/mixins";
 .match-report-banner {
     &--header {
-        background-color: #111111;
+        background-color: $black;
         padding: 1rem 0;
         color: #F2F2F2;
         border-bottom: 9px solid #00AEEF;
