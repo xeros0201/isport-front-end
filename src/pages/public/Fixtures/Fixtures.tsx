@@ -1,10 +1,31 @@
 import { useQuery } from "react-query";
 import { useMemo, useEffect } from "react";
 import { getMatchesBySeason } from "../../../api/matches";
-import MatchFixtures from "../../../components/common/MatchFixtures/MatchFixtures";
+import MatchFixtures from "../../../components/common/MatchFixtures/MatchFixture";
 import { RoundFilter } from "../../../components/filters";
 import { Page } from "../../../components/layout";
 import useSearchParamsState from "../../../hooks/useSearchParamsState";
+import { DateTime } from "luxon";
+import "./Fixtures.scss";
+
+const isEmptyObject = (value: object) : boolean=> {
+  return Object.keys(value).length === 0 && value.constructor === Object;
+}
+
+//Group by property
+const groupBy = (items: any, key: string) => items.reduce(
+  (result: any, item: any) => {
+      item.dateOnly = DateTime.fromISO(item.date).toLocaleString(DateTime.DATE_FULL);
+      return ({
+          ...result,
+          [item[key]]: [
+              ...(result[item[key]] || []),
+              item,
+          ],
+      })
+  },
+  {},
+);
 
 const Fixtures = () => {
   const [leagueId, setLeagueId] = useSearchParamsState("leagueId", "");
@@ -33,6 +54,10 @@ const Fixtures = () => {
     return matches.filter((match: Match) => match.round === +round);
   }, [matches, setRound]);
 
+  //Group by date
+  const groupByDate = groupBy(filteredMatches, "dateOnly");
+  console.log(groupByDate);
+
   return (
     <Page title="Fixtures">
       <RoundFilter
@@ -45,11 +70,19 @@ const Fixtures = () => {
       />
       <h1>Fixtures</h1>
       {
-        filteredMatches && filteredMatches.map((match: Match) => {
-          return <MatchFixtures matchFixture={match}/>;
+        !isEmptyObject(groupByDate) ? Object.entries(groupByDate).map((item: any) => {
+          const date: string = item[0];
+          const match: Match = item[1][0];
+          return (
+          <>
+            <div className="date">{date}</div>
+            <MatchFixtures matchFixture={match}/>
+          </>
+          )
         })
+        :
+        <div>Please select League and Season!!!</div>
       }
-
     </Page>
   );
 };

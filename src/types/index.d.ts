@@ -92,6 +92,7 @@ declare global {
     awayTeamCsv: string | null;
     round: number;
     date: string;
+    dateOnly: string | null;
     teamId: number;
     locationId: number;
     awayTeam: Team;

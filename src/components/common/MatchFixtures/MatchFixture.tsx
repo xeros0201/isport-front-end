@@ -19,7 +19,7 @@ const MatchFixtures = ({matchFixture} : MatchFixtureProps) => {
     const awayTeamScorePrimary = matchFixture.aflResults.find(result => result.teamId == matchFixture.awayTeam.id)?.scorePrimary;
     const awayTeamScoreSecondary = matchFixture.aflResults.find(result => result.teamId == matchFixture.awayTeam.id)?.scoreSecondary;
 
-    const time = DateTime.fromISO(matchFixture.date).toLocaleString(DateTime.DATETIME_SHORT)
+    const time = DateTime.fromISO(matchFixture.date).toLocaleString(DateTime.TIME_SIMPLE)
 
     const isTeamWinner = (teamName: string) : boolean => {
         if(homeTeamScorePrimary && awayTeamScorePrimary) {
