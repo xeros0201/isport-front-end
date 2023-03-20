@@ -3,7 +3,7 @@ import { Row } from "../../layout";
 import Button from "../Button/Button";
 import Icon from "../Icon/Icon";
 import Logo from "../Logo/Logo";
-import "./MatchFixtures.scss";
+import "./MatchFixture.scss";
 import { DateTime } from "luxon";
 
 interface MatchFixtureProps {
