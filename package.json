@@ -26,7 +26,9 @@
     "react-image": "^4.0.3",
     "react-images-uploading": "^3.1.7",
     "react-query": "^3.39.3",
-    "react-router-dom": "^6.8.0"
+    "react-router-dom": "^6.8.0",
+    "sweetalert2": "^11.7.3",
+    "sweetalert2-react-content": "^5.0.7"
   },
   "devDependencies": {
     "@types/luxon": "^3.2.0",

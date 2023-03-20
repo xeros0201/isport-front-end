@@ -5,8 +5,11 @@ import { LeagueDropdown } from "../../../components/dropdowns";
 import { DateInput, CheckboxInput, TextInput } from "../../../components/input";
 import { Form, Page, Row } from "../../../components/layout";
 import ImageInput from "../../../components/input/ImageInput/ImageInput";
+import Modal from "../../../components/layout/Modal/Modal";
 
 const Test = () => {
+  const [isShowModal, setIsShowModal] = useState<boolean>(false);
+
   const [isSubmitting, setIsSubmitting] = useState(false);
   const formik = useFormik({
     initialValues: {
@@ -32,21 +35,21 @@ const Test = () => {
       <h3>This is a test form for testing</h3>
       <Form onSubmit={formik.submitForm}>
         <Row>
-            <TextInput
+          <TextInput
             label="Text 1"
             value={formik.values.text1}
             onChange={formik.handleChange("text1")}
             error={formik.errors.text1}
             touched={formik.touched.text1}
-            />
-            <TextInput
+          />
+          <TextInput
             label="Text 2"
             value={formik.values.text2}
             onChange={formik.handleChange("text2")}
             error={formik.errors.text2}
             touched={formik.touched.text2}
             icon="IoSearch"
-            />
+          />
         </Row>
         <DateInput
           label="Date"
@@ -92,6 +95,25 @@ const Test = () => {
       />
       <br />
       {/* {JSON.stringify(formik.values)} */}
+      <Modal
+        show={isShowModal}
+        title="ARE YOU SURE?"
+        text="Do you really want to remove this player from the match? This process cannot be undone"
+        confirmText="Remove Player"
+        onConfirmClicked={() => {
+          setIsShowModal(false);
+
+          alert("OK");
+        }}
+        onCloseClicked={() => setIsShowModal(false)}
+        children={undefined}
+      />
+      <Button
+        onClick={() => {
+          setIsShowModal(true);
+        }}
+        label={"Click here to show the Modal"}
+      />
     </Page>
   );
 };
