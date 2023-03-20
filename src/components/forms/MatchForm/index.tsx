@@ -8,22 +8,20 @@ import {
   MatchFormValues,
   updateMatch,
 } from "../../../api/matches";
+import { getSeasons } from "../../../api/seasons";
 import { Button, Spinner } from "../../common";
 import { LeagueDropdown } from "../../dropdowns";
 import LocationDropdown from "../../dropdowns/LocationDropdown";
-import RoundDropdown from "../../dropdowns/RoundDropdown";
+import MatchTypeDropdown from "../../dropdowns/MatchTypeDropdown";
 import SeasonDropdown from "../../dropdowns/SeasonDropdown";
 import TeamDropdown from "../../dropdowns/TeamDropdown";
-import { DateInput, DropdownInput, InputError, TextInput } from "../../input";
+import { DateInput, InputError } from "../../input";
 import FileInput from "../../input/FileInput/FileInput";
-import ImageInput from "../../input/ImageInput/ImageInput";
+import NumberInput from "../../input/NumberInput/NumberInput";
 import TimeInput from "../../input/TimeInput/TimeInput";
 import { Form, Row } from "../../layout";
 import CSVPreview from "./components/CSVPreview";
-import TeamNameDropdown from "./components/CSVDropdown";
 import "./MatchForm.scss";
-import MatchTypeDropdown from "../../dropdowns/MatchTypeDropdown";
-import { getSeasons } from "../../../api/seasons";
 
 const adminPrefix = import.meta.env.VITE_ADMIN_PREFIX;
 const defaultDate = new Date().toISOString();
@@ -32,8 +30,14 @@ const MatchForm = ({ id }: FormProps) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const navigate = useNavigate();
   const [teamCSVData, setTeamCSVData] = useState<{
-    homeTeamCsv?: CSVRow[];
-    awayTeamCsv?: CSVRow[];
+    homeTeamCsv?: string[];
+    awayTeamCsv?: string[];
+  }>({});
+  const [homePlayerIds, setHomePlayerIds] = useState<{
+    [key: string]: string | undefined;
+  }>({});
+  const [awayPlayerIds, setAwayPlayerIds] = useState<{
+    [key: string]: string | undefined;
   }>({});
 
   // Setup react-query for fetching data
@@ -44,15 +48,26 @@ const MatchForm = ({ id }: FormProps) => {
     }
   );
 
+  useEffect(() => {
+    setTeamCSVData({
+      homeTeamCsv: data?.players
+        ?.filter((item) => item.teamId === data.homeTeamId)
+        ?.map((item) => item.playerNumber?.toString()),
+      awayTeamCsv: data?.players
+        ?.filter((item) => item.teamId === data.awayTeamId)
+        ?.map((item) => item.playerNumber?.toString()),
+    });
+  }, [data]);
+
   const { data: seasons } = useQuery(["getSeasons"], async () => getSeasons());
 
   // Setup initial values
   const initialValues: MatchFormValues = {
     homeTeamCsv: data?.awayTeamCsv ?? "",
     awayTeamCsv: data?.awayTeamCsv ?? "",
-    seasonId: "",
-    homeTeamId: data?.homeTeamId.toString() ?? "",
-    awayTeamId: data?.awayTeamId.toString() ?? "",
+    seasonId: data?.seasonId.toString() ?? "",
+    homeTeamId: data?.homeTeamId?.toString() ?? "",
+    awayTeamId: data?.awayTeamId?.toString() ?? "",
     round: data?.round.toString() ?? "",
     type: data?.type ?? "",
     locationId: data?.locationId.toString() ?? "",
@@ -67,11 +82,11 @@ const MatchForm = ({ id }: FormProps) => {
   const onSubmit = async (values: MatchFormValues) => {
     const update = async () => {
       if (!id) return;
-      await updateMatch(id, values);
+      await updateMatch(id, { ...values, homePlayerIds, awayPlayerIds });
       refetch();
     };
     const create = async () => {
-      await createMatch(values);
+      await createMatch({ ...values, homePlayerIds, awayPlayerIds });
       navigate(`${adminPrefix}/matches`);
     };
 
@@ -149,7 +164,9 @@ const MatchForm = ({ id }: FormProps) => {
   const handleReadFile = (data: CSVRow[], key: string) => {
     setTeamCSVData((val) => ({
       ...val,
-      [key]: data,
+      [key]: data.map((item) =>
+        (+item.Code.split(" ")[0].substring(1)).toString()
+      ),
     }));
   };
 
@@ -173,6 +190,35 @@ const MatchForm = ({ id }: FormProps) => {
           onReadFile={(data: CSVRow[]) => handleReadFile(data, "awayTeamCsv")}
         />
         <Row>
+          <LeagueDropdown
+            label="League"
+            value={formik.values.leagueId}
+            onChange={(value) => {
+              formik.handleChange("leagueId")(value);
+              formik.handleChange("seasonId")("");
+            }}
+            touched={formik.touched.leagueId}
+            error={formik.errors.leagueId}
+            required
+            asInput
+          />
+          <SeasonDropdown
+            label="Season"
+            value={formik.values.seasonId}
+            onChange={(value) => {
+              formik.handleChange("seasonId")(value);
+              formik.handleChange("homeTeamId")("");
+              formik.handleChange("awayTeamId")("");
+            }}
+            touched={formik.touched.seasonId}
+            error={formik.errors.seasonId}
+            required
+            asInput
+            requireLeague
+            leagueId={formik.values.leagueId}
+          />
+        </Row>
+        <Row>
           <TeamDropdown
             label="Home Team"
             value={formik.values.homeTeamId}
@@ -181,6 +227,9 @@ const MatchForm = ({ id }: FormProps) => {
             error={formik.errors.homeTeamId}
             required
             asInput
+            requireSeason
+            seasonId={formik.values.seasonId}
+            filter={(team) => team.id !== +formik.values.awayTeamId}
           />
           <TeamDropdown
             label="Away Team"
@@ -190,38 +239,20 @@ const MatchForm = ({ id }: FormProps) => {
             error={formik.errors.awayTeamId}
             required
             asInput
+            requireSeason
+            seasonId={formik.values.seasonId}
+            filter={(team) => team.id !== +formik.values.homeTeamId}
           />
         </Row>
         <Row>
-          <LeagueDropdown
-            label="League"
-            value={formik.values.leagueId}
-            onChange={formik.handleChange("leagueId")}
-            touched={formik.touched.leagueId}
-            error={formik.errors.leagueId}
-            required
-            asInput
-          />
-          <SeasonDropdown
-            label="Season"
-            value={formik.values.seasonId}
-            onChange={formik.handleChange("seasonId")}
-            touched={formik.touched.seasonId}
-            error={formik.errors.seasonId}
-            required
-            asInput
-            disabled
-          />
-        </Row>
-        <Row>
-          <RoundDropdown
+          <NumberInput
             label="Round"
             value={formik.values.round}
             onChange={formik.handleChange("round")}
             touched={formik.touched.round}
             error={formik.errors.round}
             required
-            asInput
+            onlyInteger
           />
           <MatchTypeDropdown
             label="Match Type"
@@ -271,23 +302,34 @@ const MatchForm = ({ id }: FormProps) => {
         {[
           {
             type: "hometeam",
-            data: teamCSVData.homeTeamCsv,
+            playerNumberList: teamCSVData.homeTeamCsv,
             title: "Home",
             teamId: formik.values.homeTeamId,
+            onChange: (val: typeof homePlayerIds) => setHomePlayerIds(val),
           },
           {
             type: "awayteam",
-            data: teamCSVData.awayTeamCsv,
+            playerNumberList: teamCSVData.awayTeamCsv,
             title: "Away",
             teamId: formik.values.awayTeamId,
+            onChange: (val: typeof awayPlayerIds) => setAwayPlayerIds(val),
           },
         ].map((item) => {
-          const { teamId, data } = item;
-          if (!data || !data.length) return null;
+          const { teamId, playerNumberList, onChange } = item;
+          if (!(!isLoading && playerNumberList && playerNumberList.length))
+            return null;
+
           return (
             <div className="preview__team preview__hometeam" key={item.type}>
               <h2 className={`preview__${item.type}--header`}>{item.title}</h2>
-              <CSVPreview data={data} teamId={teamId}></CSVPreview>
+              <CSVPreview
+                playerNumberList={playerNumberList}
+                teamId={teamId}
+                onChange={onChange}
+                playersOnMatch={data?.players}
+                key={teamId}
+                matchId={id}
+              ></CSVPreview>
             </div>
           );
         })}

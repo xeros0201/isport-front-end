@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { useQuery } from "react-query";
+import { deletePlayerOnMatch } from "../../../../api/matches";
 import { getTeamPlayers } from "../../../../api/teams";
 import CSVDropdown from "./CSVDropdown";
 
@@ -7,14 +8,47 @@ interface CSVPreviewProps {
   /**
    * The options to be displayed to the user.
    */
-  data: CSVRow[];
+  playerNumberList?: string[];
   teamId: string | undefined;
+  onChange?: (value: { [key: string]: string | undefined }) => void;
+  playersOnMatch?: PlayerOnMatch[];
+  matchId?: number;
 }
 
-function CSVPreview({ data, teamId }: CSVPreviewProps) {
+function CSVPreview({
+  playerNumberList,
+  teamId,
+  onChange,
+  playersOnMatch,
+  matchId,
+}: CSVPreviewProps) {
+  const [playerNumbers, setPlayerNumbers] = useState<string[]>([]);
   const [selectedPlayers, setSelectedPlayers] = useState<{
     [key: string]: string | undefined;
   }>({});
+
+  useEffect(() => {
+    if (playerNumberList) setPlayerNumbers(playerNumberList);
+  }, [playerNumberList]);
+
+  useEffect(() => {
+    if (playersOnMatch)
+      setSelectedPlayers(
+        playersOnMatch
+          .filter((player) => player.teamId.toString() === teamId)
+          .reduce(
+            (obj, player) => ({
+              ...obj,
+              [player.playerNumber as number]: player.playerId.toString(),
+            }),
+            {}
+          )
+      );
+  }, [playersOnMatch]);
+
+  useEffect(() => {
+    if (onChange) onChange(selectedPlayers);
+  }, [selectedPlayers]);
 
   // fetch all players in selected team
   const {
@@ -28,72 +62,84 @@ function CSVPreview({ data, teamId }: CSVPreviewProps) {
 
   // initiate or reset selectedPlayers
   useEffect(() => {
-    const refPlayers: { [key: string]: Player } =
-      players?.reduce(
-        (obj, item) => ({ ...obj, [item.playerNumber]: item }),
-        {}
-      ) || {};
-    const _selectedPlayers = Object.values(data || {}).reduce((obj, item) => {
-      const { Code } = item;
-      const _code = Code.split(" ")[0];
+    if (!playersOnMatch && playerNumberList) {
+      const refPlayers: { [key: string]: Player } =
+        players?.reduce(
+          (obj, item) =>
+            item.playerNumber ? { ...obj, [item.playerNumber]: item } : obj,
+          {}
+        ) || {};
+      const _selectedPlayers = playerNumberList.reduce((obj, playerNumber) => {
+        return {
+          ...obj,
+          [playerNumber]: refPlayers[playerNumber]?.id.toString() || undefined,
+        };
+      }, {});
 
-      const playerNumber = +_code.slice(1);
-      return {
-        ...obj,
-        [item.Code]: refPlayers[playerNumber]?.id.toString() || undefined,
-      };
-    }, {});
+      setSelectedPlayers(_selectedPlayers);
+    }
+  }, [playerNumberList, players, playersOnMatch]);
 
-    setSelectedPlayers(_selectedPlayers);
-  }, [data, players]);
-
-  // generate list codes
-  const arrCodes = useMemo(
-    () => Object.keys(selectedPlayers),
-    [selectedPlayers]
-  );
+  const handleDeletePlayer = async (playerNumber: string) => {
+    setPlayerNumbers((val) => {
+      const _val = [...val];
+      const index = _val.findIndex((item) => item === playerNumber);
+      _val.splice(index, 1);
+      return [..._val];
+    });
+    setSelectedPlayers((val) => {
+      delete val[playerNumber];
+      return { ...val };
+    });
+    if (matchId) {
+      const playerId = playersOnMatch?.find(
+        (item) =>
+          item.teamId.toString() === teamId &&
+          item.playerNumber?.toString() === playerNumber
+      )?.id;
+      if (playerId) await deletePlayerOnMatch(matchId, +playerId);
+    }
+  };
 
   return (
     <table width={"100%"}>
       <tbody>
-        {arrCodes.map((code) => {
+        {playerNumbers?.map((playerNumber, index) => {
           return (
-            <tr key={code}>
+            <tr key={playerNumber}>
               <td width={"1%"}>
-                <div className="preview__team--id"> {code}</div>
+                <div className="preview__team--id"> {playerNumber}</div>
               </td>
               <td width={"auto"}>
-                <CSVDropdown
-                  label="Location"
-                  value={selectedPlayers[code]}
-                  onChange={(id) =>
-                    setSelectedPlayers((val) => ({
-                      ...val,
-                      [code]: id,
-                    }))
-                  }
-                  required
-                  asInput
-                  data={players?.filter((item) => {
-                    if (
-                      selectedPlayers[code] !== item.id.toString() &&
-                      Object.values(selectedPlayers).includes(
-                        item.id.toString()
-                      )
-                    )
-                      return false;
-                    return true;
-                  })}
-                />
+                {!isLoading && (
+                  <CSVDropdown
+                    value={selectedPlayers[playerNumber]}
+                    onChange={(id) =>
+                      setSelectedPlayers((val) => {
+                        const swapKey = Object.keys(val).find(
+                          (key) => val[key] === id
+                        );
+                        return {
+                          ...val,
+                          [playerNumber]: id,
+                          ...(swapKey
+                            ? { [swapKey]: val[playerNumber] || "" }
+                            : {}),
+                        };
+                      })
+                    }
+                    required
+                    asInput
+                    data={players}
+                  />
+                )}
               </td>
               <td width={"1%"}>
                 <button
                   type="button"
-                  onClick={() =>
-                    setSelectedPlayers((val) => {
-                      return { ...val, [code]: undefined };
-                    })
-                  }
+                  onClick={() => {
+                    handleDeletePlayer(playerNumber);
+                  }}
                 >
                   x
                 </button>

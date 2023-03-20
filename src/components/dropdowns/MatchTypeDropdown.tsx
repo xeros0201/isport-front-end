@@ -1,32 +1,29 @@
 import { useMemo } from "react";
-import { useQuery } from "react-query";
-import { getTeams } from "../../api/teams";
-import { Spinner } from "../common";
-import { InputError, DropdownInput } from "../input";
+import { DropdownInput } from "../input";
 
-enum MatchType {
-  REGULAR = "REGULAR",
-  QUARTER_FINAL = "QUARTER FINAL",
-  SEMI_FINAL = "SEMI FINAL",
-  FINAL = "FINAL",
-}
+export const MatchType = {
+  REGULAR: "REGULAR",
+  QUARTER_FINAL: "QUARTER_FINAL",
+  SEMI_FINAL: "SEMI_FINAL",
+  FINAL: "FINAL",
+};
 
 const data = [
   {
-    id: "FINAL",
-    name: MatchType.FINAL,
+    id: MatchType.FINAL,
+    name: "FINAL",
   },
   {
-    id: "QUARTER_FINAL",
-    name: MatchType.QUARTER_FINAL,
+    id: MatchType.QUARTER_FINAL,
+    name: "QUARTER FINAL",
   },
   {
-    id: "REGULAR",
-    name: MatchType.REGULAR,
+    id: MatchType.REGULAR,
+    name: "REGULAR",
   },
   {
-    id: "SEMI_FINAL",
-    name: MatchType.SEMI_FINAL,
+    id: MatchType.SEMI_FINAL,
+    name: "SEMI FINAL",
   },
 ];
 

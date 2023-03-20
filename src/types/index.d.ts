@@ -1,3 +1,4 @@
+import { MatchType } from "./../components/dropdowns/MatchTypeDropdown";
 import * as reactIcon from "react-icons/all";
 import { _ReactIcon } from "../components/common/Icon/Icon";
 import { Role } from "./enums";
@@ -9,6 +10,7 @@ export enum Role {
 
 declare global {
   type ReactIcon = _ReactIcon;
+  type MatchType = typeof MatchType[keyof typeof MatchType];
 
   interface User {
     id: string;
@@ -72,6 +74,14 @@ declare global {
     playerNumber?: number;
   }
 
+  interface PlayerOnMatch {
+    id: number;
+    matchId: number;
+    playerId: number;
+    playerNumber: number;
+    teamId: number;
+  }
+
   interface Match {
     id: number;
     seasonId: number;
@@ -80,12 +90,14 @@ declare global {
     awayTeamId: number | null;
     awayTeamCsv: string | null;
     round: number;
+    type: MatchType;
     date: string;
     teamId: number;
     locationId: number;
     awayTeam: Team;
     homeTeam: Team;
     location: Location;
+    players: PlayerOnMatch[];
   }
 
   interface Player {

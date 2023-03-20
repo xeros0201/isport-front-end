@@ -17,7 +17,7 @@ const SeasonDropdown = ({
   touched,
   label,
   required,
-  disabled,
+  disabled = false,
   asInput,
 }: SeasonDropdown) => {
   const {
@@ -36,10 +36,9 @@ const SeasonDropdown = ({
 
   // Fetch as soon as a leagueId is provided
   useEffect(() => {
-    if (requireLeague && !leagueId) onChange("");
     if (!requireLeague && value) onChange(value);
     refetch();
-  }, [leagueId, requireLeague]);
+  }, [requireLeague, value]);
 
   // Format season options so they are input compatible
   const seasonOptions: InputOption[] = useMemo(() => {
