@@ -1,3 +1,4 @@
+import { DateTime } from "luxon";
 import * as reactIcon from "react-icons/all";
 import { _ReactIcon } from "../components/common/Icon/Icon";
 import { Role } from "./enums";
@@ -62,7 +63,24 @@ declare global {
     id: number;
     name: string;
     logo: string;
-    seasonId: string;
+    seasonId: number;
+    season: Season;
+  }
+
+  interface Player {
+    id: number;
+    name: string;
+    team_id: number;
+    playerNumber?: number;
+  }
+
+  interface AflResults {
+    id: number;
+    matchId: number;
+    teamId: number;
+    scorePrimary: number;
+    scoreSecondary: string;
+    team: Team;
   }
 
   interface Match {
@@ -74,13 +92,30 @@ declare global {
     awayTeamCsv: string | null;
     round: number;
     date: string;
+    dateOnly: string | null;
     teamId: number;
     locationId: number;
     awayTeam: Team;
     homeTeam: Team;
     location: Location;
+    aflResults: AflResults[];
+  }
+  interface ScoreDistribution {
+    name: string;
+    homeScore: number;
+    awayScore: number;
   }
 
+  interface Player {
+    id: number;
+    teamId: number;
+    name: string;
+    playerNumber: number;
+    leagueId: number;
+    createdDate: string;
+    team: Team;
+    league: League;
+  }
 }
 
 export {};
