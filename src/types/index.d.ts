@@ -87,18 +87,22 @@ declare global {
     homeTeam: Team;
     location: Location;
   }
+  interface ScoreDistribution {
+    name: string;
+    homeScore: number;
+    awayScore: number;
+  }
 
   interface Player {
-    id: number,
-    teamId: number,
-    name: string,
-    playerNumber: number,
-    leagueId: number,
-    createdDate: string,
+    id: number;
+    teamId: number;
+    name: string;
+    playerNumber: number;
+    leagueId: number;
+    createdDate: string;
     team: Team;
     league: League;
   }
-
 }
 
 export {};
