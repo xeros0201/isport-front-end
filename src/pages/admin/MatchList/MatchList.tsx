@@ -14,6 +14,7 @@ const MatchList = () => {
     const [leagueId, setLeagueId] = useSearchParamsState("leagueId", "");
     const [seasonId, setSeasonId] = useSearchParamsState("seasonId", "");
     const [teamName, setTeamName] = useSearchParamsState("teamName", "");
+    const [isSeasonIdProvided, setIsSeasonIdProvided] = useState(false);
 
     // Fetch data
     const { isLoading, data: matches, refetch } = useQuery(
@@ -23,6 +24,7 @@ const MatchList = () => {
     // Fetch as soon as a seasonId is provided
     useEffect(() => {
         if (!seasonId) return;
+        setIsSeasonIdProvided(true);
         refetch();
     }, [seasonId]);
 
@@ -51,7 +53,13 @@ const MatchList = () => {
                 teamName={teamName}
                 onTeamNameChange={setTeamName}
             />
-            <MatchTable data={filteredMatches} isLoading={isLoading} />
+            {
+                isSeasonIdProvided ?
+                    <MatchTable data={filteredMatches} isLoading={isLoading} />
+                    :
+                    <p>Please select league and season</p>
+            }
+            
         </Page>
     );
 };
