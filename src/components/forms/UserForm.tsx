@@ -142,8 +142,8 @@ const UserForm = ({ id }: UserFormProps) => {
         asInput
         label="Role"
         onChange={formik.handleChange("role")}
-        value={formik.values.role}
         required
+        value={formik.values.role}
       />
       <CheckboxInput
         label={"Status"}

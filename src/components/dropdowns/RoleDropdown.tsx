@@ -21,7 +21,7 @@ const RoleDropdown = ({
 
     return data.map((role) => ({
       value: role,
-      label: role
+      label: role.charAt(0) + role.slice(1).toLowerCase()
     }));
   }, [data]);
 
@@ -30,17 +30,17 @@ const RoleDropdown = ({
 
   return (
     <DropdownInput
-      label={label}
-      value={value}
-      onChange={onChange}
-      error={error}
-      touched={touched}
-      required={required}
+      asInput={asInput}
       disabled={disabled}
+      error={error}
+      isFetching={isLoading}
+      label={label}
+      onChange={onChange}
       options={roleOptions}
       placeholder="Select Roles"
-      asInput={asInput}
-      isFetching={isLoading}
+      required={required}
+      touched={touched}
+      value={value}
     />
   );
 };
