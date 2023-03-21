@@ -21,7 +21,7 @@ interface TextInputProps extends InputProps, FocusProps<HTMLInputElement> {
    */
   icon?: ReactIcon;
   /**
-   * 
+   * Set no margin
    */
   noMargin?: boolean;
 }
