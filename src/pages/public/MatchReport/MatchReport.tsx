@@ -1,9 +1,13 @@
 import ScoreDistributionChart from "../../../components/charts/ScoreDistributionChart";
 import { useState } from "react";
 import { Page, TabContainer, TabSelect } from "../../../components/layout";
+import { useNavigate } from "react-router-dom";
+import MatchReportBanner from "./components/MatchReportBanner/MatchReportBanner";
+import { Button } from "../../../components/common";
 
 const MatchReport = () => {
   const [selectedTab, setSelectedTab] = useState(0);
+  const navigate = useNavigate();
 
   const renderDisposables = () => {
     return (
@@ -32,7 +36,27 @@ const MatchReport = () => {
 
   return (
     <Page title="Match Report">
-      <h1>Match Report</h1>
+      <Button
+        label="QAFL, Round 21"
+        onClick={() => navigate(-1)}
+        type="transparent"
+        icon="IoChevronBackOutline"
+      />
+      <MatchReportBanner
+        data={{
+          leagueName: "AFL Queensland, 2022",
+          time: "Saturday, 04 June 2022, 02:00 PM",
+          location: "Zupps Aspley Oval / Graham Road 1",
+          homeTeamName: "BROADBEACH",
+          homeTeamLogo: "/public/broadbeach.png",
+          homeTeamScore: 95,
+          homeTeamSecondScore: 14.11,
+          awayTeamName: "ASPLEY",
+          awayTeamLogo: "/public/broadbeach.png",
+          awayTeamScore: 67,
+          awayTeamSecondScore: 9.13,
+        }}
+      ></MatchReportBanner>
       <TabSelect
         tabs={["Match Overview", "Match Statistics", "Game Leaders"]}
         selectedTab={selectedTab}
