@@ -3,8 +3,8 @@
 
 .match-fixture {
     background: $white;
-    margin-bottom: 10px;
-    padding: 10px 40px 10px 40px;
+    margin-top: $margin-top-medium;
+    padding: $padding-component;
 
     > .row {
         margin-top: 0;

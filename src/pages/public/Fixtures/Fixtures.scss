@@ -1,3 +1,7 @@
-.date {
-    margin-bottom: 10px;
+@import '../../../styles/variables.scss';
+
+.fixtures {
+    &__fixture-group {
+        margin-top: $margin-top-large;
+    }
 }

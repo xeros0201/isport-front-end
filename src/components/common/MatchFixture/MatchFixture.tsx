@@ -79,7 +79,7 @@ const MatchFixtures = ({matchFixture} : MatchFixtureProps) => {
                     label="Match Report"
                     type="outlined"
                     size="small"
-                    onClick={() => navigate(`/match-report`)}
+                    onClick={() => navigate(`/match-report?id=${matchFixture.id}`)}
                 />
             </Row>
         </div>

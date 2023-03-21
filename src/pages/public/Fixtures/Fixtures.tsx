@@ -1,7 +1,7 @@
 import { useQuery } from "react-query";
 import { useMemo, useEffect } from "react";
 import { getMatchesBySeason } from "../../../api/matches";
-import MatchFixtures from "../../../components/common/MatchFixtures/MatchFixture";
+import MatchFixtures from "../../../components/common/MatchFixture/MatchFixture";
 import { RoundFilter } from "../../../components/filters";
 import { Page } from "../../../components/layout";
 import useSearchParamsState from "../../../hooks/useSearchParamsState";
@@ -68,20 +68,19 @@ const Fixtures = () => {
         round={round}
         onRoundChange={setRound}
       />
-      <h1>Fixtures</h1>
       {
         !isEmptyObject(groupByDate) ? Object.entries(groupByDate).map((item: any) => {
           const date: string = item[0];
           const match: Match = item[1][0];
           return (
-          <>
-            <div className="date">{date}</div>
-            <MatchFixtures matchFixture={match}/>
-          </>
+            <div className="fixtures__fixture-group">
+              <div className="date">{date}</div>
+              <MatchFixtures matchFixture={match}/>
+            </div>
           )
         })
         :
-        <div>Please select League and Season!!!</div>
+        <div>Please select league and season</div>
       }
     </Page>
   );
