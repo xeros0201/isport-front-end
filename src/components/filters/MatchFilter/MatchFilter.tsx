@@ -24,7 +24,7 @@ const MatchFilter = ({
     return (
         <div className="match-filter">
             <Row alignItems="center" justifyContent="flex-start" disableWrapping noFlex isWrapRowItem={false}>
-                <div style={{flex: 10}}>
+                <div className="match-filter__team-search">
                     <TextInput
                         placeholder="Search..."
                         value={teamName}
@@ -34,13 +34,13 @@ const MatchFilter = ({
                         noMargin
                     />
                 </div>
-                <div style={{flex: 1}}>
+                <div className="match-filter__league">
                     <LeagueDropdown
                         value={leagueId}
                         onChange={onLeagueChange}
                     />
                 </div>
-                <div style={{flex: 1}}>
+                <div className="match-filter__season">
                     <SeasonDropdown
                         value={seasonId}
                         onChange={onSeasonChange}
