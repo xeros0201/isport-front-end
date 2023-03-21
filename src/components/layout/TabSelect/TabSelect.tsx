@@ -1,13 +1,12 @@
-import { FC } from 'react';
 import { Button } from '../../common';
 import './TabSelect.scss';
 
-interface Props {
+interface TabSelectProps {
   selectedTab: number;
   setSelectedTab: (value: number) => void;
 }
 
-const TabSelect = ({ selectedTab, setSelectedTab }: Props) => {
+const TabSelect = ({ selectedTab, setSelectedTab }: TabSelectProps) => {
 
   return (
     <div className='tab-select'>

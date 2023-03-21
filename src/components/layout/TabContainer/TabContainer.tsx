@@ -2,11 +2,11 @@ import classNames from 'classnames';
 import { PropsWithChildren } from 'react';
 import './TabContainer.scss'
 
-interface Props extends PropsWithChildren {
+interface TabContainerProps extends PropsWithChildren {
   selected: boolean
 }
 
-const TabContainer = ({ selected, children }: Props) => {
+const TabContainer = ({ selected, children }: TabContainerProps) => {
 
   return (
     <div
