@@ -48,19 +48,7 @@ const Test = () => {
             error={formik.errors.text2}
             touched={formik.touched.text2}
             icon="IoSearch"
-<<<<<<< HEAD
-            />
-                    <LeagueDropdown
-          label="League"
-          value={formik.values.league}
-          onChange={formik.handleChange("league")}
-          error={formik.errors.league}
-          touched={formik.touched.league}
-          asInput
-        />
-=======
           />
->>>>>>> remotes/origin/develop
         </Row>
         <DateInput
           label="Date"

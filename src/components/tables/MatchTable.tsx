@@ -19,7 +19,7 @@ interface MatchTableProps {
 
 const MatchTable = ({ data, isLoading = false }: MatchTableProps) => {
     const navigate = useNavigate();
-
+    
     // Setup columns
     const columns = useMemo<ColumnDef<Match>[]>(
         () => [
@@ -28,7 +28,7 @@ const MatchTable = ({ data, isLoading = false }: MatchTableProps) => {
             footer: (props) => props.column.id,
             cell: (info) => <p>{info.getValue() as string}</p>,
             sortingFn: "alphanumeric",
-            accessorFn: (row) => row.homeTeamName ?? "Team 1",
+            accessorFn: (row) => row.homeTeam.name,
             enableSorting: true,
           },
           {
@@ -36,7 +36,7 @@ const MatchTable = ({ data, isLoading = false }: MatchTableProps) => {
             footer: (props) => props.column.id,
             cell: (info) => <p>{info.getValue() as string}</p>,
             sortingFn: "alphanumeric",
-            accessorFn: (row) => row.awayTeamName ?? "Team 2",
+            accessorFn: (row) => row.awayTeam.name,
             enableSorting: true,
           },
           {
@@ -44,7 +44,7 @@ const MatchTable = ({ data, isLoading = false }: MatchTableProps) => {
             footer: (props) => props.column.id,
             cell: (info) => <p>{info.getValue() as string}</p>,
             sortingFn: "alphanumeric",
-            accessorFn: (row) => row.leagueName ?? "League 1",
+            accessorFn: (row) => row.season.league.name,
             enableSorting: true,
           },
           {
@@ -52,7 +52,7 @@ const MatchTable = ({ data, isLoading = false }: MatchTableProps) => {
             footer: (props) => props.column.id,
             cell: (info) => <p>{info.getValue() as string}</p>,
             sortingFn: "alphanumeric",
-            accessorFn: (row) => row.seasonName ?? "2023",
+            accessorFn: (row) => row.season.name,
             enableSorting: true,
           },
           {
@@ -74,7 +74,7 @@ const MatchTable = ({ data, isLoading = false }: MatchTableProps) => {
             cell: (info) => (
                 <Button
                     label="Match Report"
-                    type="transparent-border"
+                    type="outlined"
                     // icon="IoPencilOutline"
                     size="small"
                     onClick={() => navigate(`/admin/match-report`)}

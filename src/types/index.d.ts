@@ -1,4 +1,3 @@
-import { DateTime } from "luxon";
 import * as reactIcon from "react-icons/all";
 import { _ReactIcon } from "../components/common/Icon/Icon";
 import { Role } from "./enums";
@@ -54,45 +53,38 @@ declare global {
     league: League;
   }
 
-<<<<<<< HEAD
-=======
   interface Location {
     id: string;
     name: string;
   }
 
->>>>>>> remotes/origin/develop
   interface Team {
     id: number;
     name: string;
     logo: string;
-<<<<<<< HEAD
-    seasonId: number;
-=======
     seasonId: string;
->>>>>>> remotes/origin/develop
+  }
+
+  interface Player {
+    id: number;
+    name: string;
+    team_id: number;
+    playerNumber?: number;
+  }
+
+  interface AflResults {
+    id: number;
+    matchId: number;
+    teamId: number;
+    scorePrimary: number;
+    scoreSecondary: string;
+    team: Team;
   }
 
   interface Match {
     id: number;
-<<<<<<< HEAD
-    leagueId: number;
-    leagueName: string;
     seasonId: number;
-    seasonName: string;
-    homeTeamId: number;
-    homeTeamName: string;
-    homeTeamCsv: string;
-    awayTeamId: number;
-    awayTeamName: string;
-    awayTeamCsv: string;
-    round: number;
-    date: Date;
-    teamId: number;
-    locationId: number;
-  }
-=======
-    seasonId: number;
+    season: Season;
     homeTeamId: number | null;
     homeTeamCsv: string | null;
     awayTeamId: number | null;
@@ -104,9 +96,20 @@ declare global {
     awayTeam: Team;
     homeTeam: Team;
     location: Location;
+    aflResults: AflResults[];
   }
 
->>>>>>> remotes/origin/develop
+  interface Player {
+    id: number,
+    teamId: number,
+    name: string,
+    playerNumber: number,
+    leagueId: number,
+    createdDate: string,
+    team: Team;
+    league: League;
+  }
+
 }
 
 export {};
