@@ -4,28 +4,24 @@ import './TabSelect.scss';
 interface TabSelectProps {
   selectedTab: number;
   setSelectedTab: (value: number) => void;
+  tabs: string[];
 }
 
-const TabSelect = ({ selectedTab, setSelectedTab }: TabSelectProps) => {
+const TabSelect = ({ selectedTab, setSelectedTab, tabs }: TabSelectProps) => {
 
   return (
     <div className='tab-select'>
-      <Button
-        label="Match Overview"
-        onClick={() => { setSelectedTab(0) }}
-        type={selectedTab === 0 ? 'primary' : 'transparent'}
-
-      />
-      <Button
-        label="Match Statistics"
-        onClick={() => { setSelectedTab(1) }}
-        type={selectedTab === 1 ? 'primary' : 'transparent'}
-      />
-      <Button
-        label="Game Leaders"
-        onClick={() => { setSelectedTab(2) }}
-        type={selectedTab === 2 ? 'primary' : 'transparent'}
-      />
+      {tabs.map((tab, index) => {
+        return (
+          <Button
+            key={index}
+            label={tab}
+            onClick={() => { setSelectedTab(index) }}
+            type={selectedTab === index ? 'primary' : 'transparent'}
+          />
+        )
+      })
+      }
     </div>
   );
 };

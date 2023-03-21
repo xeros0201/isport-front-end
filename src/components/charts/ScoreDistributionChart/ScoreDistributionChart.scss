@@ -2,7 +2,8 @@
 
 .score-distribution-wrapper {
     background-color: white;
-    padding: 1rem;
+    padding: $padding-component;
+    width: 100%;
 
     .score-distribution {
         position: relative;

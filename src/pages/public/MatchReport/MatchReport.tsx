@@ -5,16 +5,12 @@ import { Page, TabContainer, TabSelect } from "../../../components/layout";
 const MatchReport = () => {
   const [selectedTab, setSelectedTab] = useState(0);
 
-  return (
-    <Page title="Match Report">
-      <h1>Match Report</h1>
-      <TabSelect selectedTab={selectedTab} setSelectedTab={setSelectedTab} />
-      <div>
-        <TabContainer selected={selectedTab === 0}>
-        <ScoreDistributionChart
+  const renderDisposables = () => {
+    return (
+      <ScoreDistributionChart
           data={[
             {
-              name: "Diposables",
+              name: "Disposables",
               homeScore: 100,
               awayScore: 223,
             },
@@ -29,7 +25,22 @@ const MatchReport = () => {
               awayScore: 223,
             },
           ]}
-        ></ScoreDistributionChart>
+        />
+    );
+  }
+
+
+  return (
+    <Page title="Match Report">
+      <h1>Match Report</h1>
+      <TabSelect
+        tabs={["Match Overview", "Match Statistics", "Game Leaders"]}
+        selectedTab={selectedTab}
+        setSelectedTab={setSelectedTab}
+      />
+      <div>
+        <TabContainer selected={selectedTab === 0}>
+          {renderDisposables()}
         </TabContainer>
         <TabContainer selected={selectedTab === 1}>
           Tab 1
