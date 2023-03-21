@@ -1,0 +1,10 @@
+.tab-select{
+  display: flex;
+  justify-content: flex-end;
+}
+
+@media print {
+  .tab-select {
+    display: none
+  }
+}
