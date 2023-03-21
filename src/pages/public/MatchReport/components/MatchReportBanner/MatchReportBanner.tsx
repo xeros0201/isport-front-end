@@ -1,15 +1,25 @@
-import React from "react";
 import { AiOutlineCalendar } from "react-icons/ai";
 import { GiTrophyCup } from "react-icons/gi";
 import { HiOutlineLocationMarker } from "react-icons/hi";
 import "./MatchReportBanner.scss";
 
 interface MatchReportBannerProps {
-  data: MatchReportBanner;
-  isLoading?: boolean;
+  data: {
+    leagueName: string;
+    time: string;
+    location: string;
+    homeTeamName: string;
+    awayTeamName: string;
+    homeTeamLogo: string;
+    awayTeamLogo: string;
+    homeTeamScore: number;
+    homeTeamSecondScore: number;
+    awayTeamScore: number;
+    awayTeamSecondScore: number;
+  }
 }
 
-function MatchReportBanner({ data, isLoading }: MatchReportBannerProps) {
+function MatchReportBanner({ data }: MatchReportBannerProps) {
   const {
     leagueName,
     time,
@@ -21,8 +31,9 @@ function MatchReportBanner({ data, isLoading }: MatchReportBannerProps) {
     homeTeamScore,
     homeTeamSecondScore,
     awayTeamScore,
-    awayTeamSecondScore,
+    awayTeamSecondScore
   } = data;
+  
   return (
     <div className="match-report-banner">
       <div className="match-report-banner--header">

@@ -1,4 +1,5 @@
 import { Button } from '../../common';
+import Row from '../Row/Row';
 import './TabSelect.scss';
 
 interface TabSelectProps {
@@ -10,7 +11,7 @@ interface TabSelectProps {
 const TabSelect = ({ selectedTab, setSelectedTab, tabs }: TabSelectProps) => {
 
   return (
-    <div className='tab-select'>
+    <Row justifyContent="flex-end" noFlex removeSpacing>
       {tabs.map((tab, index) => {
         return (
           <Button
@@ -22,7 +23,7 @@ const TabSelect = ({ selectedTab, setSelectedTab, tabs }: TabSelectProps) => {
         )
       })
       }
-    </div>
+    </Row>
   );
 };
 

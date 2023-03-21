@@ -2,7 +2,7 @@ import ScoreDistributionChart from "../../../components/charts/ScoreDistribution
 import { useState } from "react";
 import { Page, TabContainer, TabSelect } from "../../../components/layout";
 import { useNavigate } from "react-router-dom";
-import MatchReportBanner from "./components/MatchReportBanner";
+import MatchReportBanner from "./components/MatchReportBanner/MatchReportBanner";
 import { Button } from "../../../components/common";
 
 const MatchReport = () => {
@@ -38,7 +38,7 @@ const MatchReport = () => {
     <Page title="Match Report">
       <Button
         label="QAFL, Round 21"
-        onClick={() => navigate("/admin/matches")}
+        onClick={() => navigate(-1)}
         type="transparent"
         icon="IoChevronBackOutline"
       />

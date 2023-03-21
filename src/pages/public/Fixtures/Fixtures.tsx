@@ -56,7 +56,6 @@ const Fixtures = () => {
 
   //Group by date
   const groupByDate = groupBy(filteredMatches, "dateOnly");
-  console.log(groupByDate);
 
   return (
     <Page title="Fixtures">
@@ -80,7 +79,8 @@ const Fixtures = () => {
           )
         })
         :
-        <div>Please select league and season</div>
+        <p>Please select league and season</p>
+        
       }
     </Page>
   );
