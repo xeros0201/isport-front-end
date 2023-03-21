@@ -47,6 +47,8 @@ const Logo = ({
     width: isSquare ? height : 'auto'
   }
 
+  if (!url || url === "null") return null;
+
   return (
     <div className={logoClasses} style={logoStyles} >
       <img
