@@ -7,6 +7,7 @@ const Fixtures = () => {
   const [seasonId, setSeasonId] = useSearchParamsState("seasonId", "");
   const [round, setRound] = useSearchParamsState("round", "");
 
+
   return (
     <Page title="Fixtures">
       <RoundFilter

@@ -1,0 +1,17 @@
+@import "../../../styles/variables";
+
+.tab-container {
+  display: none;
+  padding: $padding-input;
+  margin-top: $margin-top-medium;
+
+  &--selected {
+    display: flex;
+  }
+}
+
+@media print {
+  .tab-container {
+    display: flex !important;
+  }
+}
