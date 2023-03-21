@@ -2,64 +2,72 @@ import { useFormik } from "formik";
 import { useState } from "react";
 import { useQuery } from "react-query";
 import { useNavigate } from "react-router-dom";
-import {
-  createTeam,
-  getTeam,
-  TeamFormValues,
-  updateTeam,
-} from "../../api/teams";
-
+import { 
+  createPlayer, getPlayer, 
+  PlayerFormValues, updatePlayer 
+} from "../../api/players";
 import { Button, Spinner } from "../common";
-import { LeagueDropdown, SeasonDropdown } from "../dropdowns";
+import { LeagueDropdown, SeasonDropdown, TeamDropdown } from "../dropdowns";
 import { InputError, TextInput } from "../input";
-import ImageInput from "../input/ImageInput/ImageInput";
 import { Form } from "../layout";
+const adminPrefix = import.meta.env.VITE_ADMIN_PREFIX;
 
-const TeamForm = ({ id }: FormProps) => {
+const PlayerForm = ({ id }: FormProps) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const navigate = useNavigate();
 
   // Setup react-query for fetching data
   const { isLoading, data, refetch, error } = useQuery(
-    ["getTeam", { id }],
+    ["getPlayer", {}],
     async () => {
-      if (id) return getTeam(+id);
+      if (id) return getPlayer(+id);
     }
   );
 
   // Setup initial values
-  const initialValues: TeamFormValues = {
+  const initialValues: PlayerFormValues = {
     name: data?.name ?? "",
-    logo: data?.logo ?? "",
-    leagueId: data?.season.league.id.toString() ?? "",
-    seasonId: data?.seasonId?.toString() ?? "",
+    playerNumber: data?.playerNumber.toString() ??  "",
+    teamId: data?.teamId.toString() ?? "",
+    leagueId: "",
+    seasonId: "",
   };
 
   // Setup submit handler
-  const onSubmit = async (values: TeamFormValues) => {
+  const onSubmit = async (values: PlayerFormValues) => {
     const update = async () => {
       if (!id) return;
-      await updateTeam(id, values);
+      await updatePlayer(id, values);
       refetch();
     };
     const create = async () => {
-      await createTeam(values);
-      navigate("/admin/teams");
+      await createPlayer(values);
+      navigate(`${adminPrefix}/players`);
     };
 
     setIsSubmitting(true);
-    !!id ? await update() : await create();
+    try {
+      !!id ? await update() : await create();
+    } catch (error) {
+      alert(JSON.stringify(error))
+    }
     setIsSubmitting(false);
   };
 
   // Setup validation
-  const validate = (values: TeamFormValues) => {
+  const validate = (values: PlayerFormValues) => {
     const errors: { [key: string]: string } = {};
     if (!values.name) {
       errors.name = "Required";
     }
-    if (values.logo.length === 0) {
-      errors.logo = "Required";
+    if (!values.playerNumber) {
+      errors.playerNumber = "Required";
+    }
+    if (!values.leagueId) {
+      errors.leagueId = "Required";
+    }
+    if (!values.teamId) {
+      errors.teamId = "Required";
     }
     return errors;
   };
@@ -85,48 +93,61 @@ const TeamForm = ({ id }: FormProps) => {
   return (
     <Form onSubmit={formik.handleSubmit}>
       <TextInput
-        label="Team Name"
-        placeholder="Type team name..."
+        label="Player Name"
+        placeholder="Type player name..."
         value={formik.values.name}
         onChange={formik.handleChange("name")}
         touched={formik.touched.name}
         error={formik.errors.name}
         required
       />
-      <ImageInput
-        label="Team Logo"
+      <TextInput
+        label="Player Number"
+        placeholder="Type player number..."
+        value={formik.values.playerNumber}
+        onChange={formik.handleChange("playerNumber")}
+        touched={formik.touched.playerNumber}
+        error={formik.errors.playerNumber}
         required
-        value={formik.values.logo}
-        onChange={formik.handleChange("logo")}
-        touched={formik.touched.logo}
-        error={formik.errors.logo}
       />
       <LeagueDropdown
         label="League"
         value={formik.values.leagueId}
         onChange={formik.handleChange("leagueId")}
-        error={formik.errors.leagueId}
         touched={formik.touched.leagueId}
+        error={formik.errors.leagueId}
         required
         asInput
       />
-      <SeasonDropdown
+      {formik.values.leagueId && <SeasonDropdown
         label="Season"
         leagueId={formik.values.leagueId}
         value={formik.values.seasonId}
         onChange={formik.handleChange("seasonId")}
         error={formik.errors.seasonId}
         touched={formik.touched.seasonId}
+        requireLeague
+        required
+        asInput
+      />}
+      <TeamDropdown
+        label="Team"
+        seasonId={formik.values.seasonId}
+        value={formik.values.teamId}
+        onChange={formik.handleChange("teamId")}
+        touched={formik.touched.teamId}
+        error={formik.errors.teamId}
+        requireSeason
         required
         asInput
       />
       <Button
-        label={id ? "Save" : "Add Team"}
-        onClick={formik.submitForm}
+        label={initialValues ? "Save" : "Add Player"}
+        onClick={() => formik.submitForm()}
         isSubmit
       />
     </Form>
   );
 };
 
-export default TeamForm;
+export default PlayerForm;
