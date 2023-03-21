@@ -19,7 +19,7 @@ const LeagueDropdown = ({
     // Format league options so they are input compatible
     const leagueOptions: InputOption[] = useMemo(() => {
         if (!data) return [];
-
+        
         return data.map((league) => ({
             value: league.id.toString(),
             label: league.name
