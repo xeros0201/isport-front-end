@@ -36,3 +36,8 @@ export const logout = async (): Promise<boolean> => {
         .then((response) => response.status === 200)
         .catch(() => false);
 };
+
+export const getRoles = async (): Promise<string[]> => {
+  const response = await axios.get<string[]>("/auth/roles", authConfig);
+  return response.data;
+};

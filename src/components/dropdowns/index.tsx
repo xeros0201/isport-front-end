@@ -3,6 +3,7 @@ import AccountDropdown from "./AccountDropdown";
 import NavigationDropdown from "./NavigationDropdown";
 import SeasonDropdown from "./SeasonDropdown";
 import TeamDropdown from "./TeamDropdown";
+import RoleDropDown from './RoleDropdown';
 
 export {
   LeagueDropdown,
@@ -10,4 +11,5 @@ export {
   NavigationDropdown,
   SeasonDropdown,
   TeamDropdown,
+  RoleDropDown,
 };

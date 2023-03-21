@@ -6,6 +6,7 @@ export interface UserFormValues {
   lastName: string;
   password: string;
   active: "true" | ""
+  role: string
 }
 
 /**
