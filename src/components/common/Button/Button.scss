@@ -90,6 +90,12 @@
     background-color: $transparent;
   }
 
+  &--outlined {
+    color: $black;
+    background-color: $white;
+    border-color: $black;
+  }
+
   &--disabled {
     @include disabled; 
   } 
