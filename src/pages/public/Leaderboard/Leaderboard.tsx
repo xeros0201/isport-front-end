@@ -1,5 +1,4 @@
 import { Page } from "../../../components/layout";
-import LeaderboardTable from "../../../components/tables/LeaderBoardTable";
 
 const Leaderboard = () => {
     return (
