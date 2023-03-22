@@ -116,6 +116,23 @@ declare global {
     team: Team;
     league: League;
   }
+
+  interface PlayersOnAflResults {
+    id: number;
+    match: Match;
+    aflResultProperties: AflResultProperties;
+    player: Player;
+    value: number;
+  }
+
+  interface AflResultProperties {
+    id: number;
+    type: string;
+    name: string;
+    alias: string;
+    parentId: number;
+  }
+  
 }
 
 export {};
