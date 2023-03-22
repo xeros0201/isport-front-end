@@ -7,7 +7,7 @@ interface RoundInputProps extends InputProps {
   seasonId: string;
 }
 
-const RoundInputDropdown = ({
+const RoundDropdown = ({
   value,
   onChange,
   disabled,
@@ -82,4 +82,4 @@ const RoundInputDropdown = ({
   )
 };
 
-export default RoundInputDropdown
+export default RoundDropdown

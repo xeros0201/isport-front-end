@@ -1,5 +1,5 @@
 import { Logo } from "../../common";
-import { LeagueDropdown, RoundInputDropdown, SeasonDropdown } from "../../dropdowns";
+import { LeagueDropdown, RoundDropdown, SeasonDropdown } from "../../dropdowns";
 import { Row } from "../../layout";
 import "./RoundFilter.scss";
 import { RoundInput } from "../../input";
@@ -39,7 +39,7 @@ const RoundFilter = ({
             onChange={onSeasonChange}
           />
           {dropdown
-            && <RoundInputDropdown
+            && <RoundDropdown
               onChange={onRoundChange}
               seasonId={seasonId}
               value={round}
