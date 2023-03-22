@@ -7,14 +7,12 @@ import DropdownInput from "../DropdownInput/DropdownInput";
 
 interface RoundInputProps extends InputProps {
   seasonId: string;
-  dropdown?: boolean;
 }
 
 const RoundInput = ({
   value,
   onChange,
   disabled,
-  dropdown = false,
   error,
   htmlFor,
   label,
@@ -66,42 +64,7 @@ const RoundInput = ({
     )
   }
 
-  // Format round options so they are input compatible
-  const roundOptions: InputOption[] = useMemo(() => {
-    if (!rounds) return [];
-    return rounds.map((round) => ({
-      value: round.toString(),
-      label: round.toString()
-    }));
-  }, [rounds]);
-
-  const allOption: InputOption = {
-    value: 'All',
-    label: 'All'
-  }
-
-  if (dropdown) {
-    return (
-      <div style={{ padding: '1rem' }}>
-        <DropdownInput
-          asInput
-          disabled={disabled}
-          error={error}
-          htmlFor={htmlFor}
-          isFetching={isLoading}
-          label={label}
-          onChange={(item) => onChange(item === 'All' ? '' : item)}
-          options={[
-            allOption,
-            ...roundOptions
-          ]}
-          required={required}
-          touched={touched}
-          value={value === '' ? 'All' : value}
-        />
-      </div>
-    )
-  }
+  if(!seasonId) return <></>;
 
   return (
     <div className="roundinput">
