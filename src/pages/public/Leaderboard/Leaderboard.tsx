@@ -5,7 +5,6 @@ const Leaderboard = () => {
     return (
         <Page title="Leaderboard">
             <h1>Leaderboard</h1>
-            {/* <LeaderboardTable /> */}
         </Page>
     );
 };
