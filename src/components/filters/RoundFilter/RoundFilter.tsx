@@ -11,6 +11,7 @@ interface RoundFilterProps {
     onLeagueChange: (value: string) => void;
     onSeasonChange: (value: string) => void;
     onRoundChange: (value: string) => void;
+    dropdown?: boolean
 }
 
 const RoundFilter = ({
@@ -20,6 +21,7 @@ const RoundFilter = ({
     onLeagueChange,
     onSeasonChange,
     onRoundChange,
+    dropdown
 }: RoundFilterProps) => {
 
     return (
@@ -42,6 +44,7 @@ const RoundFilter = ({
                 onChange={onRoundChange}
                 value={round}
                 seasonId={seasonId}
+                dropdown={dropdown}
             />
         </div>
     );

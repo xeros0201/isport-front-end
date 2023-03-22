@@ -68,11 +68,11 @@ const Fixtures = () => {
         onRoundChange={setRound}
       />
       {
-        !isEmptyObject(groupByDate) ? Object.entries(groupByDate).map((item: any) => {
+        !isEmptyObject(groupByDate) ? Object.entries(groupByDate).map((item: any, i) => {
           const date: string = item[0];
           const match: Match = item[1][0];
           return (
-            <div className="fixtures__fixture-group">
+            <div key={i} className="fixtures__fixture-group">
               <div className="date">{date}</div>
               <MatchFixtures matchFixture={match}/>
             </div>
