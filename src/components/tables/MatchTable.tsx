@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { Table, Tbody, Td, Th, Thead, Tr } from "../../components/layout/Table";
+import { Table, Tbody, Td, Th, Thead, Tr } from "../layout/Table";
 import { Button, Logo, Spinner } from "../common";
 import { DateTime } from "luxon";
 import {
@@ -11,62 +11,52 @@ import {
     useReactTable,
   } from "@tanstack/react-table";
 import { useMemo, useState } from "react";
-import { Row } from "../layout";
 
-interface SeasonTableProps {
-    data: Season[];
+interface MatchTableProps {
+    data: Match[];
     isLoading?: boolean;
 }
 
-const SeasonTable = ({ data, isLoading = false }: SeasonTableProps) => {
+const MatchTable = ({ data, isLoading = false }: MatchTableProps) => {
     const navigate = useNavigate();
-
+    
     // Setup columns
-    const columns = useMemo<ColumnDef<Season>[]>(
+    const columns = useMemo<ColumnDef<Match>[]>(
         () => [
           {
-            header: "Season Name",
+            header: "Home team",
             footer: (props) => props.column.id,
             cell: (info) => <p>{info.getValue() as string}</p>,
             sortingFn: "alphanumeric",
-            accessorFn: (row) => row.name,
+            accessorFn: (row) => row.homeTeam.name,
             enableSorting: true,
           },
           {
-            header: "Start Date",
+            header: "Away team",
             footer: (props) => props.column.id,
-            cell: ({ getValue }) => {
-                const dateTime = DateTime
-                    .fromISO(getValue() as string)
-                    .toISODate();
-                return <p>{dateTime}</p>
+            cell: (info) => <p>{info.getValue() as string}</p>,
+            sortingFn: "alphanumeric",
+            accessorFn: (row) => row.awayTeam.name,
+            enableSorting: true,
+          },
+          {
+            header: "League",
+            footer: (props) => props.column.id,
+            cell: (info) => {
+                const {logo, name} = info.getValue() as League;
+                return <Logo url={logo} label={name} height={40} />;
             },
-            sortingFn: "datetime",
-            accessorFn: (row) => row.startDate,
-            enableSorting: true,
+            sortingFn: "alphanumeric",
+            accessorFn: (row) => row.season.league,
+            enableSorting: false,
           },
           {
-            header: "End Date",
+            header: "Season",
             footer: (props) => props.column.id,
-            cell: ({ getValue }) => {
-                const dateTime = DateTime
-                    .fromISO(getValue() as string)
-                    .toISODate();
-                return <p>{dateTime}</p>
-            },
-            sortingFn: "datetime",
-            accessorFn: (row) => row.endDate,
+            cell: (info) => <p>{info.getValue() as string}</p>,
+            sortingFn: "alphanumeric",
+            accessorFn: (row) => row.season.name,
             enableSorting: true,
-          },
-          {
-            header: "League Name",
-            footer: (props) => props.column.id,
-            cell: (info) => (
-                <Logo url="/league-logo.png" height={40} label={info.getValue() as string} />
-            ),
-            sortingFn: "text",
-            accessorFn: (row) => row.league.name,
-            enableSorting: true
           },
           {
             header: "Date Created",
@@ -78,8 +68,24 @@ const SeasonTable = ({ data, isLoading = false }: SeasonTableProps) => {
                 return <p>{dateTime}</p>
             },
             sortingFn: "datetime",
-            accessorFn: (row) => row.createdDate,
+            accessorFn: (row) => row.date,
             enableSorting: true,
+          },
+          {
+            header: "Match Report",
+            footer: (props) => props.column.id,
+            cell: (info) => (
+                <Button
+                    label="Match Report"
+                    type="outlined"
+                    // icon="IoPencilOutline"
+                    size="small"
+                    onClick={() => navigate(`/match-report?id=${info.getValue()}`)}
+                />
+            ),
+            sortingFn: "text",
+            accessorFn: (row) => row.id,
+            enableSorting: false,
           },
           {
             header: "Action",
@@ -90,7 +96,7 @@ const SeasonTable = ({ data, isLoading = false }: SeasonTableProps) => {
                     type="secondary"
                     icon="IoPencilOutline"
                     size="small"
-                    onClick={() => navigate(`/admin/seasons/edit?id=${info.getValue()}`)}
+                    onClick={() => navigate(`/admin/matches/edit?id=${info.getValue()}`)}
                 />
             ),
             sortingFn: "text",
@@ -117,7 +123,7 @@ const SeasonTable = ({ data, isLoading = false }: SeasonTableProps) => {
     if (isLoading) return <Spinner size="large" />
 
     // If no data
-    if (!isLoading && !data.length) return <p>No seasons found</p>;
+    if (!isLoading && !data.length) return <p>No matches found</p>;
 
     return (
         <Table >
@@ -153,4 +159,4 @@ const SeasonTable = ({ data, isLoading = false }: SeasonTableProps) => {
     )
 };
 
-export default SeasonTable;
+export default MatchTable;

@@ -86,6 +86,7 @@ declare global {
   interface Match {
     id: number;
     seasonId: number;
+    season: Season;
     homeTeamId: number | null;
     homeTeamCsv: string | null;
     awayTeamId: number | null;
