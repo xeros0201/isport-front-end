@@ -129,6 +129,7 @@ const TeamStats = () => {
         onSeasonChange={setSeasonId}
         round={round}
         onRoundChange={setRound}
+        dropdown
       />
       <h1>Team & Player Averages</h1>
       <AveragesTable

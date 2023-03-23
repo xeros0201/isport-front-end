@@ -49,7 +49,6 @@ const LoginForm = () => {
           error={formik.errors.email}
           type="email"
           required
-          variant="login"
         />
         <TextInput
           label="Password"
@@ -59,7 +58,6 @@ const LoginForm = () => {
           error={formik.errors.password}
           type="password"
           required
-          variant="login"
         />
         <Button
           label="Log In"
