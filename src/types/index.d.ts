@@ -133,6 +133,10 @@ declare global {
     parentId: number;
   }
   
+  interface Statistic {
+    id: number;
+    name: string;
+  }
 }
 
 export {};

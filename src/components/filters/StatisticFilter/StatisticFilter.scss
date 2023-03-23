@@ -1,0 +1,17 @@
+@import "../../../styles/variables";
+
+.statistic-filter {
+    background-color: $white;
+    > *:first-child {
+        padding: $padding-input;
+    }
+
+    .logo {
+        .logo__label { font-weight: bold; }
+    }
+
+    .dropdowninput {
+        .Dropdown-placeholder { font-weight: bold; }
+        .Dropdown-arrow { border-color: $cyan transparent transparent }
+    }
+}
