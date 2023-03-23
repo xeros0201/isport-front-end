@@ -6,6 +6,7 @@ import {
   createUser, getUser, 
   updateUser, UserFormValues 
 } from "../../api/users";
+import { Role } from "../../types";
 import { Button, Spinner } from "../common";
 import { RoleDropDown } from "../dropdowns";
 import { CheckboxInput, InputError, TextInput } from "../input";
@@ -32,7 +33,7 @@ const UserForm = ({ id }: UserFormProps) => {
     lastName: data?.lastName ?? "",
     password: "",
     active: data?.active === false ? "" : "true",
-    role: data?.role ?? 'ADMIN'
+    role: data?.role ?? Role.STAFF
   };
   
   // Setup submit handler

@@ -1,3 +1,4 @@
+import { Role } from "../types";
 import axios, { authConfig } from "./axios";
 
 export interface UserFormValues {
@@ -5,8 +6,8 @@ export interface UserFormValues {
   firstName: string;
   lastName: string;
   password: string;
-  active: "true" | ""
-  role: string
+  active: "true" | "";
+  role: Role;
 }
 
 /**
