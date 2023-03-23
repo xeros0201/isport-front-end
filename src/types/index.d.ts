@@ -116,6 +116,11 @@ declare global {
     team: Team;
     league: League;
   }
+
+  interface Statistic {
+    id: number;
+    name: string;
+  }
 }
 
 export {};
