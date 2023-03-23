@@ -42,10 +42,13 @@ const MatchTable = ({ data, isLoading = false }: MatchTableProps) => {
           {
             header: "League",
             footer: (props) => props.column.id,
-            cell: (info) => <p>{info.getValue() as string}</p>,
+            cell: (info) => {
+                const {logo, name} = info.getValue() as League;
+                return <Logo url={logo} label={name} height={40} />;
+            },
             sortingFn: "alphanumeric",
-            accessorFn: (row) => row.season.league.name,
-            enableSorting: true,
+            accessorFn: (row) => row.season.league,
+            enableSorting: false,
           },
           {
             header: "Season",
@@ -77,7 +80,7 @@ const MatchTable = ({ data, isLoading = false }: MatchTableProps) => {
                     type="outlined"
                     // icon="IoPencilOutline"
                     size="small"
-                    onClick={() => navigate(`/admin/match-report`)}
+                    onClick={() => navigate(`/match-report?id=${info.getValue()}`)}
                 />
             ),
             sortingFn: "text",
