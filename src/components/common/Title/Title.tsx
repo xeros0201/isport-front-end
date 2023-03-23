@@ -1,19 +1,8 @@
-import classNames from 'classnames';
 import { PropsWithChildren } from 'react';
-import './Title.scss'
 
-interface Props extends PropsWithChildren {
-  loginForm?: boolean
-}
-
-const Title = ({ children, loginForm = false }: Props) => {
-
-  // TODO - change styles for login
+const Title = ({ children }: PropsWithChildren) => {
   return (
-    <div className={classNames({
-      'title': true,
-      'title--login': loginForm
-    })}>
+    <div className={'title'}>
       <h1>
         {children}
       </h1>

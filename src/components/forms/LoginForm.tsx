@@ -5,7 +5,7 @@ import { login } from "../../api/auth";
 import { Button, Title } from "../common";
 import { CheckboxInput, TextInput } from "../input";
 import { Form } from "../layout";
-// TODO - login form scss
+import './LoginForm.scss';
 
 const LoginForm = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -29,19 +29,12 @@ const LoginForm = () => {
   });
 
   return (
-    <div style={{
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'center',
-      justifyContent: 'center',
-      backgroundColor: 'black',
-      height: '100%'
-    }}>
+    <div className="login-form">
       <div style={{ height: '50px' }}>
         <img src="/isports.png" style={{ height: '100%', width: 'auto' }} />
       </div>
       <Form onSubmit={formik.submitForm} fullWidth>
-        <Title loginForm>User Login</Title>
+        <Title>User Login</Title>
         <TextInput
           label="Email"
           value={formik.values.email}
@@ -71,7 +64,6 @@ const LoginForm = () => {
         <CheckboxInput
           checkboxLabel="Remember me"
           onChange={() => { }}
-          type='login'
           value={'true'}
         />
       </Form>

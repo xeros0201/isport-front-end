@@ -38,23 +38,4 @@
       }
     }
   }
-
-  // TODO - move style, change color on focus
-  &--variant-login {
-    margin-top: $margin-top-large !important;
-    .inputlabel{
-      .inputlabel__label{
-        color: $white
-      }
-    }
-    .textinput__input-wrap {  
-      .textinput__input {
-        background-color: $black;
-        border-width: 0 0 2px 0;
-        border-color: $cyan;
-        color: $white
-      }
-    }
-  }
-
 }

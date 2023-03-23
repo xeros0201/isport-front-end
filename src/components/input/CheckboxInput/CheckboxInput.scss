@@ -50,18 +50,6 @@
             transform: rotate(-45deg);
         }
     }
-
-    // TODO - move style
-    &--login{
-      .checkbox__input-wrap {
-        .checkmark {
-          background-color: $white;
-        }
-        .checkbox__label{
-          color: $white
-        }
-      }
-    }
 }
 
 .checkmark {
