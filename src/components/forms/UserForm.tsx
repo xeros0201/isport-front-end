@@ -8,7 +8,7 @@ import {
 } from "../../api/users";
 import { Role } from "../../types";
 import { Button, Spinner } from "../common";
-import { RoleDropDown } from "../dropdowns";
+import { RoleDropdown } from "../dropdowns";
 import { CheckboxInput, InputError, TextInput } from "../input";
 import { Form, Row } from "../layout";
 const adminPrefix = import.meta.env.VITE_ADMIN_PREFIX;
@@ -139,7 +139,7 @@ const UserForm = ({ id }: UserFormProps) => {
         required={!id ? true : false}
         type="password"
       />
-      <RoleDropDown
+      <RoleDropdown
         asInput
         label="Role"
         onChange={formik.handleChange("role")}
