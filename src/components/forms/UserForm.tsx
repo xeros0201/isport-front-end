@@ -6,7 +6,7 @@ import {
   createUser, getUser, 
   updateUser, UserFormValues 
 } from "../../api/users";
-import { Role } from "../../types";
+import { Role } from "../../types/enums";
 import { Button, Spinner } from "../common";
 import { RoleDropdown } from "../dropdowns";
 import { CheckboxInput, InputError, TextInput } from "../input";
