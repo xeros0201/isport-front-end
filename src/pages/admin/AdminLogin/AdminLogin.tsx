@@ -16,7 +16,7 @@ const AdminLogin = () => {
     }, [isAuthed])
 
     return (
-        <Page title="Login">
+        <Page title="Login" fullHeight>
             <LoginForm />
         </Page>
     );

@@ -1,3 +1,4 @@
+import classNames from "classnames";
 import { useEffect } from "react";
 import InputError from "../InputError/InputError";
 import InputLabel from "../InputLabel/InputLabel";
@@ -5,6 +6,7 @@ import "./CheckboxInput.scss";
 
 interface CheckboxInputProps extends InputProps {
   checkboxLabel: string;
+  type?: 'primary' | 'login'
 }
 
 const CheckboxInput = ({
@@ -19,6 +21,7 @@ const CheckboxInput = ({
   error,
   required,
   checkboxLabel,
+  type = 'primary',
 }: CheckboxInputProps) => {
   // Convert any provided value to 'true'
   useEffect(() => {
@@ -32,7 +35,10 @@ const CheckboxInput = ({
   };
 
   return (
-    <div className="checkbox">
+    <div className={classNames({
+      "checkbox": true,
+      [`checkbox--${type}`]: true,
+    })}>
       <InputLabel label={label} required={required} />
       <div className="checkbox__input-wrap" onClick={onCheck}>
         <input
