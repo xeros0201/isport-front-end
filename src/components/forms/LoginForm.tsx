@@ -5,6 +5,7 @@ import { login } from "../../api/auth";
 import { Button, Title } from "../common";
 import { CheckboxInput, TextInput } from "../input";
 import { Form } from "../layout";
+// TODO - login form scss
 
 const LoginForm = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -64,7 +65,6 @@ const LoginForm = () => {
           onClick={() => { }}
           isLoading={isSubmitting}
           fullwidth
-          type="login"
           isSubmit
         />
         {error && <p>{error}</p>}

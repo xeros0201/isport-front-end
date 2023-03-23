@@ -8,6 +8,7 @@ interface Props extends PropsWithChildren {
 
 const Title = ({ children, loginForm = false }: Props) => {
 
+  // TODO - change styles for login
   return (
     <div className={classNames({
       'title': true,

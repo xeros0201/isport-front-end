@@ -4,6 +4,7 @@ import InputError from "../InputError/InputError";
 import InputLabel from "../InputLabel/InputLabel";
 import "./CheckboxInput.scss";
 
+// TODO - remove login style
 interface CheckboxInputProps extends InputProps {
   checkboxLabel: string;
   type?: 'primary' | 'login'
