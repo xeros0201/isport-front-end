@@ -66,6 +66,7 @@ const Fixtures = () => {
         onSeasonChange={setSeasonId}
         round={round}
         onRoundChange={setRound}
+        dropdown
       />
       {
         !isEmptyObject(groupByDate) ? Object.entries(groupByDate).map((item: any, i) => {

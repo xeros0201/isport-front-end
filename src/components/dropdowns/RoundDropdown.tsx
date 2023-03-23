@@ -52,13 +52,13 @@ const RoundDropdown = ({
     if (!rounds) return [];
     return rounds.map((round) => ({
       value: round.toString(),
-      label: round.toString()
+      label: `Round ${round.toString()}`
     }));
   }, [rounds]);
 
   const allOption: InputOption = {
     value: 'All',
-    label: 'All'
+    label: 'All Rounds'
   }
   
   if(!seasonId) return <></>;
