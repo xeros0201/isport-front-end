@@ -23,7 +23,7 @@ type ButtonProps = {
   /**
    * The preconfigured style to be added to the button.
    */
-  type?: "primary" | "secondary" | "danger" | "disabled" | "transparent" | "outlined";
+  type?: "primary" | "secondary" | "danger" | "disabled" | "transparent" | "outlined" | "login";
   /**
    * Whether the button is being used to submit a form.
    */

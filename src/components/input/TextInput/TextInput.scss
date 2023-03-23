@@ -31,4 +31,20 @@
     }
   }
 
+  &--login-form {
+    .inputlabel{
+      .inputlabel__label{
+        color: white
+      }
+    }
+    .textinput__input-wrap {  
+      .textinput__input {
+        background-color: $black;
+        border-width: 0 0 2px 0;
+        border-color: $cyan;
+        color: white
+      }
+    }
+  }
+
 }

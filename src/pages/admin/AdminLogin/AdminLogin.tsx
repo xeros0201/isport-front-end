@@ -17,7 +17,6 @@ const AdminLogin = () => {
 
     return (
         <Page title="Login">
-            <h1>User Login</h1>
             <LoginForm />
         </Page>
     );

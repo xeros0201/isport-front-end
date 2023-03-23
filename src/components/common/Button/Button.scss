@@ -96,6 +96,12 @@
     border-color: $black;
   }
 
+  &--login {
+    color: $white;
+    background-color: $black;
+    border-color: $cyan;
+  }
+
   &--disabled {
     @include disabled; 
   } 
