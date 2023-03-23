@@ -3,11 +3,6 @@ import * as reactIcon from "react-icons/all";
 import { _ReactIcon } from "../components/common/Icon/Icon";
 import { Role } from "./enums";
 
-export enum Role {
-  STAFF = "STAFF",
-  ADMIN = "ADMIN",
-}
-
 declare global {
   type ReactIcon = _ReactIcon;
 
@@ -86,6 +81,7 @@ declare global {
   interface Match {
     id: number;
     seasonId: number;
+    season: Season;
     homeTeamId: number | null;
     homeTeamCsv: string | null;
     awayTeamId: number | null;
