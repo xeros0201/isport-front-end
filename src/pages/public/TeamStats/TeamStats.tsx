@@ -8,8 +8,8 @@ import useSearchParamsState from "../../../hooks/useSearchParamsState";
 import { cloneDeep } from 'lodash';
 
 interface TeamStatsProps {
-  teamId: string;
-  players: PlayerAverage[]
+  teamId: number;
+  players: PlayerAverage[];
 }
 
 const TeamStats = () => {
@@ -45,14 +45,16 @@ const TeamStats = () => {
 
   const teamAverages = useMemo(() => {
     if (isLoading) return;
+    console.log('playersAverage',playersAverage);
 
     const teamGrouping = playersAverage.reduce((accumulator: TeamStatsProps[], currentPlayer: PlayerAverage) => {
-      const team = accumulator.find(team => team.teamId === currentPlayer.name);
+      console.log('currentPlayer',currentPlayer);
+      const team = accumulator.find(team => team.teamId === currentPlayer.teamId);
       if (team) {
         team.players.push(currentPlayer);
       } else {
         accumulator.push({
-          teamId: currentPlayer.name ?? '',
+          teamId: currentPlayer.teamId,
           players: [currentPlayer]
         });
       }
@@ -82,10 +84,11 @@ const TeamStats = () => {
 
       return {
         id: ind,
-        name: team.teamId,
+        name: team.teamId.toString(),
         playerNumber: undefined,
         players: team.players,
-        properties: propertyTotals
+        properties: propertyTotals,
+        teamId: team.teamId
       }
     })
   }, [playersAverage])
@@ -116,7 +119,8 @@ const TeamStats = () => {
       name: 'Grand Total',
       playerNumber: undefined,
       players: [],
-      properties: teamTotals
+      properties: teamTotals,
+      teamId: 0
     }
   }, [teamAverages])
 

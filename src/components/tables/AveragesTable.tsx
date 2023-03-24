@@ -10,6 +10,7 @@ export interface PlayerAverage {
   players: PlayerAverage[];
   playerNumber?: number;
   properties: Record<string, Record<string, number>>
+  teamId: number;
 }
 
 interface Props {
@@ -19,6 +20,7 @@ interface Props {
 }
 
 const AveragesTable = ({ data, isLoading, totals }: Props) => {
+  console.log('data', data);
   const propertiesColumn = Object.entries(data?.[0]?.properties ?? {}).map(([key, value]) => {
     return (
       {
