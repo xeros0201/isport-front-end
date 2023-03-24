@@ -7,31 +7,52 @@ import { CheckboxInput, TextInput } from "../input";
 import { Form } from "../layout";
 import './LoginForm.scss';
 
+interface LoginFormValues {
+  email: string;
+  password: string;
+  remember: string
+}
+
 const LoginForm = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState('');
 
   const navigate = useNavigate();
 
+  const initialValues: LoginFormValues = {
+    'email': 'tyler.beutel@blackbook.ai',
+    'password': 'Aa@123456',
+    'remember': ''
+  };
+
+  const validate = (values: LoginFormValues) => {
+    const errors: { [key: string]: string } = {};
+    if (!values.email) {
+      errors.email = "Required";
+    }
+    if (!values.password) {
+      errors.password = "Required";
+    }
+    return errors;
+  };
+
   const formik = useFormik({
     // Test credentials for development (from db seeding)
-    initialValues: {
-      'email': 'tyler.beutel@blackbook.ai',
-      'password': 'Aa@123456'
-    },
+    initialValues,
     onSubmit: ({ email, password }) => {
       setIsSubmitting(true);
       login({ email, password })
         .then(() => navigate('/admin/leagues'))
-        .catch((error) => setError('Authentication failed.'))
+        .catch(() => setError('Incorrect password'))
         .finally(() => setIsSubmitting(false));
-    }
+    },
+    validate
   });
 
   return (
     <div className="login-form">
-      <div style={{ height: '50px' }}>
-        <img src="/isports.png" style={{ height: '100%', width: 'auto' }} />
+      <div className="logo-wrapper">
+        <img src="/isports.png" />
       </div>
       <Form onSubmit={formik.submitForm} fullWidth>
         <Title>User Login</Title>
@@ -60,12 +81,12 @@ const LoginForm = () => {
           fullwidth
           isSubmit
         />
-        {error && <p>{error}</p>}
         <CheckboxInput
           checkboxLabel="Remember me"
-          onChange={() => { }}
-          value={'true'}
+          onChange={formik.handleChange('remember')}
+          value={formik.values.remember}
         />
+        {error && <p className="error-text">{error}</p>}
       </Form>
     </div>
   );

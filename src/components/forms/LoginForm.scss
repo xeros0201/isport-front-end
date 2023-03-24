@@ -59,9 +59,21 @@
           background-color: $white;
         }
         .checkbox__label{
-          color: $white
+          color: $white;
         }
       }
+    }
+
+    .error-text {
+      color: $white;
+    }
+  }
+
+  .logo-wrapper{
+    height: 50px;
+    img { 
+      height: 100%; 
+      width: auto 
     }
   }
 }
