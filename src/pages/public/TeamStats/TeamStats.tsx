@@ -10,6 +10,7 @@ import { cloneDeep } from 'lodash';
 interface TeamStatsProps {
   teamId: number;
   players: PlayerAverage[];
+  teamName: string;
 }
 
 const TeamStats = () => {
@@ -38,24 +39,23 @@ const TeamStats = () => {
             clr_bu: Math.floor(Math.random() * 10),
             clr_csb: Math.floor(Math.random() * 10)
           },
-        }
+        },
+        teamName: item.team.name
       }
     });
   }, [players]);
 
   const teamAverages = useMemo(() => {
     if (isLoading) return;
-    console.log('playersAverage',playersAverage);
-
     const teamGrouping = playersAverage.reduce((accumulator: TeamStatsProps[], currentPlayer: PlayerAverage) => {
-      console.log('currentPlayer',currentPlayer);
       const team = accumulator.find(team => team.teamId === currentPlayer.teamId);
       if (team) {
         team.players.push(currentPlayer);
       } else {
         accumulator.push({
           teamId: currentPlayer.teamId,
-          players: [currentPlayer]
+          players: [currentPlayer],
+          teamName: currentPlayer.teamName,
         });
       }
       return accumulator;
@@ -84,11 +84,12 @@ const TeamStats = () => {
 
       return {
         id: ind,
-        name: team.teamId.toString(),
+        name: team.teamName,
         playerNumber: undefined,
         players: team.players,
         properties: propertyTotals,
-        teamId: team.teamId
+        teamId: team.teamId,
+        teamName: team.teamName
       }
     })
   }, [playersAverage])
@@ -120,7 +121,8 @@ const TeamStats = () => {
       playerNumber: undefined,
       players: [],
       properties: teamTotals,
-      teamId: 0
+      teamId: 0,
+      teamName: ''
     }
   }, [teamAverages])
 
