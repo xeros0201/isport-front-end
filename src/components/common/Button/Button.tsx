@@ -59,7 +59,7 @@ const Button = ({
   isDisabled = false,
   rounded = true,
   size = "medium",
-  icon
+  icon,
 }: ButtonProps) => {
   /**
    * Determine the status of the button.
@@ -75,7 +75,7 @@ const Button = ({
     "button--rounded": rounded,
     [`button--${type}`]: true,
     [`button--${status}`]: true,
-    [`button--${size}`]: true
+    [`button--${size}`]: true,
   });
 
   return (
