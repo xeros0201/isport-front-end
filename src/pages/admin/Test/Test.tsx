@@ -6,9 +6,10 @@ import { DateInput, CheckboxInput, TextInput } from "../../../components/input";
 import { Form, Page, Row } from "../../../components/layout";
 import ImageInput from "../../../components/input/ImageInput/ImageInput";
 import Modal from "../../../components/layout/Modal/Modal";
+import { DangerModal } from "../../../components/modals";
 
 const Test = () => {
-  const [isShowModal, setIsShowModal] = useState<boolean>(false);
+  const [isModalOpen, setIsModalOpen] = useState(true);
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const formik = useFormik({
@@ -96,24 +97,19 @@ const Test = () => {
       
       <br />
       {/* {JSON.stringify(formik.values)} */}
-      <Modal
-        show={isShowModal}
-        title="ARE YOU SURE?"
-        text="Do you really want to remove this player from the match? This process cannot be undone"
-        confirmText="Remove Player"
-        onConfirmClicked={() => {
-          setIsShowModal(false);
-
-          alert("OK");
+      <DangerModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        message="Do you really want to delete this player from the match? This process cannot be undone."
+        buttonLabel="Delete Player"
+        buttonOnClick={() => {
+          setIsModalOpen(false);
+          alert("Delete");
         }}
-        onCloseClicked={() => setIsShowModal(false)}
-        children={undefined}
       />
       <Button
-        onClick={() => {
-          setIsShowModal(true);
-        }}
-        label={"Click here to show the Modal"}
+        onClick={() => setIsModalOpen(true)}
+        label="Click here to show the Modal"
       />
     </Page>
   );

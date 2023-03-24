@@ -11,15 +11,16 @@ export type _ReactIcon = keyof typeof reactIcon;
 
 interface IconProps extends IconBaseProps {
   name: ReactIcon;
+  size?: number;
 }
 
-const Icon = ({ name, ...props }: IconProps) => {
+const Icon = ({ name, size = 18, ...props }: IconProps) => {
   if (!name || !reactIcon || !reactIcon[name]) return null;
   return (
     reactIcon[name]({
       ...props,
       className: props.className + ' icon',
-      fontSize: 18
+      fontSize: size
     })
   );
 }

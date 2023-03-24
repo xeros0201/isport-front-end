@@ -1,61 +1,37 @@
 import { ReactNode } from "react";
 import "./Modal.scss";
-import {
-  FaClipboard,
-  FaTimes,
-  FaTimesCircle,
-  FaRegTimesCircle,
-} from "react-icons/fa";
-import { Button } from "../../common";
+import { Icon } from "../../common";
+import classNames from "classnames";
+
 type Props = {
-  show: boolean;
-  title: string;
-  text: string;
+  className?: string;
+  isOpen: boolean;
+  onClose: () => void;
   children: ReactNode;
-  confirmText?: string;
-  onConfirmClicked?: () => void;
-  onCloseClicked: () => void;
+  maxWidth?: number;
 };
 
-const Modal = ({
-  show,
-  title,
-  text,
-  children,
-  confirmText = "OK",
-  onConfirmClicked,
-  onCloseClicked,
-}: Props) => {
-  return show ? (
-    <div className="modal_wrapper">
-      <div className="modal_main">
-        <div className="modal_close" onClick={onCloseClicked}>
-          <FaTimes size={20} />
+const Modal = ({ className, isOpen, onClose, children, maxWidth = 300 }: Props) => {
+
+  const modalClasses = classNames({
+    modal: true,
+    ...className ? { [className]: true } : {},
+  })
+
+  if (!isOpen) return null;
+
+  return (
+    <div className={modalClasses}>
+      <div className="modal__overlay" onClick={onClose} />
+      <div className="modal__main" style={{ maxWidth }}>
+        <div className="modal__close" onClick={onClose}>
+          <Icon name="IoCloseOutline" size={40} />
         </div>
-        <div>
-          <FaTimesCircle size={80} color="#7e1d12" />
-        </div>
-        <div className="modal_title">
-          {title}
-          <br />
-        </div>
-        {text}
-        <div
-          className="modal_button"
-        >
-          <Button onClick={onCloseClicked} label={"Continue"} />
-          {onConfirmClicked && (
-            <Button
-              type="confirm"
-              label={"Remove Player"}
-              onClick={onConfirmClicked}
-            />
-          )}
+        <div className="modal__body">
+          {children}
         </div>
       </div>
     </div>
-  ) : (
-    <></>
   );
 };
 

@@ -10,10 +10,8 @@ function App() {
   return (
     <BrowserRouter>
       <QueryClientProvider client={queryClient}>
-        <IconContext.Provider value={{ className: "icon", size: "18px" }}>
           <Routing />
           <ReactQueryDevtools initialIsOpen={false} />
-        </IconContext.Provider>
       </QueryClientProvider>
     </BrowserRouter>
   );
