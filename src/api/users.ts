@@ -1,4 +1,4 @@
-import { Role } from "../types";
+import { Role } from "../types/enums";
 import axios, { authConfig } from "./axios";
 
 export interface UserFormValues {

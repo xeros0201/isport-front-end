@@ -47,12 +47,12 @@ const TeamStats = () => {
     if (isLoading) return;
 
     const teamGrouping = playersAverage.reduce((accumulator: TeamStatsProps[], currentPlayer: PlayerAverage) => {
-      const team = accumulator.find(team => team.teamId === currentPlayer.team?.name);
+      const team = accumulator.find(team => team.teamId === currentPlayer.name);
       if (team) {
         team.players.push(currentPlayer);
       } else {
         accumulator.push({
-          teamId: currentPlayer.team?.name ?? '',
+          teamId: currentPlayer.name ?? '',
           players: [currentPlayer]
         });
       }

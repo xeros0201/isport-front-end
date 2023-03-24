@@ -5,11 +5,10 @@ import { Table } from "../layout"
 import { Tbody, Td, Th, Thead, Tr } from "../layout/Table"
 import TFooter from "../layout/Table/TFooter";
 
-export interface PlayerAverage extends Omit<Player, 'team_id'> {
-  team?: {
-    name: string;
-  }
+export interface PlayerAverage {
+  name: string;
   players: PlayerAverage[];
+  playerNumber?: number;
   properties: Record<string, Record<string, number>>
 }
 
@@ -70,7 +69,7 @@ const AveragesTable = ({ data, isLoading, totals }: Props) => {
               )
             },
             sortingFn: "alphanumeric",
-            accessorFn: (row) => `${row.playerNumber ?? ''} ${row.name}`,
+            accessorFn: (row) => `${row?.playerNumber ?? ''} ${row.name}`,
           },
         ]
       },
