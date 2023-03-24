@@ -27,7 +27,7 @@ const PlayerForm = ({ id }: FormProps) => {
   // Setup initial values
   const initialValues: PlayerFormValues = {
     name: data?.name ?? "",
-    playerNumber: data?.playerNumber.toString() ??  "",
+    playerNumber: data?.playerNumber?.toString() ??  "",
     teamId: data?.teamId.toString() ?? "",
     leagueId: "",
     seasonId: "",

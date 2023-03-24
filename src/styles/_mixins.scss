@@ -36,8 +36,9 @@
   flex-direction: row;
   width: 100%;
   justify-content: space-between;
+  margin-top: $margin-top-medium;
   @include sm-screen {
-    display: block;
+    @include row-wrap;
   }
   
   > * {
@@ -58,6 +59,21 @@
 
 @mixin row-disallow-wrapping {
   display: flex;
+  > * {
+    margin-top: 0px;
+    
+  }
+  > *:not(:last-child) {
+    margin-right: $margin-between;
+  }
+}
+
+@mixin row-wrap {
+  display: block;
+
+  > *:not(:first-child) {
+    margin-top: $margin-top-small;
+  }
 }
 
 /* Inputs */

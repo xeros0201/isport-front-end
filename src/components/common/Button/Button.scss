@@ -95,6 +95,12 @@
     background-color: $red1;
     border-color: $red1;
   }
+  
+  &--outlined {
+    color: $black;
+    background-color: $white;
+    border-color: $black;
+  }
 
   &--disabled {
     @include disabled; 
