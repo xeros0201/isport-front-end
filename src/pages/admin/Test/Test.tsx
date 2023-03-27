@@ -5,10 +5,12 @@ import { LeagueDropdown } from "../../../components/dropdowns";
 import { DateInput, CheckboxInput, TextInput } from "../../../components/input";
 import { Form, Page, Row } from "../../../components/layout";
 import ImageInput from "../../../components/input/ImageInput/ImageInput";
-import TeamForm from "../../../components/forms/TeamForm";
-import DropdownInput from "../../../components/input/DropdownInput/DropdownInput";
+import Modal from "../../../components/layout/Modal/Modal";
+import { DangerModal } from "../../../components/modals";
 
 const Test = () => {
+  const [isModalOpen, setIsModalOpen] = useState(true);
+
   const [isSubmitting, setIsSubmitting] = useState(false);
   const formik = useFormik({
     initialValues: {
@@ -92,10 +94,23 @@ const Test = () => {
         isLoading={isSubmitting}
         isSubmit
       />
-      <TeamForm />
+      
       <br />
       {/* {JSON.stringify(formik.values)} */}
-      
+      <DangerModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        message="Do you really want to delete this player from the match? This process cannot be undone."
+        buttonLabel="Delete Player"
+        buttonOnClick={() => {
+          setIsModalOpen(false);
+          alert("Delete");
+        }}
+      />
+      <Button
+        onClick={() => setIsModalOpen(true)}
+        label="Click here to show the Modal"
+      />
     </Page>
   );
 };

@@ -6,7 +6,9 @@ import {
   createUser, getUser, 
   updateUser, UserFormValues 
 } from "../../api/users";
+import { Role } from "../../types/enums";
 import { Button, Spinner } from "../common";
+import { RoleDropdown } from "../dropdowns";
 import { CheckboxInput, InputError, TextInput } from "../input";
 import { Form, Row } from "../layout";
 const adminPrefix = import.meta.env.VITE_ADMIN_PREFIX;
@@ -30,7 +32,8 @@ const UserForm = ({ id }: UserFormProps) => {
     firstName: data?.firstName ?? "",
     lastName: data?.lastName ?? "",
     password: "",
-    active: data?.active === false ? "" : "true"
+    active: data?.active === false ? "" : "true",
+    role: data?.role ?? Role.STAFF
   };
   
   // Setup submit handler
@@ -135,6 +138,13 @@ const UserForm = ({ id }: UserFormProps) => {
         error={formik.errors.password}
         required={!id ? true : false}
         type="password"
+      />
+      <RoleDropdown
+        asInput
+        label="Role"
+        onChange={formik.handleChange("role")}
+        required
+        value={formik.values.role}
       />
       <CheckboxInput
         label={"Status"}

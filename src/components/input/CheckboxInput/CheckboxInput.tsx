@@ -32,7 +32,7 @@ const CheckboxInput = ({
   };
 
   return (
-    <div className="checkbox">
+    <div className={'checkbox'}>
       <InputLabel label={label} required={required} />
       <div className="checkbox__input-wrap" onClick={onCheck}>
         <input
