@@ -1,3 +1,4 @@
+import { Role } from "../types/enums";
 import axios, { authConfig } from "./axios";
 
 export interface UserFormValues {
@@ -5,7 +6,8 @@ export interface UserFormValues {
   firstName: string;
   lastName: string;
   password: string;
-  active: "true" | ""
+  active: "true" | "";
+  role: Role;
 }
 
 /**

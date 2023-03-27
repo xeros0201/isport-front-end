@@ -1,0 +1,17 @@
+@import "../../../styles/variables.scss";
+
+$icon-size: 80px;
+
+.danger-modal {
+    &__icon {
+        height: $icon-size;
+        width: $icon-size;
+        background-color: $red;
+        border-radius: 50%;
+
+        .icon {
+            font-size: $icon-size;
+            color: $white;
+        }
+    }
+}

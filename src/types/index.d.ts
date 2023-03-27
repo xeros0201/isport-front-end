@@ -1,16 +1,14 @@
-import { MatchType } from "./../components/dropdowns/MatchTypeDropdown";
+// import { MatchType } from "./../components/dropdowns/MatchTypeDropdown";
+import { DateTime } from "luxon";
 import * as reactIcon from "react-icons/all";
 import { _ReactIcon } from "../components/common/Icon/Icon";
+import { MatchStatus, MatchType } from "../constants";
 import { Role } from "./enums";
-
-export enum Role {
-  STAFF = "STAFF",
-  ADMIN = "ADMIN",
-}
 
 declare global {
   type ReactIcon = _ReactIcon;
   type MatchType = typeof MatchType[keyof typeof MatchType];
+  type MatchStatus = typeof MatchStatus[keyof typeof MatchStatus];
 
   interface User {
     id: string;
@@ -64,7 +62,8 @@ declare global {
     id: number;
     name: string;
     logo: string;
-    seasonId: string;
+    seasonId: number;
+    season: Season;
   }
 
   interface Player {
@@ -81,23 +80,40 @@ declare global {
     playerNumber: number;
     teamId: number;
   }
+  interface AflResults {
+    id: number;
+    matchId: number;
+    teamId: number;
+    scorePrimary: number;
+    scoreSecondary: string;
+    team: Team;
+  }
 
   interface Match {
     id: number;
-    seasonId: number;
-    homeTeamId: number | null;
-    homeTeamCsv: string | null;
-    awayTeamId: number | null;
-    awayTeamCsv: string | null;
-    round: number;
-    type: MatchType;
-    date: string;
-    teamId: number;
-    locationId: number;
-    awayTeam: Team;
-    homeTeam: Team;
-    location: Location;
+    status?: MatchStatus;
+    seasonId?: number;
+    season?: Season;
+    homeTeamId?: number | null;
+    homeTeamCsv?: string | null;
+    awayTeamId?: number | null;
+    awayTeamCsv?: string | null;
+    round?: number;
+    type?: MatchType;
+    date?: string;
+    dateOnly: string | null;
+    teamId?: number;
+    locationId?: number;
+    awayTeam?: Team;
+    homeTeam?: Team;
+    location?: Location;
     players: PlayerOnMatch[];
+    aflResults: AflResults[];
+  }
+  interface ScoreDistribution {
+    name: string;
+    homeScore: number;
+    awayScore: number;
   }
 
   interface Player {
@@ -113,6 +129,10 @@ declare global {
 
   interface CSVRow {
     Code: string;
+  }
+  interface Statistic {
+    id: number;
+    name: string;
   }
 }
 

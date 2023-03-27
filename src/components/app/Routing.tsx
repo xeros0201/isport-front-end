@@ -182,24 +182,10 @@ export const adminRoutes: RouteConfig[] = [
  */
 export const publicRoutes: RouteConfig[] = [
     {
-        path: 'login',
-        name: 'Login',
-        exact: true,
-        Component: AdminLogin,
-        secured: false
-    },
-    {
         path: '/',
         name: 'Fixtures',
         exact: true,
         Component: Fixtures,
-        secured: false
-    },
-    {
-        path: '/match-report',
-        name: 'MatchReport',
-        exact: true,
-        Component: MatchReport,
         secured: false
     },
     {
@@ -238,6 +224,8 @@ export const publicRoutes: RouteConfig[] = [
 function Routing() {
     return <>
         <Routes>
+            <Route path={"/login"} element={<AdminLogin />}>
+            </Route>
             {/* Admin pages */}
             <Route path={adminPrefix} element={<AdminTemplate />}>
                 {adminRoutes.map(({ path, Component, secured }) => (

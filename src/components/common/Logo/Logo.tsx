@@ -47,14 +47,16 @@ const Logo = ({
     width: isSquare ? height : 'auto'
   }
 
+  if ((!url || url === "null") && !label) return null;
+
   return (
     <div className={logoClasses} style={logoStyles} >
-      <img
+      {(url && url !== "null") && <img
         className="logo__img"
         src={url}
         height={height}
         alt={alt}
-      />
+      />}
       {label && (
         <p className="logo__label">{label}</p>
       )}

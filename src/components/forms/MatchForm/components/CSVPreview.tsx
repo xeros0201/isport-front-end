@@ -2,6 +2,7 @@ import React, { useEffect, useMemo, useRef, useState } from "react";
 import { useQuery } from "react-query";
 import { deletePlayerOnMatch } from "../../../../api/matches";
 import { getTeamPlayers } from "../../../../api/teams";
+import { DangerModal } from "../../../modals";
 import CSVDropdown from "./CSVDropdown";
 
 interface CSVPreviewProps {
@@ -13,6 +14,7 @@ interface CSVPreviewProps {
   onChange?: (value: { [key: string]: string | undefined }) => void;
   playersOnMatch?: PlayerOnMatch[];
   matchId?: number;
+  disabled?: boolean;
 }
 
 function CSVPreview({
@@ -21,11 +23,18 @@ function CSVPreview({
   onChange,
   playersOnMatch,
   matchId,
+  disabled = false,
 }: CSVPreviewProps) {
   const [playerNumbers, setPlayerNumbers] = useState<string[]>([]);
   const [selectedPlayers, setSelectedPlayers] = useState<{
     [key: string]: string | undefined;
   }>({});
+  const [modalData, setModalData] = useState<{
+    open: boolean;
+    playerNumber?: string;
+  }>({
+    open: false,
+  });
 
   useEffect(() => {
     if (playerNumberList) setPlayerNumbers(playerNumberList);
@@ -101,10 +110,15 @@ function CSVPreview({
     }
   };
 
+  const disableRemove = useMemo(
+    () => disabled || playerNumbers.length <= 18,
+    [playerNumbers]
+  );
+
   return (
     <table width={"100%"}>
       <tbody>
-        {playerNumbers?.map((playerNumber, index) => {
+        {playerNumbers?.map((playerNumber, index, arr) => {
           return (
             <tr key={playerNumber}>
               <td width={"1%"}>
@@ -131,6 +145,7 @@ function CSVPreview({
                     required
                     asInput
                     data={players}
+                    disabled={disabled}
                   />
                 )}
               </td>
@@ -138,8 +153,14 @@ function CSVPreview({
                 <button
                   type="button"
                   onClick={() => {
-                    handleDeletePlayer(playerNumber);
+                    if (!disableRemove)
+                      setModalData({
+                        open: true,
+                        playerNumber,
+                      });
                   }}
+                  disabled={disableRemove}
+                  className={"remove-btn"}
                 >
                   x
                 </button>
@@ -148,6 +169,17 @@ function CSVPreview({
           );
         })}
       </tbody>
+      <DangerModal
+        isOpen={modalData.open}
+        onClose={() => setModalData({ open: false })}
+        message="Do you really want to delete this player from the match? This process cannot be undone."
+        buttonLabel="Delete Player"
+        buttonOnClick={() => {
+          setModalData({ open: false });
+          if (modalData.playerNumber)
+            handleDeletePlayer(modalData.playerNumber);
+        }}
+      />
     </table>
   );
 }

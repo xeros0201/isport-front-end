@@ -2,6 +2,7 @@ import dayjs from "dayjs";
 import axios, { authConfig } from "./axios";
 
 export interface MatchFormValues {
+  status: string;
   homeTeamCsv: File | string;
   awayTeamCsv: File | string;
   seasonId: string;
@@ -56,7 +57,8 @@ export const createMatch = async (
     if (
       key !== "leagueId" &&
       key !== "homePlayerIds" &&
-      key !== "awayPlayerIds"
+      key !== "awayPlayerIds" &&
+      !!match[key as keyof CreateMatchFormValues]
     )
       formData.append(
         key,
@@ -114,7 +116,8 @@ export const updateMatch = async (
     if (
       key !== "leagueId" &&
       key !== "homePlayerIds" &&
-      key !== "awayPlayerIds"
+      key !== "awayPlayerIds" &&
+      !!match[key as keyof UpdateMatchFormValues]
     )
       formData.append(
         key,

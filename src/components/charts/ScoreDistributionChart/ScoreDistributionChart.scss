@@ -1,0 +1,103 @@
+@import "../../../styles/variables";
+
+.score-distribution-wrapper {
+    background-color: white;
+    padding: $padding-component-medium;
+    width: 100%;
+
+    .score-distribution {
+        position: relative;
+        margin-bottom: 3rem;
+        .line-wrapper {
+            height: 100%;
+            width: calc(100% - 100px);
+            min-height: 100%;
+            display: flex;
+            position: absolute;
+            left: 99px;
+            top: 0;
+            bottom: 0;
+            .line {
+                position: relative;
+
+
+                & span {
+                    position: absolute;
+                    top: calc(100% + 5px);
+                    right: 0;
+                }
+
+                &:not(:last-child) {
+                    border-left: 1px solid #F2F2F2;
+                    width: 10%;
+
+                    & span {
+                        left: 0;
+                        right: auto;
+                        transform: translateX(-50%);
+                    }
+                }
+            }
+
+        }
+        .score-distribution-row{
+            display: flex;
+            align-items: center;
+
+            &:not(:last-child) {
+                margin-bottom: 10px;
+            }
+
+            &--name {
+                width: 100px;
+                text-align: right;
+                padding-right: 1rem;
+            }
+            &--score {
+                flex: 1;
+                background-color: #C92A7A;
+                height: 19px;
+                position: relative;
+                text-align: right;
+                padding-right: 1rem;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                color: white;
+
+                & .score-fill {
+                    background-color: #F8E12F;
+                    height: 100%;
+                    position: absolute;
+                    left: 0;
+                    top: 0;
+                    text-align: right;
+                    padding-right: 1rem;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    color: black;
+                }
+            }
+        }
+    }
+
+    .legend {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        .legend-item {
+            margin-left: 2rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            .rect {
+                width: 16px;
+                height: 16px;
+                margin-right: 0.5rem;
+            }
+        }
+    }
+}

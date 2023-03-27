@@ -62,10 +62,6 @@ const SeasonTable = ({ data, isLoading = false }: SeasonTableProps) => {
             header: "League Name",
             footer: (props) => props.column.id,
             cell: (info) => (
-                // <div style={{ display: 'flex', alignItems: 'center' }}>
-                //     <Logo url="/league-logo.png" height={40} />
-                //     <p style={{ marginLeft: 10 }}>{info.getValue() as string}</p>
-                // </div>
                 <Logo url="/league-logo.png" height={40} label={info.getValue() as string} />
             ),
             sortingFn: "text",

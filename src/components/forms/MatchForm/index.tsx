@@ -1,5 +1,5 @@
 import { useFormik } from "formik";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useQuery } from "react-query";
 import { useNavigate } from "react-router-dom";
 import {
@@ -9,6 +9,7 @@ import {
   updateMatch,
 } from "../../../api/matches";
 import { getSeasons } from "../../../api/seasons";
+import { MatchStatus } from "../../../constants";
 import { Button, Spinner } from "../../common";
 import { LeagueDropdown } from "../../dropdowns";
 import LocationDropdown from "../../dropdowns/LocationDropdown";
@@ -61,19 +62,25 @@ const MatchForm = ({ id }: FormProps) => {
 
   const { data: seasons } = useQuery(["getSeasons"], async () => getSeasons());
 
+  const disabled = useMemo(
+    () => data?.status === MatchStatus.PUBLISHED,
+    [data]
+  );
+
   // Setup initial values
   const initialValues: MatchFormValues = {
+    status: data?.status ?? "",
     homeTeamCsv: data?.awayTeamCsv ?? "",
     awayTeamCsv: data?.awayTeamCsv ?? "",
-    seasonId: data?.seasonId.toString() ?? "",
+    seasonId: data?.seasonId?.toString() ?? "",
     homeTeamId: data?.homeTeamId?.toString() ?? "",
     awayTeamId: data?.awayTeamId?.toString() ?? "",
-    round: data?.round.toString() ?? "",
+    round: data?.round?.toString() ?? "",
     type: data?.type ?? "",
-    locationId: data?.locationId.toString() ?? "",
+    locationId: data?.locationId?.toString() ?? "",
     leagueId:
       seasons
-        ?.find((item) => item.id.toString() === data?.seasonId.toString())
+        ?.find((item) => item.id.toString() === data?.seasonId?.toString())
         ?.league.id.toString() || "",
     date: data?.date ?? defaultDate,
   };
@@ -102,35 +109,37 @@ const MatchForm = ({ id }: FormProps) => {
   // Setup validation
   const validate = (values: MatchFormValues) => {
     const errors: { [key: string]: string } = {};
-    if (!values.homeTeamCsv) {
-      errors.homeTeamCsv = "Required";
-    }
-    if (!values.awayTeamCsv) {
-      errors.awayTeamCsv = "Required";
-    }
-    if (!values.leagueId) {
-      errors.leagueId = "Required";
-    }
-    if (!values.seasonId) {
-      errors.seasonId = "Required";
-    }
-    if (!values.homeTeamId) {
-      errors.homeTeamId = "Required";
-    }
-    if (!values.awayTeamId) {
-      errors.awayTeamId = "Required";
-    }
-    if (!values.round) {
-      errors.round = "Required";
-    }
-    if (!values.type) {
-      errors.type = "Required";
-    }
-    if (!values.locationId) {
-      errors.locationId = "Required";
-    }
-    if (!values.date) {
-      errors.date = "Required";
+    if (values.status === MatchStatus.PUBLISHED) {
+      if (!values.homeTeamCsv) {
+        errors.homeTeamCsv = "Required";
+      }
+      if (!values.awayTeamCsv) {
+        errors.awayTeamCsv = "Required";
+      }
+      if (!values.leagueId) {
+        errors.leagueId = "Required";
+      }
+      if (!values.seasonId) {
+        errors.seasonId = "Required";
+      }
+      if (!values.homeTeamId) {
+        errors.homeTeamId = "Required";
+      }
+      if (!values.awayTeamId) {
+        errors.awayTeamId = "Required";
+      }
+      if (!values.round) {
+        errors.round = "Required";
+      }
+      if (!values.type) {
+        errors.type = "Required";
+      }
+      if (!values.locationId) {
+        errors.locationId = "Required";
+      }
+      if (!values.date) {
+        errors.date = "Required";
+      }
     }
     return errors;
   };
@@ -201,6 +210,7 @@ const MatchForm = ({ id }: FormProps) => {
             error={formik.errors.leagueId}
             required
             asInput
+            disabled={disabled}
           />
           <SeasonDropdown
             label="Season"
@@ -216,6 +226,7 @@ const MatchForm = ({ id }: FormProps) => {
             asInput
             requireLeague
             leagueId={formik.values.leagueId}
+            disabled={disabled}
           />
         </Row>
         <Row>
@@ -230,6 +241,7 @@ const MatchForm = ({ id }: FormProps) => {
             requireSeason
             seasonId={formik.values.seasonId}
             filter={(team) => team.id !== +formik.values.awayTeamId}
+            disabled={disabled}
           />
           <TeamDropdown
             label="Away Team"
@@ -242,6 +254,7 @@ const MatchForm = ({ id }: FormProps) => {
             requireSeason
             seasonId={formik.values.seasonId}
             filter={(team) => team.id !== +formik.values.homeTeamId}
+            disabled={disabled}
           />
         </Row>
         <Row>
@@ -253,6 +266,8 @@ const MatchForm = ({ id }: FormProps) => {
             error={formik.errors.round}
             required
             onlyInteger
+            placeholder="Round"
+            disabled={disabled}
           />
           <MatchTypeDropdown
             label="Match Type"
@@ -262,6 +277,7 @@ const MatchForm = ({ id }: FormProps) => {
             error={formik.errors.type}
             required
             asInput
+            disabled={disabled}
           />
         </Row>
 
@@ -273,6 +289,7 @@ const MatchForm = ({ id }: FormProps) => {
             touched={formik.touched.date}
             error={formik.errors.date}
             required
+            disabled={disabled}
           />
           <TimeInput
             label="Time"
@@ -281,6 +298,7 @@ const MatchForm = ({ id }: FormProps) => {
             touched={formik.touched.date}
             error={formik.errors.date}
             required
+            disabled={disabled}
           />
         </Row>
         <LocationDropdown
@@ -291,12 +309,28 @@ const MatchForm = ({ id }: FormProps) => {
           error={formik.errors.locationId}
           required
           asInput
+          disabled={disabled}
         />
-        <Button
-          label={id ? "Save" : "Save as Draft"}
-          onClick={() => formik.submitForm()}
-          isSubmit
-        />
+        {data?.status !== MatchStatus.PUBLISHED && (
+          <Row noFlex justifyContent={"flex-start"}>
+            <Button
+              label={"Save as Draft"}
+              onClick={async () => {
+                await formik.setFieldValue("status", "DRAFT");
+                formik.submitForm();
+              }}
+              isSubmit
+            />
+            <Button
+              label={"Publish"}
+              onClick={async () => {
+                await formik.setFieldValue("status", "PUBLISHED");
+                formik.submitForm();
+              }}
+              isSubmit
+            />
+          </Row>
+        )}
       </Form>
       <div className="preview">
         {[
@@ -329,6 +363,7 @@ const MatchForm = ({ id }: FormProps) => {
                 playersOnMatch={data?.players}
                 key={teamId}
                 matchId={id}
+                disabled={disabled}
               ></CSVPreview>
             </div>
           );

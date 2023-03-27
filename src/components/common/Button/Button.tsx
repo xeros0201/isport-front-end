@@ -23,7 +23,7 @@ type ButtonProps = {
   /**
    * The preconfigured style to be added to the button.
    */
-  type?: "primary" | "secondary" | "danger" | "disabled" | "transparent";
+  type?: "primary" | "secondary" | "danger" | "disabled" | "transparent" | "outlined";
   /**
    * Whether the button is being used to submit a form.
    */
@@ -59,7 +59,7 @@ const Button = ({
   isDisabled = false,
   rounded = true,
   size = "medium",
-  icon
+  icon,
 }: ButtonProps) => {
   /**
    * Determine the status of the button.
@@ -75,7 +75,7 @@ const Button = ({
     "button--rounded": rounded,
     [`button--${type}`]: true,
     [`button--${status}`]: true,
-    [`button--${size}`]: true
+    [`button--${size}`]: true,
   });
 
   return (

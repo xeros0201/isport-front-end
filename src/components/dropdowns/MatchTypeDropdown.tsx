@@ -1,12 +1,13 @@
 import { useMemo } from "react";
+import { MatchType } from "../../constants";
 import { DropdownInput } from "../input";
 
-export const MatchType = {
-  REGULAR: "REGULAR",
-  QUARTER_FINAL: "QUARTER_FINAL",
-  SEMI_FINAL: "SEMI_FINAL",
-  FINAL: "FINAL",
-};
+// export const MatchType = {
+//   REGULAR: "REGULAR",
+//   QUARTER_FINAL: "QUARTER_FINAL",
+//   SEMI_FINAL: "SEMI_FINAL",
+//   FINAL: "FINAL",
+// };
 
 const data = [
   {

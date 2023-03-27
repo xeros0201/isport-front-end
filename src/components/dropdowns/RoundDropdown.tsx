@@ -1,56 +1,87 @@
-import { useMemo } from "react";
+import { FC, useEffect, useMemo, useState } from "react";
 import { useQuery } from "react-query";
-import { getTeams } from "../../api/teams";
-import { Spinner } from "../common";
-import { InputError, DropdownInput } from "../input";
+import { getMatchesBySeason } from "../../api/matches";
+import DropdownInput from "../input/DropdownInput/DropdownInput";
 
-const data = [
-  {
-    id: 1,
-    name: "1",
-  },
-  {
-    id: 2,
-    name: "2",
-  },
-  {
-    id: 3,
-    name: "3",
-  },
-];
+interface RoundInputProps extends InputProps {
+  seasonId: string;
+}
 
 const RoundDropdown = ({
   value,
   onChange,
+  disabled,
   error,
-  touched,
+  htmlFor,
   label,
   required,
-  disabled,
-  asInput,
-}: ImplementedDropdownProps) => {
-  // Format league options so they are input compatible
-  const roundOptions: InputOption[] = useMemo(() => {
-    if (!data) return [];
+  touched,
+  seasonId,
+}: RoundInputProps) => {
+  const [rounds, setRounds] = useState<number[]>([]);
 
-    return data.map((round) => ({
-      value: round.id.toString(),
-      label: round.name,
-    }));
+  const {
+    error: fetchError,
+    isLoading,
+    data,
+    refetch,
+  } = useQuery(
+    ["getMatchesBySeason", { seasonId }],
+    async (): Promise<Match[]> => {
+      if (!seasonId) return [];
+      return getMatchesBySeason(+seasonId);
+    },
+    { enabled: !!seasonId }
+  );
+
+  // Fetch as soon as a seasonId is provided
+  useEffect(() => {
+    if (!seasonId) return;
+    onChange("");
+    refetch();
+  }, [seasonId]);
+
+  // With data, calculate and set rounds
+  useEffect(() => {
+    if (!data) return;
+    const rounds = data
+      .reduce((acc, match) => {
+        if (!!match.round && !acc.includes(match.round)) {
+          acc.push(match.round);
+        }
+        return acc;
+      }, [] as number[])
+      .sort();
+    setRounds(rounds);
   }, [data]);
+
+  const roundOptions: InputOption[] = useMemo(() => {
+    if (!rounds) return [];
+    return rounds.map((round) => ({
+      value: round.toString(),
+      label: `Round ${round.toString()}`,
+    }));
+  }, [rounds]);
+
+  const allOption: InputOption = {
+    value: "All",
+    label: "All Rounds",
+  };
+
+  if (!seasonId) return <></>;
 
   return (
     <DropdownInput
-      label={label}
-      value={value}
-      onChange={onChange}
-      error={error}
-      touched={touched}
-      required={required}
       disabled={disabled}
-      options={roundOptions}
-      placeholder="Select Round"
-      asInput={asInput}
+      error={error}
+      htmlFor={htmlFor}
+      isFetching={isLoading}
+      label={label}
+      onChange={(item) => onChange(item === "All" ? "" : item)}
+      options={[allOption, ...roundOptions]}
+      required={required}
+      touched={touched}
+      value={value === "" ? "All" : value}
     />
   );
 };
