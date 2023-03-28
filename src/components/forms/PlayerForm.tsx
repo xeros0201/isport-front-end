@@ -27,10 +27,10 @@ const PlayerForm = ({ id }: FormProps) => {
   // Setup initial values
   const initialValues: PlayerFormValues = {
     name: data?.name ?? "",
-    playerNumber: data?.playerNumber?.toString() ??  "",
-    teamId: data?.teamId.toString() ?? "",
-    leagueId: "",
-    seasonId: "",
+    playerNumber: data?.playerNumber.toString() ??  "",
+    teamId: data?.teamId?.toString() ?? "",
+    leagueId: data?.team?.id.toString() ?? "",
+    seasonId: data?.team?.seasonId.toString() ?? "",
   };
 
   // Setup submit handler
@@ -132,12 +132,14 @@ const PlayerForm = ({ id }: FormProps) => {
       />}
       <TeamDropdown
         label="Team"
+        leagueId={formik.values.leagueId}
         seasonId={formik.values.seasonId}
         value={formik.values.teamId}
         onChange={formik.handleChange("teamId")}
         touched={formik.touched.teamId}
         error={formik.errors.teamId}
         requireSeason
+        requireLeagueId
         required
         asInput
       />

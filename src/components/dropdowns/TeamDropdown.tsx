@@ -7,11 +7,15 @@ import { InputError, DropdownInput } from "../input";
 interface TeamDropdown extends ImplementedDropdownProps {
   requireSeason?: boolean;
   seasonId?: string;
+  requireLeagueId?: boolean;
+  leagueId?: string;
 }
 
 const TeamDropdown = ({
   requireSeason = false,
   seasonId,
+  requireLeagueId,
+  leagueId,
   value,
   onChange,
   error,
@@ -37,6 +41,13 @@ const TeamDropdown = ({
     if (!requireSeason && value) onChange(value);
     refetch();
   }, [seasonId, requireSeason]);
+
+  // Clear data if League and Season is required and change new League and Season's value
+  useEffect(() => {
+    if (requireLeagueId && requireSeason) {
+      onChange('');
+    }
+  }, [seasonId, leagueId])
 
   // Format league options so they are input compatible
   const teamOptions: InputOption[] = useMemo(() => {

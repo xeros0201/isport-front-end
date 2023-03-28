@@ -1,7 +1,11 @@
-import { DateTime } from "luxon";
 import * as reactIcon from "react-icons/all";
 import { _ReactIcon } from "../components/common/Icon/Icon";
 import { Role } from "./enums";
+
+export enum Role {
+  STAFF = "STAFF",
+  ADMIN = "ADMIN",
+}
 
 declare global {
   type ReactIcon = _ReactIcon;
@@ -103,14 +107,19 @@ declare global {
   }
 
   interface Player {
-    id: number;
-    teamId: number;
-    name: string;
-    playerNumber: number;
-    leagueId: number;
-    createdDate: string;
-    team: Team;
-    league: League;
+    id: number,
+    teamId: number,
+    name: string,
+    playerNumber: number,
+    leagueId: number,
+    createdDate: string,
+    team?: {
+      id: number,
+      name: string,
+      logo: any,
+      seasonId: number
+      season: Season
+    }
   }
 
   interface Statistic {
