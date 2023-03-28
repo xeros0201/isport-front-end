@@ -1,35 +1,90 @@
 import ScoreDistributionChart from "../../../components/charts/ScoreDistributionChart";
-import { useState } from "react";
-import { Page, TabContainer, TabSelect } from "../../../components/layout";
+import { useEffect, useState } from "react";
+import { Page, Row, TabContainer, TabSelect } from "../../../components/layout";
 import { useNavigate } from "react-router-dom";
 import MatchReportBanner from "./components/MatchReportBanner/MatchReportBanner";
 import { Button } from "../../../components/common";
+import useSearchParamsState from "../../../hooks/useSearchParamsState";
+import { useQuery } from "react-query";
+import { getStats } from "../../../api/matches";
+import MatchReportTable from "../../../components/tables/MatchReportTable";
 
 const MatchReport = () => {
   const [selectedTab, setSelectedTab] = useState(0);
+  const [matchId, setmatchId] = useSearchParamsState("id", "");
+  const [isMatchIdProvided, setIsMatchIdProvided] = useState(false);
+  const [overView, setOverView] = useState([] as ReportOnMatches[]);
+  const [otherProps, setOtherProps] = useState([] as ReportOnMatches[][]);
+
   const navigate = useNavigate();
+
+  // Fetch data
+  const { isLoading, data: stats, refetch } = useQuery(
+    ["aflResultProperties"], async () => await getStats(+matchId)
+  );
+
+  // Fetch as soon as a matchId is provided on the url
+  useEffect(() => {
+    if (!matchId) return;
+    setIsMatchIdProvided(true);
+    refetch();
+    if(stats) {
+      const _aflProps = Object.keys(stats.reports);
+      console.log(_aflProps);
+
+      //set data overView prop
+      const _overView = stats.reports["Overview"];
+      setOverView(_overView);
+  
+      let _otherProps = [];
+
+      for (const key in stats.reports) {
+        if (Object.prototype.hasOwnProperty.call(stats.reports, key)) {
+          if(key != "Overview") {
+            const reportData = stats.reports[key];
+            _otherProps.push(reportData);
+          }
+        }
+      }
+
+      setOtherProps(_otherProps);
+    }
+  }, [matchId, stats]);
 
   const renderDisposables = () => {
     return (
-      <ScoreDistributionChart
-          data={[
-            {
-              name: "Disposables",
-              homeScore: 100,
-              awayScore: 223,
-            },
-            {
-              name: "Kicks",
-              homeScore: 178,
-              awayScore: 223,
-            },
-            {
-              name: "Handballs",
-              homeScore: 200,
-              awayScore: 223,
-            },
-          ]}
-        />
+      <>
+        <Row alignItems="center" justifyContent="flex-start" disableWrapping >
+          <MatchReportTable parentName={"Overview"} data={overView} />
+  
+          <ScoreDistributionChart
+            data={[
+              {
+                name: "Disposables",
+                homeScore: 100,
+                awayScore: 223,
+              },
+              {
+                name: "Kicks",
+                homeScore: 178,
+                awayScore: 223,
+              },
+              {
+                name: "Handballs",
+                homeScore: 200,
+                awayScore: 223,
+              },
+            ]}
+          />
+        </Row>
+
+        <Row alignItems="center" justifyContent="flex-start" disableWrapping>
+          {
+            otherProps && otherProps.map((item) => <MatchReportTable parentName={item[0].resultProperty.name} data={item} />)
+          }
+        </Row>
+          
+      </>
     );
   }
 
@@ -64,7 +119,9 @@ const MatchReport = () => {
       />
       <div>
         <TabContainer selected={selectedTab === 0}>
-          {renderDisposables()}
+          {
+            isMatchIdProvided ? renderDisposables() : <p>Please select match from previous page.</p>
+          }
         </TabContainer>
         <TabContainer selected={selectedTab === 1}>
           Tab 1
