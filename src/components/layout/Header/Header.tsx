@@ -3,7 +3,7 @@ import { NavLink, useLocation } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { NavigationDropdown } from "../../dropdowns";
 import { useComponentDimensions } from "../../../hooks";
-const defaultAdminPage = import.meta.env.VITE_DEFAULT_ADMIN_ROUTE
+
 
 interface HeaderProps {
   menu: Menu;
@@ -63,7 +63,7 @@ const Header = ({ menu, children, collapseWidth = 630 }: HeaderProps) => {
   return (
     <div className="header">
       <div className="header__container" ref={containerRef}>
-        <div className="header__logo" onClick={() => navigate(defaultAdminPage)}>
+        <div className="header__logo" onClick={() => navigate('/')}>
           <img src="/isports.png" />
         </div>
         {containerWidth > collapseWidth 
