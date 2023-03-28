@@ -17,14 +17,6 @@ interface MatchReportTableProps {
 }
 
 const MatchReportTable = ({ parentName, data, isLoading = false }: MatchReportTableProps) => {
-    // const [data, setData] = useState([] as ReportOnMatches[])
-
-    //Filter aflResultProps by parentId
-    // useMemo(() => {
-    //     const temp = _data.filter(item => item.aflResultProperties.parentId === parentId);
-    //     setData(temp);
-    // }, [parentId]);
-
     // Setup columns
     const columns = useMemo<ColumnDef<ReportOnMatches>[]>(
         () => [
@@ -34,7 +26,6 @@ const MatchReportTable = ({ parentName, data, isLoading = false }: MatchReportTa
             cell: (info) => <p>{info.getValue() as string}</p>,
             sortingFn: "alphanumeric",
             accessorFn: (row) => {
-                // debugger
                 const a = row.resultProperty.name;
                 return a;
             },
