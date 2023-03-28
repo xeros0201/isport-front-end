@@ -31,8 +31,8 @@ const MatchList = () => {
     // Filter data to match query  
     const filteredMatches = useMemo(() => {
         if (!matches) return [];
-        return matches.filter((match: Match) => match.homeTeam.name.toLowerCase().includes(teamName.toLowerCase()) 
-            || match.awayTeam.name.toLowerCase().includes(teamName.toLowerCase()));
+        return matches.filter((match: Match) => match.homeTeam?.name.toLowerCase().includes(teamName.toLowerCase()) 
+            || match.awayTeam?.name.toLowerCase().includes(teamName.toLowerCase()));
     }, [matches, setTeamName]);
 
     return (

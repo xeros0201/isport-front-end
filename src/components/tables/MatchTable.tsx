@@ -28,7 +28,7 @@ const MatchTable = ({ data, isLoading = false }: MatchTableProps) => {
             footer: (props) => props.column.id,
             cell: (info) => <p>{info.getValue() as string}</p>,
             sortingFn: "alphanumeric",
-            accessorFn: (row) => row.homeTeam.name,
+            accessorFn: (row) => row.homeTeam?.name,
             enableSorting: true,
           },
           {
@@ -36,7 +36,7 @@ const MatchTable = ({ data, isLoading = false }: MatchTableProps) => {
             footer: (props) => props.column.id,
             cell: (info) => <p>{info.getValue() as string}</p>,
             sortingFn: "alphanumeric",
-            accessorFn: (row) => row.awayTeam.name,
+            accessorFn: (row) => row.awayTeam?.name,
             enableSorting: true,
           },
           {
@@ -47,7 +47,7 @@ const MatchTable = ({ data, isLoading = false }: MatchTableProps) => {
                 return <Logo url={logo} label={name} height={40} />;
             },
             sortingFn: "alphanumeric",
-            accessorFn: (row) => row.season.league,
+            accessorFn: (row) => row.season?.league,
             enableSorting: false,
           },
           {
@@ -55,7 +55,7 @@ const MatchTable = ({ data, isLoading = false }: MatchTableProps) => {
             footer: (props) => props.column.id,
             cell: (info) => <p>{info.getValue() as string}</p>,
             sortingFn: "alphanumeric",
-            accessorFn: (row) => row.season.name,
+            accessorFn: (row) => row.season?.name,
             enableSorting: true,
           },
           {
