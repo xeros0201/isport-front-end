@@ -65,14 +65,7 @@ declare global {
     seasonId: number;
     season: Season;
   }
-
-  interface Player {
-    id: number;
-    name: string;
-    team_id: number;
-    playerNumber?: number;
-  }
-
+  
   interface AflResults {
     id: number;
     matchId: number;

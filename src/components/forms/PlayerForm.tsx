@@ -139,7 +139,7 @@ const PlayerForm = ({ id }: FormProps) => {
         touched={formik.touched.teamId}
         error={formik.errors.teamId}
         requireSeason
-        requireLeagueId
+        requireLeague
         required
         asInput
       />

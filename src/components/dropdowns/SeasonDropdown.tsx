@@ -36,11 +36,6 @@ const SeasonDropdown = ({
         refetch();
     }, [leagueId, requireLeague]);
 
-    // Clear value if League is required and change new League's value
-    useEffect(() => {
-        if (requireLeague) onChange('');
-    }, [leagueId])
-
     // Format season options so they are input compatible
     const seasonOptions: InputOption[] = useMemo(() => {
         if (!data) return [];

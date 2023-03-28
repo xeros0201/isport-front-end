@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import { useQuery } from "react-query";
 import { getTeamBySeasons } from "../../api/teams";
 import { getTeams } from "../../api/teams";
@@ -7,14 +7,14 @@ import { InputError, DropdownInput } from "../input";
 interface TeamDropdown extends ImplementedDropdownProps {
   requireSeason?: boolean;
   seasonId?: string;
-  requireLeagueId?: boolean;
+  requireLeague?: boolean;
   leagueId?: string;
 }
 
 const TeamDropdown = ({
   requireSeason = false,
   seasonId,
-  requireLeagueId,
+  requireLeague,
   leagueId,
   value,
   onChange,
@@ -41,13 +41,6 @@ const TeamDropdown = ({
     if (!requireSeason && value) onChange(value);
     refetch();
   }, [seasonId, requireSeason]);
-
-  // Clear data if League and Season is required and change new League and Season's value
-  useEffect(() => {
-    if (requireLeagueId && requireSeason) {
-      onChange('');
-    }
-  }, [seasonId, leagueId])
 
   // Format league options so they are input compatible
   const teamOptions: InputOption[] = useMemo(() => {
