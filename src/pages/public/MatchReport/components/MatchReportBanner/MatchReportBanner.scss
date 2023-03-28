@@ -1,161 +1,161 @@
 
 @import "../../../../../styles/mixins";
 .match-report-banner {
-    &--header {
-        background-color: $black;
-        padding: 1rem 0;
-        color: #F2F2F2;
-        border-bottom: 9px solid #00AEEF;
+  &--header {
+    background-color: $black;
+    padding: 1rem 0;
+    color: #F2F2F2;
+    border-bottom: 9px solid #00AEEF;
 
-        & h2 {
-            color: #FFFFFF;
-            text-align: center;
-            font-size: 24px;
-            margin: 0;
-            margin-bottom: 1.5rem;
-        }
-
-        & .detail {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin: 0 1.5rem;
-            color: #F2F2F2;
-            font-size: 18px;
-
-            & .detail-item {
-                display: flex;
-                align-items: center;
-
-                &:not(:last-child) {
-                    margin-right: 1.5rem;
-                }
-
-                & .icon {
-                    margin-right: 0.5rem;
-                }
-            }
-            @include md-screen {
-              display: block;
-              & .detail-item {
-                margin-top: 1rem;
-              }
-            }
-        }
+    & h2 {
+      color: #FFFFFF;
+      text-align: center;
+      font-size: 24px;
+      margin: 0;
+      margin-bottom: 1.5rem;
     }
 
-    &--body {
-        background: #FFFFFF;
-        padding: 1rem 0rem;
+    & .detail {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 0 1.5rem;
+      color: #F2F2F2;
+      font-size: 18px;
+
+      & .detail-item {
         display: flex;
-        justify-content: space-between;
         align-items: center;
 
-        & .team-score {
-            flex: 3;
-            display: flex;
-            align-items: center;
-            justify-content: space-around;
-
-            & p {
-                margin: 0;
-            }
-
-            &--logo {
-                img {
-                    width: 108px;
-                }
-            }
-
-            &--name {
-              .team-name {
-                font-size: 24px;
-                font-weight: 500;
-              }
-              .team-type {
-                font-size: 16px;
-                font-weight: 300;
-              }
-            }
-
-            &--score {
-                font-size: 44px;
-                font-weight: 500;
-                text-align: center;
-            }
-
-            &--secondScore {
-                font-size: 24px;
-                text-align: center;
-            }
-
-            &:nth-child(2) {
-                flex-direction: row-reverse;
-                .team-score--name {
-                    text-align: right;
-                }
-            }
-
-
-
-            @include md-screen {
-                &--logo {
-                    img {
-                        width: 50px;
-                    }
-                }
-                &--name {
-                    display: none;
-                }
-
-                &--score {
-                    font-size: 20px;
-                    font-weight: 500;
-                    text-align: center;
-                }
-    
-                &--secondScore {
-                    font-size: 14px;
-                    text-align: center;
-                }
-            }
+        &:not(:last-child) {
+          margin-right: 1.5rem;
         }
 
-        & .league {
-            flex: 2;
-            order: 2;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            &--logo img {
-              margin: auto;
-              width: 47px;
-            }
-            &--matchname {
-              background-color: #F2F2F2;
-              border-radius: 13px;
-              padding: 0.75rem 2rem;
-              font-weight: 500;
-              margin-top: 0.5rem;
-              text-align: center;
-            }
-            @include md-screen {
-              &--logo img {
-                width: 35px;
-              }
-              &--matchname {
-                padding: 0.5rem 1rem;
-              }
-            }
+        & .icon {
+          margin-right: 0.5rem;
         }
+      }
+      @include md-screen {
+        display: block;
+        & .detail-item {
+          margin-top: 1rem;
+        }
+      }
     }
+  }
+
+  &--body {
+    background: #FFFFFF;
+    padding: 1rem 0rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    & .team-score {
+      flex: 3;
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+
+      & p {
+        margin: 0;
+      }
+
+      &--logo {
+        img {
+          width: 108px;
+        }
+      }
+
+      &--name {
+        .team-name {
+          font-size: 24px;
+          font-weight: 500;
+        }
+        .team-type {
+          font-size: 16px;
+          font-weight: 300;
+        }
+      }
+
+      &--score {
+        font-size: 44px;
+        font-weight: 500;
+        text-align: center;
+      }
+
+      &--secondScore {
+        font-size: 24px;
+        text-align: center;
+      }
+
+      &:nth-child(2) {
+        flex-direction: row-reverse;
+        .team-score--name {
+          text-align: right;
+        }
+      }
+
+
+
+      @include md-screen {
+        &--logo {
+          img {
+            width: 50px;
+          }
+        }
+        &--name {
+          display: none;
+        }
+
+        &--score {
+          font-size: 20px;
+          font-weight: 500;
+          text-align: center;
+        }
+
+        &--secondScore {
+          font-size: 14px;
+          text-align: center;
+        }
+      }
+    }
+
+    & .league {
+      flex: 2;
+      order: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      &--logo img {
+        margin: auto;
+        width: 47px;
+      }
+      &--matchname {
+        background-color: #F2F2F2;
+        border-radius: 13px;
+        padding: 0.75rem 2rem;
+        font-weight: 500;
+        margin-top: 0.5rem;
+        text-align: center;
+      }
+      @include md-screen {
+        &--logo img {
+          width: 35px;
+        }
+        &--matchname {
+          padding: 0.5rem 1rem;
+        }
+      }
+    }
+  }
 }
 
 @media print {
   .match-report-banner {
-    &--body{
-      & .team-score{
-        &--logo img{
+    &--body {
+      & .team-score {
+        &--logo img {
           width: 50px;
         }
         &--name {
@@ -167,6 +167,23 @@
             font-size: 10px;
             font-weight: 100;
           }
+        }
+        &--score {
+          font-size: 20px;
+          font-weight: 500;
+          text-align: center;
+        }
+        &--secondScore {
+          font-size: 14px;
+          text-align: center;
+        }
+      }
+      & .league {
+        &--logo img {
+          width: 35px;
+        }
+        &--matchname {
+          padding: 0.5rem 1rem;
         }
       }
     }

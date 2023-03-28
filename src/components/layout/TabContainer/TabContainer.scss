@@ -3,9 +3,6 @@
 .tab-container {
   display: none;
   margin-top: $margin-top-medium;
-  border: 1px solid black;
-  min-height: 300px;
-
   &--selected {
     display: flex;
   }
@@ -14,5 +11,6 @@
 @media print {
   .tab-container {
     display: flex !important;
+    break-inside: avoid;
   }
 }
