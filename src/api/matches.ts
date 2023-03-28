@@ -2,7 +2,6 @@ import dayjs from "dayjs";
 import axios, { authConfig } from "./axios";
 
 export interface MatchFormValues {
-  status: string;
   homeTeamCsv: File | string;
   awayTeamCsv: File | string;
   seasonId: string;
@@ -28,6 +27,24 @@ export const getMatches = async (): Promise<Match[]> => {
  */
 export const getMatch = async (id: number): Promise<Match> => {
   const response = await axios.get<Match>(`/matches/${id}`);
+  return response.data;
+};
+
+/**
+ * Fetches validation to publish of match that matches id.
+ */
+export const getMatchValidation = async (
+  id: number
+): Promise<MatchValidation> => {
+  const response = await axios.get<MatchValidation>(`/matches/${id}/_valid`);
+  return response.data;
+};
+
+/**
+ * Publish match that matches id.
+ */
+export const publishMatch = async (id: number): Promise<void> => {
+  const response = await axios.get<void>(`/matches/${id}/_publish`);
   return response.data;
 };
 

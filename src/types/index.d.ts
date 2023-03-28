@@ -110,6 +110,12 @@ declare global {
     players: PlayerOnMatch[];
     aflResults: AflResults[];
   }
+
+  interface MatchValidation {
+    isValid: boolean;
+    errors: any;
+  }
+
   interface ScoreDistribution {
     name: string;
     homeScore: number;
