@@ -43,9 +43,17 @@ const PlayerTable = ({ data, isLoading = false }: PlayerTableProps) => {
       {
         header: "Team",
         footer: (props) => props.column.id,
-        cell: (info) => (
-          <Logo url="/public/league-logo.png" height={40} label={info.getValue() as string} />
-        ),
+        cell: (info) => {
+          const logo =
+            info?.row?.original?.team?.logo ?? "/public/league-logo.png";
+          const teamName = info?.row?.original?.team?.name;
+          return (
+            <Row  removeSpacing alignItems={'center'}>
+              <Logo isSquare height={42} url={logo} />
+              <span>{teamName as string}</span>
+            </Row>
+          );
+        },
         sortingFn: "alphanumeric",
         accessorFn: (row) => row?.team?.name,
         enableSorting: true,
@@ -53,11 +61,19 @@ const PlayerTable = ({ data, isLoading = false }: PlayerTableProps) => {
       {
         header: "League",
         footer: (props) => props.column.id,
-        cell: (info) => (
-          <Logo url="/public/league-logo.png" height={40} label={info.getValue() as string} />
-        ),
+        cell: (info) => {
+          const logo =
+            info?.row?.original?.team?.logo ?? "/public/league-logo.png";
+          const leagueName = info?.row?.original.team?.season?.league?.name;
+          return (
+            <Row  removeSpacing alignItems={'center'}>
+              <Logo isSquare height={42} url={logo} />
+              <span>{leagueName as string}</span>
+            </Row>
+          );
+        },
         sortingFn: "alphanumeric",
-        accessorFn: (row) => row?.league?.name,
+        accessorFn: (row) => row?.team?.season?.league?.name,
         enableSorting: true,
       },
       {
