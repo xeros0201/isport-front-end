@@ -132,14 +132,12 @@ const PlayerForm = ({ id }: FormProps) => {
       />}
       <TeamDropdown
         label="Team"
-        leagueId={formik.values.leagueId}
         seasonId={formik.values.seasonId}
         value={formik.values.teamId}
         onChange={formik.handleChange("teamId")}
         touched={formik.touched.teamId}
         error={formik.errors.teamId}
         requireSeason
-        requireLeague
         required
         asInput
       />

@@ -5,6 +5,6 @@ export const authConfig = {
     withCredentials: true,
 }
 
-const axios = _axios.create({ baseURL: API, withCredentials: true });
+const axios = _axios.create({ baseURL: API });
 
 export default axios;

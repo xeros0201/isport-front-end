@@ -7,15 +7,11 @@ import { InputError, DropdownInput } from "../input";
 interface TeamDropdown extends ImplementedDropdownProps {
   requireSeason?: boolean;
   seasonId?: string;
-  requireLeague?: boolean;
-  leagueId?: string;
 }
 
 const TeamDropdown = ({
   requireSeason = false,
   seasonId,
-  requireLeague,
-  leagueId,
   value,
   onChange,
   error,
