@@ -11,6 +11,7 @@ import {
     useReactTable,
   } from "@tanstack/react-table";
 import { useMemo, useState } from "react";
+import { Row } from "../layout";
 
 interface MatchTableProps {
     data: Match[];
@@ -75,7 +76,7 @@ const MatchTable = ({ data, isLoading = false }: MatchTableProps) => {
             header: "Match Report",
             footer: (props) => props.column.id,
             cell: (info) => (
-                <Button
+                <Button marginAuto
                     label="Match Report"
                     type="outlined"
                     // icon="IoPencilOutline"
@@ -91,17 +92,28 @@ const MatchTable = ({ data, isLoading = false }: MatchTableProps) => {
             header: "Action",
             footer: (props) => props.column.id,
             cell: (info) => (
-                <Button
-                    label="Edit"
-                    type="secondary"
-                    icon="IoPencilOutline"
-                    size="small"
-                    onClick={() => navigate(`/admin/matches/edit?id=${info.getValue()}`)}
-                />
+                info.getValue<string>().split(",")[0] == "PUBLISHED" &&
+                <Row alignItems="center">
+                    <Button marginAuto
+                        label="Edit"
+                        type="secondary"
+                        icon="IoPencilOutline"
+                        size="small"
+                        onClick={() => navigate(`/admin/matches/edit?id=${info.getValue<string>().split(",")[1]}`)}
+                    />
+                    <Button marginAuto
+                        label="Delete"
+                        type="danger"
+                        icon="IoPencilOutline"
+                        size="small"
+                        onClick={() => navigate(`/admin/matches/id=${info.getValue<string>().split(",")[1]}`)}
+                    />
+                </Row>
             ),
-            sortingFn: "text",
-            accessorFn: (row) => row.id,
+            sortingFn: "text",  
+            accessorFn: (row) => `${row.status},${row.id}`,
             enableSorting: false,
+            enableHiding: false,
           },
         ],
         []
