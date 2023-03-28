@@ -150,3 +150,25 @@
         }
     }
 }
+
+@media print {
+  .match-report-banner {
+    &--body{
+      & .team-score{
+        &--logo img{
+          width: 50px;
+        }
+        &--name {
+          .team-name {
+            font-size: 16px;
+            font-weight: 300;
+          }
+          .team-type {
+            font-size: 10px;
+            font-weight: 100;
+          }
+        }
+      }
+    }
+  }
+}
