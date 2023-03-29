@@ -48,6 +48,10 @@ type ButtonProps = {
    * Set margin auto
    */
   marginAuto?: boolean;
+  /**
+   * Set margin left
+   */
+  marginLeft?: number;
 };
 
 /**
@@ -64,7 +68,8 @@ const Button = ({
   rounded = true,
   size = "medium",
   icon,
-  marginAuto = false
+  marginAuto = false,
+  marginLeft,
 }: ButtonProps) => {
   /**
    * Determine the status of the button.
@@ -90,6 +95,7 @@ const Button = ({
       className={buttonClasses}
       onClick={isLoading || isDisabled ? undefined : onClick}
       type={isSubmit ? "submit" : undefined}
+      style={{ marginLeft: `${marginLeft}px`}}
     >
       <Spinner size="tiny" />
       {icon && !isLoading && <Icon name={icon} />}

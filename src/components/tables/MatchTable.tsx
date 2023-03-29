@@ -91,7 +91,7 @@ const MatchTable = ({ data, isLoading = false }: MatchTableProps) => {
             header: "Action",
             footer: (props) => props.column.id,
             cell: (info) => (
-                info.getValue<string>().split(",")[0] == "DRAFT" &&
+                info.getValue<string>().split(",")[0] == "DRAFT" ?
                 <Row alignItems="center">
                     <Button marginAuto
                         label="Edit"
@@ -108,6 +108,15 @@ const MatchTable = ({ data, isLoading = false }: MatchTableProps) => {
                         onClick={() => navigate(`/admin/matches/id=${info.getValue<string>().split(",")[1]}`)}
                     />
                 </Row>
+                :
+                <Button
+                    marginLeft={12}
+                    label="View"
+                    type="secondary"
+                    icon="IoEyeOutline"
+                    size="small"
+                    onClick={() => navigate(`/admin/matches/edit?id=${info.getValue<string>().split(",")[1]}`)}
+                />
             ),
             sortingFn: "text",  
             accessorFn: (row) => `${row.status},${row.id}`,

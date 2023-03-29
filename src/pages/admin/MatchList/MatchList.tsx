@@ -33,7 +33,7 @@ const MatchList = () => {
         if (!matches) return [];
         return matches.filter((match: Match) => match.homeTeam?.name.toLowerCase().includes(teamName.toLowerCase()) 
             || match.awayTeam?.name.toLowerCase().includes(teamName.toLowerCase()) 
-            || (typeof match.awayTeam != "undefined" && typeof match.awayTeam != "undefined")
+            || (typeof match.homeTeam !== "undefined" && typeof match.awayTeam !== "undefined")
             );
     }, [matches, setTeamName]);
 
