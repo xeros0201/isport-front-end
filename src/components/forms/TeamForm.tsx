@@ -97,7 +97,7 @@ const TeamForm = ({ id }: FormProps) => {
         label="Team Logo"
         required
         value={formik.values.logo}
-        onChange={formik.handleChange("logo")}
+        onChange={(value) => formik.setFieldValue("logo", value)}
         touched={formik.touched.logo}
         error={formik.errors.logo}
       />
