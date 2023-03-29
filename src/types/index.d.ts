@@ -83,21 +83,21 @@ declare global {
   interface Match {
     id: number;
     status?: MatchStatus;
-    seasonId?: number;
-    season?: Season;
-    homeTeamId?: number | null;
-    homeTeamCsv?: string | null;
-    awayTeamId?: number | null;
-    awayTeamCsv?: string | null;
-    round?: number;
-    type?: MatchType;
-    date?: string;
+    seasonId: number;
+    season: Season;
+    homeTeamId: number | null;
+    homeTeamCsv: string | null;
+    awayTeamId: number | null;
+    awayTeamCsv: string | null;
+    round: number;
+    type: MatchType;
+    date: string;
     dateOnly: string | null;
-    teamId?: number;
-    locationId?: number;
-    awayTeam?: Team;
-    homeTeam?: Team;
-    location?: Location;
+    teamId: number;
+    locationId: number;
+    awayTeam: Team;
+    homeTeam: Team;
+    location: Location;
     players: PlayerOnMatch[];
     aflResults: AflResults[];
   }
