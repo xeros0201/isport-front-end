@@ -5,12 +5,13 @@ import { LeagueDropdown } from "../../../components/dropdowns";
 import { DateInput, CheckboxInput, TextInput } from "../../../components/input";
 import { Form, Page, Row } from "../../../components/layout";
 import ImageInput from "../../../components/input/ImageInput/ImageInput";
-import Modal from "../../../components/layout/Modal/Modal";
-import { DangerModal } from "../../../components/modals";
+import { DangerModal, SuccessModal } from "../../../components/modals";
+ 
 
 const Test = () => {
   const [isModalOpen, setIsModalOpen] = useState(true);
-
+  const [isSuccessModal, setIsSuccessModal] = useState(true);
+  const [isErrorModal, setIsErrorModal] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const formik = useFormik({
     initialValues: {
@@ -107,9 +108,15 @@ const Test = () => {
           alert("Delete");
         }}
       />
-      <Button
-        onClick={() => setIsModalOpen(true)}
-        label="Click here to show the Modal"
+          <SuccessModal
+        isOpen={isSuccessModal}
+        onClose={() => setIsSuccessModal(false)}
+        message={undefined}
+        buttonLabel={undefined}
+        buttonOnClick={() => {
+          setIsSuccessModal(false);
+          alert("action to view");
+        }}
       />
     </Page>
   );

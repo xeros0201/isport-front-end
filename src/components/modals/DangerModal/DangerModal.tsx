@@ -19,7 +19,7 @@ const DangerModal = ({ isOpen, onClose, message, buttonLabel, buttonOnClick }: D
             maxWidth={800}
         >
             <div className="danger-modal__icon">
-                <Icon name="IoCloseOutline" />
+                <Icon className="IoCloseOutline danger" name="IoCloseOutline" />
             </div>
             <h1>Are you sure?</h1>
             <p>{message}</p>
