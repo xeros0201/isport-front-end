@@ -1,0 +1,11 @@
+.stat-table {
+    .overview {
+        &__table {
+            flex: 3
+        }
+        
+        &__chart {
+            flex: 7
+        }
+    }
+}

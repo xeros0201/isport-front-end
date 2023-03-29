@@ -8,6 +8,7 @@ import useSearchParamsState from "../../../hooks/useSearchParamsState";
 import { useQuery } from "react-query";
 import { getStats } from "../../../api/matches";
 import MatchReportTable from "../../../components/tables/MatchReportTable";
+import "./MatchReport.scss";
 
 const MatchReport = () => {
   const [selectedTab, setSelectedTab] = useState(0);
@@ -50,24 +51,29 @@ const MatchReport = () => {
 
   const renderDisposables = () => {
     return (
-      <>
-        <Row alignItems="center" justifyContent="flex-start" disableWrapping isWrapRowItem={false} >
-          <div style={{flex: 3}}><MatchReportTable parentName={"Overview"} data={overView} /></div>
-  
-          <div style={{flex: 7}}>
-            <ScoreDistributionChart
-              data={overView}
-            />
-          </div>
-        </Row>
+      <div className="stat-table">
 
-        <Row alignItems="center" justifyContent="flex-start" disableWrapping>
-          {
-            otherProps && otherProps.map((item) => <MatchReportTable parentName={item[0].resultProperty.name} data={item} />)
-          }
-        </Row>
-          
-      </>
+        <div className="overview">
+          <Row alignItems="center" justifyContent="flex-start" disableWrapping isWrapRowItem={false} >
+            <div className="overview__table"><MatchReportTable parentName={"Overview"} data={overView} /></div>
+    
+            <div className="overview__chart">
+              <ScoreDistributionChart
+                data={overView}
+              />
+            </div>
+          </Row>
+        </div>
+
+        <div className="other-props">
+          <Row alignItems="center" justifyContent="flex-start" disableWrapping>
+            {
+              otherProps && otherProps.map((item) => <MatchReportTable parentName={item[0].resultProperty.name} data={item} />)
+            }
+          </Row>
+        </div>
+        
+      </div>
     );
   }
 
