@@ -76,14 +76,14 @@ const Test = () => {
         <ImageInput
           label="Prefilled logo"
           value={formik.values.logo1}
-          onChange={formik.handleChange("logo1")}
+          onChange={(value) => formik.setFieldValue("logo1", value)}
           error={formik.errors.logo1}
           touched={formik.touched.logo1}
         />
         <ImageInput
           label="Empty logo"
           value={formik.values.logo2}
-          onChange={formik.handleChange("logo2")}
+          onChange={(value) => formik.setFieldValue("logo2", value)}
           error={formik.errors.logo2}
           touched={formik.touched.logo2}
         />
@@ -94,7 +94,7 @@ const Test = () => {
         isLoading={isSubmitting}
         isSubmit
       />
-      
+
       <br />
       {/* {JSON.stringify(formik.values)} */}
       <DangerModal
