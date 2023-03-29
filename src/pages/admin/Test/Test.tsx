@@ -5,12 +5,12 @@ import { LeagueDropdown } from "../../../components/dropdowns";
 import { DateInput, CheckboxInput, TextInput } from "../../../components/input";
 import { Form, Page, Row } from "../../../components/layout";
 import ImageInput from "../../../components/input/ImageInput/ImageInput";
-import Modal from "../../../components/layout/Modal/Modal";
-import { DangerModal } from "../../../components/modals";
+import { DangerModal, ErrorModal } from "../../../components/modals";
+ 
 
 const Test = () => {
   const [isModalOpen, setIsModalOpen] = useState(true);
-
+  const [isErrorModal, setIsErrorModal] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const formik = useFormik({
     initialValues: {
@@ -106,6 +106,11 @@ const Test = () => {
           setIsModalOpen(false);
           alert("Delete");
         }}
+      />
+      <ErrorModal
+        isOpen={isErrorModal}
+        onClose={() => setIsErrorModal(false)}
+        message={"Sorry for the inconvenience, please try again!"}
       />
       <Button
         onClick={() => setIsModalOpen(true)}
