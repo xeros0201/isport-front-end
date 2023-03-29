@@ -56,23 +56,7 @@ const MatchReport = () => {
   
           <div style={{flex: 7}}>
             <ScoreDistributionChart
-              data={[
-                {
-                  name: "Disposables",
-                  homeScore: 100,
-                  awayScore: 223,
-                },
-                {
-                  name: "Kicks",
-                  homeScore: 178,
-                  awayScore: 223,
-                },
-                {
-                  name: "Handballs",
-                  homeScore: 200,
-                  awayScore: 223,
-                },
-              ]}
+              data={overView}
             />
           </div>
         </Row>
