@@ -1,0 +1,66 @@
+
+@import "../../../styles/mixins";
+
+.preview {
+    display: flex;
+
+    @include md-screen {
+        display: block;
+      }
+
+      .preview__hometeam {
+          &--header {
+              background-color: #f8e12f;
+              text-align: center;
+              padding: 0.5rem 0;
+          }
+      }
+
+      .preview__awayteam {
+          &--header {
+              background-color: #cc507a;
+              text-align: center;
+              padding: 0.5rem 0;
+              color: #ffffff;
+          }
+      }
+
+    .preview__team {
+        flex: 1;
+
+        &:not(:last-child) {
+            margin-right: 10px;
+          }
+
+        &--id {
+            width: auto;
+            padding: 10px;
+            background-color: #ffffff;
+            border: 1px solid #808080;
+            text-align: center;
+        }
+
+        & .dropdowninput {
+            margin-top: 0 !important;
+
+            & .Dropdown-control {
+                margin-top: 0;
+                
+            }
+        }
+
+        button.remove-btn {
+            background-color: transparent;
+            border: none;
+            font-size: 20px;
+
+            &:not(:disabled):hover {
+                cursor: pointer;
+                color: $cyan;
+            }
+            &:disabled {
+                cursor: not-allowed;
+            }
+        }
+    }
+}
