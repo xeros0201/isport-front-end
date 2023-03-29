@@ -104,7 +104,10 @@ const TeamForm = ({ id }: FormProps) => {
       <LeagueDropdown
         label="League"
         value={formik.values.leagueId}
-        onChange={formik.handleChange("leagueId")}
+        onChange={(value) => {
+          formik.setFieldValue("leagueId", value);
+          formik.setFieldValue("seasonId", "");
+        }}
         error={formik.errors.leagueId}
         touched={formik.touched.leagueId}
         required
@@ -112,6 +115,7 @@ const TeamForm = ({ id }: FormProps) => {
       />
       <SeasonDropdown
         label="Season"
+        requireLeague
         leagueId={formik.values.leagueId}
         value={formik.values.seasonId}
         onChange={formik.handleChange("seasonId")}
