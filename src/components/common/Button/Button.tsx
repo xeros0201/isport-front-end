@@ -50,14 +50,6 @@ type ButtonProps = {
    * The icon to be shown inside the input field.
    */
   icon?: ReactIcon;
-  /**
-   * Set margin auto
-   */
-  marginAuto?: boolean;
-  /**
-   * Set margin left
-   */
-  marginLeft?: number;
 };
 
 /**
