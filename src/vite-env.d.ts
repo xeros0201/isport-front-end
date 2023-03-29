@@ -7,6 +7,7 @@ interface ImportMetaEnv {
   readonly VITE_LOGIN_ROUTE: string;
   readonly VITE_DEFAULT_ADMIN_ROUTE: string;
   readonly VITE_DEFAULT_PUBLIC_ROUTE: string;
+  readonly VITE_S3_URL: string;
 }
 
 interface ImportMeta {
