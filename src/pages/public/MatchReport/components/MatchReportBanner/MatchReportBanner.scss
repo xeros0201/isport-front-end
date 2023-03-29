@@ -187,5 +187,10 @@
         }
       }
     }
+    &--header {
+      & .detail-item--label {
+        font-size: 12px;
+      }
+    }
   }
 }
