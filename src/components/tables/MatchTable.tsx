@@ -76,23 +76,22 @@ const MatchTable = ({ data, isLoading = false }: MatchTableProps) => {
             header: "Match Report",
             footer: (props) => props.column.id,
             cell: (info) => (
-                <Button marginAuto
+                info.getValue<string>().split(",")[0] == "PUBLISHED" && <Button marginAuto
                     label="Match Report"
                     type="outlined"
-                    // icon="IoPencilOutline"
                     size="small"
-                    onClick={() => navigate(`/match-report?id=${info.getValue()}`)}
+                    onClick={() => navigate(`/match-report?id=${info.getValue<string>().split(",")[1]}`)}
                 />
             ),
             sortingFn: "text",
-            accessorFn: (row) => row.id,
+            accessorFn: (row) => `${row.status},${row.id}`,
             enableSorting: false,
           },
           {
             header: "Action",
             footer: (props) => props.column.id,
             cell: (info) => (
-                info.getValue<string>().split(",")[0] == "PUBLISHED" &&
+                info.getValue<string>().split(",")[0] == "DRAFT" &&
                 <Row alignItems="center">
                     <Button marginAuto
                         label="Edit"
