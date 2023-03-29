@@ -5,7 +5,9 @@ import { useNavigate } from "react-router-dom";
 import {
   createMatch,
   getMatch,
+  getMatchValidation,
   MatchFormValues,
+  publishMatch,
   updateMatch,
 } from "../../../api/matches";
 import { getSeasons } from "../../../api/seasons";
@@ -49,6 +51,14 @@ const MatchForm = ({ id }: FormProps) => {
     }
   );
 
+  // Check match validation to publish
+  const { data: matchValidation } = useQuery(
+    ["getMatchValidation", { id }],
+    async () => {
+      if (id) return getMatchValidation(+id);
+    }
+  );
+
   useEffect(() => {
     setTeamCSVData({
       homeTeamCsv: data?.players
@@ -69,7 +79,6 @@ const MatchForm = ({ id }: FormProps) => {
 
   // Setup initial values
   const initialValues: MatchFormValues = {
-    status: data?.status ?? "",
     homeTeamCsv: data?.awayTeamCsv ?? "",
     awayTeamCsv: data?.awayTeamCsv ?? "",
     seasonId: data?.seasonId?.toString() ?? "",
@@ -106,10 +115,18 @@ const MatchForm = ({ id }: FormProps) => {
     setIsSubmitting(false);
   };
 
+  const handlePublish = async () => {
+    if (!id) return;
+    setIsSubmitting(true);
+    await publishMatch(id);
+    refetch();
+    setIsSubmitting(false);
+  };
+
   // Setup validation
   const validate = (values: MatchFormValues) => {
     const errors: { [key: string]: string } = {};
-    if (values.status === MatchStatus.PUBLISHED) {
+    if (data?.status === MatchStatus.PUBLISHED) {
       if (!values.homeTeamCsv) {
         errors.homeTeamCsv = "Required";
       }
@@ -315,20 +332,19 @@ const MatchForm = ({ id }: FormProps) => {
           <Row noFlex justifyContent={"flex-start"}>
             <Button
               label={"Save as Draft"}
-              onClick={async () => {
-                await formik.setFieldValue("status", "DRAFT");
+              onClick={() => {
                 formik.submitForm();
               }}
               isSubmit
             />
-            <Button
-              label={"Publish"}
-              onClick={async () => {
-                await formik.setFieldValue("status", "PUBLISHED");
-                formik.submitForm();
-              }}
-              isSubmit
-            />
+            {!!id && (
+              <Button
+                label={"Publish Report"}
+                onClick={handlePublish}
+                isSubmit
+                isDisabled={!matchValidation?.isValid}
+              />
+            )}
           </Row>
         )}
       </Form>
