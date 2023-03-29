@@ -44,7 +44,6 @@ const LoginForm = () => {
       }
     }
 
-    if (values.password)
     return errors;
   };
 
