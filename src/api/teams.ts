@@ -24,6 +24,14 @@ export const getTeam = async (id: number): Promise<Team> => {
 };
 
 /**
+ * Fetches all team players.
+ */
+export const getTeamPlayers = async (id: string): Promise<Player[]> => {
+  const response = await axios.get<Player[]>(`/teams/${id}/players`);
+  return response.data;
+};
+
+/**
  * Get teams that belong to a season.
  */
 export const getTeamBySeasons = async (seasonId: number): Promise<Team[]> => {
