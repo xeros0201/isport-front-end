@@ -79,7 +79,6 @@ const MatchTable = ({ data, isLoading = false }: MatchTableProps) => {
         cell: (info) =>
           info.getValue<string>().split(",")[0] == "PUBLISHED" && (
             <Button
-              marginAuto
               label="Match Report"
               type="outlined"
               size="small"
