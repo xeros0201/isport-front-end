@@ -42,7 +42,7 @@ function ImageInput({
           setImageList([
             {
               dataURL: `${s3URL}/image/${value}`,
-              file: new File([blob], value, { type: "image/png" }),
+              file: new File([blob], value),
             },
           ]);
         });
