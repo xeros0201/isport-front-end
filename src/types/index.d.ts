@@ -1,4 +1,3 @@
-import { DateTime } from "luxon";
 import * as reactIcon from "react-icons/all";
 import { _ReactIcon } from "../components/common/Icon/Icon";
 import { Role } from "./enums";
@@ -61,14 +60,7 @@ declare global {
     seasonId: number;
     season: Season;
   }
-
-  interface Player {
-    id: number;
-    name: string;
-    team_id: number;
-    playerNumber?: number;
-  }
-
+  
   interface AflResults {
     id: number;
     matchId: number;
@@ -109,8 +101,13 @@ declare global {
     playerNumber: number;
     leagueId: number;
     createdDate: string;
-    team: Team;
-    league: League;
+    team?: {
+      id: number;
+      name: string;
+      logo: any;
+      seasonId: number;
+      season: Season;
+    };
   }
 
   interface Statistic {

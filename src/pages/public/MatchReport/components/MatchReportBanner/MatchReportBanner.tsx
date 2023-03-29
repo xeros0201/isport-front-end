@@ -56,8 +56,8 @@ function MatchReportBanner({ data }: MatchReportBannerProps) {
             const { icon, label } = item;
             return (
               <div className="detail-item">
-                {icon}
-                <span>{label}</span>
+                <div className="icon">{icon}</div>
+                <span className="detail-item--label">{label}</span>
               </div>
             );
           })}

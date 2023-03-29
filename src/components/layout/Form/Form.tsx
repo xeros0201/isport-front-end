@@ -1,3 +1,4 @@
+import classNames from "classnames";
 import "./Form.scss";
 
 type FormProps = {
@@ -9,16 +10,20 @@ type FormProps = {
    * The function to be envoked when submitting the form.
    */
   onSubmit: () => void;
+  fullWidth?: boolean;
 };
 
 /**
  * A component to wrap the form html element for consistant
  * styling across the web app.
  */
-const Form = ({ children, onSubmit }: FormProps) => {
+const Form = ({ children, fullWidth, onSubmit }: FormProps) => {
   return (
     <form
-      className="form"
+      className={classNames({
+        "form": true,
+        "form--full-width": fullWidth
+      })}
       onSubmit={(e) => {
         e.preventDefault();
         onSubmit();
