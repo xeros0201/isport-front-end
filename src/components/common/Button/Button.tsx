@@ -23,7 +23,13 @@ type ButtonProps = {
   /**
    * The preconfigured style to be added to the button.
    */
-  type?: "primary" | "secondary" | "danger" | "disabled" | "transparent" | "outlined";
+  type?:
+    | "primary"
+    | "secondary"
+    | "danger"
+    | "disabled"
+    | "transparent"
+    | "outlined";
   /**
    * Whether the button is being used to submit a form.
    */
@@ -68,8 +74,6 @@ const Button = ({
   rounded = true,
   size = "medium",
   icon,
-  marginAuto = false,
-  marginLeft,
 }: ButtonProps) => {
   /**
    * Determine the status of the button.
@@ -86,7 +90,6 @@ const Button = ({
     [`button--${type}`]: true,
     [`button--${status}`]: true,
     [`button--${size}`]: true,
-    "button--margin-auto": marginAuto,
   });
 
   return (
@@ -95,7 +98,6 @@ const Button = ({
       className={buttonClasses}
       onClick={isLoading || isDisabled ? undefined : onClick}
       type={isSubmit ? "submit" : undefined}
-      style={{ marginLeft: `${marginLeft}px`}}
     >
       <Spinner size="tiny" />
       {icon && !isLoading && <Icon name={icon} />}
