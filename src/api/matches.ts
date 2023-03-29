@@ -31,6 +31,24 @@ export const getMatch = async (id: number): Promise<Match> => {
 };
 
 /**
+ * Fetches validation to publish of match that matches id.
+ */
+export const getMatchValidation = async (
+  id: number
+): Promise<MatchValidation> => {
+  const response = await axios.get<MatchValidation>(`/matches/${id}/_valid`);
+  return response.data;
+};
+
+/**
+ * Publish match that matches id.
+ */
+export const publishMatch = async (id: number): Promise<void> => {
+  const response = await axios.get<void>(`/matches/${id}/_publish`);
+  return response.data;
+};
+
+/**
  * Creates new match.
  */
 interface CreateMatchFormValues {
@@ -43,15 +61,40 @@ interface CreateMatchFormValues {
   type: string;
   locationId: string;
   date: string;
+  homePlayerIds: { [key: string]: string | undefined };
+  awayPlayerIds: { [key: string]: string | undefined };
 }
 export const createMatch = async (
   match: CreateMatchFormValues
 ): Promise<Match> => {
   let formData = new FormData();
   match.date = dayjs(match.date).format("YYYY-MM-DD HH:mm");
+
   Object.keys(match).forEach((key) => {
-    if (key !== "leagueId")
-      formData.append(key, match[key as keyof CreateMatchFormValues]);
+    if (
+      key !== "leagueId" &&
+      key !== "homePlayerIds" &&
+      key !== "awayPlayerIds" &&
+      !!match[key as keyof CreateMatchFormValues]
+    )
+      formData.append(
+        key,
+        match[key as keyof CreateMatchFormValues] as string | Blob
+      );
+  });
+  Object.keys(match.homePlayerIds).forEach((key) => {
+    if (!!match.homePlayerIds[key])
+      formData.append(
+        `homePlayerIds[H${key}]`,
+        match.homePlayerIds[key] as string
+      );
+  });
+  Object.keys(match.awayPlayerIds).forEach((key) => {
+    if (!!match.awayPlayerIds[key])
+      formData.append(
+        `awayPlayerIds[A${key}]`,
+        match.awayPlayerIds[key] as string
+      );
   });
 
   const response = await axios.post<Match>("/matches", formData, {
@@ -76,6 +119,8 @@ interface UpdateMatchFormValues {
   type: string;
   locationId: string;
   date: string;
+  homePlayerIds: { [key: string]: string | undefined };
+  awayPlayerIds: { [key: string]: string | undefined };
 }
 export const updateMatch = async (
   id: number,
@@ -83,10 +128,34 @@ export const updateMatch = async (
 ): Promise<Match> => {
   let formData = new FormData();
   match.date = dayjs(match.date).format("YYYY-MM-DD HH:mm");
+
   Object.keys(match).forEach((key) => {
-    if (key !== "leagueId")
-      formData.append(key, match[key as keyof UpdateMatchFormValues]);
+    if (
+      key !== "leagueId" &&
+      key !== "homePlayerIds" &&
+      key !== "awayPlayerIds" &&
+      !!match[key as keyof UpdateMatchFormValues]
+    )
+      formData.append(
+        key,
+        match[key as keyof UpdateMatchFormValues] as string | Blob
+      );
   });
+  Object.keys(match.homePlayerIds).forEach((key) => {
+    if (!!match.homePlayerIds[key])
+      formData.append(
+        `homePlayerIds[H${key}]`,
+        match.homePlayerIds[key] as string
+      );
+  });
+  Object.keys(match.awayPlayerIds).forEach((key) => {
+    if (!!match.awayPlayerIds[key])
+      formData.append(
+        `awayPlayerIds[A${key}]`,
+        match.awayPlayerIds[key] as string
+      );
+  });
+
   const response = await axios.put<Match>(
     `/matches/${id}`,
     formData,
@@ -98,7 +167,22 @@ export const updateMatch = async (
 /**
  * Get matches that belong to a season.
  */
-export const getMatchesBySeason = async (seasonId: number): Promise<Match[]> => {
-    const response = await axios.get<Match[]>(`/seasons/${seasonId}/matches`);
-    return response.data;
+export const getMatchesBySeason = async (
+  seasonId: number
+): Promise<Match[]> => {
+  const response = await axios.get<Match[]>(`/seasons/${seasonId}/matches`);
+  return response.data;
+};
+
+/**
+ * Delete specific player on matche.
+ */
+export const deletePlayerOnMatch = async (
+  matchId: number,
+  playerId: number
+): Promise<Match> => {
+  const response = await axios.delete<Match>(
+    `/matches/${matchId}/players/${playerId}`
+  );
+  return response.data;
 };

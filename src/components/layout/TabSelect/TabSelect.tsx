@@ -14,12 +14,14 @@ const TabSelect = ({ selectedTab, setSelectedTab, tabs }: TabSelectProps) => {
     <Row justifyContent="flex-end" noFlex removeSpacing>
       {tabs.map((tab, index) => {
         return (
-          <Button
-            key={index}
-            label={tab}
-            onClick={() => { setSelectedTab(index) }}
-            type={selectedTab === index ? 'primary' : 'transparent'}
-          />
+          <div className='tab-select'>
+            <Button
+              key={index}
+              label={tab}
+              onClick={() => { setSelectedTab(index) }}
+              type={selectedTab === index ? 'primary' : 'transparent'}
+            />
+          </div>
         )
       })
       }

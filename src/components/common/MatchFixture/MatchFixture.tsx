@@ -13,38 +13,38 @@ interface MatchFixtureProps {
 const MatchFixtures = ({matchFixture} : MatchFixtureProps) => {
     const navigate = useNavigate();
 
-    const homeTeamScorePrimary = matchFixture.aflResults.find(result => result.teamId == matchFixture.homeTeam.id)?.scorePrimary;
-    const homeTeamScoreSecondary = matchFixture.aflResults.find(result => result.teamId == matchFixture.homeTeam.id)?.scoreSecondary;
+    const homeTeamScorePrimary = matchFixture.aflResults.find(result => result.teamId == matchFixture.homeTeam?.id)?.scorePrimary;
+    const homeTeamScoreSecondary = matchFixture.aflResults.find(result => result.teamId == matchFixture.homeTeam?.id)?.scoreSecondary;
 
-    const awayTeamScorePrimary = matchFixture.aflResults.find(result => result.teamId == matchFixture.awayTeam.id)?.scorePrimary;
-    const awayTeamScoreSecondary = matchFixture.aflResults.find(result => result.teamId == matchFixture.awayTeam.id)?.scoreSecondary;
+    const awayTeamScorePrimary = matchFixture.aflResults.find(result => result.teamId == matchFixture.awayTeam?.id)?.scorePrimary;
+    const awayTeamScoreSecondary = matchFixture.aflResults.find(result => result.teamId == matchFixture.awayTeam?.id)?.scoreSecondary;
 
-    const time = DateTime.fromISO(matchFixture.date).toLocaleString(DateTime.TIME_SIMPLE)
+    const time = matchFixture.date ? DateTime.fromISO(matchFixture.date).toLocaleString(DateTime.TIME_SIMPLE) : ""
 
-    const isTeamWinner = (teamName: string) : boolean => {
+    const isTeamWinner = (teamName?: string) : boolean => {
         if(homeTeamScorePrimary && awayTeamScorePrimary) {
-            if(homeTeamScorePrimary > awayTeamScorePrimary && matchFixture.homeTeam.name == teamName)
+            if(homeTeamScorePrimary > awayTeamScorePrimary && matchFixture.homeTeam?.name == teamName)
                 return true;
-            else if(homeTeamScorePrimary < awayTeamScorePrimary && matchFixture.awayTeam.name == teamName)
+            else if(homeTeamScorePrimary < awayTeamScorePrimary && matchFixture.awayTeam?.name == teamName)
                 return true;
         }
         return false;
     }
 
-    const isWinner = (teamName: string) : string => `score--${isTeamWinner(teamName) ? "winner" : "loser"}`;
+    const isWinner = (teamName?: string) : string => `score--${isTeamWinner(teamName) ? "winner" : "loser"}`;
 
     return (
         <div className="match-fixture">
             <Row alignItems="center" noFlex>
                 {/* Home Team */}
                 <Row alignItems="center" justifyContent="flex-start" disableWrapping noFlex>
-                    <Logo url={`${matchFixture.homeTeam.logo}`}/>
+                    <Logo url={`${matchFixture.homeTeam?.logo}`}/>
                     
-                    <div className={`score ${isWinner(matchFixture.homeTeam.name)}`}>
-                        {matchFixture.homeTeam.name}
+                    <div className={`score ${isWinner(matchFixture.homeTeam?.name)}`}>
+                        {matchFixture.homeTeam?.name}
                     </div>
                 
-                    <div className={`score ${isWinner(matchFixture.homeTeam.name)}`}>
+                    <div className={`score ${isWinner(matchFixture.homeTeam?.name)}`}>
                         {`${homeTeamScorePrimary} (${homeTeamScoreSecondary})`}
                     </div>
                 </Row>
@@ -52,13 +52,13 @@ const MatchFixtures = ({matchFixture} : MatchFixtureProps) => {
 
                 {/* Away Team */}
                 <Row alignItems="center" justifyContent="flex-start" disableWrapping noFlex>
-                    <Logo url={`${matchFixture.awayTeam.logo}`}/>
+                    <Logo url={`${matchFixture.awayTeam?.logo}`}/>
                     
-                    <div className={`score ${isWinner(matchFixture.awayTeam.name)}`}>
-                        {matchFixture.awayTeam.name}
+                    <div className={`score ${isWinner(matchFixture.awayTeam?.name)}`}>
+                        {matchFixture.awayTeam?.name}
                     </div>
                 
-                    <div className={`score ${isWinner(matchFixture.awayTeam.name)}`}>
+                    <div className={`score ${isWinner(matchFixture.awayTeam?.name)}`}>
                         {`${awayTeamScorePrimary} (${awayTeamScoreSecondary})`}
                     </div>
                 </Row>
@@ -71,7 +71,7 @@ const MatchFixtures = ({matchFixture} : MatchFixtureProps) => {
                 
                 <div className="location" >
                     <Icon className="location__icon" name="IoLocationOutline" />
-                    <div className="location__info">{matchFixture.location.name}</div>
+                    <div className="location__info">{matchFixture.location?.name}</div>
                 </div>
                 
                 {/* Action */}

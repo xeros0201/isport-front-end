@@ -16,14 +16,13 @@ const CSVDropdown = ({
   onChange,
   error,
   touched,
-  label,
   required,
   disabled,
   asInput,
   data = [],
 }: TeamNameDropdownProps) => {
-  // Format league options so they are input compatible
-  const teamOptions: InputOption[] = useMemo(() => {
+  // Format player options so they are input compatible
+  const playerOptions: InputOption[] = useMemo(() => {
     if (!data) return [];
 
     return data.map((item: Player) => ({
@@ -44,7 +43,7 @@ const CSVDropdown = ({
       touched={touched}
       required={required}
       disabled={disabled}
-      options={teamOptions}
+      options={playerOptions}
       placeholder="Select Team"
       asInput
     />

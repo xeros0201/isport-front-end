@@ -49,10 +49,18 @@
             }
         }
 
-        button {
+        button.remove-btn {
             background-color: transparent;
             border: none;
             font-size: 20px;
+
+            &:not(:disabled):hover {
+                cursor: pointer;
+                color: $cyan;
+            }
+            &:disabled {
+                cursor: not-allowed;
+            }
         }
     }
 }
