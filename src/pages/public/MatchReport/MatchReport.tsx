@@ -36,14 +36,11 @@ const MatchReport = () => {
       const _overView = stats.reports["Overview"];
       setOverView(_overView);
   
-      let _otherProps = [];
+      let _otherProps: ReportOnMatches[][] = [];
 
-      for (const key in stats.reports) {
-        if (Object.prototype.hasOwnProperty.call(stats.reports, key)) {
-          if(key != "Overview") {
-            const reportData = stats.reports[key];
-            _otherProps.push(reportData);
-          }
+      for (const [key, value] of Object.entries(stats.reports)) {
+        if (key !== "Overview") {
+          _otherProps = [..._otherProps, value];
         }
       }
 
@@ -54,28 +51,30 @@ const MatchReport = () => {
   const renderDisposables = () => {
     return (
       <>
-        <Row alignItems="center" justifyContent="flex-start" disableWrapping >
-          <MatchReportTable parentName={"Overview"} data={overView} />
+        <Row alignItems="center" justifyContent="flex-start" disableWrapping isWrapRowItem={false} >
+          <div style={{flex: 3}}><MatchReportTable parentName={"Overview"} data={overView} /></div>
   
-          <ScoreDistributionChart
-            data={[
-              {
-                name: "Disposables",
-                homeScore: 100,
-                awayScore: 223,
-              },
-              {
-                name: "Kicks",
-                homeScore: 178,
-                awayScore: 223,
-              },
-              {
-                name: "Handballs",
-                homeScore: 200,
-                awayScore: 223,
-              },
-            ]}
-          />
+          <div style={{flex: 7}}>
+            <ScoreDistributionChart
+              data={[
+                {
+                  name: "Disposables",
+                  homeScore: 100,
+                  awayScore: 223,
+                },
+                {
+                  name: "Kicks",
+                  homeScore: 178,
+                  awayScore: 223,
+                },
+                {
+                  name: "Handballs",
+                  homeScore: 200,
+                  awayScore: 223,
+                },
+              ]}
+            />
+          </div>
         </Row>
 
         <Row alignItems="center" justifyContent="flex-start" disableWrapping>
