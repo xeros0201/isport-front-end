@@ -115,7 +115,6 @@ declare global {
 
   interface Player {
     id: number;
-    createdDate: Date;
     createdDate: string;
     createdUserId: string;
     league: League;
