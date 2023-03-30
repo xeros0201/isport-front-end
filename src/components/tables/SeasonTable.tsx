@@ -65,7 +65,7 @@ const SeasonTable = ({ data, isLoading = false }: SeasonTableProps) => {
             cell: (info) => {
               const leagueName = info?.row?.original.league?.name;
               const imgId = info?.row?.original.league?.logo;
-              const imgUrl = info.getValue()
+              const imgUrl = imgId
                 ? `${s3URL}/image/${imgId}`
                 : "/league-logo.png";
               return (
