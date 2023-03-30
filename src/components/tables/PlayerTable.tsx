@@ -47,7 +47,7 @@ const PlayerTable = ({ data, isLoading = false }: PlayerTableProps) => {
         cell: (info) => {
           const teamName = info?.row?.original.team?.name;
           const imgId = info?.row?.original.team?.logo;
-          const imgUrl = info.getValue()
+          const imgUrl = imgId
             ? `${s3URL}/image/${imgId}`
             : "/league-logo.png";
           return (
@@ -67,7 +67,7 @@ const PlayerTable = ({ data, isLoading = false }: PlayerTableProps) => {
         cell: (info) => {
           const leagueName = info?.row?.original.team?.season?.league?.name;
           const imgId = info?.row?.original.team?.season?.league?.logo;
-          const imgUrl = info.getValue()
+          const imgUrl = imgId
             ? `${s3URL}/image/${imgId}`
             : "/league-logo.png";
           return (
