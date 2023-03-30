@@ -13,9 +13,6 @@ interface SuccessModalProps {
 
 const SuccessModal = ({ isOpen, onClose, message, statment, buttonLabel, buttonOnClick }: SuccessModalProps) => {
 
-
-
- 
     return (
         <Modal
             className="success-modal"
