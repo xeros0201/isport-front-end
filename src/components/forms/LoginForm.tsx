@@ -20,8 +20,8 @@ const LoginForm = () => {
   const navigate = useNavigate();
 
   const initialValues: LoginFormValues = {
-    'email': 'tyler.beutel@blackbook.ai',
-    'password': 'Aa@123456',
+    'email': '' ,// 'tyler.beutel@blackbook.ai',
+    'password': '',// 'Aa@123456',
     'remember': ''
   };
 
