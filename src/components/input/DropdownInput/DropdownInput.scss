@@ -43,6 +43,14 @@
         height: calc(#{$padding-input} * 2 + #{$font-size-default});
       }
     }
+
+    .create-select{
+      @include input;
+      padding: 0;
+      & div {
+        border: none;
+      }
+    }
   }
 
   &--not-as-input {

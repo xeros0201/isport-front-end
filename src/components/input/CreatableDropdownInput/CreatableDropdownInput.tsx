@@ -46,7 +46,7 @@ function CreatableDropdownInput<T extends { id: string }>({
       <InputLabel label={label} required={required} />
       {!isFetching
         && <CreatableSelect
-          className="reactdropdown"
+          className="create-select"
           isClearable
           isDisabled={disabled || loading}
           onChange={(newValue) => onChange(newValue?.value ?? '')}
