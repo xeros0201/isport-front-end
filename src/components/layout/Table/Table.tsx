@@ -7,6 +7,7 @@ interface TableProps {
     compact?: boolean;
     striped?: boolean;
     hasFirstColumn?: boolean;
+    noMargin?: boolean;
 }
 
 const Table = ({
@@ -14,6 +15,7 @@ const Table = ({
     compact = false,
     striped = false,
     hasFirstColumn = false,
+    noMargin = false,
 }: TableProps) => {
 
     const tableClasses = useMemo(() => classNames({
@@ -21,6 +23,7 @@ const Table = ({
         'table--compact': compact,
         'table--striped': striped,
         'table--has-first-column': hasFirstColumn,
+        'table--no-margin': noMargin,
     }), [compact, striped, hasFirstColumn]);
 
     return (
