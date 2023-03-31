@@ -10,6 +10,8 @@ export interface PlayerAverage {
   players: PlayerAverage[];
   playerNumber?: number;
   properties: Record<string, Record<string, number>>
+  teamId: number;
+  teamName: string;
 }
 
 interface Props {

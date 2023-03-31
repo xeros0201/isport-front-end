@@ -8,8 +8,9 @@ import useSearchParamsState from "../../../hooks/useSearchParamsState";
 import { cloneDeep } from 'lodash';
 
 interface TeamStatsProps {
-  teamId: string;
-  players: PlayerAverage[]
+  teamId: number;
+  players: PlayerAverage[];
+  teamName: string;
 }
 
 const TeamStats = () => {
@@ -38,22 +39,23 @@ const TeamStats = () => {
             clr_bu: Math.floor(Math.random() * 10),
             clr_csb: Math.floor(Math.random() * 10)
           },
-        }
+        },
+        teamName: item.team.name
       }
     });
   }, [players]);
 
   const teamAverages = useMemo(() => {
     if (isLoading) return;
-
     const teamGrouping = playersAverage.reduce((accumulator: TeamStatsProps[], currentPlayer: PlayerAverage) => {
-      const team = accumulator.find(team => team.teamId === currentPlayer.name);
+      const team = accumulator.find(team => team.teamId === currentPlayer.teamId);
       if (team) {
         team.players.push(currentPlayer);
       } else {
         accumulator.push({
-          teamId: currentPlayer.name ?? '',
-          players: [currentPlayer]
+          teamId: currentPlayer.teamId,
+          players: [currentPlayer],
+          teamName: currentPlayer.teamName,
         });
       }
       return accumulator;
@@ -86,10 +88,12 @@ const TeamStats = () => {
 
       return {
         id: ind,
-        name: team.teamId,
+        name: team.teamName,
         playerNumber: undefined,
         players: team.players,
-        properties: propertyTotals
+        properties: propertyTotals,
+        teamId: team.teamId,
+        teamName: team.teamName
       }
     })
   }, [playersAverage])
@@ -124,7 +128,9 @@ const TeamStats = () => {
       name: 'Grand Total',
       playerNumber: undefined,
       players: [],
-      properties: teamTotals
+      properties: teamTotals,
+      teamId: 0,
+      teamName: ''
     }
   }, [teamAverages])
 

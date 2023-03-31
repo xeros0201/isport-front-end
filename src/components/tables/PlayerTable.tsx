@@ -12,6 +12,7 @@ import {
 } from "@tanstack/react-table";
 import { useMemo, useState } from "react";
 import { Row } from "../layout";
+const s3URL = import.meta.env.VITE_S3_URL;
 
 interface PlayerTableProps {
   data: Player[];
@@ -44,12 +45,14 @@ const PlayerTable = ({ data, isLoading = false }: PlayerTableProps) => {
         header: "Team",
         footer: (props) => props.column.id,
         cell: (info) => {
-          const logo =
-            info?.row?.original?.team?.logo ?? "/public/league-logo.png";
-          const teamName = info?.row?.original?.team?.name;
+          const teamName = info?.row?.original.team?.name;
+          const imgId = info?.row?.original.team?.logo;
+          const imgUrl = imgId
+            ? `${s3URL}/image/${imgId}`
+            : "/league-logo.png";
           return (
             <Row  removeSpacing alignItems={'center'}>
-              <Logo isSquare height={42} url={logo} />
+              <Logo isSquare height={42} url={imgUrl} />
               <span>{teamName as string}</span>
             </Row>
           );
@@ -62,12 +65,14 @@ const PlayerTable = ({ data, isLoading = false }: PlayerTableProps) => {
         header: "League",
         footer: (props) => props.column.id,
         cell: (info) => {
-          const logo =
-            info?.row?.original?.team?.logo ?? "/public/league-logo.png";
           const leagueName = info?.row?.original.team?.season?.league?.name;
+          const imgId = info?.row?.original.team?.season?.league?.logo;
+          const imgUrl = imgId
+            ? `${s3URL}/image/${imgId}`
+            : "/league-logo.png";
           return (
             <Row  removeSpacing alignItems={'center'}>
-              <Logo isSquare height={42} url={logo} />
+              <Logo isSquare height={42} url={imgUrl} />
               <span>{leagueName as string}</span>
             </Row>
           );
