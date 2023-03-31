@@ -3,7 +3,7 @@ import DatePicker from "react-datepicker";
 import "./TimeInput.scss";
 import { Icon } from "../../common";
 import { InputHTMLAttributes, useEffect, useState } from "react";
-import * as dayjs from "dayjs";
+import dayjs from "dayjs";
 
 const TimeInput = ({
   label,
