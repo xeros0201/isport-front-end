@@ -25,10 +25,7 @@ const MatchReportTable = ({ parentName, data, isLoading = false }: MatchReportTa
             footer: (props) => props.column.id,
             cell: (info) => <p>{info.getValue() as string}</p>,
             sortingFn: "alphanumeric",
-            accessorFn: (row) => {
-                const a = row.resultProperty.name;
-                return a;
-            },
+            accessorFn: (row) => row.resultProperty.name,
             enableSorting: false,
           },
           {
@@ -78,7 +75,7 @@ const MatchReportTable = ({ parentName, data, isLoading = false }: MatchReportTa
     if (!isLoading && !data) return <p>No match report of "{}" found</p>;
 
     return (
-        <Table compact striped noMargin>
+        <Table compact striped noMargin hasFirstColumn>
             <Thead>
                 <Tr>
                     {table.getFlatHeaders().map((header) => {
