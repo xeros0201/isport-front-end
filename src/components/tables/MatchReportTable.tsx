@@ -78,7 +78,7 @@ const MatchReportTable = ({ parentName, data, isLoading = false }: MatchReportTa
     if (!isLoading && !data) return <p>No match report of "{}" found</p>;
 
     return (
-        <Table compact striped>
+        <Table compact striped noMargin>
             <Thead>
                 <Tr>
                     {table.getFlatHeaders().map((header) => {

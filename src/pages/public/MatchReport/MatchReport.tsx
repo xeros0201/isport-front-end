@@ -51,23 +51,24 @@ const MatchReport = () => {
       <div className="stat-table">
 
         <div className="overview">
-          <Row alignItems="center" justifyContent="flex-start" disableWrapping isWrapRowItem={false} >
-            <div className="overview__table"><MatchReportTable parentName={"Overview"} data={overView} /></div>
-    
-            <div className="overview__chart">
-              <ScoreDistributionChart
-                data={overView}
-              />
-            </div>
-          </Row>
+          <div className="overview__grid">
+            <MatchReportTable parentName={"Overview"} data={overView} />
+                <ScoreDistributionChart
+                  data={overView}
+                />
+          </div>
         </div>
 
         <div className="other-props">
-          <Row alignItems="center" justifyContent="flex-start" disableWrapping>
+          <div className="other-props__grid">
             {
-              otherProps && otherProps.map((item) => <MatchReportTable parentName={item[0].resultProperty.name} data={item} />)
-            }
-          </Row>
+              otherProps && otherProps.map((item) => 
+                <MatchReportTable 
+                  parentName={item[0].resultProperty.name} 
+                  data={item} 
+                />
+            )}
+          </div>
         </div>
         
       </div>

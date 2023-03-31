@@ -1,11 +1,26 @@
 .stat-table {
     .overview {
-        &__table {
-            flex: 3
+        &__grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-gap: 20px;
+            grid-template-areas: "table score-distribution-wrapper score-distribution-wrapper";
+            
         }
-        
-        &__chart {
-            flex: 7
+
+        .score-distribution-wrapper {
+            overflow: auto;
+            grid-area: score-distribution-wrapper;
         }
     }
+    
+    .other-props {
+        margin-top: 20px;
+        &__grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-gap: 20px;
+        }
+    }
+
 }
