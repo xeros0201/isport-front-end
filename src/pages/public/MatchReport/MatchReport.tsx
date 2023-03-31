@@ -30,9 +30,6 @@ const MatchReport = () => {
     setIsMatchIdProvided(true);
     refetch();
     if(stats) {
-      const _aflProps = Object.keys(stats.reports);
-      console.log(_aflProps);
-
       //set data overView prop
       const _overView = stats.reports["Overview"];
       setOverView(_overView);
