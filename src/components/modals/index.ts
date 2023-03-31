@@ -1,3 +1,3 @@
 import DangerModal from "./DangerModal/DangerModal";
-
-export { DangerModal };
+import SuccessModal from "./SuccessModal/SuccessModal";
+export { DangerModal,SuccessModal };
