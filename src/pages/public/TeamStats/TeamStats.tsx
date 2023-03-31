@@ -40,7 +40,8 @@ const TeamStats = () => {
             clr_csb: Math.floor(Math.random() * 10)
           },
         },
-        teamName: item.team.name
+        teamName: item.team?.name ?? '',
+        teamId: item.team?.id ?? 0
       }
     });
   }, [players]);
@@ -66,7 +67,11 @@ const TeamStats = () => {
 
       const playerProperties = team.players.map((player) => player.properties);
 
-      const propertyTotals: Record<string, Record<string, number>> = cloneDeep(playerProperties).reduce((accumulator, currentPlayer, i) => {
+      const propertyTotals: Record<string, Record<string, number>> = cloneDeep(playerProperties).reduce((
+        accumulator: Record<string, Record<string, number>>, 
+        currentPlayer: Record<string, Record<string, number>>, 
+        i: number
+        ) => {
         if (i === 0) return currentPlayer
         Object.entries(currentPlayer).forEach(([groupKey, groupValue]) => {
           Object.keys(groupValue).forEach((property) => {
@@ -99,7 +104,11 @@ const TeamStats = () => {
     const teamLength = teamAverages.length
     const teamAverageProperties = teamAverages.map((team) => team.properties);
 
-    const teamTotals: Record<string, Record<string, number>> = cloneDeep(teamAverageProperties).reduce((accumulator, currentTeam, i) => {
+    const teamTotals: Record<string, Record<string, number>> = cloneDeep(teamAverageProperties).reduce((
+      accumulator: Record<string, Record<string, number>>,
+      currentTeam: Record<string, Record<string, number>>,
+      i: number
+    ) => {
       if (i === 0) return currentTeam
       Object.entries(currentTeam).forEach(([groupKey, groupValue]) => {
         Object.keys(groupValue).forEach((property) => {
