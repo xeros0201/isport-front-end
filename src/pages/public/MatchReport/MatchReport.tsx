@@ -63,10 +63,10 @@ const MatchReport = () => {
           <div className="other-props__grid">
             {
               otherProps && otherProps.map((item) => 
-                <MatchReportTable 
-                  parentName={item[0].resultProperty.name} 
-                  data={item} 
-                />
+              <MatchReportTable 
+                parentName={item[0].resultProperty.parent.name} 
+                data={item}
+              />
             )}
           </div>
         </div>
