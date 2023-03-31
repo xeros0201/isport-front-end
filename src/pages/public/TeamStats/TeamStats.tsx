@@ -40,7 +40,8 @@ const TeamStats = () => {
             clr_csb: Math.floor(Math.random() * 10)
           },
         },
-        teamName: item.team.name
+        teamName: item.team?.name ?? '',
+        teamId: item.team?.id ?? 0
       }
     });
   }, [players]);
