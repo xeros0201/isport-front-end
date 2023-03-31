@@ -1,5 +1,5 @@
 @import "../../../styles/variables.scss";
-
+@import "../../../styles/mixins";
 $icon-size: 80px;
 .success-modal {
     &__icon {
@@ -15,5 +15,10 @@ $icon-size: 80px;
             font-size:$icon-size + -15 ;
             color: $white;
         }
+    }
+}
+@include sm-screen{
+    .row {
+        display: flex;
     }
 }
