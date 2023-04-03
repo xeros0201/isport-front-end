@@ -1,4 +1,5 @@
 @import "../../../styles/variables.scss";
+@import "../../../styles/mixins";
 
 $icon-size: 80px;
 
@@ -13,5 +14,11 @@ $icon-size: 80px;
             font-size: $icon-size;
             color: $white;
         }
+    }
+}
+
+@include sm-screen{
+    .row {
+        display: flex;
     }
 }
