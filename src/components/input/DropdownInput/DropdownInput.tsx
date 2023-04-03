@@ -40,9 +40,9 @@ function DropdownInput({
         <ReactDropdown
           className="reactdropdown"
           options={options}
-          value={value}
+          value={options.length ? value : ""}
           placeholder={placeholder ?? ""}
-          onChange={(e) => onChange(e.value)}
+          onChange={(e) => (e.value !== value ? onChange(e.value) : null)}
           disabled={disabled}
         />
       )}

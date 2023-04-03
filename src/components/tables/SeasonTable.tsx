@@ -12,6 +12,7 @@ import {
   } from "@tanstack/react-table";
 import { useMemo, useState } from "react";
 import { Row } from "../layout";
+const s3URL = import.meta.env.VITE_S3_URL;
 
 interface SeasonTableProps {
     data: Season[];
@@ -61,12 +62,22 @@ const SeasonTable = ({ data, isLoading = false }: SeasonTableProps) => {
           {
             header: "League Name",
             footer: (props) => props.column.id,
-            cell: (info) => (
-                <Logo url="/league-logo.png" height={40} label={info.getValue() as string} />
-            ),
+            cell: (info) => {
+              const leagueName = info?.row?.original.league?.name;
+              const imgId = info?.row?.original.league?.logo;
+              const imgUrl = imgId
+                ? `${s3URL}/image/${imgId}`
+                : "/league-logo.png";
+              return (
+                <Row removeSpacing alignItems={"center"}>
+                  <Logo isSquare height={42} url={imgUrl} />
+                  <span>{leagueName as string}</span>
+                </Row>
+              );
+            },
             sortingFn: "text",
             accessorFn: (row) => row.league.name,
-            enableSorting: true
+            enableSorting: true,
           },
           {
             header: "Date Created",
