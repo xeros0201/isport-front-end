@@ -5,7 +5,7 @@ import { LeagueDropdown } from "../../../components/dropdowns";
 import { DateInput, CheckboxInput, TextInput } from "../../../components/input";
 import { Form, Page, Row } from "../../../components/layout";
 import ImageInput from "../../../components/input/ImageInput/ImageInput";
-import { DangerModal, SuccessModal } from "../../../components/modals";
+import { DangerModal, SuccessModal,ErrorModal } from "../../../components/modals";
  
 
 const Test = () => {
@@ -108,7 +108,12 @@ const Test = () => {
           alert("Delete");
         }}
       />
-          <SuccessModal
+       <ErrorModal
+        isOpen={isErrorModal}
+        onClose={() => setIsErrorModal(false)}
+        message={"Sorry for the inconvenience, please try again!"}
+      />
+       <SuccessModal
         isOpen={isSuccessModal}
         onClose={() => setIsSuccessModal(false)}
         message={undefined}
@@ -117,6 +122,10 @@ const Test = () => {
           setIsSuccessModal(false);
           alert("action to view");
         }}
+      />
+      <Button
+        onClick={() => setIsModalOpen(true)}
+        label="Click here to show the Modal"
       />
     </Page>
   );
