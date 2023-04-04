@@ -16,6 +16,7 @@ const MatchReport = () => {
   const [isMatchIdProvided, setIsMatchIdProvided] = useState(false);
   const [overView, setOverView] = useState([] as ReportOnMatches[]);
   const [otherProps, setOtherProps] = useState([] as ReportOnMatches[][]);
+  const [aflResult, setAflResult] = useState({} as AflResult);
 
   const navigate = useNavigate();
 
@@ -43,6 +44,9 @@ const MatchReport = () => {
       }
 
       setOtherProps(_otherProps);
+
+      const aflResult = stats.aflResult;
+      if(aflResult) setAflResult(aflResult);
     }
   }, [matchId, stats]);
 
@@ -85,20 +89,9 @@ const MatchReport = () => {
         icon="IoChevronBackOutline"
       />
       <MatchReportBanner
-        data={{
-          leagueName: "AFL Queensland, 2022",
-          time: "Saturday, 04 June 2022, 02:00 PM",
-          location: "Zupps Aspley Oval / Graham Road 1",
-          homeTeamName: "BROADBEACH",
-          homeTeamLogo: "/public/broadbeach.png",
-          homeTeamScore: 95,
-          homeTeamSecondScore: 14.11,
-          awayTeamName: "ASPLEY",
-          awayTeamLogo: "/public/broadbeach.png",
-          awayTeamScore: 67,
-          awayTeamSecondScore: 9.13,
-        }}
-      ></MatchReportBanner>
+        matchId={+matchId}
+        score={aflResult}
+      />
       <TabSelect
         tabs={["Match Overview", "Match Statistics", "Game Leaders"]}
         selectedTab={selectedTab}

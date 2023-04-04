@@ -18,12 +18,20 @@ interface ReportOnMatches {
     value: MatchReportValue;
 }
 
-interface AflResult {
+interface Result {
+    scorePrimary: number;
+    secondaryScore: number;
     team: Team;
     player: Player[];
 }
 
+interface AflResult {
+    home?: Result;
+    away?: Result;
+}
+
 interface Stats {
     reports: Record<string, ReportOnMatches[]>;
-    aflResult?: AflResult[];
+    aflResult?: AflResult;
+    match?: Match;
 }
