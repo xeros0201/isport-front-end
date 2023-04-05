@@ -1,4 +1,5 @@
 @import "../../../styles/variables";
+@import '../../../styles/mixins';
 
 .score-distribution-wrapper {
     background-color: white;
@@ -8,6 +9,11 @@
     .score-distribution {
         position: relative;
         margin-bottom: 3rem;
+
+        @include xs-screen {
+            margin-bottom: 1.5rem;
+        }
+
         .line-wrapper {
             height: 100%;
             width: calc(100% - 100px);
@@ -25,6 +31,14 @@
                     position: absolute;
                     top: calc(100% + 5px);
                     right: 0;
+                    @include md-screen {
+                        transform: rotate(300deg);
+                        left: -25px !important;
+                        font-size: x-small;
+                    }
+                    @include xs-screen {
+                        display: none;
+                    }
                 }
 
                 &:not(:last-child) {
@@ -35,6 +49,13 @@
                         left: 0;
                         right: auto;
                         transform: translateX(-50%);
+                        @include md-screen {
+                            transform: rotate(300deg);
+                            left: -15px !important;
+                        }
+                        @include xs-screen {
+                            display: none;
+                        }
                     }
                 }
             }
