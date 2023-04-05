@@ -77,5 +77,17 @@
         }
     }
 
+}
 
+@media print {
+  .header {
+    .header__container{
+      .header__nav-mobile{
+        display: none;
+      }
+      .header__nav-desktop{
+        display: none;
+      }
+    }
+  }
 }

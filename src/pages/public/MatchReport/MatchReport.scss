@@ -1,0 +1,47 @@
+@import '../../../styles/variables';
+@import '../../../styles/mixins';
+
+.stat-table {
+    .overview {
+        @media only screen and (min-width: 901px) {
+            &__grid {
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                grid-gap: 20px;
+                grid-template-areas: "table score-distribution-wrapper score-distribution-wrapper";
+            }
+
+            .score-distribution-wrapper {
+                overflow: auto;
+                grid-area: score-distribution-wrapper;
+            }
+        }
+
+        @media only screen and (max-width: 900px) {
+            .score-distribution-wrapper {
+                margin-top: 20px;
+            }
+        }
+    }
+    
+    .other-props {
+        margin-top: 20px;
+        &__grid {
+            display: grid;
+
+            @include lg-screen {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            @include md-screen {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            @include sm-screen {
+                grid-template-columns: repeat(1, 1fr);
+            }
+
+            grid-gap: 20px;
+        }
+    }
+}

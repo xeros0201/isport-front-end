@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "lint": "tsc --noEmit && eslint src/**/*.ts{,x}"
   },
   "dependencies": {
     "@react-icons/all-files": "^4.1.0",
@@ -28,7 +29,8 @@
     "react-image": "^4.0.3",
     "react-images-uploading": "^3.1.7",
     "react-query": "^3.39.3",
-    "react-router-dom": "^6.8.0"
+    "react-router-dom": "^6.8.0",
+    "react-select": "^5.7.0"
   },
   "devDependencies": {
     "@types/luxon": "^3.2.0",

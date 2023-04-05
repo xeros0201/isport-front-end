@@ -5,10 +5,13 @@ import { LeagueDropdown } from "../../../components/dropdowns";
 import { DateInput, CheckboxInput, TextInput } from "../../../components/input";
 import { Form, Page, Row } from "../../../components/layout";
 import ImageInput from "../../../components/input/ImageInput/ImageInput";
-import TeamForm from "../../../components/forms/TeamForm";
-import DropdownInput from "../../../components/input/DropdownInput/DropdownInput";
+import { DangerModal, SuccessModal,ErrorModal } from "../../../components/modals";
+ 
 
 const Test = () => {
+  const [isModalOpen, setIsModalOpen] = useState(true);
+  const [isSuccessModal, setIsSuccessModal] = useState(true);
+  const [isErrorModal, setIsErrorModal] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const formik = useFormik({
     initialValues: {
@@ -74,14 +77,14 @@ const Test = () => {
         <ImageInput
           label="Prefilled logo"
           value={formik.values.logo1}
-          onChange={formik.handleChange("logo1")}
+          onChange={(value) => formik.setFieldValue("logo1", value)}
           error={formik.errors.logo1}
           touched={formik.touched.logo1}
         />
         <ImageInput
           label="Empty logo"
           value={formik.values.logo2}
-          onChange={formik.handleChange("logo2")}
+          onChange={(value) => formik.setFieldValue("logo2", value)}
           error={formik.errors.logo2}
           touched={formik.touched.logo2}
         />
@@ -92,10 +95,38 @@ const Test = () => {
         isLoading={isSubmitting}
         isSubmit
       />
-      <TeamForm />
+
       <br />
       {/* {JSON.stringify(formik.values)} */}
-      
+      <DangerModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        message="Do you really want to delete this player from the match? This process cannot be undone."
+        buttonLabel="Delete Player"
+        buttonOnClick={() => {
+          setIsModalOpen(false);
+          alert("Delete");
+        }}
+      />
+       <ErrorModal
+        isOpen={isErrorModal}
+        onClose={() => setIsErrorModal(false)}
+        message={"Sorry for the inconvenience, please try again!"}
+      />
+       <SuccessModal
+        isOpen={isSuccessModal}
+        onClose={() => setIsSuccessModal(false)}
+        message={undefined}
+        buttonLabel={undefined}
+        buttonOnClick={() => {
+          setIsSuccessModal(false);
+          alert("action to view");
+        }}
+      />
+      <Button
+        onClick={() => setIsModalOpen(true)}
+        label="Click here to show the Modal"
+      />
     </Page>
   );
 };

@@ -28,9 +28,9 @@ const PlayerForm = ({ id }: FormProps) => {
   const initialValues: PlayerFormValues = {
     name: data?.name ?? "",
     playerNumber: data?.playerNumber.toString() ??  "",
-    teamId: data?.teamId.toString() ?? "",
-    leagueId: "",
-    seasonId: "",
+    teamId: data?.team?.id.toString() ?? "",
+    leagueId: data?.team?.id.toString() ?? "",
+    seasonId: data?.team?.seasonId.toString() ?? "",
   };
 
   // Setup submit handler
