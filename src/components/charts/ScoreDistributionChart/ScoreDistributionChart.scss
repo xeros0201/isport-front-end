@@ -39,11 +39,6 @@
                     @include xs-screen {
                         display: none;
                     }
-                    // @media screen and (max-width: 980px) {
-                    //     transform: rotate(300deg);
-                    //     left: -25px !important;
-                    //     font-size: x-small;
-                    // }
                 }
 
                 &:not(:last-child) {
@@ -61,10 +56,6 @@
                         @include xs-screen {
                             display: none;
                         }
-                        // @media screen and (max-width: 980px) {
-                        //     transform: rotate(300deg);
-                        //     left: -15px !important;
-                        // }
                     }
                 }
             }
