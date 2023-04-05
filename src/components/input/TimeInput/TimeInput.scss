@@ -1,0 +1,77 @@
+@import "react-datepicker/dist/react-datepicker.css";
+@import "../../../styles/mixins";
+
+.timeinput {
+  @include input-wrap;
+
+  &__input-wrap {
+    // @include input-wrap;
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row;
+    margin-top: 10px;
+  }
+  &__input {
+    // @include input;
+    // padding-right: 40px;
+    display: flex;
+    align-items: center;
+
+    input {
+      width: 45px;
+      padding: 10px;
+      border: 1px solid #808080;
+      text-align: center;
+    }
+
+    /* Chrome, Safari, Edge, Opera */
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+
+    /* Firefox */
+    input[type=number] {
+      -moz-appearance: textfield;
+    }
+
+    span {
+      margin: 0 0.5rem;
+    }
+  }
+  &__button {
+    display: flex;
+    align-items: center;
+
+    button {
+      border-radius: 10px;
+      background-color: #ffffff;
+      padding: 0.5rem 0.75rem;
+      border: 1px solid #808080;
+      margin-left: 0.5rem;
+
+      &.active {
+        background-color: #111111;
+        color: #ffffff;
+      }
+    }
+  }
+  .icon {
+    position: absolute;
+    bottom: 12px;
+    right: 12px;
+  }
+}
+
+.react-datepicker-popper {
+  transition: 0s;
+}
+
+.react-datepicker__triangle{
+  left: 50% !important;
+  transform: none !important;
+  z-index: 1;
+}

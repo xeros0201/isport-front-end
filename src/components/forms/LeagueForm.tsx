@@ -2,7 +2,12 @@ import { useFormik } from "formik";
 import { useState } from "react";
 import { useQuery } from "react-query";
 import { useNavigate } from "react-router-dom";
-import { createLeague, getLeague, LeagueFormValues, updateLeague } from "../../api/leagues";
+import {
+  createLeague,
+  getLeague,
+  LeagueFormValues,
+  updateLeague,
+} from "../../api/leagues";
 import { Button, Spinner } from "../common";
 import { InputError, TextInput } from "../input";
 import ImageInput from "../input/ImageInput/ImageInput";
@@ -43,7 +48,7 @@ const LeagueForm = ({ id }: FormProps) => {
     try {
       !!id ? await update() : await create();
     } catch (error) {
-      alert(JSON.stringify(error))
+      alert(JSON.stringify(error));
     }
     setIsSubmitting(false);
   };
@@ -87,7 +92,7 @@ const LeagueForm = ({ id }: FormProps) => {
       />
       <ImageInput
         label="League Logo"
-        onChange={formik.handleChange("logo")}
+        onChange={(value) => formik.setFieldValue("logo", value)}
         value={formik.values.logo}
         touched={formik.touched.logo}
         error={formik.errors.logo as string}

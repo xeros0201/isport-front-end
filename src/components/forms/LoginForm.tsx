@@ -20,8 +20,8 @@ const LoginForm = () => {
   const navigate = useNavigate();
 
   const initialValues: LoginFormValues = {
-    'email': 'tyler.beutel@blackbook.ai',
-    'password': 'Aa@123456',
+    'email': '' ,// 'tyler.beutel@blackbook.ai',
+    'password': '',// 'Aa@123456',
     'remember': ''
   };
 
@@ -32,7 +32,18 @@ const LoginForm = () => {
     }
     if (!values.password) {
       errors.password = "Required";
+    } else {
+      // 🎯 Minimum 8 characters
+      // 🎯 Should contain 1 or more numbers
+      // 🎯 Should contain 1 or more symbols
+      // 🎯 Should contain 1 or more letters
+      const r = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,20}$/;
+
+      if (!r.test(values.password)) {
+        errors.password = "Password must be at least 8 characters, contains only letters, numbers and symbols";
+      }
     }
+
     return errors;
   };
 

@@ -1,0 +1,34 @@
+@import "../../../styles/variables";
+@import "../../../styles/mixins";
+
+.numberinput {
+  @include input-wrap;
+  flex: 1;
+
+  .numberinput__input-wrap {
+    position: relative;
+
+    .numberinput__input {
+        @include input;
+  
+        &--rounded {
+          @include input-rounded;
+        }
+    }
+  
+    .icon {
+      position: absolute;
+      bottom: 12px;
+      left: 14px;
+    }
+  }
+
+  &--has-icon {
+    .numberinput__input-wrap {  
+      .numberinput__input {
+        padding-left: 40px;
+      }
+    }
+  }
+
+}

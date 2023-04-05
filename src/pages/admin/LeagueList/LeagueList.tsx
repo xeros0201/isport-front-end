@@ -8,41 +8,44 @@ import { useMemo, useState } from "react";
 import { LeagueTable } from "../../../components/tables";
 
 const LeagueList = () => {
-    const [query, setQuery] = useState('');
+  const [query, setQuery] = useState("");
 
-    // Fetch data
-    const { isLoading, data: leagues } = useQuery(
-        ["getLeagues"], async () => await getLeagues()
+  // Fetch data
+  const { isLoading, data: leagues } = useQuery(
+    ["getLeagues"],
+    async () => await getLeagues()
+  );
+
+  // Filter data to match query
+  const filteredLeagues = useMemo(() => {
+    if (!leagues) return [];
+    return leagues.filter((league: League) =>
+      league.name.toLowerCase().includes(query.toLowerCase())
     );
+  }, [leagues, query]);
 
-    // Filter data to match query  
-    const filteredLeagues = useMemo(() => {
-        if (!leagues) return [];
-        return leagues.filter((league: any) => league.name.toLowerCase().includes(query.toLowerCase()));
-    }, [leagues, query]);
+  const navigate = useNavigate();
 
-    const navigate = useNavigate();
-
-    return (
-        <Page title="Leagues">
-            <Row alignItems='center' disableWrapping noFlex>
-                <h1>Leagues</h1>
-                <Button
-                    label="New League"
-                    onClick={() => navigate('/admin/leagues/new')}
-                    icon="IoAdd"
-                />
-            </Row>
-            <TextInput
-                placeholder="Search..."
-                value={query}
-                onChange={setQuery}
-                icon="IoSearch"
-                rounded
-            />
-            <LeagueTable data={filteredLeagues} isLoading={isLoading} />
-        </Page>
-    );
+  return (
+    <Page title="Leagues">
+      <Row alignItems="center" disableWrapping noFlex>
+        <h1>Leagues</h1>
+        <Button
+          label="New League"
+          onClick={() => navigate("/admin/leagues/new")}
+          icon="IoAdd"
+        />
+      </Row>
+      <TextInput
+        placeholder="Search..."
+        value={query}
+        onChange={setQuery}
+        icon="IoSearch"
+        rounded
+      />
+      <LeagueTable data={filteredLeagues} isLoading={isLoading} />
+    </Page>
+  );
 };
 
 export default LeagueList;

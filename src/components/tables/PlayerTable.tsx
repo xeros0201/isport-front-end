@@ -12,6 +12,7 @@ import {
 } from "@tanstack/react-table";
 import { useMemo, useState } from "react";
 import { Row } from "../layout";
+const s3URL = import.meta.env.VITE_S3_URL;
 
 interface PlayerTableProps {
   data: Player[];
@@ -43,9 +44,19 @@ const PlayerTable = ({ data, isLoading = false }: PlayerTableProps) => {
       {
         header: "Team",
         footer: (props) => props.column.id,
-        cell: (info) => (
-          <Logo url="/public/league-logo.png" height={40} label={info.getValue() as string} />
-        ),
+        cell: (info) => {
+          const teamName = info?.row?.original.team?.name;
+          const imgId = info?.row?.original.team?.logo;
+          const imgUrl = imgId
+            ? `${s3URL}/image/${imgId}`
+            : "/league-logo.png";
+          return (
+            <Row  removeSpacing alignItems={'center'}>
+              <Logo isSquare height={42} url={imgUrl} />
+              <span>{teamName as string}</span>
+            </Row>
+          );
+        },
         sortingFn: "alphanumeric",
         accessorFn: (row) => row?.team?.name,
         enableSorting: true,
@@ -53,11 +64,21 @@ const PlayerTable = ({ data, isLoading = false }: PlayerTableProps) => {
       {
         header: "League",
         footer: (props) => props.column.id,
-        cell: (info) => (
-          <Logo url="/public/league-logo.png" height={40} label={info.getValue() as string} />
-        ),
+        cell: (info) => {
+          const leagueName = info?.row?.original.team?.season?.league?.name;
+          const imgId = info?.row?.original.team?.season?.league?.logo;
+          const imgUrl = imgId
+            ? `${s3URL}/image/${imgId}`
+            : "/league-logo.png";
+          return (
+            <Row  removeSpacing alignItems={'center'}>
+              <Logo isSquare height={42} url={imgUrl} />
+              <span>{leagueName as string}</span>
+            </Row>
+          );
+        },
         sortingFn: "alphanumeric",
-        accessorFn: (row) => row?.league?.name,
+        accessorFn: (row) => row?.team?.season?.league?.name,
         enableSorting: true,
       },
       {
