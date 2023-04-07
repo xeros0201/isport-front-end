@@ -1,19 +1,9 @@
 import { useEffect, useMemo } from "react";
 import { useQuery } from "react-query";
+import { getResultPropsParent } from "../../api/matches";
 import { getTeamBySeasons } from "../../api/teams";
 import { getTeams } from "../../api/teams";
 import { InputError, DropdownInput } from "../input";
-
-const statistics = [
-  {
-    id: 1,
-    name: "Disposals",
-  },
-  {
-    id: 2,
-    name: "Goals",
-  },
-];
 
 interface StatisticDropdown extends ImplementedDropdownProps {}
 
@@ -31,9 +21,10 @@ const StatisticDropdown = ({
     error: fetchError,
     isLoading,
     data,
-    refetch,
   } = useQuery(["getStatistics"], async (): Promise<Statistic[]> => {
-    return statistics;
+    const temp = await getResultPropsParent();
+    const playerProps = temp.filter(prop => prop.type == "PLAYER");
+    return playerProps;
   });
 
   // Format statistic options so they are input compatible
