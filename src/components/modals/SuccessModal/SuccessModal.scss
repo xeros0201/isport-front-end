@@ -16,9 +16,10 @@ $icon-size: 80px;
             color: $white;
         }
     }
-}
-@include sm-screen{
-    .row {
-        display: flex;
+    
+    @include sm-screen{
+        .row {
+            display: flex;
+        }
     }
 }
