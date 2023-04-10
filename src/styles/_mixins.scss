@@ -69,7 +69,7 @@
 }
 
 @mixin row-wrap {
-  display: block !important;
+  display: block;
 
   > *:not(:first-child) {
     margin-top: $margin-top-small;
