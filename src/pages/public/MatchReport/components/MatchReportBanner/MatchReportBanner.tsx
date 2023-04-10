@@ -27,14 +27,13 @@ interface MatchReportBannerProps {
   awayTeamSecondScore: number;
 }
 
-function MatchReportBanner({
-  matchId,
-  score,
-} : BannerProps) {
+function MatchReportBanner({ matchId, score }: BannerProps) {
   // Fetch data
-  const { isLoading, data: match, refetch } = useQuery(
-    ["match"], async () => await getMatchById(+matchId)
-  );
+  const {
+    isLoading,
+    data: match,
+    refetch,
+  } = useQuery(["match"], async () => await getMatchById(+matchId));
 
   const [bannerData, setBannerData] = useState({} as MatchReportBannerProps);
 
@@ -45,7 +44,9 @@ function MatchReportBanner({
     setBannerData({
       ...bannerData,
       leagueName: match?.season.league.name || "",
-      time: DateTime.fromISO(match?.date as string).toLocaleString(DateTime.DATETIME_MED_WITH_WEEKDAY),
+      time: DateTime.fromISO(match?.date as string).toLocaleString(
+        DateTime.DATETIME_MED_WITH_WEEKDAY
+      ),
       location: match?.location.name || "",
       homeTeamName: match?.homeTeam.name || "",
       homeTeamLogo: match?.homeTeam.logo || "",
@@ -55,7 +56,7 @@ function MatchReportBanner({
       awayTeamLogo: match?.awayTeam.logo || "",
       awayTeamScore: score?.away?.scorePrimary || 0,
       awayTeamSecondScore: score?.away?.secondaryScore || 0,
-    })
+    });
   }, [matchId, match]);
 
   // If fetching data for provided id, show loading
