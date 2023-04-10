@@ -41,7 +41,6 @@ function MatchReportBanner({ matchId, score }: BannerProps) {
   useEffect(() => {
     if (!matchId) return;
     refetch();
-    debugger
     setBannerData({
       ...bannerData,
       leagueName: match?.season.league.name || "",
