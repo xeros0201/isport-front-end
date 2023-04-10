@@ -200,12 +200,12 @@ export const getMatchById = async (matchId: number): Promise<Match> => {
     return response.data;
 };
 
-export const getResultPropsParent = async (): Promise<AflResultProperties[]> => {
-    const response = await axios.get<any>(`/matches/stat-props-parent`);
-    return response.data;
-};
+// export const getResultPropsParent = async (): Promise<AflResultProperties[]> => {
+//     const response = await axios.get<any>(`/matches/stat-props-parent`);
+//     return response.data;
+// };
 
-export const getResultPropsChildren = async (parentId: number): Promise<AflResultProperties[]> => {
-    const response = await axios.get<any>(`/matches/${parentId}/stat-props-children`);
-    return response.data;
-}
+// export const getResultPropsChildren = async (parentId: number): Promise<AflResultProperties[]> => {
+//     const response = await axios.get<any>(`/matches/${parentId}/stat-props-children`);
+//     return response.data;
+// }

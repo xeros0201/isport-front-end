@@ -134,10 +134,11 @@ declare global {
 
   interface PlayersOnAflResults {
     id: number;
-    match: Match;
-    aflResultProperties: AflResultProperties;
-    player: Player;
-    value: number;
+    teamId: number;
+    name: string;
+    playerNumber: number;
+    team: Team;
+    total: number;
   }
 
   interface AflResultProperties {
@@ -154,6 +155,7 @@ declare global {
   interface Statistic {
     id: number;
     name: string;
+    alias: string;
   }
 }
 

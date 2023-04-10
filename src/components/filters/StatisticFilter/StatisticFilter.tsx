@@ -9,7 +9,7 @@ interface StatisticFilterProps {
   leagueId: string;
   seasonId: string;
   teamId: string;
-  statisticId: string;
+  statisticAlias: string;
   onLeagueChange: (value: string) => void;
   onSeasonChange: (value: string) => void;
   onTeamChange: (value: string) => void;
@@ -20,7 +20,7 @@ const StatisticFilter = ({
   leagueId,
   seasonId,
   teamId,
-  statisticId,
+  statisticAlias,
   onLeagueChange,
   onSeasonChange,
   onTeamChange,
@@ -45,7 +45,7 @@ const StatisticFilter = ({
             value={teamId}
             onChange={onTeamChange}
           />
-          <StatisticDropdown value={statisticId} onChange={onStatisticChange} />
+          <StatisticDropdown value={statisticAlias} onChange={onStatisticChange} />
         </Row>
       </Row>
     </div>
