@@ -12,7 +12,7 @@ import {
 } from "@tanstack/react-table";
 import { useMemo, useState } from "react";
 import { Row } from "../layout";
-import { MatchStatus } from "../../constants";
+import { MatchStatus } from "../../types/enums";
 
 interface MatchTableProps {
   data: Match[];
