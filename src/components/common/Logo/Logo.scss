@@ -5,6 +5,12 @@
         display: block;
         margin-left: auto;
         margin-right: auto;
+
+        .logo__img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
     }
 
     &--with-label {
