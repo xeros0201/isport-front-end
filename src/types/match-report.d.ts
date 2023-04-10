@@ -23,8 +23,8 @@ interface ReportOnMatches {
 }
 
 interface Result {
-  scorePrimary: number;
-  secondaryScore: number;
+  meta: any;
+  score: number;
   team: Team;
   player: Player[];
 }
@@ -36,6 +36,6 @@ interface AflResult {
 
 interface Stats {
   reports: Record<string, ReportOnMatches>;
-  aflResult?: AflResult;
+  teamReports?: AflResult;
   match?: Match;
 }

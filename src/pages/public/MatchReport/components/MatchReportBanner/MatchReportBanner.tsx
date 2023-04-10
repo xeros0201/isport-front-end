@@ -22,9 +22,9 @@ interface MatchReportBannerProps {
   homeTeamLogo: string;
   awayTeamLogo: string;
   homeTeamScore: number;
-  homeTeamSecondScore: number;
+  homeTeamSecondScore: string;
   awayTeamScore: number;
-  awayTeamSecondScore: number;
+  awayTeamSecondScore: string;
 }
 
 function MatchReportBanner({ matchId, score }: BannerProps) {
@@ -41,6 +41,7 @@ function MatchReportBanner({ matchId, score }: BannerProps) {
   useEffect(() => {
     if (!matchId) return;
     refetch();
+    debugger
     setBannerData({
       ...bannerData,
       leagueName: match?.season.league.name || "",
@@ -50,14 +51,30 @@ function MatchReportBanner({ matchId, score }: BannerProps) {
       location: match?.location.name || "",
       homeTeamName: match?.homeTeam.name || "",
       homeTeamLogo: match?.homeTeam.logo || "",
-      homeTeamScore: score?.home?.scorePrimary || 0,
-      homeTeamSecondScore: score?.home?.secondaryScore || 0,
+      homeTeamScore: score?.home?.score 
+        ? 
+        (score?.home?.score * 6 + score?.home?.meta.RUSHED) 
+        : 
+        score?.home?.meta.RUSHED,
+      homeTeamSecondScore: score?.home?.score 
+        ? 
+        `${score?.home?.score}.${score?.home?.meta.RUSHED}` 
+        : 
+        `0.${score?.home?.meta.RUSHED}`,
       awayTeamName: match?.awayTeam.name || "",
       awayTeamLogo: match?.awayTeam.logo || "",
-      awayTeamScore: score?.away?.scorePrimary || 0,
-      awayTeamSecondScore: score?.away?.secondaryScore || 0,
+      awayTeamScore: score?.away?.score 
+        ? 
+        (score?.away?.score * 6 + score?.away?.meta.RUSHED) 
+        : 
+      score?.away?.meta.RUSHED,
+      awayTeamSecondScore: score?.away?.score 
+        ? 
+        `${score?.away?.score}.${score?.away?.meta.RUSHED}` 
+        : 
+        `0.${score?.away?.meta.RUSHED}`,
     });
-  }, [matchId, match]);
+  }, [matchId, match, score]);
 
   // If fetching data for provided id, show loading
   if (matchId && isLoading) return <Spinner />;

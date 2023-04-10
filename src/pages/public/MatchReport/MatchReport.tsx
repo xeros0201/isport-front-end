@@ -39,7 +39,7 @@ const MatchReport = () => {
     [stats]
   );
 
-  const aflResult = useMemo(() => stats?.aflResult || {}, [stats]);
+  const aflResult = useMemo(() => stats?.teamReports || {}, [stats]);
 
   const overView = useMemo(
     () => _stats.find((item) => item.name === "Overview"),
