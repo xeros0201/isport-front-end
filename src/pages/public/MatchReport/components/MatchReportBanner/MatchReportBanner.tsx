@@ -22,19 +22,18 @@ interface MatchReportBannerProps {
   homeTeamLogo: string;
   awayTeamLogo: string;
   homeTeamScore: number;
-  homeTeamSecondScore: number;
+  homeTeamSecondScore: string;
   awayTeamScore: number;
-  awayTeamSecondScore: number;
+  awayTeamSecondScore: string;
 }
 
-function MatchReportBanner({
-  matchId,
-  score,
-} : BannerProps) {
+function MatchReportBanner({ matchId, score }: BannerProps) {
   // Fetch data
-  const { isLoading, data: match, refetch } = useQuery(
-    ["match"], async () => await getMatchById(+matchId)
-  );
+  const {
+    isLoading,
+    data: match,
+    refetch,
+  } = useQuery(["match"], async () => await getMatchById(+matchId));
 
   const [bannerData, setBannerData] = useState({} as MatchReportBannerProps);
 
@@ -45,18 +44,36 @@ function MatchReportBanner({
     setBannerData({
       ...bannerData,
       leagueName: match?.season.league.name || "",
-      time: DateTime.fromISO(match?.date as string).toLocaleString(DateTime.DATETIME_MED_WITH_WEEKDAY),
+      time: DateTime.fromISO(match?.date as string).toLocaleString(
+        DateTime.DATETIME_MED_WITH_WEEKDAY
+      ),
       location: match?.location.name || "",
       homeTeamName: match?.homeTeam.name || "",
       homeTeamLogo: match?.homeTeam.logo || "",
-      homeTeamScore: score?.home?.scorePrimary || 0,
-      homeTeamSecondScore: score?.home?.secondaryScore || 0,
+      homeTeamScore: score?.home?.score 
+        ? 
+        (score?.home?.score * 6 + score?.home?.meta.RUSHED) 
+        : 
+        score?.home?.meta.RUSHED,
+      homeTeamSecondScore: score?.home?.score 
+        ? 
+        `${score?.home?.score}.${score?.home?.meta.RUSHED}` 
+        : 
+        `0.${score?.home?.meta.RUSHED}`,
       awayTeamName: match?.awayTeam.name || "",
       awayTeamLogo: match?.awayTeam.logo || "",
-      awayTeamScore: score?.away?.scorePrimary || 0,
-      awayTeamSecondScore: score?.away?.secondaryScore || 0,
-    })
-  }, [matchId, match]);
+      awayTeamScore: score?.away?.score 
+        ? 
+        (score?.away?.score * 6 + score?.away?.meta.RUSHED) 
+        : 
+      score?.away?.meta.RUSHED,
+      awayTeamSecondScore: score?.away?.score 
+        ? 
+        `${score?.away?.score}.${score?.away?.meta.RUSHED}` 
+        : 
+        `0.${score?.away?.meta.RUSHED}`,
+    });
+  }, [matchId, match, score]);
 
   // If fetching data for provided id, show loading
   if (matchId && isLoading) return <Spinner />;

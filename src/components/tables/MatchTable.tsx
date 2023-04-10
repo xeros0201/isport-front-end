@@ -97,7 +97,6 @@ const MatchTable = ({ data, isLoading = false }: MatchTableProps) => {
         header: "Action",
         footer: (props) => props.column.id,
         cell: (info) => {
-          console.log(info);
           const isDraft = info.getValue() === MatchStatus.DRAFT;
           return (
             <Row alignItems="center" noFlex justifyContent={"flex-start"}>
