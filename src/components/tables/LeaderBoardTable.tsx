@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { Table, Tbody, Td, Th, Thead, Tr } from "../layout/Table";
 import { Button, Logo, Spinner } from "../common";
 import { useEffect } from "react";
+const s3URL = import.meta.env.VITE_S3_URL;
 
 import {
     ColumnDef,
@@ -67,7 +68,16 @@ const LeaderboardTable = ({ property, teamId, seasonId, leagueId }: LeaderBoardT
           {
             header: "Team",
             footer: (props) => props.column.id,
-            cell: (info) => <p>{info.getValue() as string}</p>,
+            cell: (info) => {
+                const logo = info.row.original.team.logo;
+                return <div style={{ display: "flex", alignItems: "center" }}>
+                    <Logo
+                    url={logo ? `${s3URL}/image/${logo}` : "/league-logo.png"}
+                    height={40}
+                    />
+                    <p style={{ marginLeft: 10 }}>{info.getValue() as string}</p>
+                </div>
+            },
             sortingFn: "alphanumeric",
             accessorFn: (row) => row.team.name,
             enableSorting: false,
