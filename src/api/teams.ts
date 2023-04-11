@@ -74,3 +74,13 @@ export const updateTeam = async (
   });
   return response.data;
 };
+
+export const getTeamAverages = async (round: string, seasonId: string): Promise<TeamStats[]> => {
+  const response = await axios.get<TeamStats[]>('/teams/_stats', {
+    params: {
+      round,
+      seasonId
+    }
+  });
+  return response.data;
+};

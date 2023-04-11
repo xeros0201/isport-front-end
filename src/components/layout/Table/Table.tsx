@@ -27,7 +27,7 @@ const Table = ({
     }), [compact, striped, hasFirstColumn]);
 
     return (
-        <div style={{ overflow: 'auto' }}>
+        <div className="table-container">
             <table className={tableClasses}>
                 {children}
             </table>

@@ -132,6 +132,20 @@ declare global {
     };
   }
 
+  interface TeamStats {
+    players: {
+      player: {
+        id: number;
+        name: string;
+      },
+      values: Record<string, Record<string, { name: string, value: number }>>
+    }[];
+    team: {
+      id: number;
+      name: string;
+    }
+  }
+
   interface PlayersOnAflResults {
     id: number;
     teamId: number;
