@@ -48,13 +48,21 @@ const TeamDropdown = ({
   const teamOptions: InputOption[] = useMemo(() => {
     if (!data) return [];
 
-    const _data = filter ? data.filter(filter) : data;
+    let _data = filter ? data.filter(filter) : data;
 
+    const allTeam : Team = {
+      id: 0,
+      name: "All Teams",
+      logo: "",
+      seasonId: seasonId ? +seasonId : 0,
+      season: _data[0].season,
+    }
+    _data = [allTeam, ..._data];
     return _data.map((team) => ({
       value: team.id.toString(),
       label: team.name,
     }));
-  }, [data, filter]);
+  }, [data, filter, seasonId]);
 
   // If error fetching data
   if (fetchError) return <InputError error="Error fetching teams" touched />;

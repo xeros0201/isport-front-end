@@ -1,0 +1,14 @@
+.leaderboard {
+    .table {
+        .thead {
+                .tr {
+                    .th:first-child{
+                        width: 60px;
+                }
+                .th:not(:first-child) {
+                    min-width: 100px;
+                }
+            }
+        }
+    }
+}
