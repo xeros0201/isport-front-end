@@ -47,3 +47,11 @@ export const updatePlayer = async (id: number, player: PlayerFormValues): Promis
   }, authConfig);
   return response.data;
 };
+
+/**
+ * Get stats
+ */
+export const getStats = async (property: string, teamId: number): Promise<PlayersOnAflResults[]> => {
+  const response = await axios.get<PlayersOnAflResults[]>(`/players/_stats?property=${property}&teamId=${teamId}`);
+  return response.data;
+};

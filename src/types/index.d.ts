@@ -146,12 +146,30 @@ declare global {
     }
   }
 
+  interface PlayersOnAflResults {
+    id: number;
+    teamId: number;
+    name: string;
+    playerNumber: number;
+    team: Team;
+    total: number;
+  }
+
+  interface AflResultProperties {
+    id: number;
+    type: string;
+    name: string;
+    alias: string;
+    parentId: number;
+  }
+  
   interface CSVRow {
     Code: string;
   }
   interface Statistic {
     id: number;
     name: string;
+    alias: string;
   }
 }
 
