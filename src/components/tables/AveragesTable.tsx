@@ -5,19 +5,17 @@ import { Table } from "../layout"
 import { Tbody, Td, Th, Thead, Tr } from "../layout/Table"
 import TFooter from "../layout/Table/TFooter";
 
-export interface PlayerAverage {
+export interface TeamAverage {
+  id: number;
   name: string;
-  players: PlayerAverage[];
-  playerNumber?: number;
-  properties: Record<string, Record<string, number>>
-  teamId: number;
-  teamName: string;
+  properties: Record<string, Record<string, { name: string, value: number }>>;
+  players: TeamAverage[];
 }
 
 interface Props {
   isLoading: boolean;
-  data?: PlayerAverage[];
-  totals?: PlayerAverage;
+  data?: TeamAverage[];
+  totals?: TeamAverage;
 }
 
 const AveragesTable = ({ data, isLoading, totals }: Props) => {
@@ -27,11 +25,11 @@ const AveragesTable = ({ data, isLoading, totals }: Props) => {
         header: key.charAt(0).toUpperCase() + key.slice(1),
         columns: Object.keys(value).map((key2) => (
           {
-            footer: () => totals?.properties[key][key2],
+            footer: () => totals?.properties[key][key2].value,
             header: key2.toUpperCase(),
-            cell: ({ getValue }: CellContext<PlayerAverage, any>) => <p>{getValue() as string}</p>,
+            cell: ({ getValue }: CellContext<TeamAverage, any>) => <p>{getValue() as string}</p>,
             sortingFn: "alphanumeric",
-            accessorFn: (row: PlayerAverage) => row.properties[key][key2],
+            accessorFn: (row: TeamAverage) => row.properties[key][key2].value,
           })
         )
       }
@@ -39,7 +37,7 @@ const AveragesTable = ({ data, isLoading, totals }: Props) => {
   })
 
   // Setup columns
-  const columns = useMemo<ColumnDef<PlayerAverage>[]>(
+  const columns = useMemo<ColumnDef<TeamAverage>[]>(
     () => [
       {
         header: "Team",
@@ -71,7 +69,7 @@ const AveragesTable = ({ data, isLoading, totals }: Props) => {
               )
             },
             sortingFn: "alphanumeric",
-            accessorFn: (row) => `${row?.playerNumber ?? ''} ${row.name}`,
+            accessorFn: (row) => row.name,
           },
         ]
       },
