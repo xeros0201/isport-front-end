@@ -13,11 +13,9 @@ const TeamStats = () => {
   const [round, setRound] = useSearchParamsState("round", "");
 
   const { isLoading, data: averages } = useQuery(
-    ["getTeamAverages"], async () => {
+    ["getTeamAverages", seasonId, round], async () => {
       if (!seasonId) return []
       return getTeamAverages(round, seasonId)
-    },{
-      enabled: !!(seasonId && round)
     }
   );
 
