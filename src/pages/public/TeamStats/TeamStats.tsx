@@ -12,10 +12,12 @@ const TeamStats = () => {
   const [seasonId, setSeasonId] = useSearchParamsState("seasonId", "");
   const [round, setRound] = useSearchParamsState("round", "");
 
-  const { isLoading, data: averages, refetch } = useQuery(
+  const { isLoading, data: averages } = useQuery(
     ["getTeamAverages"], async () => {
       if (!seasonId) return []
       return getTeamAverages(round, seasonId)
+    },{
+      enabled: !!(seasonId && round)
     }
   );
 
@@ -98,10 +100,6 @@ const TeamStats = () => {
       properties: teamTotals,
     }
   }, [teamAverages])
-
-  useEffect(() => {
-    refetch();
-  }, [seasonId, round]);
 
   return (
     <Page title="Team & Player Averages">
