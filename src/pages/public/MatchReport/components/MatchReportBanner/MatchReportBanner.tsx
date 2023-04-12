@@ -50,28 +50,18 @@ function MatchReportBanner({ matchId, score }: BannerProps) {
       location: match?.location.name || "",
       homeTeamName: match?.homeTeam.name || "",
       homeTeamLogo: match?.homeTeam.logo || "",
-      homeTeamScore: score?.home?.score 
-        ? 
-        (score?.home?.score * 6 + score?.home?.meta.RUSHED) 
-        : 
-        score?.home?.meta.RUSHED,
-      homeTeamSecondScore: score?.home?.score 
-        ? 
-        `${score?.home?.score}.${score?.home?.meta.RUSHED}` 
-        : 
-        `0.${score?.home?.meta.RUSHED}`,
+      homeTeamScore: score?.home?.score || 0,
+      homeTeamSecondScore: `${score?.home?.meta.TOTAL_GOAL}.${score?.home?.meta.TOTAL_BEHIND}`,
       awayTeamName: match?.awayTeam.name || "",
       awayTeamLogo: match?.awayTeam.logo || "",
-      awayTeamScore: score?.away?.score 
-        ? 
-        (score?.away?.score * 6 + score?.away?.meta.RUSHED) 
-        : 
-      score?.away?.meta.RUSHED,
-      awayTeamSecondScore: score?.away?.score 
-        ? 
-        `${score?.away?.score}.${score?.away?.meta.RUSHED}` 
-        : 
-        `0.${score?.away?.meta.RUSHED}`,
+      awayTeamScore: score?.away?.score || 0,
+      awayTeamSecondScore: `${score?.away?.meta.TOTAL_GOAL}.${score?.away?.meta.TOTAL_BEHIND}`,
+      // awayTeamScore: score?.away?.score
+      //   ? score?.away?.score * 6 + score?.away?.meta.RUSHED
+      //   : score?.away?.meta.RUSHED,
+      // awayTeamSecondScore: score?.away?.score
+      //   ? `${score?.away?.score}.${score?.away?.meta.RUSHED}`
+      //   : `0.${score?.away?.meta.RUSHED}`,
     });
   }, [matchId, match, score]);
 

@@ -27,24 +27,37 @@ export const getPlayer = async (id: number): Promise<Player> => {
 /**
  * Creates new player.
  */
-export const createPlayer = async ( player: PlayerFormValues ): Promise<Player> => {
-  const response = await axios.post<Player>("/players", {
-    playerNumber: parseInt(player.playerNumber),
-    teamId: parseInt(player.teamId),
-    name: player.name
-  }, authConfig);
+export const createPlayer = async (
+  player: PlayerFormValues
+): Promise<Player> => {
+  const response = await axios.post<Player>(
+    "/players",
+    {
+      playerNumber: parseInt(player.playerNumber),
+      teamId: parseInt(player.teamId),
+      name: player.name,
+    },
+    authConfig
+  );
   return response.data;
 };
 
 /**
  * Updates existing player.
  */
-export const updatePlayer = async (id: number, player: PlayerFormValues): Promise<Player> => {
-  const response = await axios.put<Player>(`/players/${id}`, {
-    playerNumber: parseInt(player.playerNumber),
-    teamId: parseInt(player.teamId),
-    name: player.name
-  }, authConfig);
+export const updatePlayer = async (
+  id: number,
+  player: PlayerFormValues
+): Promise<Player> => {
+  const response = await axios.put<Player>(
+    `/players/${id}`,
+    {
+      playerNumber: parseInt(player.playerNumber),
+      teamId: parseInt(player.teamId),
+      name: player.name,
+    },
+    authConfig
+  );
   return response.data;
 };
 
