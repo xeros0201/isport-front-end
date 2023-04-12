@@ -2,7 +2,6 @@ import { Logo } from "../../common";
 import { LeagueDropdown, SeasonDropdown, TeamDropdown } from "../../dropdowns";
 import { Row } from "../../layout";
 import "./StatisticFilter.scss";
-import { RoundInput } from "../../input";
 import StatisticDropdown from "../../dropdowns/StatisticDropdown";
 
 interface StatisticFilterProps {
@@ -36,11 +35,13 @@ const StatisticFilter = ({
         <Row noFlex removeSpacing>
           <LeagueDropdown value={leagueId} onChange={onLeagueChange} />
           <SeasonDropdown
+            requireLeague={true}
             leagueId={leagueId}
             value={seasonId}
             onChange={onSeasonChange}
           />
           <TeamDropdown
+            requireSeason={true}
             seasonId={seasonId}
             value={teamId}
             onChange={onTeamChange}

@@ -1,7 +1,5 @@
-import { useNavigate } from "react-router-dom";
 import { Table, Tbody, Td, Th, Thead, Tr } from "../layout/Table";
-import { Button, Logo, Spinner } from "../common";
-import { useEffect } from "react";
+import { Logo, Spinner } from "../common";
 const s3URL = import.meta.env.VITE_S3_URL;
 
 import {
@@ -12,7 +10,7 @@ import {
     SortingState,
     useReactTable,
   } from "@tanstack/react-table";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useQuery } from "react-query";
 import { getStats } from "../../api/players";
 
@@ -24,26 +22,26 @@ interface LeaderBoardTableProps {
 }
 
 const LeaderboardTable = ({ property, teamId, seasonId, leagueId }: LeaderBoardTableProps) => {
-    const [statCol, setStatCol] = useState("");
-
     const {
         error: fetchError,
         isLoading,
-        data,
-        refetch,
-    } = useQuery(["getProperty"], async (): Promise<PlayersOnAflResults[]> => {
+        data: data,
+    } = useQuery(["getProperty", {property, teamId, seasonId, leagueId}], async (): Promise<PlayersOnAflResults[]> => {
         if(!property) return [];
-        if(!teamId) teamId = 0;
-        const temp = await getStats(property, teamId);
+        let _teamId = teamId;
+        if(!teamId) _teamId = undefined;
+        const temp = await getStats(property, _teamId);
         return temp;
     });
 
-    // Fetch as soon as a seasonId is provided
-    useEffect(() => {
-        if (!property || property == "") return;
-        refetch();
-        setStatCol(property);
-    }, [property, teamId, seasonId, leagueId]);
+    const _data = useMemo(
+        () => {
+        if(!data) return [];
+          return data?.filter(
+            (item) =>
+              item.team.seasonId == seasonId &&
+              item.team.season.leagueId == leagueId
+    )}, [data, seasonId, leagueId]);
 
     // Setup columns
     const columns = useMemo<ColumnDef<PlayersOnAflResults>[]>(
@@ -83,7 +81,7 @@ const LeaderboardTable = ({ property, teamId, seasonId, leagueId }: LeaderBoardT
             enableSorting: false,
           },
           {
-            header: statCol == "" ? "Property" : statCol,
+            header: property || "Property",
             footer: (props) => props.column.id,
             cell: (info) => <p style={{textAlign: "right"}}>{info.getValue() as string}</p>,
             sortingFn: "alphanumeric",
@@ -91,13 +89,13 @@ const LeaderboardTable = ({ property, teamId, seasonId, leagueId }: LeaderBoardT
             enableSorting: false,
           }
         ],
-        [statCol]
+        [property]
       );
 
     // Setup table
     const [sorting, setSorting] = useState<SortingState>([]);
     const table = useReactTable({
-        data: data ? data : [] as PlayersOnAflResults[],
+        data: _data ? _data : [] as PlayersOnAflResults[],
         columns,
         state: { sorting },
         onSortingChange: setSorting,
@@ -110,7 +108,7 @@ const LeaderboardTable = ({ property, teamId, seasonId, leagueId }: LeaderBoardT
     if (isLoading) return <Spinner size="large" />
 
     // If no data
-    if (!isLoading && !data?.length) return <p>No player found</p>;
+    if (!isLoading && !_data?.length) return <p>No player found</p>;
 
     // // If no property select
     // if (!property || property == "") return <p>Select Property</p>;
