@@ -1,6 +1,6 @@
 import ScoreDistributionChart from "../../../components/charts/ScoreDistributionChart";
-import { useEffect, useMemo, useState } from "react";
-import { Page, Row, TabContainer, TabSelect } from "../../../components/layout";
+import { useMemo, useState } from "react";
+import { Page, TabContainer, TabSelect } from "../../../components/layout";
 import { useNavigate } from "react-router-dom";
 import MatchReportBanner from "./components/MatchReportBanner/MatchReportBanner";
 import { Button } from "../../../components/common";
@@ -12,17 +12,15 @@ import "./MatchReport.scss";
 
 const MatchReport = () => {
   const [selectedTab, setSelectedTab] = useState(0);
-  const [matchId, setmatchId] = useSearchParamsState("id", "");
-  const [isMatchIdProvided, setIsMatchIdProvided] = useState(false);
+  const [matchId] = useSearchParamsState("id", "");
 
   const navigate = useNavigate();
 
   // Fetch data
-  const {
-    isLoading,
-    data: stats,
-    refetch,
-  } = useQuery(["aflResultProperties"], async () => await getStats(+matchId));
+  const { data: stats } = useQuery(
+    ["aflResultProperties"],
+    async () => await getStats(+matchId)
+  );
 
   const _stats = useMemo(
     () =>
