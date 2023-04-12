@@ -6,7 +6,13 @@ import { useNavigate } from "react-router-dom";
 import { Button, Spinner } from "../common";
 import { DateInput, InputError, TextInput } from "../input";
 import { LeagueDropdown } from "../dropdowns";
-import { createSeasons, getSeason, SeasonFormValues, updateSeason } from "../../api/seasons";
+import {
+  createSeasons,
+  getSeason,
+  SeasonFormValues,
+  updateSeason,
+} from "../../api/seasons";
+import dayjs from "dayjs";
 const adminPrefix = import.meta.env.VITE_ADMIN_PREFIX;
 const defaultDate = new Date().toISOString();
 
@@ -46,7 +52,7 @@ const SeasonForm = ({ id }: FormProps) => {
     try {
       !!id ? await update() : await create();
     } catch (error) {
-      alert(JSON.stringify(error))
+      alert(JSON.stringify(error));
     }
     setIsSubmitting(false);
   };
@@ -54,6 +60,7 @@ const SeasonForm = ({ id }: FormProps) => {
   // Setup validation
   const validate = (values: SeasonFormValues) => {
     const errors: { [key: string]: string } = {};
+
     if (!values.name) {
       errors.name = "Required";
     }
@@ -62,6 +69,12 @@ const SeasonForm = ({ id }: FormProps) => {
     }
     if (!values.endDate) {
       errors.endDate = "Required";
+    }
+    if (
+      values.endDate &&
+      dayjs(values.endDate).isBefore(dayjs(values.startDate), "day")
+    ) {
+      errors.endDate = "Start date cannot be after End date";
     }
     if (!values.leagueId) {
       errors.league = "Required";
@@ -76,7 +89,7 @@ const SeasonForm = ({ id }: FormProps) => {
     validate,
     enableReinitialize: true,
   });
-  
+
   // If fetching data for provided id, show loading
   if (id && isLoading) return <Spinner />;
 
@@ -85,7 +98,6 @@ const SeasonForm = ({ id }: FormProps) => {
 
   // If error fetching data, show error
   if (error) return <InputError error="Failed to load form" touched={true} />;
-
 
   // Otherwise show form
   return (
@@ -105,6 +117,7 @@ const SeasonForm = ({ id }: FormProps) => {
           onChange={formik.handleChange("startDate")}
           touched={formik.touched.startDate}
           error={formik.errors.startDate}
+          onBlur={formik.handleBlur("startDate")}
           required
         />
         <DateInput
@@ -113,6 +126,7 @@ const SeasonForm = ({ id }: FormProps) => {
           onChange={formik.handleChange("endDate")}
           touched={formik.touched.endDate}
           error={formik.errors.endDate}
+          onBlur={formik.handleBlur("endDate")}
           required
         />
       </Row>
