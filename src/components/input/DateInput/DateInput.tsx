@@ -1,7 +1,11 @@
 import { InputError, InputLabel } from "../../input";
-import DatePicker from "react-datepicker";
+import DatePicker, { ReactDatePickerProps } from "react-datepicker";
 import "./DateInput.scss";
 import { Icon } from "../../common";
+
+interface DateInputProps
+  extends Omit<ReactDatePickerProps, "onChange">,
+    InputProps {}
 
 const DateInput = ({
   label,
@@ -10,7 +14,8 @@ const DateInput = ({
   touched,
   value,
   onChange,
-}: InputProps) => {
+  onBlur,
+}: DateInputProps) => {
   const handleChange = (date: null | Date) => {
     if (!date) return;
 
@@ -27,6 +32,7 @@ const DateInput = ({
           onChange={handleChange}
           className="dateinput__input"
           placeholderText="DD-MM-YYYY"
+          onFocus={onBlur}
         />
         <Icon name="IoCalendarClearOutline" />
       </div>

@@ -1,8 +1,7 @@
-import React from "react";
 import "./ScoreDistributionChart.scss";
 
 interface ScoreDistributionChartProps {
-  data: ScoreDistribution[];
+  data: MatchReportTableData[];
   isLoading?: boolean;
 }
 function ScoreDistributionChart({
@@ -21,16 +20,25 @@ function ScoreDistributionChart({
             );
           })}
         </div>
-        {data.map((item) => {
-          const { name, homeScore, awayScore } = item;
-          const percent = (homeScore / (homeScore + awayScore)) * 100;
+        {data.map((value) => {
+          const percent =
+            value.home === value.away
+              ? 50
+              : (value.home / (value.home + value.away)) * 100;
+
           return (
             <div className="score-distribution-row">
-              <div className="score-distribution-row--name">{item.name}</div>
+              <div className="score-distribution-row--name">{value.name}</div>
               <div className="score-distribution-row--score">
-                {item.awayScore}
-                <div className="score-fill" style={{ width: `${percent}%` }}>
-                  {item.homeScore}
+                {value.away}
+                <div
+                  className="score-fill"
+                  style={{
+                    width: `${percent}%`,
+                    paddingRight: percent > 10 ? "1rem" : "0px",
+                  }}
+                >
+                  {percent > 10 ? value.home : ""}
                 </div>
               </div>
             </div>

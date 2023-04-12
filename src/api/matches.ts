@@ -186,3 +186,26 @@ export const deletePlayerOnMatch = async (
   );
   return response.data;
 };
+
+/**
+ * Get aflResultProperties that belong to a match.
+ */
+export const getStats = async (matchId: number): Promise<Stats> => {
+    const response = await axios.get<Stats>(`/matches/${matchId}/_stats`);
+    return response.data;
+};
+
+export const getMatchById = async (matchId: number): Promise<Match> => {
+    const response = await axios.get<Match>(`/matches/${matchId}`);
+    return response.data;
+};
+
+// export const getResultPropsParent = async (): Promise<AflResultProperties[]> => {
+//     const response = await axios.get<any>(`/matches/stat-props-parent`);
+//     return response.data;
+// };
+
+// export const getResultPropsChildren = async (parentId: number): Promise<AflResultProperties[]> => {
+//     const response = await axios.get<any>(`/matches/${parentId}/stat-props-children`);
+//     return response.data;
+// }

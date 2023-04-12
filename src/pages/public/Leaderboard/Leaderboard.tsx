@@ -1,25 +1,32 @@
 import StatisticFilter from "../../../components/filters/StatisticFilter/StatisticFilter";
 import { Page } from "../../../components/layout";
+import LeaderboardTable from "../../../components/tables/LeaderBoardTable";
 import useSearchParamsState from "../../../hooks/useSearchParamsState";
+import "./LeaderBoard.scss";
 
 const Leaderboard = () => {
-  const [leagueId, setLeagueId] = useSearchParamsState("leagueId", "");
-  const [seasonId, setSeasonId] = useSearchParamsState("seasonId", "");
+  const [leagueId, setLeagueId] = useSearchParamsState("leagueId", "1");
+  const [seasonId, setSeasonId] = useSearchParamsState("seasonId", "1");
   const [teamId, setTeamId] = useSearchParamsState("teamId", "");
-  const [statisticId, setStatisticId] = useSearchParamsState("statistic", "");
+  const [statisticAlias, setStatisticAlias] = useSearchParamsState("property", "");
+
   return (
     <Page title="Leaderboard">
-      <h1>Leaderboard</h1>
-      <StatisticFilter
-        leagueId={leagueId}
-        onLeagueChange={setLeagueId}
-        seasonId={seasonId}
-        onSeasonChange={setSeasonId}
-        teamId={teamId}
-        onTeamChange={setTeamId}
-        statisticId={statisticId}
-        onStatisticChange={setStatisticId}
-      ></StatisticFilter>
+      <div className="leaderboard">
+        <h1>Leaderboard</h1>
+        <StatisticFilter
+          leagueId={leagueId}
+          onLeagueChange={setLeagueId}
+          seasonId={seasonId}
+          onSeasonChange={setSeasonId}
+          teamId={teamId}
+          onTeamChange={setTeamId}
+          statisticAlias={statisticAlias}
+          onStatisticChange={setStatisticAlias}
+        ></StatisticFilter>
+  
+        <LeaderboardTable property={statisticAlias} teamId={+teamId} seasonId={+seasonId} leagueId={+leagueId} />
+      </div>
     </Page>
   );
 };

@@ -11,7 +11,7 @@ import {
   updateMatch,
 } from "../../../api/matches";
 import { getSeasons } from "../../../api/seasons";
-import { MatchStatus } from "../../../constants";
+import { MatchStatus } from "../../../types/enums";
 import { Button, Spinner } from "../../common";
 import { LeagueDropdown } from "../../dropdowns";
 import LocationDropdown from "../../dropdowns/LocationDropdown";

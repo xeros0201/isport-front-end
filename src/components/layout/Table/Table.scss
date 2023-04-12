@@ -142,8 +142,17 @@ $table-cell-padding-compact: 5px 10px;
   }
 }
 
+.table--no-margin {
+  margin: 0;
+}
+
 .tr--expanded {
   .td {
     font-weight: bold;
   }
+}
+
+.table-container {
+  overflow: auto;
+  padding-bottom: $padding-component-small;
 }

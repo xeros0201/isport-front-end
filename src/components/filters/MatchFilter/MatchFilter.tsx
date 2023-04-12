@@ -23,7 +23,7 @@ const MatchFilter = ({
 } : MatchFilterProps) => {
     return (
         <div className="match-filter">
-            <Row alignItems="center" justifyContent="flex-start" disableWrapping noFlex isWrapRowItem={false}>
+            <Row alignItems="center" justifyContent="flex-start" noFlex isWrapRowItem={false}>
                 <div className="match-filter__team-search">
                     <TextInput
                         placeholder="Search..."

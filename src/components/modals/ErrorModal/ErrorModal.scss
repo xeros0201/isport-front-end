@@ -1,0 +1,24 @@
+@import "../../../styles/variables.scss";
+@import "../../../styles/mixins";
+
+$icon-size: 80px;
+
+.error-modal {
+    &__icon {
+        height: $icon-size;
+        width: $icon-size;
+        background-color: $red;
+        border-radius: 50%;
+
+        .icon {
+            font-size: $icon-size;
+            color: $white;
+        }
+    }
+
+    @include sm-screen{
+        .row {
+            display: flex;
+        }
+    }
+}

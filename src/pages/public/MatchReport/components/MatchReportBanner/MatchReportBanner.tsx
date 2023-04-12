@@ -1,39 +1,73 @@
 import { AiOutlineCalendar } from "react-icons/ai";
 import { GiTrophyCup } from "react-icons/gi";
 import { HiOutlineLocationMarker } from "react-icons/hi";
+import { useQuery } from "react-query";
+import { getMatchById } from "../../../../../api/matches";
+import { useEffect, useState } from "react";
 import "./MatchReportBanner.scss";
+import { Spinner } from "../../../../../components/common";
+import { DateTime } from "luxon";
 
-interface MatchReportBannerProps {
-  data: {
-    leagueName: string;
-    time: string;
-    location: string;
-    homeTeamName: string;
-    awayTeamName: string;
-    homeTeamLogo: string;
-    awayTeamLogo: string;
-    homeTeamScore: number;
-    homeTeamSecondScore: number;
-    awayTeamScore: number;
-    awayTeamSecondScore: number;
-  }
+interface BannerProps {
+  matchId: number;
+  score: AflResult;
 }
 
-function MatchReportBanner({ data }: MatchReportBannerProps) {
+interface MatchReportBannerProps {
+  leagueName: string;
+  time: string;
+  location: string;
+  homeTeamName: string;
+  awayTeamName: string;
+  homeTeamLogo: string;
+  awayTeamLogo: string;
+  homeTeamScore: number;
+  homeTeamSecondScore: string;
+  awayTeamScore: number;
+  awayTeamSecondScore: string;
+}
+
+function MatchReportBanner({ matchId, score }: BannerProps) {
+  // Fetch data
   const {
-    leagueName,
-    time,
-    location,
-    homeTeamName,
-    awayTeamName,
-    homeTeamLogo,
-    awayTeamLogo,
-    homeTeamScore,
-    homeTeamSecondScore,
-    awayTeamScore,
-    awayTeamSecondScore
-  } = data;
-  
+    isLoading,
+    data: match,
+    refetch,
+  } = useQuery(["match"], async () => await getMatchById(+matchId));
+
+  const [bannerData, setBannerData] = useState({} as MatchReportBannerProps);
+
+  // Fetch as soon as a matchId is provided on the url
+  useEffect(() => {
+    if (!matchId) return;
+    refetch();
+    setBannerData({
+      ...bannerData,
+      leagueName: match?.season.league.name || "",
+      time: DateTime.fromISO(match?.date as string).toLocaleString(
+        DateTime.DATETIME_MED_WITH_WEEKDAY
+      ),
+      location: match?.location.name || "",
+      homeTeamName: match?.homeTeam.name || "",
+      homeTeamLogo: match?.homeTeam.logo || "",
+      homeTeamScore: score?.home?.score || 0,
+      homeTeamSecondScore: `${score?.home?.meta.TOTAL_GOAL}.${score?.home?.meta.TOTAL_BEHIND}`,
+      awayTeamName: match?.awayTeam.name || "",
+      awayTeamLogo: match?.awayTeam.logo || "",
+      awayTeamScore: score?.away?.score || 0,
+      awayTeamSecondScore: `${score?.away?.meta.TOTAL_GOAL}.${score?.away?.meta.TOTAL_BEHIND}`,
+      // awayTeamScore: score?.away?.score
+      //   ? score?.away?.score * 6 + score?.away?.meta.RUSHED
+      //   : score?.away?.meta.RUSHED,
+      // awayTeamSecondScore: score?.away?.score
+      //   ? `${score?.away?.score}.${score?.away?.meta.RUSHED}`
+      //   : `0.${score?.away?.meta.RUSHED}`,
+    });
+  }, [matchId, match, score]);
+
+  // If fetching data for provided id, show loading
+  if (matchId && isLoading) return <Spinner />;
+
   return (
     <div className="match-report-banner">
       <div className="match-report-banner--header">
@@ -41,15 +75,15 @@ function MatchReportBanner({ data }: MatchReportBannerProps) {
         <div className="detail">
           {[
             {
-              label: leagueName,
+              label: bannerData.leagueName,
               icon: <GiTrophyCup />,
             },
             {
-              label: time,
+              label: bannerData.time,
               icon: <AiOutlineCalendar />,
             },
             {
-              label: location,
+              label: bannerData.location,
               icon: <HiOutlineLocationMarker />,
             },
           ].map((item) => {
@@ -66,18 +100,18 @@ function MatchReportBanner({ data }: MatchReportBannerProps) {
       <div className="match-report-banner--body">
         {[
           {
-            name: homeTeamName,
+            name: bannerData.homeTeamName,
             team: "HOME",
-            logo: homeTeamLogo,
-            score: homeTeamScore,
-            secondScore: homeTeamSecondScore,
+            logo: bannerData.homeTeamLogo,
+            score: bannerData.homeTeamScore,
+            secondScore: bannerData.homeTeamSecondScore,
           },
           {
-            name: awayTeamName,
+            name: bannerData.awayTeamName,
             team: "AWAY",
-            logo: awayTeamLogo,
-            score: awayTeamScore,
-            secondScore: awayTeamSecondScore,
+            logo: bannerData.awayTeamLogo,
+            score: bannerData.awayTeamScore,
+            secondScore: bannerData.awayTeamSecondScore,
           },
         ].map((item, index) => {
           const { name, team, logo, score, secondScore } = item;

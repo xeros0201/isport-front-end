@@ -1,0 +1,25 @@
+@import "../../../styles/variables.scss";
+@import "../../../styles/mixins";
+$icon-size: 80px;
+.success-modal {
+    &__icon {
+        height: $icon-size;
+        width: $icon-size;
+        background-color: $cyan;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        .icon {
+             
+            font-size:$icon-size + -15 ;
+            color: $white;
+        }
+    }
+    
+    @include sm-screen{
+        .row {
+            display: flex;
+        }
+    }
+}

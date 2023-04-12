@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import { MatchType } from "../../constants";
+import { MatchType } from "../../types/enums";
 import { DropdownInput } from "../input";
 
 // export const MatchType = {

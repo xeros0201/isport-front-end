@@ -5,41 +5,43 @@ import { Table } from "../layout"
 import { Tbody, Td, Th, Thead, Tr } from "../layout/Table"
 import TFooter from "../layout/Table/TFooter";
 
-export interface PlayerAverage {
+export interface TeamAverage {
+  id: number;
   name: string;
-  players: PlayerAverage[];
-  playerNumber?: number;
-  properties: Record<string, Record<string, number>>
-  teamId: number;
-  teamName: string;
+  properties: Record<string, Record<string, { name: string, value: number }>>;
+  players: TeamAverage[];
 }
 
 interface Props {
   isLoading: boolean;
-  data?: PlayerAverage[];
-  totals?: PlayerAverage;
+  data?: TeamAverage[];
+  totals?: TeamAverage;
 }
 
 const AveragesTable = ({ data, isLoading, totals }: Props) => {
-  const propertiesColumn = Object.entries(data?.[0]?.properties ?? {}).map(([key, value]) => {
-    return (
-      {
-        header: key.charAt(0).toUpperCase() + key.slice(1),
-        columns: Object.keys(value).map((key2) => (
-          {
-            footer: () => totals?.properties[key][key2],
-            header: key2.toUpperCase(),
-            cell: ({ getValue }: CellContext<PlayerAverage, any>) => <p>{getValue() as string}</p>,
-            sortingFn: "alphanumeric",
-            accessorFn: (row: PlayerAverage) => row.properties[key][key2],
-          })
-        )
-      }
-    )
-  })
+  const propertiesColumn = useMemo(() => {
+    if (!data?.[0]?.properties) return [];
+
+    return Object.entries(data[0].properties).map(([key, value]) => {
+      return (
+        {
+          header: key.charAt(0).toUpperCase() + key.slice(1),
+          columns: Object.keys(value).map((key2) => (
+            {
+              footer: () => totals?.properties[key][key2].value,
+              header: key2.toUpperCase(),
+              cell: ({ getValue }: CellContext<TeamAverage, any>) => <p>{getValue() as string}</p>,
+              sortingFn: "alphanumeric",
+              accessorFn: (row: TeamAverage) => row.properties[key][key2].value,
+            })
+          )
+        }
+      )
+    })
+  }, [data])
 
   // Setup columns
-  const columns = useMemo<ColumnDef<PlayerAverage>[]>(
+  const columns = useMemo<ColumnDef<TeamAverage>[]>(
     () => [
       {
         header: "Team",
@@ -71,7 +73,7 @@ const AveragesTable = ({ data, isLoading, totals }: Props) => {
               )
             },
             sortingFn: "alphanumeric",
-            accessorFn: (row) => `${row?.playerNumber ?? ''} ${row.name}`,
+            accessorFn: (row) => row.name,
           },
         ]
       },
@@ -110,40 +112,40 @@ const AveragesTable = ({ data, isLoading, totals }: Props) => {
     >
       <Thead>
         {table.getHeaderGroups().map((headerGroup) => (
-            <Tr key={headerGroup.id}>
-              {headerGroup.headers.map((header) => (
-                <Th
-                  key={header.id}
-                  colSpan={header.colSpan}
-                  onClick={header.column.getToggleSortingHandler()}
-                  propertyHeader={header.depth === 2}
-                  sorted={header.column.getIsSorted()}
-                >
-                  {header.isPlaceholder ? null : (
-                    header.column.getCanGroup()
-                      ? flexRender(
-                        header.column.columnDef.header,
-                        header.getContext()
-                      )
-                      : null
-                  )}
-                </Th>
-              )
-              )}
-            </Tr>
-          )
+          <Tr key={headerGroup.id}>
+            {headerGroup.headers.map((header) => (
+              <Th
+                key={header.id}
+                colSpan={header.colSpan}
+                onClick={header.column.getToggleSortingHandler()}
+                propertyHeader={header.depth === 2}
+                sorted={header.column.getIsSorted()}
+              >
+                {header.isPlaceholder ? null : (
+                  header.column.getCanGroup()
+                    ? flexRender(
+                      header.column.columnDef.header,
+                      header.getContext()
+                    )
+                    : null
+                )}
+              </Th>
+            )
+            )}
+          </Tr>
+        )
         )}
       </Thead>
       <Tbody>
         {table.getRowModel().rows.map((row) => (
-            <Tr key={row.id} expanded={row.getIsExpanded()}>
-              {row.getVisibleCells().map((cell) => (
-                <Td key={cell.id}>
-                  {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                </Td>
-              ))}
-            </Tr>
-          )
+          <Tr key={row.id} expanded={row.getIsExpanded()}>
+            {row.getVisibleCells().map((cell) => (
+              <Td key={cell.id}>
+                {flexRender(cell.column.columnDef.cell, cell.getContext())}
+              </Td>
+            ))}
+          </Tr>
+        )
         )}
       </Tbody>
       {totals
