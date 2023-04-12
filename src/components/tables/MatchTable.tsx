@@ -77,7 +77,7 @@ const MatchTable = ({ data, isLoading = false }: MatchTableProps) => {
         header: "Match Report",
         footer: (props) => props.column.id,
         cell: (info) =>
-          info.getValue<string>().split(",")[0] == "PUBLISHED" && (
+          info.getValue<string>().split(",")[0] == MatchStatus.PUBLISHED && (
             <Button
               label="Match Report"
               type="outlined"
