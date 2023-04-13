@@ -27,7 +27,11 @@ const TeamLeaderTable = ({ property, data }: TeamLeaderTableProps) => {
           {
             header: "#",
             footer: (props) => props.column.id,
-            cell: (info) => <p style={{textAlign: "center"}}>{info.getValue() as string}</p>,
+            cell: (info) => {
+                const value = info.getValue() as string;
+                const formatValue = value.toString().length == 1 ? `0${value}` : value;
+                return <p style={{textAlign: "center"}}>{formatValue}</p>
+            },
             sortingFn: "alphanumeric",
             accessorFn: (row) => (row.player.playerNumber || row.player.id),
             enableSorting: true,
