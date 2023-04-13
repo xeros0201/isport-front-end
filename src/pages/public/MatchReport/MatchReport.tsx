@@ -3,12 +3,13 @@ import { useMemo, useState } from "react";
 import { Page, TabContainer, TabSelect } from "../../../components/layout";
 import { useNavigate } from "react-router-dom";
 import MatchReportBanner from "./components/MatchReportBanner/MatchReportBanner";
-import { Button } from "../../../components/common";
+import { Button, Spinner } from "../../../components/common";
 import useSearchParamsState from "../../../hooks/useSearchParamsState";
 import { useQuery } from "react-query";
 import { getStats } from "../../../api/matches";
 import MatchReportTable from "../../../components/tables/MatchReportTable";
 import "./MatchReport.scss";
+import MatchStatistic from "./components/MatchStatistic";
 
 const MatchReport = () => {
   const [selectedTab, setSelectedTab] = useState(0);
@@ -17,7 +18,7 @@ const MatchReport = () => {
   const navigate = useNavigate();
 
   // Fetch data
-  const { data: stats } = useQuery(
+  const { data: stats, isLoading } = useQuery(
     ["aflResultProperties"],
     async () => await getStats(+matchId)
   );
@@ -77,6 +78,8 @@ const MatchReport = () => {
     );
   };
 
+  if (isLoading) return <Spinner size="large" />;
+  if (!isLoading && !stats) return <p>No Statistics found</p>;
   return (
     <Page title="Match Report">
       <Button
@@ -99,7 +102,16 @@ const MatchReport = () => {
             <p>Please select match from previous page.</p>
           )}
         </TabContainer>
-        <TabContainer selected={selectedTab === 1}>Tab 1</TabContainer>
+        <TabContainer selected={selectedTab === 1}>
+          {!!matchId && stats?.teamReports ? (
+            <MatchStatistic
+              data={stats?.teamReports}
+              isLoading={isLoading}
+            ></MatchStatistic>
+          ) : (
+            <p>Please select match from previous page.</p>
+          )}
+        </TabContainer>
         <TabContainer selected={selectedTab === 2}>Tab 2</TabContainer>
       </div>
     </Page>
