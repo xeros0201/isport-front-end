@@ -60,7 +60,7 @@ const MatchStatisticTable = ({ data, isLoading, type }: Props) => {
         header: "Player",
         columns: [
           {
-            header: "Home",
+            header: type.charAt(0).toUpperCase() + type.slice(1),
             cell: ({ row, getValue }) => {
               return <p className="player-name">{getValue() as string}</p>;
             },
