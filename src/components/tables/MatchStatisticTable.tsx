@@ -62,17 +62,15 @@ const MatchStatisticTable = ({ data, isLoading, type }: Props) => {
           {
             header: "Home",
             cell: ({ row, getValue }) => {
-              return <p>{getValue() as string}</p>;
+              return <p className="player-name">{getValue() as string}</p>;
             },
             sortingFn: "alphanumeric",
-            accessorFn: (row) => (
-              <p className="player-name">
-                {row.player.playerNumber < 10
+            accessorFn: (row) =>
+              `${
+                row.player.playerNumber < 10
                   ? `0${row.player.playerNumber}`
-                  : row.player.playerNumber}{" "}
-                {row.player.name}
-              </p>
-            ),
+                  : row.player.playerNumber
+              } ${row.player.name}`,
           },
         ],
       },
