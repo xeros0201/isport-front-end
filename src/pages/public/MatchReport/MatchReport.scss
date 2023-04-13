@@ -45,3 +45,76 @@
         }
     }
 }
+
+.leader {
+    .team-side {
+        display: grid; 
+        grid-template-columns: 1fr 1fr; 
+        grid-template-rows: 1fr; 
+        gap: 10px 10px; 
+        grid-template-areas: "home-side away-side"; 
+        justify-content: start; 
+        align-content: start; 
+        justify-items: stretch; 
+        align-items: stretch; 
+    }
+    .home-side-banner { 
+        grid-area: home-side;
+        display: inline;
+        background: #F8E12F;
+        text-align: center;
+        margin-bottom: 20px;
+        padding: 5px;
+        font-weight: bold;
+    }
+    .away-side-banner { 
+        grid-area: away-side; 
+        display: inline;
+        background: #C92A7A;
+        text-align: center;
+        margin-bottom: 20px;
+        padding: 5px;
+        font-weight: bold;
+    }
+
+    .result-table {  display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: 1fr;
+        gap: 10px 10px;
+        grid-auto-flow: row;
+        justify-content: start;
+        align-content: start;
+        justify-items: stretch;
+        align-items: stretch;
+        grid-template-areas:
+          "home-side away-side";
+      }
+      
+      .home-side {  display: grid;
+        @media screen and (max-width: 900px) {
+            grid-template-columns: 1fr;
+        }
+
+        @media screen and (min-width: 901px) {
+            grid-template-columns: 1fr 1fr;
+        }
+
+        grid-template-rows: 1fr;
+        gap: 10px 10px;
+        grid-auto-flow: row;
+      }
+      
+      .away-side {  display: grid;
+        @media screen and (max-width: 900px) {
+            grid-template-columns: 1fr;
+        }
+
+        @media screen and (min-width: 901px) {
+            grid-template-columns: 1fr 1fr;
+        }
+        grid-template-rows: 1fr;
+        gap: 10px 10px;
+        grid-auto-flow: row;
+      }
+      
+}
