@@ -125,6 +125,7 @@
 }
 
 @media print {
+@page {size: landscape}
   .overview {
     &__grid {
       display: grid;
