@@ -1,3 +1,4 @@
+import { useState } from "react";
 import StatisticFilter from "../../../components/filters/StatisticFilter/StatisticFilter";
 import { Page } from "../../../components/layout";
 import LeaderboardTable from "../../../components/tables/LeaderBoardTable";
@@ -5,8 +6,8 @@ import useSearchParamsState from "../../../hooks/useSearchParamsState";
 import "./LeaderBoard.scss";
 
 const Leaderboard = () => {
-  const [leagueId, setLeagueId] = useSearchParamsState("leagueId", "1");
-  const [seasonId, setSeasonId] = useSearchParamsState("seasonId", "1");
+  const [leagueId, setLeagueId] = useState("");
+  const [seasonId, setSeasonId] = useState("");
   const [teamId, setTeamId] = useSearchParamsState("teamId", "");
   const [statisticAlias, setStatisticAlias] = useSearchParamsState("property", "");
 

@@ -151,3 +151,14 @@ $table-cell-padding-compact: 5px 10px;
     font-weight: bold;
   }
 }
+
+.table-container {
+  overflow: auto;
+  padding-bottom: $padding-component-small;
+}
+
+@media print {
+  .table-container {
+    break-inside: avoid;
+  }
+}

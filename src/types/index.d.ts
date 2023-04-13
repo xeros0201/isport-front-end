@@ -71,13 +71,20 @@ declare global {
     playerNumber: number;
     teamId: number;
   }
-  interface AflResults {
+
+  interface TeamReport {
     id: number;
     matchId: number;
     teamId: number;
-    scorePrimary: number;
-    scoreSecondary: string;
+    // scorePrimary: number;
+    // scoreSecondary: string;
+    score: number;
     team: Team;
+    meta: {
+      RUSHED: number;
+      TOTAL_GOAL: number;
+      TOTAL_BEHIND: number;
+    };
   }
 
   interface Match {
@@ -99,7 +106,8 @@ declare global {
     homeTeam: Team;
     location: Location;
     players: PlayerOnMatch[];
-    aflResults: AflResults[];
+    teamReports: TeamReport[];
+    isCanPublish?: boolean;
   }
 
   interface MatchValidation {
@@ -132,6 +140,29 @@ declare global {
     };
   }
 
+  interface TeamStats {
+    players: {
+      player: {
+        id: number;
+        name: string;
+      };
+      values: Record<
+        string,
+        Record<
+          string,
+          {
+            name: string;
+            value: number;
+          }
+        >
+      >;
+    }[];
+    team: {
+      id: number;
+      name: string;
+    };
+  }
+
   interface PlayersOnAflResults {
     id: number;
     teamId: number;
@@ -148,7 +179,7 @@ declare global {
     alias: string;
     parentId: number;
   }
-  
+
   interface CSVRow {
     Code: string;
   }
@@ -158,5 +189,3 @@ declare global {
     alias: string;
   }
 }
-
-export {};

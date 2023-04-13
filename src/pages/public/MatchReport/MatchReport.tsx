@@ -1,28 +1,41 @@
 import ScoreDistributionChart from "../../../components/charts/ScoreDistributionChart";
-import { useEffect, useMemo, useState } from "react";
-import { Page, Row, TabContainer, TabSelect } from "../../../components/layout";
+import { useMemo, useState } from "react";
+import { Page, TabContainer, TabSelect } from "../../../components/layout";
 import { useNavigate } from "react-router-dom";
 import MatchReportBanner from "./components/MatchReportBanner/MatchReportBanner";
-import { Button } from "../../../components/common";
+import { Button, Spinner } from "../../../components/common";
 import useSearchParamsState from "../../../hooks/useSearchParamsState";
 import { useQuery } from "react-query";
 import { getStats } from "../../../api/matches";
 import MatchReportTable from "../../../components/tables/MatchReportTable";
 import "./MatchReport.scss";
+import MatchStatistic from "./components/MatchStatistic";
+import TeamLeaderTable from "../../../components/tables/TeamLeaderTable";
 
 const MatchReport = () => {
   const [selectedTab, setSelectedTab] = useState(0);
-  const [matchId, setmatchId] = useSearchParamsState("id", "");
-  const [isMatchIdProvided, setIsMatchIdProvided] = useState(false);
+  const [matchId] = useSearchParamsState("id", "");
 
   const navigate = useNavigate();
 
+  const checkStatShow = (property: string) => {
+    // const property = Object.keys(stat).toString();
+    if (
+      property === "D" ||
+      property === "CLR" ||
+      property === "CP" ||
+      property === "T"
+    ) {
+      return true;
+    }
+    return false;
+  };
+
   // Fetch data
-  const {
-    isLoading,
-    data: stats,
-    refetch,
-  } = useQuery(["aflResultProperties"], async () => await getStats(+matchId));
+  const { data: stats, isLoading } = useQuery(
+    ["aflResultProperties"],
+    async () => await getStats(+matchId)
+  );
 
   const _stats = useMemo(
     () =>
@@ -39,6 +52,11 @@ const MatchReport = () => {
     [stats]
   );
 
+  const gameLeader = useMemo(() => {
+    const homeTeam = stats?.leaders?.home?.reports || {};
+    const awayTeam = stats?.leaders?.away?.reports || {};
+    return { homeTeam, awayTeam };
+  }, [stats]);
   const aflResult = useMemo(() => stats?.teamReports || {}, [stats]);
 
   const overView = useMemo(
@@ -78,7 +96,45 @@ const MatchReport = () => {
       </div>
     );
   };
+  const renderGameLeader = () => {
+    return (
+      <>
+        <div className="leader">
+          <div className="team-side">
+            <div className="home-side-banner">Home</div>
+            <div className="away-side-banner">Away</div>
+          </div>
+          <div className="result-table">
+            <div className="home-side">
+              {Object.keys(gameLeader.homeTeam).map((key) => {
+                if (checkStatShow(key))
+                  return (
+                    <TeamLeaderTable
+                      property={key}
+                      data={gameLeader.homeTeam[key]}
+                    />
+                  );
+              })}
+            </div>
+            <div className="away-side">
+              {Object.keys(gameLeader.awayTeam).map((key) => {
+                if (checkStatShow(key))
+                  return (
+                    <TeamLeaderTable
+                      property={key}
+                      data={gameLeader.awayTeam[key]}
+                    />
+                  );
+              })}
+            </div>
+          </div>
+        </div>
+      </>
+    );
+  };
 
+  if (isLoading) return <Spinner size="large" />;
+  if (!isLoading && !stats) return <p>No Statistics found</p>;
   return (
     <Page title="Match Report">
       <Button
@@ -101,8 +157,23 @@ const MatchReport = () => {
             <p>Please select match from previous page.</p>
           )}
         </TabContainer>
-        <TabContainer selected={selectedTab === 1}>Tab 1</TabContainer>
-        <TabContainer selected={selectedTab === 2}>Tab 2</TabContainer>
+        <TabContainer selected={selectedTab === 1}>
+          {!!matchId && !!stats?.teamReports ? (
+            <MatchStatistic
+              data={stats?.teamReports}
+              isLoading={isLoading}
+            ></MatchStatistic>
+          ) : (
+            <p>Please select match from previous page.</p>
+          )}
+        </TabContainer>
+        <TabContainer selected={selectedTab === 2}>
+          {!!matchId ? (
+            renderGameLeader()
+          ) : (
+            <p>Please select match from previous page.</p>
+          )}
+        </TabContainer>
       </div>
     </Page>
   );
