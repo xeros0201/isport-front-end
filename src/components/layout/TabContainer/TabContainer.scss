@@ -10,7 +10,9 @@
 
 @media print {
   .tab-container {
+    padding-top: $padding-component-medium;
+    break-before: avoid;
     display: flex !important;
-    break-inside: avoid;
+    box-decoration-break: clone;
   }
 }
