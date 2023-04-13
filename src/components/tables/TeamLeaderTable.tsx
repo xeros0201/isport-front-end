@@ -6,7 +6,6 @@ import {
     getCoreRowModel,
     getSortedRowModel,
     SortingState,
-    // InitialTableState,
     useReactTable,
   } from "@tanstack/react-table";
 import { useEffect, useMemo, useState } from "react";
@@ -21,8 +20,7 @@ const TeamLeaderTable = ({ property, data }: TeamLeaderTableProps) => {
     const _data = useMemo(() => {
         if (!data) return [];
         return data;
-      }, [data]);
-
+    }, [data]);
     // Setup columns
     const columns = useMemo<ColumnDef<ReportProps>[]>(
         () => [
@@ -57,22 +55,10 @@ const TeamLeaderTable = ({ property, data }: TeamLeaderTableProps) => {
 
     // Setup table
     const [sorting, setSorting] = useState<SortingState>([]);
-    // const [initState, setInitState] = useState<InitialTableState>();
-
-    // const initialState = {
-    //     columnVisibility: columnsDisable ? columnsDisable.reduce((acc:any, colName:string) => {
-    //       return { ...acc, [colName]: false };
-    //     }, {}) : {},
-    // };
-
-    // useEffect(() => {
-    //     setInitState(initialState);
-    // }, [initialState])
 
     const table = useReactTable({
         data: _data ? _data : [] as ReportProps[],
         columns,
-        // initialState: initState || {},
         state: { sorting },
         onSortingChange: setSorting,
         getCoreRowModel: getCoreRowModel(),

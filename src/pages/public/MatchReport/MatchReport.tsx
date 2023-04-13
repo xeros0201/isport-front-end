@@ -17,6 +17,14 @@ const MatchReport = () => {
 
   const navigate = useNavigate();
 
+  const checkStatShow = (property: string) => {
+    // const property = Object.keys(stat).toString();
+    if(property === "D" || property === "CLR" || property === "CP" || property === "T") {
+      return true;
+    }
+    return false;
+  }
+
   // Fetch data
   const { data: stats } = useQuery(
     ["aflResultProperties"],
@@ -95,24 +103,26 @@ const MatchReport = () => {
             <div className="home-side">
               {
                 Object.keys(gameLeader.homeTeam).map((key) => {
-                  return (
-                    <TeamLeaderTable
-                      property={key}
-                      data={gameLeader.homeTeam[key]}
-                    />
-                  );
+                  if (checkStatShow(key))
+                    return (
+                      <TeamLeaderTable
+                        property={key}
+                        data={gameLeader.homeTeam[key]}
+                      />
+                    );
                 })
               }
             </div>
             <div className="away-side">
               {
                 Object.keys(gameLeader.awayTeam).map((key) => {
-                  return (
-                    <TeamLeaderTable
-                      property={key}
-                      data={gameLeader.awayTeam[key]}
-                    />
-                  );
+                  if (checkStatShow(key))
+                    return (
+                      <TeamLeaderTable
+                        property={key}
+                        data={gameLeader.awayTeam[key]}
+                      />
+                    );
                 })
               }
             </div>
