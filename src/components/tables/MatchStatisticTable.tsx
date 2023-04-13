@@ -27,69 +27,50 @@ export interface TeamAverage {
 
 interface Props {
   isLoading: boolean;
-  data?: TeamAverage[];
-  totals?: TeamAverage;
+  data?: Result;
+  type: "home" | "away";
 }
 
-const AveragesTable = ({ data, isLoading, totals }: Props) => {
-  const propertiesColumn = useMemo(() => {
-    if (!data?.[0]?.properties) return [];
+const MatchStatisticTable = ({ data, isLoading, type }: Props) => {
+  const [sorting, setSorting] = useState<SortingState>([]);
+  const [grouping, setGrouping] = useState<GroupingState>([]);
+  const [expanded, setExpanded] = useState<ExpandedState>({});
 
-    return Object.entries(data[0].properties).map(([key, value]) => {
+  const propertiesColumn = useMemo<ColumnDef<PlayerOnResult>[]>(() => {
+    return Object.entries(data?.players[0].values || {}).map(([key, value]) => {
       return {
-        header: key.charAt(0).toUpperCase() + key.slice(1),
-        columns: Object.keys(value).map((key2) => ({
-          footer: () => totals?.properties[key][key2].value,
-          header: key2.toUpperCase(),
+        header: key,
+        columns: Object.entries(value).map(([key2, value2]) => ({
+          header: value2.name,
           cell: ({ getValue }: CellContext<TeamAverage, any>) => (
             <p>{getValue() as string}</p>
           ),
           sortingFn: "alphanumeric",
-          accessorFn: (row: TeamAverage) => row.properties[key][key2].value,
+          accessorFn: (row) => row.values[key][key2].value,
+          id: key2,
         })),
       };
     });
   }, [data]);
 
   // Setup columns
-  const columns = useMemo<ColumnDef<TeamAverage>[]>(
+  const columns = useMemo<ColumnDef<PlayerOnResult>[]>(
     () => [
       {
-        header: "Team",
+        header: "Player",
         columns: [
           {
-            header: "Team Name",
-            footer: () => totals?.name,
+            header: type.charAt(0).toUpperCase() + type.slice(1),
             cell: ({ row, getValue }) => {
-              return (
-                <div
-                  style={{
-                    display: "flex",
-                    paddingLeft: row.getCanExpand() ? 0 : "2rem",
-                  }}
-                >
-                  {row.getCanExpand() && (
-                    <button
-                      onClick={row.getToggleExpandedHandler()}
-                      style={{
-                        cursor: "pointer",
-                        background: "none",
-                        border: "none",
-                      }}
-                    >
-                      {row.getIsExpanded() ? (
-                        <Icon name="IoRemoveCircleOutline" />
-                      ) : (
-                        <Icon name="IoAddCircleOutline" />
-                      )}
-                    </button>
-                  )}
-                  {getValue() as string}
-                </div>
-              );
+              return <p className="player-name">{getValue() as string}</p>;
             },
             sortingFn: "alphanumeric",
-            accessorFn: (row) => row.name,
+            accessorFn: (row) =>
+              `${
+                row.player.playerNumber < 10
+                  ? `0${row.player.playerNumber}`
+                  : row.player.playerNumber
+              }. ${row.player.name}`,
           },
         ],
       },
@@ -98,19 +79,33 @@ const AveragesTable = ({ data, isLoading, totals }: Props) => {
     [propertiesColumn]
   );
 
-  const [sorting, setSorting] = useState<SortingState>([]);
-  const [grouping, setGrouping] = useState<GroupingState>([]);
-  const [expanded, setExpanded] = useState<ExpandedState>({});
+  const totals = useMemo(() => {
+    const _totals =
+      data?.players.reduce((obj: Record<string, number>, item) => {
+        Object.entries(item.values).forEach(([key1, value1]) => {
+          Object.entries(value1).forEach(([key2, value2]) => {
+            const key = key2;
+            obj[key] = (obj[key] || 0) + value2.value;
+          });
+        });
+        return obj;
+      }, {}) || {};
+
+    _totals.PER_1 = Math.round((_totals.E_1 / _totals.D) * 100) / 100;
+    _totals.PER_2 = Math.round((_totals.E_2 / _totals.K) * 100) / 100;
+    _totals.PER_3 = Math.round((_totals.E_3 / _totals.HB) * 100) / 100;
+
+    return _totals;
+  }, [data]);
 
   const table = useReactTable({
     columns,
-    data: data ?? [],
+    data: data?.players ?? [],
     debugTable: true,
     getCoreRowModel: getCoreRowModel(),
     getExpandedRowModel: getExpandedRowModel(),
     getGroupedRowModel: getGroupedRowModel(),
     getSortedRowModel: getSortedRowModel(),
-    getSubRows: (row) => row.players,
     onExpandedChange: setExpanded,
     onGroupingChange: setGrouping,
     onSortingChange: setSorting,
@@ -118,10 +113,15 @@ const AveragesTable = ({ data, isLoading, totals }: Props) => {
   });
 
   if (isLoading) return <Spinner size="large" />;
-  if (!isLoading && !data?.length) return <p>No Averages found</p>;
+  if (!isLoading && !data?.players?.length) return <p>No Statistics found</p>;
 
   return (
-    <Table compact hasFirstColumn striped>
+    <Table
+      compact
+      hasFirstColumn
+      striped
+      className={`match-statistic-table--${type}`}
+    >
       <Thead>
         {table.getHeaderGroups().map((headerGroup) => (
           <Tr key={headerGroup.id}>
@@ -157,27 +157,30 @@ const AveragesTable = ({ data, isLoading, totals }: Props) => {
           </Tr>
         ))}
       </Tbody>
-      {totals && (
+      {
         <TFooter>
-          {table.getFooterGroups().map((footerGroups) => (
-            <Tr key={footerGroups.id}>
-              {footerGroups.headers.map((footer) => {
-                if (footer.depth === 1) return null;
-                return (
-                  <Td>
-                    {flexRender(
-                      footer.column.columnDef.footer,
-                      footer.getContext()
-                    )}
-                  </Td>
-                );
-              })}
-            </Tr>
-          ))}
+          {table.getFooterGroups().map((footerGroups) => {
+            if (footerGroups.depth === 0) return null;
+
+            return (
+              <Tr key={footerGroups.id}>
+                {footerGroups.headers.map((header) => {
+                  return (
+                    <Td>
+                      {(header.index === 0
+                        ? "Total"
+                        : totals[header.id]
+                      )?.toString()}
+                    </Td>
+                  );
+                })}
+              </Tr>
+            );
+          })}
         </TFooter>
-      )}
+      }
     </Table>
   );
 };
 
-export default AveragesTable;
+export default MatchStatisticTable;

@@ -64,12 +64,12 @@ export const updatePlayer = async (
 /**
  * Get stats
  */
-export const getStats = async (
-  property: string,
-  teamId: number
-): Promise<PlayersOnAflResults[]> => {
-  const response = await axios.get<PlayersOnAflResults[]>(
-    `/players/_stats?property=${property}&teamId=${teamId}`
-  );
+export const getStats = async (property: string, teamId?: number): Promise<PlayersOnAflResults[]> => {
+  const response = await axios.get<PlayersOnAflResults[]>(`/players/_stats`,{
+    params: {
+      property,
+      teamId
+    }
+  });
   return response.data;
 };

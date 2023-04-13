@@ -107,6 +107,7 @@ declare global {
     location: Location;
     players: PlayerOnMatch[];
     teamReports: TeamReport[];
+    isCanPublish?: boolean;
   }
 
   interface MatchValidation {

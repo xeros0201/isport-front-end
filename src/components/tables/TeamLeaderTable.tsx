@@ -1,6 +1,4 @@
 import { Table, Tbody, Td, Th, Thead, Tr } from "../layout/Table";
-import { Logo, Spinner } from "../common";
-const s3URL = import.meta.env.VITE_S3_URL;
 
 import {
     ColumnDef,
@@ -11,48 +9,32 @@ import {
     useReactTable,
   } from "@tanstack/react-table";
 import { useEffect, useMemo, useState } from "react";
-import { useQuery } from "react-query";
-import { getStats } from "../../api/players";
 
-interface LeaderBoardTableProps {
+interface TeamLeaderTableProps {
     property?: string;
-    teamId?: number;
-    seasonId?: number;
-    leagueId?: number;
+    columnsDisable?: string[];
+    data: ReportProps[]
 }
 
-const LeaderboardTable = ({ property, teamId, seasonId, leagueId }: LeaderBoardTableProps) => {
-    const {
-        error: fetchError,
-        isLoading,
-        data: data,
-    } = useQuery(["getProperty", {property, teamId, seasonId, leagueId}], async (): Promise<PlayersOnAflResults[]> => {
-        if(!property) return [];
-        let _teamId = teamId;
-        if(!teamId) _teamId = undefined;
-        const temp = await getStats(property, _teamId);
-        return temp;
-    });
-
-    const _data = useMemo(
-        () => {
-        if(!data) return [];
-          return data?.filter(
-            (item) =>
-              item.team.seasonId == seasonId &&
-              item.team.season.leagueId == leagueId
-    )}, [data, seasonId, leagueId]);
-
+const TeamLeaderTable = ({ property, data }: TeamLeaderTableProps) => {
+    const _data = useMemo(() => {
+        if (!data) return [];
+        return data;
+    }, [data]);
     // Setup columns
-    const columns = useMemo<ColumnDef<PlayersOnAflResults>[]>(
+    const columns = useMemo<ColumnDef<ReportProps>[]>(
         () => [
           {
             header: "#",
             footer: (props) => props.column.id,
-            cell: (info) => <p style={{textAlign: "center"}}>{info.getValue() as string}</p>,
+            cell: (info) => {
+                const value = info.getValue() as string;
+                const formatValue = value.toString().length == 1 ? `0${value}` : value;
+                return <p style={{textAlign: "center"}}>{formatValue}</p>
+            },
             sortingFn: "alphanumeric",
-            accessorFn: (row) => row.playerNumber,
-            enableSorting: false,
+            accessorFn: (row) => (row.player.playerNumber || row.player.id),
+            enableSorting: true,
             size: 100,
           },
           {
@@ -60,42 +42,26 @@ const LeaderboardTable = ({ property, teamId, seasonId, leagueId }: LeaderBoardT
             footer: (props) => props.column.id,
             cell: (info) => <p>{info.getValue() as string}</p>,
             sortingFn: "alphanumeric",
-            accessorFn: (row) => row.name,
-            enableSorting: false,
-          },
-          {
-            header: "Team",
-            footer: (props) => props.column.id,
-            cell: (info) => {
-                const logo = info.row.original.team.logo;
-                return <div style={{ display: "flex", alignItems: "center" }}>
-                    <Logo
-                    url={logo ? `${s3URL}/image/${logo}` : "/league-logo.png"}
-                    height={40}
-                    />
-                    <p style={{ marginLeft: 10 }}>{info.getValue() as string}</p>
-                </div>
-            },
-            sortingFn: "alphanumeric",
-            accessorFn: (row) => row.team.name,
-            enableSorting: false,
+            accessorFn: (row) => row.player.name,
+            enableSorting: true,
           },
           {
             header: property || "Property",
             footer: (props) => props.column.id,
             cell: (info) => <p style={{textAlign: "right"}}>{info.getValue() as string}</p>,
             sortingFn: "alphanumeric",
-            accessorFn: (row) => row.total,
-            enableSorting: false,
+            accessorFn: (row) => row.value,
+            enableSorting: true,
           }
         ],
-        [property]
+        []
       );
 
     // Setup table
     const [sorting, setSorting] = useState<SortingState>([]);
+
     const table = useReactTable({
-        data: _data ? _data : [] as PlayersOnAflResults[],
+        data: _data ? _data : [] as ReportProps[],
         columns,
         state: { sorting },
         onSortingChange: setSorting,
@@ -104,17 +70,8 @@ const LeaderboardTable = ({ property, teamId, seasonId, leagueId }: LeaderBoardT
         debugTable: true,
     })
 
-    // If loading
-    if (isLoading) return <Spinner size="large" />
-
-    // If no data
-    if (!isLoading && !_data?.length) return <p>No player found</p>;
-
-    // // If no property select
-    // if (!property || property == "") return <p>Select Property</p>;
-
     return (
-        <Table >
+        <Table noMargin compact>
             <Thead>
                 <Tr>
                     {table.getFlatHeaders().map((header) => {
@@ -147,4 +104,4 @@ const LeaderboardTable = ({ property, teamId, seasonId, leagueId }: LeaderBoardT
     )
 };
 
-export default LeaderboardTable;
+export default TeamLeaderTable;

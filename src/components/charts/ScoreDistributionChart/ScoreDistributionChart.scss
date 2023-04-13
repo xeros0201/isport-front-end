@@ -122,3 +122,9 @@
         }
     }
 }
+
+@media print {
+  .score-distribution-wrapper{
+    break-inside: avoid;
+  }
+}

@@ -1,0 +1,38 @@
+
+@import "../../../../../styles/mixins";
+
+.match-statistic {
+  .match-statistic-table {
+    .table-container {
+      // max-height: 400px;
+      & table {
+        margin-top: 0;
+      }
+    }
+    .player-name {
+      white-space: nowrap;
+    }
+    &--home {
+      .th--property-header {
+        background-color: $yellow !important;
+      }
+
+      & .tfoot .tr .td {
+        background-color: #FFFAD0;
+        
+      }
+    }
+    &--away {
+      margin-top: 2rem;
+      .th--property-header {
+        background-color: $magenta !important;
+        color: $white !important;
+      }
+
+      & .tfoot .tr .td {
+        background-color: #FFE0F0;
+        
+      }
+    }
+  }
+}

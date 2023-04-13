@@ -22,11 +22,20 @@ interface ReportOnMatches {
   [key: string]: MatchReportValue;
 }
 
+interface PlayerOnResult {
+  player: {
+    id: number;
+    name: string;
+    playerNumber: number;
+  };
+  values: Record<string, Record<string, { name: string; value: number }>>;
+}
+
 interface Result {
   meta: any;
   score: number;
   team: Team;
-  player: Player[];
+  players: PlayerOnResult[];
 }
 
 interface AflResult {
@@ -34,8 +43,24 @@ interface AflResult {
   away?: Result;
 }
 
+interface ReportProps {
+  name: string;
+  player: Player;
+  value: number;
+}
+
+interface Reports {
+  reports: Record<string, ReportProps[]>;
+}
+
+interface LeaderAflResult {
+  home?: Reports;
+  away?: Reports;
+}
+
 interface Stats {
   reports: Record<string, ReportOnMatches>;
+  leaders?: LeaderAflResult;
   teamReports?: AflResult;
   match?: Match;
 }

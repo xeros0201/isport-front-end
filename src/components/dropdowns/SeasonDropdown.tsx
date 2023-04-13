@@ -24,7 +24,6 @@ const SeasonDropdown = ({
     error: fetchError,
     isLoading,
     data,
-    refetch,
   } = useQuery(
     ["getSeasonsByLeague", { leagueId, requireLeague }],
     async (): Promise<Season[]> => {
@@ -34,11 +33,15 @@ const SeasonDropdown = ({
     }
   );
 
-  // Fetch as soon as a leagueId is provided
+  // Set default if leagueaId changed
   useEffect(() => {
-    if (!requireLeague && value) onChange(value);
-    refetch();
-  }, [requireLeague, value]);
+      onChange("");
+  }, [leagueId]);
+
+  // Set value season
+  useEffect(() => {
+      if(value) onChange(value);
+  }, [value]);
 
   // Format season options so they are input compatible
   const seasonOptions: InputOption[] = useMemo(() => {

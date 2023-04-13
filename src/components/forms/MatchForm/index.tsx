@@ -52,12 +52,12 @@ const MatchForm = ({ id }: FormProps) => {
   );
 
   // Check match validation to publish
-  const { data: matchValidation } = useQuery(
-    ["getMatchValidation", { id }],
-    async () => {
-      if (id) return getMatchValidation(+id);
-    }
-  );
+  // const { data: matchValidation } = useQuery(
+  //   ["getMatchValidation", { id }],
+  //   async () => {
+  //     if (id) return getMatchValidation(+id);
+  //   }
+  // );
 
   useEffect(() => {
     setTeamCSVData({
@@ -342,7 +342,8 @@ const MatchForm = ({ id }: FormProps) => {
                 label={"Publish Report"}
                 onClick={handlePublish}
                 isSubmit
-                isDisabled={!matchValidation?.isValid}
+                // isDisabled={!matchValidation?.isValid}
+                isDisabled={!data?.isCanPublish}
               />
             )}
           </Row>
