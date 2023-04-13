@@ -192,6 +192,7 @@ export const deletePlayerOnMatch = async (
  */
 export const getStats = async (matchId: number): Promise<Stats> => {
     const response = await axios.get<Stats>(`/matches/${matchId}/_stats`);
+    console.log(response.data);
     return response.data;
 };
 

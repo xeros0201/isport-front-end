@@ -34,8 +34,24 @@ interface AflResult {
   away?: Result;
 }
 
+interface ReportProps {
+  name: string;
+  player: Player;
+  value: number;
+}
+
+interface Reports {
+  reports: Record<string, ReportProps[]>;
+}
+
+interface LeaderAflResult {
+  home?: Reports;
+  away?: Reports;
+}
+
 interface Stats {
   reports: Record<string, ReportOnMatches>;
+  leaders?: LeaderAflResult;
   teamReports?: AflResult;
   match?: Match;
 }

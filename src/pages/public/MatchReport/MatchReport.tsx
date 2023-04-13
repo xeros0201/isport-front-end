@@ -9,6 +9,7 @@ import { useQuery } from "react-query";
 import { getStats } from "../../../api/matches";
 import MatchReportTable from "../../../components/tables/MatchReportTable";
 import "./MatchReport.scss";
+import TeamLeaderTable from "../../../components/tables/TeamLeaderTable";
 
 const MatchReport = () => {
   const [selectedTab, setSelectedTab] = useState(0);
@@ -37,6 +38,11 @@ const MatchReport = () => {
     [stats]
   );
 
+  const gameLeader = useMemo(() =>{
+    const homeTeam = stats?.leaders?.home?.reports || {};
+    const awayTeam = stats?.leaders?.away?.reports || {};
+    return {homeTeam, awayTeam};
+  }, [stats]);
   const aflResult = useMemo(() => stats?.teamReports || {}, [stats]);
 
   const overView = useMemo(
@@ -77,6 +83,45 @@ const MatchReport = () => {
     );
   };
 
+  const renderGameLeader = () => {
+    return (
+      <>
+        <div className="leader">
+          <div className="team-side">
+            <div className="home-side-banner">Home</div>
+            <div className="away-side-banner">Away</div>
+          </div>
+          <div className="result-table">
+            <div className="home-side">
+              {
+                Object.keys(gameLeader.homeTeam).map((key) => {
+                  return (
+                    <TeamLeaderTable
+                      property={key}
+                      data={gameLeader.homeTeam[key]}
+                    />
+                  );
+                })
+              }
+            </div>
+            <div className="away-side">
+              {
+                Object.keys(gameLeader.awayTeam).map((key) => {
+                  return (
+                    <TeamLeaderTable
+                      property={key}
+                      data={gameLeader.awayTeam[key]}
+                    />
+                  );
+                })
+              }
+            </div>
+          </div>
+        </div>
+      </>
+    );
+  }
+
   return (
     <Page title="Match Report">
       <Button
@@ -100,7 +145,13 @@ const MatchReport = () => {
           )}
         </TabContainer>
         <TabContainer selected={selectedTab === 1}>Tab 1</TabContainer>
-        <TabContainer selected={selectedTab === 2}>Tab 2</TabContainer>
+        <TabContainer selected={selectedTab === 2}>
+          {!!matchId ? (
+            renderGameLeader()
+          ) : (
+            <p>Please select match from previous page.</p>
+          )}
+        </TabContainer>
       </div>
     </Page>
   );
