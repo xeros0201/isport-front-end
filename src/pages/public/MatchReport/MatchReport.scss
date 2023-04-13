@@ -2,6 +2,7 @@
 @import '../../../styles/mixins';
 
 .stat-table {
+    width: 100%;
     .overview {
         @media only screen and (min-width: 901px) {
             &__grid {
@@ -44,4 +45,20 @@
             grid-gap: 20px;
         }
     }
+}
+
+@media print {
+  .overview {
+    &__grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      grid-template-rows: 1fr 1fr;
+      grid-template-areas: "table" "score-distribution-wrapper";
+    }
+
+    .score-distribution-wrapper {
+      overflow: auto;
+      grid-area: score-distribution-wrapper;
+    }
+  }
 }
