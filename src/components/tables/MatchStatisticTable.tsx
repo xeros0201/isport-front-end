@@ -70,7 +70,7 @@ const MatchStatisticTable = ({ data, isLoading, type }: Props) => {
                 row.player.playerNumber < 10
                   ? `0${row.player.playerNumber}`
                   : row.player.playerNumber
-              } ${row.player.name}`,
+              }. ${row.player.name}`,
           },
         ],
       },
