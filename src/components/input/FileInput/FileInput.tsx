@@ -100,12 +100,12 @@ function FileInput({
       // Split by line break to gets rows Array
       var rowData = csvdata.split("\n");
 
-      const keys = rowData[0].replace(/(\r\n|\n|\r)/gm, "").split(";");
+      const keys = rowData[0].replace(/(\r\n|\n|\r)/gm, "").split(",");
       onReadFile(
         rowData.slice(1).map((row: string) => {
           return row
             .replace(/(\r\n|\n|\r)/gm, "")
-            .split(";")
+            .split(",")
             .reduce(
               (obj, item, index) => ({ ...obj, [keys[index]]: item }),
               {}
