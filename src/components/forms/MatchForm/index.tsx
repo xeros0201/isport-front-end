@@ -192,6 +192,7 @@ const MatchForm = ({ id }: FormProps) => {
       ...val,
       [key]: data.reduce((arr: number[], item) => {
         try {
+          if (item.Code.toLowerCase().includes("unknown")) return arr;
           const value = +item.Code.split(" ")[0].substring(1);
 
           if (!value || isNaN(value)) return arr;
