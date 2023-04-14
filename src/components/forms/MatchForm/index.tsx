@@ -190,9 +190,17 @@ const MatchForm = ({ id }: FormProps) => {
   const handleReadFile = (data: CSVRow[], key: string) => {
     setTeamCSVData((val) => ({
       ...val,
-      [key]: data.map((item) =>
-        (+item.Code.split(" ")[0].substring(1)).toString()
-      ),
+      [key]: data.reduce((arr: number[], item) => {
+        try {
+          const value = +item.Code.split(" ")[0].substring(1);
+
+          if (!value || isNaN(value)) return arr;
+
+          return [...arr, value];
+        } catch (error) {
+          return arr;
+        }
+      }, []),
     }));
   };
 
