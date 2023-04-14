@@ -5,12 +5,14 @@ import { getTeams } from "../../api/teams";
 import { InputError, DropdownInput } from "../input";
 
 interface TeamDropdown extends ImplementedDropdownProps {
+  isHasAllTeamOption?: boolean;
   requireSeason?: boolean;
   seasonId?: string;
   filter?: (value: Team, index: number, array: Team[]) => boolean;
 }
 
 const TeamDropdown = ({
+  isHasAllTeamOption = false,
   requireSeason = false,
   seasonId,
   filter,
@@ -50,7 +52,7 @@ const TeamDropdown = ({
 
     let _data = filter ? data.filter(filter) : data;
 
-    if (_data.length > 0) {
+    if (_data.length > 0 && isHasAllTeamOption) {
       const allTeam : Team = {
         id: 0,
         name: "All Teams",

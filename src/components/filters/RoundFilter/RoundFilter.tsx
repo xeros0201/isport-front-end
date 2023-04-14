@@ -34,6 +34,7 @@ const RoundFilter = ({
             onChange={onLeagueChange}
           />
           <SeasonDropdown
+            requireLeague={true}
             leagueId={leagueId}
             value={seasonId}
             onChange={onSeasonChange}

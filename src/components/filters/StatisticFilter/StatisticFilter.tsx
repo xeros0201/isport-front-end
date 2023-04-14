@@ -41,6 +41,7 @@ const StatisticFilter = ({
             onChange={onSeasonChange}
           />
           <TeamDropdown
+            isHasAllTeamOption
             requireSeason={true}
             seasonId={seasonId}
             value={teamId}
