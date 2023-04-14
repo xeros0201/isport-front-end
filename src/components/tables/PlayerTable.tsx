@@ -34,6 +34,14 @@ const PlayerTable = ({ data, isLoading = false }: PlayerTableProps) => {
         enableSorting: true,
       },
       {
+        header: "Player Number",
+        footer: (props) => props.column.id,
+        cell: (info) => <p>{info.getValue() as string}</p>,
+        sortingFn: "alphanumeric",
+        accessorFn: (row) => row.playerNumber,
+        enableSorting: true,
+      },
+      {
         header: "Player Name",
         footer: (props) => props.column.id,
         cell: (info) => <p>{info.getValue() as string}</p>,
@@ -47,11 +55,9 @@ const PlayerTable = ({ data, isLoading = false }: PlayerTableProps) => {
         cell: (info) => {
           const teamName = info?.row?.original.team?.name;
           const imgId = info?.row?.original.team?.logo;
-          const imgUrl = imgId
-            ? `${s3URL}/image/${imgId}`
-            : "/league-logo.png";
+          const imgUrl = imgId ? `${s3URL}/image/${imgId}` : "/league-logo.png";
           return (
-            <Row  removeSpacing alignItems={'center'}>
+            <Row removeSpacing alignItems={"center"}>
               <Logo isSquare height={42} url={imgUrl} />
               <span>{teamName as string}</span>
             </Row>
@@ -67,11 +73,9 @@ const PlayerTable = ({ data, isLoading = false }: PlayerTableProps) => {
         cell: (info) => {
           const leagueName = info?.row?.original.team?.season?.league?.name;
           const imgId = info?.row?.original.team?.season?.league?.logo;
-          const imgUrl = imgId
-            ? `${s3URL}/image/${imgId}`
-            : "/league-logo.png";
+          const imgUrl = imgId ? `${s3URL}/image/${imgId}` : "/league-logo.png";
           return (
-            <Row  removeSpacing alignItems={'center'}>
+            <Row removeSpacing alignItems={"center"}>
               <Logo isSquare height={42} url={imgUrl} />
               <span>{leagueName as string}</span>
             </Row>

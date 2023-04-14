@@ -42,6 +42,8 @@ const MatchFilter = ({
                 </div>
                 <div className="match-filter__season">
                     <SeasonDropdown
+                        requireLeague={true}
+                        leagueId={leagueId}
                         value={seasonId}
                         onChange={onSeasonChange}
                     />

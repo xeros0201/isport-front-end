@@ -5,8 +5,9 @@ import { useQuery } from "react-query";
 import { getMatchById } from "../../../../../api/matches";
 import { useEffect, useState } from "react";
 import "./MatchReportBanner.scss";
-import { Spinner } from "../../../../../components/common";
+import { Logo, Spinner } from "../../../../../components/common";
 import { DateTime } from "luxon";
+const s3URL = import.meta.env.VITE_S3_URL;
 
 interface BannerProps {
   matchId: number;
@@ -14,6 +15,7 @@ interface BannerProps {
 }
 
 interface MatchReportBannerProps {
+  leagueLogo: string;
   leagueName: string;
   time: string;
   location: string;
@@ -41,8 +43,10 @@ function MatchReportBanner({ matchId, score }: BannerProps) {
   useEffect(() => {
     if (!matchId) return;
     refetch();
+    const logoUrl = match?.season.league.logo;
     setBannerData({
       ...bannerData,
+      leagueLogo: logoUrl ? `${s3URL}/image/${logoUrl}` : "/league-logo.png",
       leagueName: match?.season.league.name || "",
       time: DateTime.fromISO(match?.date as string).toLocaleString(
         DateTime.DATETIME_MED_WITH_WEEKDAY
@@ -133,7 +137,7 @@ function MatchReportBanner({ matchId, score }: BannerProps) {
         })}
         <div className="league">
           <div className="league--logo">
-            <img src="/public/league-logo.png" alt="" />
+            <Logo url={bannerData.leagueLogo}/>
           </div>
           <div className="league--matchname">Grand Final</div>
         </div>
