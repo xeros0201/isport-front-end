@@ -53,13 +53,13 @@ const TeamDropdown = ({
     let _data = filter ? data.filter(filter) : data;
 
     if (_data.length > 0 && isHasAllTeamOption) {
-      const allTeam : Team = {
+      const allTeam: Team = {
         id: 0,
         name: "All Teams",
         logo: "",
         seasonId: seasonId ? +seasonId : 0,
         season: _data[0].season,
-      }
+      };
       _data = [allTeam, ..._data];
     }
 
@@ -69,15 +69,10 @@ const TeamDropdown = ({
     }));
   }, [data, filter, seasonId]);
 
-    // Set default if seasonId changed
-    useEffect(() => {
-      onChange("");
-    }, [seasonId]);
-
-    // Set value season
-    useEffect(() => {
-        if(value) onChange(value);
-    }, [value]);
+  // Set value season
+  useEffect(() => {
+    if (value) onChange(value);
+  }, [value]);
 
   // If error fetching data
   if (fetchError) return <InputError error="Error fetching teams" touched />;
