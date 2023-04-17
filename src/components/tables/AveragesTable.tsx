@@ -38,9 +38,9 @@ const AveragesTable = ({ data, isLoading, totals }: Props) => {
     return Object.entries(data[0].properties).map(([key, value]) => {
       return {
         header: key.charAt(0).toUpperCase() + key.slice(1),
-        columns: Object.keys(value).map((key2) => ({
+        columns: Object.entries(value).map(([key2, value2]) => ({
           footer: () => totals?.properties[key][key2].value,
-          header: key2.toUpperCase(),
+          header: value2.name.toUpperCase(),
           cell: ({ getValue }: CellContext<TeamAverage, any>) => (
             <p>{getValue() as string}</p>
           ),

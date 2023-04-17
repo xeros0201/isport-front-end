@@ -5,6 +5,7 @@ import Button from "../Button/Button";
 import Icon from "../Icon/Icon";
 import Logo from "../Logo/Logo";
 import "./MatchFixture.scss";
+const s3URL = import.meta.env.VITE_S3_URL;
 
 interface MatchFixtureProps {
   matchFixture: Match;
@@ -20,8 +21,8 @@ const MatchFixtures = ({ matchFixture }: MatchFixtureProps) => {
     (result) => result.teamId == matchFixture.awayTeamId
   );
 
-  const homeTeamScorePrimary = homeTeamReport!.score;
-  const awayTeamScorePrimary = awayTeamReport!.score;
+  const homeTeamScorePrimary = homeTeamReport?.score || 0;
+  const awayTeamScorePrimary = awayTeamReport?.score || 0;
 
   const time = matchFixture.date
     ? DateTime.fromISO(matchFixture.date).toLocaleString(DateTime.TIME_SIMPLE)
@@ -58,8 +59,13 @@ const MatchFixtures = ({ matchFixture }: MatchFixtureProps) => {
           disableWrapping
           noFlex
         >
-          <Logo url={`${matchFixture.homeTeam?.logo}`} />
-
+          <Logo
+            url={
+              matchFixture.homeTeam?.logo
+                ? `${s3URL}/image/${matchFixture.homeTeam?.logo}`
+                : "/league-logo.png"
+            }
+          />
           <div className={`score ${isWinner(matchFixture.homeTeam?.name)}`}>
             {matchFixture.homeTeam?.name}
           </div>
@@ -77,7 +83,13 @@ const MatchFixtures = ({ matchFixture }: MatchFixtureProps) => {
           disableWrapping
           noFlex
         >
-          <Logo url={`${matchFixture.awayTeam?.logo}`} />
+          <Logo
+            url={
+              matchFixture.awayTeam?.logo
+                ? `${s3URL}/image/${matchFixture.awayTeam?.logo}`
+                : "/league-logo.png"
+            }
+          />
 
           <div className={`score ${isWinner(matchFixture.awayTeam?.name)}`}>
             {matchFixture.awayTeam?.name}

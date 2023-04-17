@@ -55,11 +55,11 @@ function MatchReportBanner({ matchId, score }: BannerProps) {
       homeTeamName: match?.homeTeam.name || "",
       homeTeamLogo: match?.homeTeam.logo || "",
       homeTeamScore: score?.home?.score || 0,
-      homeTeamSecondScore: `${score?.home?.meta.TOTAL_GOAL}.${score?.home?.meta.TOTAL_BEHIND}`,
+      homeTeamSecondScore: `${score?.home?.meta.TOTAL_GOAL}.${score?.home?.meta.TOTAL_BEHIND + score?.home?.meta.RUSHED}`,
       awayTeamName: match?.awayTeam.name || "",
       awayTeamLogo: match?.awayTeam.logo || "",
       awayTeamScore: score?.away?.score || 0,
-      awayTeamSecondScore: `${score?.away?.meta.TOTAL_GOAL}.${score?.away?.meta.TOTAL_BEHIND}`,
+      awayTeamSecondScore: `${score?.away?.meta.TOTAL_GOAL}.${score?.away?.meta.TOTAL_BEHIND + score?.away?.meta.RUSHED}`,
       // awayTeamScore: score?.away?.score
       //   ? score?.away?.score * 6 + score?.away?.meta.RUSHED
       //   : score?.away?.meta.RUSHED,
