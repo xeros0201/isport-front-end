@@ -2,9 +2,11 @@ import { useFormik } from "formik";
 import { useState } from "react";
 import { useQuery } from "react-query";
 import { useNavigate } from "react-router-dom";
-import { 
-  createPlayer, getPlayer, 
-  PlayerFormValues, updatePlayer 
+import {
+  createPlayer,
+  getPlayer,
+  PlayerFormValues,
+  updatePlayer,
 } from "../../api/players";
 import { Button, Spinner } from "../common";
 import { LeagueDropdown, SeasonDropdown, TeamDropdown } from "../dropdowns";
@@ -18,7 +20,7 @@ const PlayerForm = ({ id }: FormProps) => {
 
   // Setup react-query for fetching data
   const { isLoading, data, refetch, error } = useQuery(
-    ["getPlayer", {}],
+    ["getPlayer", id],
     async () => {
       if (id) return getPlayer(+id);
     }
@@ -27,9 +29,9 @@ const PlayerForm = ({ id }: FormProps) => {
   // Setup initial values
   const initialValues: PlayerFormValues = {
     name: data?.name ?? "",
-    playerNumber: data?.playerNumber.toString() ??  "",
+    playerNumber: data?.playerNumber.toString() ?? "",
     teamId: data?.team?.id.toString() ?? "",
-    leagueId: data?.team?.id.toString() ?? "",
+    leagueId: data?.team?.season?.leagueId?.toString() ?? "",
     seasonId: data?.team?.seasonId.toString() ?? "",
   };
 
@@ -49,7 +51,7 @@ const PlayerForm = ({ id }: FormProps) => {
     try {
       !!id ? await update() : await create();
     } catch (error) {
-      alert(JSON.stringify(error))
+      alert(JSON.stringify(error));
     }
     setIsSubmitting(false);
   };
@@ -119,17 +121,19 @@ const PlayerForm = ({ id }: FormProps) => {
         required
         asInput
       />
-      {formik.values.leagueId && <SeasonDropdown
-        label="Season"
-        leagueId={formik.values.leagueId}
-        value={formik.values.seasonId}
-        onChange={formik.handleChange("seasonId")}
-        error={formik.errors.seasonId}
-        touched={formik.touched.seasonId}
-        requireLeague
-        required
-        asInput
-      />}
+      {formik.values.leagueId && (
+        <SeasonDropdown
+          label="Season"
+          leagueId={formik.values.leagueId}
+          value={formik.values.seasonId}
+          onChange={formik.handleChange("seasonId")}
+          error={formik.errors.seasonId}
+          touched={formik.touched.seasonId}
+          requireLeague
+          required
+          asInput
+        />
+      )}
       <TeamDropdown
         label="Team"
         seasonId={formik.values.seasonId}
