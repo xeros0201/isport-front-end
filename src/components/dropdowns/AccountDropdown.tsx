@@ -59,6 +59,7 @@ const AccountDropdown = () => {
 
     return (
         <DropdownInput
+            dropDownName="account-dropdown"
             value={accountName}
             options={options}
             onChange={handleChange}

@@ -12,6 +12,7 @@ interface DropdownInputProps
    * Placeholder text inside dropdown
    */
   placeholder?: string;
+  dropDownName?: string;
 }
 
 /**
@@ -29,12 +30,13 @@ function DropdownInput({
   touched,
   isFetching,
   asInput = false,
+  dropDownName = "",
 }: DropdownInputProps) {
   const asInputClass = `dropdowninput--${
     asInput ? "as-input" : "not-as-input"
   }`;
   return (
-    <div className={`dropdowninput ${asInputClass}`}>
+    <div className={`${dropDownName} dropdowninput ${asInputClass}`}>
       {asInput && <InputLabel label={label} required={required} />}
       {!isFetching && (
         <ReactDropdown
