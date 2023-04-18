@@ -62,7 +62,7 @@ const MatchFixtures = ({ matchFixture }: MatchFixtureProps) => {
           <Logo
             url={
               matchFixture.homeTeam?.logo
-                ? `${s3URL}/image/${matchFixture.homeTeam?.logo}`
+                ? `${s3URL}/images/${matchFixture.homeTeam?.logo}`
                 : "/league-logo.png"
             }
           />
@@ -86,7 +86,7 @@ const MatchFixtures = ({ matchFixture }: MatchFixtureProps) => {
           <Logo
             url={
               matchFixture.awayTeam?.logo
-                ? `${s3URL}/image/${matchFixture.awayTeam?.logo}`
+                ? `${s3URL}/images/${matchFixture.awayTeam?.logo}`
                 : "/league-logo.png"
             }
           />

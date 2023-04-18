@@ -39,7 +39,7 @@ const LeagueTable = ({ data, isLoading = false }: LeagueTableProps) => {
           <Logo
             url={
               info.getValue()
-                ? `${s3URL}/image/${info.getValue()}`
+                ? `${s3URL}/images/${info.getValue()}`
                 : "/league-logo.png"
             }
           />
