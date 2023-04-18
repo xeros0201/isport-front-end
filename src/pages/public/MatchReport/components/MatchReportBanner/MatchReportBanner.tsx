@@ -44,6 +44,8 @@ function MatchReportBanner({ matchId, score }: BannerProps) {
     if (!matchId) return;
     refetch();
     const logoUrl = match?.season.league.logo;
+    const homeTeamLogo = match?.homeTeam.logo;
+    const awayTeamLogo = match?.awayTeam.logo;
     setBannerData({
       ...bannerData,
       leagueLogo: logoUrl ? `${s3URL}/image/${logoUrl}` : "/league-logo.png",
@@ -53,19 +55,21 @@ function MatchReportBanner({ matchId, score }: BannerProps) {
       ),
       location: match?.location.name || "",
       homeTeamName: match?.homeTeam.name || "",
-      homeTeamLogo: match?.homeTeam.logo || "",
+      homeTeamLogo: homeTeamLogo
+        ? `${s3URL}/image/${homeTeamLogo}`
+        : "/league-logo.png",
       homeTeamScore: score?.home?.score || 0,
-      homeTeamSecondScore: `${score?.home?.meta.TOTAL_GOAL}.${score?.home?.meta.TOTAL_BEHIND + score?.home?.meta.RUSHED}`,
+      homeTeamSecondScore: `${score?.home?.meta.TOTAL_GOAL}.${
+        score?.home?.meta.TOTAL_BEHIND + score?.home?.meta.RUSHED
+      }`,
       awayTeamName: match?.awayTeam.name || "",
-      awayTeamLogo: match?.awayTeam.logo || "",
+      awayTeamLogo: awayTeamLogo
+        ? `${s3URL}/image/${awayTeamLogo}`
+        : "/league-logo.png",
       awayTeamScore: score?.away?.score || 0,
-      awayTeamSecondScore: `${score?.away?.meta.TOTAL_GOAL}.${score?.away?.meta.TOTAL_BEHIND + score?.away?.meta.RUSHED}`,
-      // awayTeamScore: score?.away?.score
-      //   ? score?.away?.score * 6 + score?.away?.meta.RUSHED
-      //   : score?.away?.meta.RUSHED,
-      // awayTeamSecondScore: score?.away?.score
-      //   ? `${score?.away?.score}.${score?.away?.meta.RUSHED}`
-      //   : `0.${score?.away?.meta.RUSHED}`,
+      awayTeamSecondScore: `${score?.away?.meta.TOTAL_GOAL}.${
+        score?.away?.meta.TOTAL_BEHIND + score?.away?.meta.RUSHED
+      }`,
     });
   }, [matchId, match, score]);
 
@@ -126,7 +130,7 @@ function MatchReportBanner({ matchId, score }: BannerProps) {
                 <p className="team-type">{team}</p>
               </div>
               <div className="team-score--logo">
-                <img src={logo} alt="" />
+                <Logo isSquare height={80} url={logo} alt="" />
               </div>
               <div>
                 <p className="team-score--score">{score}</p>
