@@ -48,7 +48,7 @@ function MatchReportBanner({ matchId, score }: BannerProps) {
     const awayTeamLogo = match?.awayTeam.logo;
     setBannerData({
       ...bannerData,
-      leagueLogo: logoUrl ? `${s3URL}/image/${logoUrl}` : "/league-logo.png",
+      leagueLogo: logoUrl ? `${s3URL}/images/${logoUrl}` : "/league-logo.png",
       leagueName: match?.season.league.name || "",
       time: DateTime.fromISO(match?.date as string).toLocaleString(
         DateTime.DATETIME_MED_WITH_WEEKDAY
@@ -56,7 +56,7 @@ function MatchReportBanner({ matchId, score }: BannerProps) {
       location: match?.location.name || "",
       homeTeamName: match?.homeTeam.name || "",
       homeTeamLogo: homeTeamLogo
-        ? `${s3URL}/image/${homeTeamLogo}`
+        ? `${s3URL}/images/${homeTeamLogo}`
         : "/league-logo.png",
       homeTeamScore: score?.home?.score || 0,
       homeTeamSecondScore: `${score?.home?.meta.TOTAL_GOAL}.${
@@ -64,7 +64,7 @@ function MatchReportBanner({ matchId, score }: BannerProps) {
       }`,
       awayTeamName: match?.awayTeam.name || "",
       awayTeamLogo: awayTeamLogo
-        ? `${s3URL}/image/${awayTeamLogo}`
+        ? `${s3URL}/images/${awayTeamLogo}`
         : "/league-logo.png",
       awayTeamScore: score?.away?.score || 0,
       awayTeamSecondScore: `${score?.away?.meta.TOTAL_GOAL}.${
@@ -141,7 +141,7 @@ function MatchReportBanner({ matchId, score }: BannerProps) {
         })}
         <div className="league">
           <div className="league--logo">
-            <Logo url={bannerData.leagueLogo}/>
+            <Logo url={bannerData.leagueLogo} />
           </div>
           <div className="league--matchname">Grand Final</div>
         </div>

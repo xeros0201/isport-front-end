@@ -39,7 +39,7 @@ const TeamTable = ({ data, isLoading = false }: TeamTableProps) => {
           <Logo
             url={
               info.getValue()
-                ? `${s3URL}/image/${info.getValue()}`
+                ? `${s3URL}/images/${info.getValue()}`
                 : "/league-logo.png"
             }
             height={40}
@@ -58,7 +58,7 @@ const TeamTable = ({ data, isLoading = false }: TeamTableProps) => {
           return (
             <div style={{ display: "flex", alignItems: "center" }}>
               <Logo
-                url={logo ? `${s3URL}/image/${logo}` : "/league-logo.png"}
+                url={logo ? `${s3URL}/images/${logo}` : "/league-logo.png"}
                 height={40}
               />
               <p style={{ marginLeft: 10 }}>{info.getValue() as string}</p>
