@@ -50,6 +50,11 @@ type ButtonProps = {
    * The icon to be shown inside the input field.
    */
   icon?: ReactIcon;
+
+  /**
+   * Setting margin auto for button.
+   */
+  marginAuto?: boolean;
 };
 
 /**
@@ -66,6 +71,7 @@ const Button = ({
   rounded = true,
   size = "medium",
   icon,
+  marginAuto = false,
 }: ButtonProps) => {
   /**
    * Determine the status of the button.
@@ -82,6 +88,7 @@ const Button = ({
     [`button--${type}`]: true,
     [`button--${status}`]: true,
     [`button--${size}`]: true,
+    "button--margin-auto": marginAuto,
   });
 
   return (
