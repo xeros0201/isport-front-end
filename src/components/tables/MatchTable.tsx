@@ -10,9 +10,11 @@ import {
   SortingState,
   useReactTable,
 } from "@tanstack/react-table";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Row } from "../layout";
 import { MatchStatus } from "../../types/enums";
+import { deleteMatch } from "../../api/matches";
+import { DangerModal } from "../modals";
 
 interface MatchTableProps {
   data: Match[];
@@ -21,6 +23,24 @@ interface MatchTableProps {
 
 const MatchTable = ({ data, isLoading = false }: MatchTableProps) => {
   const navigate = useNavigate();
+  const [_data, setData] = useState(data);
+  const [modalData, setModalData] = useState<{ id?: number; open: boolean }>({
+    open: false,
+  });
+
+  useEffect(() => {
+    setData(data);
+  }, [data])
+
+  const handleDeleteMatch = async (id: number) => {
+    try {
+      const rs = await deleteMatch(id);
+      const __data = _data.filter(match => match.id !== id);
+      setData(__data)
+    } catch (error) {
+      // console.error(error);
+    }
+  }
 
   // Setup columns
   const columns = useMemo<ColumnDef<Match>[]>(
@@ -79,6 +99,7 @@ const MatchTable = ({ data, isLoading = false }: MatchTableProps) => {
         cell: (info) =>
           info.getValue<string>().split(",")[0] == MatchStatus.PUBLISHED && (
             <Button
+              marginAuto
               label="Match Report"
               type="outlined"
               size="small"
@@ -99,8 +120,9 @@ const MatchTable = ({ data, isLoading = false }: MatchTableProps) => {
         cell: (info) => {
           const isDraft = info.getValue() === MatchStatus.DRAFT;
           return (
-            <Row alignItems="center" noFlex justifyContent={"flex-start"}>
+            <Row alignItems="center" noFlex justifyContent={"center"}>
               <Button
+                marginAuto
                 label={isDraft ? "Edit" : "View"}
                 type="secondary"
                 icon={isDraft ? "IoPencilOutline" : "IoEyeOutline"}
@@ -109,21 +131,16 @@ const MatchTable = ({ data, isLoading = false }: MatchTableProps) => {
                   navigate(`/admin/matches/edit?id=${info.row.original.id}`)
                 }
               />
-              {isDraft && (
-                <Button
-                  label="Delete"
-                  type="danger"
-                  icon="IoTrash"
-                  size="small"
-                  onClick={() =>
-                    navigate(
-                      `/admin/matches/id=${
-                        info.getValue<string>().split(",")[1]
-                      }`
-                    )
-                  }
-                />
-              )}
+              <Button
+                marginAuto
+                label="Delete"
+                type="danger"
+                icon="IoTrash"
+                size="small"
+                onClick={() =>
+                  setModalData({id: info.row.original.id, open: true})
+                }
+              />
             </Row>
           );
         },
@@ -133,13 +150,13 @@ const MatchTable = ({ data, isLoading = false }: MatchTableProps) => {
         enableHiding: false,
       },
     ],
-    []
+    [_data]
   );
 
   // Setup table
   const [sorting, setSorting] = useState<SortingState>([]);
   const table = useReactTable({
-    data,
+    data: _data,
     columns,
     state: { sorting },
     onSortingChange: setSorting,
@@ -152,43 +169,56 @@ const MatchTable = ({ data, isLoading = false }: MatchTableProps) => {
   if (isLoading) return <Spinner size="large" />;
 
   // If no data
-  if (!isLoading && !data.length) return <p>No matches found</p>;
+  if (!isLoading && !_data.length) return <p>No matches found</p>;
 
   return (
-    <Table>
-      <Thead>
-        <Tr>
-          {table.getFlatHeaders().map((header) => {
-            const onClickIfSortable = header.column.getCanSort()
-              ? header.column.getToggleSortingHandler()
-              : undefined;
-            return header.isPlaceholder ? null : (
-              <Th
-                key={header.id}
-                onClick={onClickIfSortable}
-                sorted={header.column.getIsSorted()}
-              >
-                {flexRender(
-                  header.column.columnDef.header,
-                  header.getContext()
-                )}
-              </Th>
-            );
-          })}
-        </Tr>
-      </Thead>
-      <Tbody>
-        {table.getRowModel().rows.map((row) => (
-          <Tr key={row.id}>
-            {row.getVisibleCells().map((cell) => (
-              <Td key={cell.id}>
-                {flexRender(cell.column.columnDef.cell, cell.getContext())}
-              </Td>
-            ))}
+    <>
+      <Table>
+        <Thead>
+          <Tr>
+            {table.getFlatHeaders().map((header) => {
+              const onClickIfSortable = header.column.getCanSort()
+                ? header.column.getToggleSortingHandler()
+                : undefined;
+              return header.isPlaceholder ? null : (
+                <Th
+                  key={header.id}
+                  onClick={onClickIfSortable}
+                  sorted={header.column.getIsSorted()}
+                >
+                  {flexRender(
+                    header.column.columnDef.header,
+                    header.getContext()
+                  )}
+                </Th>
+              );
+            })}
           </Tr>
-        ))}
-      </Tbody>
-    </Table>
+        </Thead>
+        <Tbody>
+          {table.getRowModel().rows.map((row) => (
+            <Tr key={row.id}>
+              {row.getVisibleCells().map((cell) => (
+                <Td key={cell.id}>
+                  {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                </Td>
+              ))}
+            </Tr>
+          ))}
+        </Tbody>
+      </Table>
+      <DangerModal
+        isOpen={modalData.open}
+        onClose={() => setModalData({ open: false })}
+        message="Do you really want to delete this match?"
+        buttonLabel="Delete Match"
+        buttonOnClick={() => {
+          setModalData({ open: false });
+          if (modalData.id)
+            handleDeleteMatch(modalData.id);
+        }}
+      />
+    </>
   );
 };
 

@@ -36,12 +36,12 @@ function ImageInput({
   // Temporary - for converting a test image into the necessary format
   useEffect(() => {
     if (value && typeof value === "string") {
-      fetch(`${s3URL}/image/${value}`)
+      fetch(`${s3URL}/images/${value}`)
         .then((res) => res.blob())
         .then((blob) => {
           setImageList([
             {
-              dataURL: `${s3URL}/image/${value}`,
+              dataURL: `${s3URL}/images/${value}`,
               file: new File([blob], value),
             },
           ]);

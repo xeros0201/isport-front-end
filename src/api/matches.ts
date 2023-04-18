@@ -199,3 +199,15 @@ export const getMatchById = async (matchId: number): Promise<Match> => {
     const response = await axios.get<Match>(`/matches/${matchId}`);
     return response.data;
 };
+
+/**
+ * Delete specific match.
+ */
+export const deleteMatch = async (
+  id: number,
+): Promise<Match> => {
+  const response = await axios.delete<Match>(
+    `/matches/${id}`
+  );
+  return response.data;
+};
