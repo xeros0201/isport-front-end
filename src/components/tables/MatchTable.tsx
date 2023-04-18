@@ -14,6 +14,7 @@ import { useEffect, useMemo, useState } from "react";
 import { Row } from "../layout";
 import { MatchStatus } from "../../types/enums";
 import { deleteMatch } from "../../api/matches";
+import { DangerModal } from "../modals";
 
 interface MatchTableProps {
   data: Match[];
@@ -23,6 +24,9 @@ interface MatchTableProps {
 const MatchTable = ({ data, isLoading = false }: MatchTableProps) => {
   const navigate = useNavigate();
   const [_data, setData] = useState(data);
+  const [modalData, setModalData] = useState<{ id?: number; open: boolean }>({
+    open: false,
+  });
 
   useEffect(() => {
     setData(data);
@@ -134,7 +138,7 @@ const MatchTable = ({ data, isLoading = false }: MatchTableProps) => {
                 icon="IoTrash"
                 size="small"
                 onClick={() =>
-                  handleDeleteMatch(info.row.original.id)
+                  setModalData({id: info.row.original.id, open: true})
                 }
               />
             </Row>
@@ -168,40 +172,53 @@ const MatchTable = ({ data, isLoading = false }: MatchTableProps) => {
   if (!isLoading && !_data.length) return <p>No matches found</p>;
 
   return (
-    <Table>
-      <Thead>
-        <Tr>
-          {table.getFlatHeaders().map((header) => {
-            const onClickIfSortable = header.column.getCanSort()
-              ? header.column.getToggleSortingHandler()
-              : undefined;
-            return header.isPlaceholder ? null : (
-              <Th
-                key={header.id}
-                onClick={onClickIfSortable}
-                sorted={header.column.getIsSorted()}
-              >
-                {flexRender(
-                  header.column.columnDef.header,
-                  header.getContext()
-                )}
-              </Th>
-            );
-          })}
-        </Tr>
-      </Thead>
-      <Tbody>
-        {table.getRowModel().rows.map((row) => (
-          <Tr key={row.id}>
-            {row.getVisibleCells().map((cell) => (
-              <Td key={cell.id}>
-                {flexRender(cell.column.columnDef.cell, cell.getContext())}
-              </Td>
-            ))}
+    <>
+      <Table>
+        <Thead>
+          <Tr>
+            {table.getFlatHeaders().map((header) => {
+              const onClickIfSortable = header.column.getCanSort()
+                ? header.column.getToggleSortingHandler()
+                : undefined;
+              return header.isPlaceholder ? null : (
+                <Th
+                  key={header.id}
+                  onClick={onClickIfSortable}
+                  sorted={header.column.getIsSorted()}
+                >
+                  {flexRender(
+                    header.column.columnDef.header,
+                    header.getContext()
+                  )}
+                </Th>
+              );
+            })}
           </Tr>
-        ))}
-      </Tbody>
-    </Table>
+        </Thead>
+        <Tbody>
+          {table.getRowModel().rows.map((row) => (
+            <Tr key={row.id}>
+              {row.getVisibleCells().map((cell) => (
+                <Td key={cell.id}>
+                  {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                </Td>
+              ))}
+            </Tr>
+          ))}
+        </Tbody>
+      </Table>
+      <DangerModal
+        isOpen={modalData.open}
+        onClose={() => setModalData({ open: false })}
+        message="Do you really want to delete this match?"
+        buttonLabel="Delete Match"
+        buttonOnClick={() => {
+          setModalData({ open: false });
+          if (modalData.id)
+            handleDeleteMatch(modalData.id);
+        }}
+      />
+    </>
   );
 };
 
