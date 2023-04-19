@@ -27,6 +27,7 @@ interface MatchReportBannerProps {
   homeTeamSecondScore: string;
   awayTeamScore: number;
   awayTeamSecondScore: string;
+  matchType: string;
 }
 
 function MatchReportBanner({ matchId, score }: BannerProps) {
@@ -46,8 +47,10 @@ function MatchReportBanner({ matchId, score }: BannerProps) {
     const logoUrl = match?.season.league.logo;
     const homeTeamLogo = match?.homeTeam.logo;
     const awayTeamLogo = match?.awayTeam.logo;
+    const matchType = match?.type;
     setBannerData({
       ...bannerData,
+      matchType,
       leagueLogo: logoUrl ? `${s3URL}/images/${logoUrl}` : "/league-logo.png",
       leagueName: match?.season.league.name || "",
       time: DateTime.fromISO(match?.date as string).toLocaleString(
@@ -143,7 +146,7 @@ function MatchReportBanner({ matchId, score }: BannerProps) {
           <div className="league--logo">
             <Logo url={bannerData.leagueLogo} />
           </div>
-          <div className="league--matchname">Grand Final</div>
+          <div className="league--matchname">{bannerData.matchType}</div>
         </div>
       </div>
     </div>
