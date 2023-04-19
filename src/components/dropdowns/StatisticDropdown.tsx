@@ -7,7 +7,7 @@ import { InputError, DropdownInput } from "../input";
 
 interface StatisticDropdown extends ImplementedDropdownProps {}
 
-const statDropdown : Statistic[] = [
+export const statDropdown: Statistic[] = [
   {
     id: 57,
     name: "Disposals",
@@ -28,7 +28,7 @@ const statDropdown : Statistic[] = [
     name: "CLR",
     alias: "CLR",
   },
-]
+];
 
 const StatisticDropdown = ({
   value,
