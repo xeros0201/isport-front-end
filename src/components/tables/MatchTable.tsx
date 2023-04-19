@@ -15,6 +15,7 @@ import { Row } from "../layout";
 import { MatchStatus } from "../../types/enums";
 import { deleteMatch } from "../../api/matches";
 import { DangerModal } from "../modals";
+const s3URL = import.meta.env.VITE_S3_URL;
 
 interface MatchTableProps {
   data: Match[];
@@ -66,7 +67,15 @@ const MatchTable = ({ data, isLoading = false }: MatchTableProps) => {
         footer: (props) => props.column.id,
         cell: (info) => {
           const { logo, name } = info.getValue() as League;
-          return <Logo url={logo} label={name} height={40} />;
+          const imgUrl = logo
+            ? `${s3URL}/images/${logo}`
+            : "/league-logo.png";
+          return (
+            <Row removeSpacing alignItems={"center"}>
+              <Logo isSquare height={42} url={imgUrl} />
+              <span>{name as string}</span>
+            </Row>
+          );
         },
         sortingFn: "alphanumeric",
         accessorFn: (row) => row.season?.league,

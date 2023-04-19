@@ -32,15 +32,13 @@ const TeamList = () => {
                     icon="IoAdd"
                 />
             </Row>
-            <Row>
-                <TextInput
-                    placeholder="Search..."
-                    value={query}
-                    onChange={setQuery}
-                    icon="IoSearch"
-                    rounded
-                />
-            </Row>
+            <TextInput
+                placeholder="Search..."
+                value={query}
+                onChange={setQuery}
+                icon="IoSearch"
+                rounded
+            />
             <TeamTable data={filteredTeams} isLoading={isLoading} />
         </Page>
     );

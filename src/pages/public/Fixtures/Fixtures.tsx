@@ -71,11 +71,11 @@ const Fixtures = () => {
       {
         !isEmptyObject(groupByDate) ? Object.entries(groupByDate).map((item: any, i) => {
           const date: string = item[0];
-          const match: Match = item[1][0];
+          const matches: Match[] = item[1];
           return (
             <div key={i} className="fixtures__fixture-group">
               <div className="date">{date}</div>
-              <MatchFixtures matchFixture={match}/>
+              { matches.map((match: Match) => <MatchFixtures key={match.id} matchFixture={match}/>) }
             </div>
           )
         })
