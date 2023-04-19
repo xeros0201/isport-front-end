@@ -6,8 +6,8 @@ import useSearchParamsState from "../../../hooks/useSearchParamsState";
 import "./LeaderBoard.scss";
 
 const Leaderboard = () => {
-  const [leagueId, setLeagueId] = useState("");
-  const [seasonId, setSeasonId] = useState("");
+  const [leagueId, setLeagueId] = useSearchParamsState("leagueId", "");
+  const [seasonId, setSeasonId] = useSearchParamsState("seasonId", "");
   const [teamId, setTeamId] = useSearchParamsState("teamId", "");
   const [statisticAlias, setStatisticAlias] = useSearchParamsState("property", "");
 
