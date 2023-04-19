@@ -138,7 +138,7 @@ const MatchReport = () => {
   return (
     <Page title="Match Report">
       <Button
-        label="QAFL, Round 21"
+        label="Back"
         onClick={() => navigate(-1)}
         type="transparent"
         icon="IoChevronBackOutline"
