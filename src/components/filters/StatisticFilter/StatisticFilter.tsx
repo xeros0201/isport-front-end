@@ -2,7 +2,14 @@ import { Logo } from "../../common";
 import { LeagueDropdown, SeasonDropdown, TeamDropdown } from "../../dropdowns";
 import { Row } from "../../layout";
 import "./StatisticFilter.scss";
-import StatisticDropdown from "../../dropdowns/StatisticDropdown";
+import StatisticDropdown, {
+  statDropdown,
+} from "../../dropdowns/StatisticDropdown";
+import { useQuery } from "react-query";
+import { getLeague } from "../../../api/leagues";
+import { useMemo } from "react";
+import { getSeason } from "../../../api/seasons";
+const s3URL = import.meta.env.VITE_S3_URL;
 
 interface StatisticFilterProps {
   leagueId: string;
@@ -25,12 +32,28 @@ const StatisticFilter = ({
   onTeamChange,
   onStatisticChange,
 }: StatisticFilterProps) => {
+  const { data: league } = useQuery(["getLeague", leagueId], async () =>
+    getLeague(+leagueId)
+  );
+  const { data: season } = useQuery(["getSeason", seasonId], async () =>
+    getSeason(+seasonId)
+  );
+  const statName = useMemo(
+    () => statDropdown.find((item) => item.alias === statisticAlias)?.name,
+    [statDropdown, statisticAlias]
+  );
   return (
     <div className="statistic-filter">
       <Row alignItems="center" noFlex>
         <Logo
-          url="/public/league-logo.png"
-          label="Disposal Leaderboard - 2022"
+          url={
+            league?.logo
+              ? `${s3URL}/images/${league?.logo}`
+              : "/league-logo.png"
+          }
+          label={`${statName || ""} Leaderboard${
+            season?.name ? ` - ${season?.name}` : ""
+          }`}
         />
         <Row noFlex removeSpacing>
           <LeagueDropdown value={leagueId} onChange={onLeagueChange} />
@@ -47,7 +70,10 @@ const StatisticFilter = ({
             value={teamId}
             onChange={onTeamChange}
           />
-          <StatisticDropdown value={statisticAlias} onChange={onStatisticChange} />
+          <StatisticDropdown
+            value={statisticAlias}
+            onChange={onStatisticChange}
+          />
         </Row>
       </Row>
     </div>
