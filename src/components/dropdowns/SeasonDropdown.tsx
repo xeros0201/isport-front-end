@@ -35,12 +35,12 @@ const SeasonDropdown = ({
 
   // Set default if leagueaId changed
   useEffect(() => {
-      onChange("");
+    onChange("");
   }, [leagueId]);
 
   // Set value season
   useEffect(() => {
-      if(value) onChange(value);
+    if (value) onChange(value);
   }, [value]);
 
   // Format season options so they are input compatible
