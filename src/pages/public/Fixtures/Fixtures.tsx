@@ -8,6 +8,7 @@ import useSearchParamsState from "../../../hooks/useSearchParamsState";
 import { DateTime } from "luxon";
 import "./Fixtures.scss";
 import { MatchStatus } from "../../../types/enums";
+import PublicNavigationButtons from "../PublicNavigationButtons/PublicNavigationButtons";
 
 const isEmptyObject = (value: object) : boolean=> {
   return Object.keys(value).length === 0 && value.constructor === Object;
@@ -73,6 +74,7 @@ const Fixtures = () => {
         onRoundChange={setRound}
         dropdown
       />
+      <PublicNavigationButtons leagueId={+leagueId} seasonId={+seasonId} />
       {
         !isEmptyObject(groupByDate) ? Object.entries(groupByDate).map((item: any, i) => {
           const date: string = item[0];

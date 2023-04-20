@@ -3,6 +3,7 @@ import StatisticFilter from "../../../components/filters/StatisticFilter/Statist
 import { Page } from "../../../components/layout";
 import LeaderboardTable from "../../../components/tables/LeaderBoardTable";
 import useSearchParamsState from "../../../hooks/useSearchParamsState";
+import PublicNavigationButtons from "../PublicNavigationButtons/PublicNavigationButtons";
 import "./LeaderBoard.scss";
 
 const Leaderboard = () => {
@@ -25,7 +26,7 @@ const Leaderboard = () => {
           statisticAlias={statisticAlias}
           onStatisticChange={setStatisticAlias}
         ></StatisticFilter>
-  
+        <PublicNavigationButtons leagueId={+leagueId} seasonId={+seasonId} />
         <LeaderboardTable property={statisticAlias} teamId={+teamId} seasonId={+seasonId} leagueId={+leagueId} />
       </div>
     </Page>

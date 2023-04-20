@@ -6,6 +6,7 @@ import AveragesTable, { TeamAverage } from "../../../components/tables/AveragesT
 import useSearchParamsState from "../../../hooks/useSearchParamsState";
 import { cloneDeep } from 'lodash';
 import { getTeamAverages } from "../../../api/teams";
+import PublicNavigationButtons from "../PublicNavigationButtons/PublicNavigationButtons";
 
 const TeamStats = () => {
   const [leagueId, setLeagueId] = useSearchParamsState("leagueId", "");
@@ -111,6 +112,7 @@ const TeamStats = () => {
         dropdown
       />
       <h1>Team & Player Averages</h1>
+      <PublicNavigationButtons leagueId={+leagueId} seasonId={+seasonId} />
       {leagueId && seasonId
         && <AveragesTable
           data={teamAverages}
