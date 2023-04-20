@@ -112,7 +112,7 @@ const TeamStats = () => {
         dropdown
       />
       <h1>Team & Player Averages</h1>
-      <PublicNavigationButtons leagueId={+leagueId} seasonId={+seasonId} />
+      <PublicNavigationButtons currentPage="averages" leagueId={+leagueId} seasonId={+seasonId} />
       {leagueId && seasonId
         && <AveragesTable
           data={teamAverages}

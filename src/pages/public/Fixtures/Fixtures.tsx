@@ -74,7 +74,8 @@ const Fixtures = () => {
         onRoundChange={setRound}
         dropdown
       />
-      <PublicNavigationButtons leagueId={+leagueId} seasonId={+seasonId} />
+      <h1>Fixtures & Results</h1>
+      <PublicNavigationButtons currentPage="fixtures" leagueId={+leagueId} seasonId={+seasonId} />
       {
         !isEmptyObject(groupByDate) ? Object.entries(groupByDate).map((item: any, i) => {
           const date: string = item[0];

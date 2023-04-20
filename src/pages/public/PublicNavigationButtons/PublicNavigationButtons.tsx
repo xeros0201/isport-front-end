@@ -3,29 +3,31 @@ import { Button } from "../../../components/common";
 import { Row } from "../../../components/layout";
 
 interface PublicNavigationButtonsProps {
-  seasonId?: number;
-  leagueId?: number;
+    currentPage: string;
+    seasonId?: number;
+    leagueId?: number;
 }
 
 const PublicNavigationButtons = ({
-  seasonId,
-  leagueId,
+    currentPage,
+    seasonId,
+    leagueId,
 }: PublicNavigationButtonsProps) => {
   const navigate = useNavigate();
   return (
     <div className="public-navigation-button">
-      {seasonId && (
+      {seasonId ? (
         <Row noFlex justifyContent="left">
-          <Button
-            label={`View Fixture`}
+          {currentPage !== "fixtures" && <Button
+            label={`View Fixtures`}
             onClick={() =>
               navigate(`/?leagueId=${leagueId}&seasonId=${seasonId}`)
             }
             size="small"
             icon="IoInformationCircleOutline"
             type="secondary"
-          />
-          <Button
+          />}
+          {currentPage !== "averages" && <Button
             label={`View Averages`}
             onClick={() =>
               navigate(`/team-stats?leagueId=${leagueId}&seasonId=${seasonId}`)
@@ -33,8 +35,8 @@ const PublicNavigationButtons = ({
             size="small"
             icon="IoTrendingUpSharp"
             type="secondary"
-          />
-          <Button
+          />}
+          {currentPage !== "leaderboard" && <Button
             label={`View Leaderboard`}
             onClick={() =>
               navigate(`/leaderboard?leagueId=${leagueId}&seasonId=${seasonId}`)
@@ -42,9 +44,9 @@ const PublicNavigationButtons = ({
             size="small"
             icon="IoTrophy"
             type="secondary"
-          />
+          />}
         </Row>
-      )}
+      ) : <></>}
     </div>
   );
 };
