@@ -22,7 +22,7 @@ const PublicNavigationButtons = ({
               navigate(`/?leagueId=${leagueId}&seasonId=${seasonId}`)
             }
             size="small"
-            icon="IoTrophy"
+            icon="IoInformationCircleOutline"
             type="secondary"
           />
           <Button
