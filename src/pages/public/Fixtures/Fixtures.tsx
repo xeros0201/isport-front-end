@@ -1,5 +1,5 @@
 import { useQuery } from "react-query";
-import { useMemo, useEffect } from "react";
+import { useMemo, useEffect, useState } from "react";
 import { getMatchesBySeason } from "../../../api/matches";
 import MatchFixtures from "../../../components/common/MatchFixture/MatchFixture";
 import { RoundFilter } from "../../../components/filters";
@@ -7,6 +7,7 @@ import { Page } from "../../../components/layout";
 import useSearchParamsState from "../../../hooks/useSearchParamsState";
 import { DateTime } from "luxon";
 import "./Fixtures.scss";
+import { MatchStatus } from "../../../types/enums";
 
 const isEmptyObject = (value: object) : boolean=> {
   return Object.keys(value).length === 0 && value.constructor === Object;
@@ -31,12 +32,14 @@ const Fixtures = () => {
   const [leagueId, setLeagueId] = useSearchParamsState("leagueId", "");
   const [seasonId, setSeasonId] = useSearchParamsState("seasonId", "");
   const [round, setRound] = useSearchParamsState("round", "");
+  const [publishedMatches, setPublishedMatches] = useState([] as Match[]);
 
   const { data: matches, refetch } = useQuery(
     ['getMatchesBySeason', { seasonId }],
     async (): Promise<any> => {
         if (!seasonId) return [];
-        return getMatchesBySeason(+seasonId);
+        const matches = await getMatchesBySeason(+seasonId);
+        return matches;
     },
     { enabled: !!seasonId }
   );
@@ -45,14 +48,16 @@ const Fixtures = () => {
   useEffect(() => {
     if (!seasonId) return;
     refetch();
-  }, [seasonId]);
+    const _publishedMatches = matches?.filter((match : Match) => match.status === MatchStatus.PUBLISHED);
+    setPublishedMatches(_publishedMatches);
+  }, [seasonId, matches]);
 
   // Filter data to match query  
   const filteredMatches = useMemo(() => {
-    if (!matches) return [];
-    if (+round === 0) return matches;
-    return matches.filter((match: Match) => match.round === +round);
-  }, [matches, setRound]);
+    if (!publishedMatches) return [];
+    if (+round === 0) return publishedMatches;
+    return publishedMatches.filter((match: Match) => match.round === +round);
+  }, [publishedMatches, setRound]);
 
   //Group by date
   const groupByDate = groupBy(filteredMatches, "dateOnly");
