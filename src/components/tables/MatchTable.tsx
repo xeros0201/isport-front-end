@@ -90,6 +90,14 @@ const MatchTable = ({ data, isLoading = false }: MatchTableProps) => {
         enableSorting: true,
       },
       {
+        header: "Round",
+        footer: (props) => props.column.id,
+        cell: (info) => <p style={{textAlign: "center"}}>{info.getValue() as string}</p>,
+        sortingFn: "alphanumeric",
+        accessorFn: (row) => row.round,
+        enableSorting: true,
+      },
+      {
         header: "Date Created",
         footer: (props) => props.column.id,
         cell: ({ getValue }) => {
