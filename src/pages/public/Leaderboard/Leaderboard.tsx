@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import StatisticFilter from "../../../components/filters/StatisticFilter/StatisticFilter";
 import { Page } from "../../../components/layout";
 import LeaderboardTable from "../../../components/tables/LeaderBoardTable";
@@ -11,6 +11,10 @@ const Leaderboard = () => {
   const [seasonId, setSeasonId] = useSearchParamsState("seasonId", "");
   const [teamId, setTeamId] = useSearchParamsState("teamId", "");
   const [statisticAlias, setStatisticAlias] = useSearchParamsState("property", "");
+
+  useEffect(() => {
+    setStatisticAlias("D");
+  }, []);
 
   return (
     <Page title="Leaderboard">
