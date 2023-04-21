@@ -128,7 +128,7 @@ export const updateMatch = async (
   match: UpdateMatchFormValues
 ): Promise<Match> => {
   let formData = new FormData();
-  match.date = dayjs(match.date).format("YYYY-MM-DD HH:mm");
+  match.date = dayjs(match.date).utc().format("YYYY-MM-DD HH:mm");
 
   Object.keys(match).forEach((key) => {
     if (
