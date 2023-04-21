@@ -8,21 +8,21 @@ import useSearchParamsState from "../../../hooks/useSearchParamsState";
 import { DateTime } from "luxon";
 import "./Fixtures.scss";
 import { MatchStatus } from "../../../types/enums";
-import PublicNavigationButtons from "../PublicNavigationButtons/PublicNavigationButtons";
+import { PublicNavigationButtons } from "../../../components/common";
 
 const isEmptyObject = (value: object) : boolean=> {
   return Object.keys(value).length === 0 && value.constructor === Object;
 }
 
 //Group by property
-const groupBy = (items: any, key: string) => items.reduce(
-  (result: any, item: any) => {
-      item.dateOnly = DateTime.fromISO(item.date).toLocaleString(DateTime.DATE_FULL);
+const groupMatchesByDate = (matches: Match[]): {[key: string]: Match[]} => matches.reduce(
+  (result: any, match: any) => {
+      match.dateOnly = DateTime.fromISO(match.date).toLocaleString(DateTime.DATE_FULL);
       return ({
           ...result,
-          [item[key]]: [
-              ...(result[item[key]] || []),
-              item,
+          [match.dateOnly]: [
+              ...(result[match.dateOnly] || []),
+              match,
           ],
       })
   },
@@ -33,7 +33,6 @@ const Fixtures = () => {
   const [leagueId, setLeagueId] = useSearchParamsState("leagueId", "");
   const [seasonId, setSeasonId] = useSearchParamsState("seasonId", "");
   const [round, setRound] = useSearchParamsState("round", "");
-  const [publishedMatches, setPublishedMatches] = useState([] as Match[]);
 
   const { data: matches, refetch } = useQuery(
     ['getMatchesBySeason', { seasonId }],
@@ -49,9 +48,13 @@ const Fixtures = () => {
   useEffect(() => {
     if (!seasonId) return;
     refetch();
-    const _publishedMatches = matches?.filter((match : Match) => match.status === MatchStatus.PUBLISHED);
-    setPublishedMatches(_publishedMatches);
-  }, [seasonId, matches]);
+  }, [seasonId]);
+
+  // Filter out unpublished matches
+  const publishedMatches = useMemo(() => {
+    if (!matches) return [];
+    return matches.filter((match : Match) => match.status === MatchStatus.PUBLISHED);
+  }, [matches]);
 
   // Filter data to match query  
   const filteredMatches = useMemo(() => {
@@ -61,7 +64,7 @@ const Fixtures = () => {
   }, [publishedMatches, setRound]);
 
   //Group by date
-  const groupByDate = groupBy(filteredMatches, "dateOnly");
+  const groupByDate = groupMatchesByDate(filteredMatches);
 
   return (
     <Page title="Fixtures">
@@ -77,19 +80,20 @@ const Fixtures = () => {
       <h1>Fixtures & Results</h1>
       <PublicNavigationButtons currentPage="fixtures" leagueId={+leagueId} seasonId={+seasonId} />
       {
-        !isEmptyObject(groupByDate) ? Object.entries(groupByDate).map((item: any, i) => {
-          const date: string = item[0];
-          const matches: Match[] = item[1];
-          return (
-            <div key={i} className="fixtures__fixture-group">
-              <div className="date">{date}</div>
-              { matches.map((match: Match) => <MatchFixtures key={match.id} matchFixture={match}/>) }
-            </div>
-          )
-        })
-        :
-        <p>Please select league and season</p>
-        
+        !isEmptyObject(groupByDate) 
+          ? Object.entries(groupByDate)
+            .sort(([date1], [date2]) => new Date(date2).getTime() - new Date(date1).getTime())
+            .map((item: any, i) => {
+              const date: string = item[0];
+              const matches: Match[] = item[1];
+              return (
+                <div key={i} className="fixtures__fixture-group">
+                  <div className="date">{date}</div>
+                  { matches.map((match: Match) => <MatchFixtures key={match.id} matchFixture={match}/>) }
+                </div>
+              )
+            })
+          : <p>Please select league and season</p>
       }
     </Page>
   );
