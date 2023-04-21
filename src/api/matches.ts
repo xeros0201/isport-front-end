@@ -68,7 +68,8 @@ export const createMatch = async (
   match: CreateMatchFormValues
 ): Promise<Match> => {
   let formData = new FormData();
-  match.date = dayjs(match.date).format("YYYY-MM-DD HH:mm");
+
+  match.date = dayjs(match.date).utc().format("YYYY-MM-DD HH:mm");
 
   Object.keys(match).forEach((key) => {
     if (
@@ -191,23 +192,19 @@ export const deletePlayerOnMatch = async (
  * Get aflResultProperties that belong to a match.
  */
 export const getStats = async (matchId: number): Promise<Stats> => {
-    const response = await axios.get<Stats>(`/matches/${matchId}/_stats`);
-    return response.data;
+  const response = await axios.get<Stats>(`/matches/${matchId}/_stats`);
+  return response.data;
 };
 
 export const getMatchById = async (matchId: number): Promise<Match> => {
-    const response = await axios.get<Match>(`/matches/${matchId}`);
-    return response.data;
+  const response = await axios.get<Match>(`/matches/${matchId}`);
+  return response.data;
 };
 
 /**
  * Delete specific match.
  */
-export const deleteMatch = async (
-  id: number,
-): Promise<Match> => {
-  const response = await axios.delete<Match>(
-    `/matches/${id}`
-  );
+export const deleteMatch = async (id: number): Promise<Match> => {
+  const response = await axios.delete<Match>(`/matches/${id}`);
   return response.data;
 };
