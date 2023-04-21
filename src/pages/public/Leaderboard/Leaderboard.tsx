@@ -13,7 +13,7 @@ const Leaderboard = () => {
   const [statisticAlias, setStatisticAlias] = useSearchParamsState("property", "");
 
   useEffect(() => {
-    setStatisticAlias("D");
+    setStatisticAlias("G");
   }, []);
 
   return (

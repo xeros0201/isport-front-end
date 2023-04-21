@@ -1,8 +1,5 @@
 import { useEffect, useMemo } from "react";
 import { useQuery } from "react-query";
-// import { getResultPropsParent } from "../../api/matches";
-import { getTeamBySeasons } from "../../api/teams";
-import { getTeams } from "../../api/teams";
 import { InputError, DropdownInput } from "../input";
 
 interface StatisticDropdown extends ImplementedDropdownProps {}
@@ -19,14 +16,49 @@ export const statDropdown: Statistic[] = [
     alias: "T",
   },
   {
-    id: 47,
-    name: "CP",
+    id: 60,
+    name: "Contested Possession",
     alias: "CP",
   },
   {
     id: 56,
-    name: "CLR",
+    name: "Clearances",
     alias: "CLR",
+  },
+  {
+    id: 54,
+    name: "Goals",
+    alias: "G",
+  },
+  {
+    id: 63,
+    name: "Contested Mark",
+    alias: "CM",
+  },
+  {
+    id: 70,
+    name: "Kicking efficiency",
+    alias: "K",
+  },
+  {
+    id: 47,
+    name: "Hit outs",
+    alias: "HO",
+  },
+  {
+    id: 53,
+    name: "Inside 50s",
+    alias: "I50",
+  },
+  {
+    id: 66,
+    name: "Intercept marks",
+    alias: "INTM",
+  },
+  {
+    id: 65,
+    name: "F50 marks",
+    alias: "F50M",
   },
 ];
 
@@ -40,16 +72,6 @@ const StatisticDropdown = ({
   disabled,
   asInput,
 }: StatisticDropdown) => {
-  // const {
-  //   error: fetchError,
-  //   isLoading,
-  //   data,
-  // } = useQuery(["getStatistics"], async (): Promise<Statistic[]> => {
-  //   const temp = await getResultPropsParent();
-  //   const playerProps = temp.filter(prop => prop.type == "PLAYER");
-  //   return playerProps;
-  // });
-
   const {
     error: fetchError,
     isLoading,
@@ -62,10 +84,15 @@ const StatisticDropdown = ({
   const statisticOptions: InputOption[] = useMemo(() => {
     if (!stats) return [];
 
-    return stats.map((item) => ({
+    const alphaSortedName = stats.sort((a: Statistic, b: Statistic) =>
+      a.name.localeCompare(b.name)
+    );
+
+    return alphaSortedName.map((item) => ({
       value: item.alias,
       label: item.name,
     }));
+
   }, [stats]);
 
   // If error fetching data
