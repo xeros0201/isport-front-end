@@ -3,7 +3,7 @@ import StatisticFilter from "../../../components/filters/StatisticFilter/Statist
 import { Page } from "../../../components/layout";
 import LeaderboardTable from "../../../components/tables/LeaderBoardTable";
 import useSearchParamsState from "../../../hooks/useSearchParamsState";
-import PublicNavigationButtons from "../PublicNavigationButtons/PublicNavigationButtons";
+import { PublicNavigationButtons } from "../../../components/common";
 import "./LeaderBoard.scss";
 
 const Leaderboard = () => {

@@ -6,7 +6,7 @@ import AveragesTable, { TeamAverage } from "../../../components/tables/AveragesT
 import useSearchParamsState from "../../../hooks/useSearchParamsState";
 import { cloneDeep } from 'lodash';
 import { getTeamAverages } from "../../../api/teams";
-import PublicNavigationButtons from "../PublicNavigationButtons/PublicNavigationButtons";
+import { PublicNavigationButtons } from "../../../components/common";
 
 const TeamStats = () => {
   const [leagueId, setLeagueId] = useSearchParamsState("leagueId", "");

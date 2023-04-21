@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
-import { Button } from "../../../components/common";
-import { Row } from "../../../components/layout";
+import { Button } from "..";
+import { Row } from "../../layout";
 
 interface PublicNavigationButtonsProps {
     currentPage: string;
