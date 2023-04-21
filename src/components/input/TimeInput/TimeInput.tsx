@@ -21,20 +21,23 @@ const TimeInput = ({
     const date = dayjs(value).utc().format("hh-mm-A");
     const [h, m, a] = date.split("-");
 
-    setTime({ h: +h > 11 ? +h - 12 : h, m, a });
+    setTime({ h: +h > 11 ? +h - 12 : +h, m: +m, a });
   }, [value]);
 
-  useEffect(() => {
-    if (Object.keys(time).length) {
-      let newDate = dayjs(value);
-      handleChange(newDate);
+  const handleChange = (newTime: {
+    [key: string]: string | number | undefined;
+  }) => {
+    let newDate = dayjs(value).utc();
+
+    if (Object.keys(newTime).length) {
+      if (newTime.h)
+        newDate = newDate.hour(+newTime.h + (newTime.a === "AM" ? 0 : 12));
+      if (newTime.m) newDate = newDate.minute(+newTime.m);
     }
-  }, [time]);
+    if (!newDate) return;
 
-  const handleChange = (date: dayjs.Dayjs) => {
-    if (!date) return;
-
-    if (!date.isSame(dayjs(value))) onChange(date.toDate().toISOString());
+    if (!newDate.isSame(dayjs(value).utc()))
+      onChange(newDate.toDate().toISOString());
   };
 
   useEffect(() => {
@@ -44,6 +47,7 @@ const TimeInput = ({
       var target = e.srcElement;
       var maxLength = parseInt(target.attributes["maxlength"].value, 10);
       var myLength = target.value.length;
+
       if (myLength >= maxLength) {
         var next = target;
         while ((next = next.nextElementSibling)) {
@@ -59,11 +63,14 @@ const TimeInput = ({
 
   const handleInput = (e: any) => {
     const max = parseInt(e.target.attributes["max"].value, 10);
+
     if (e.target.value > max) {
       e.target.value = e.target.value.slice(0, 1);
       // onChange();
     }
-    setTime((val) => ({ ...val, [e.target.name]: e.target.value }));
+    const newTime = { ...time, [e.target.name]: e.target.value };
+    setTime(newTime);
+    handleChange(newTime);
   };
 
   return (
@@ -104,7 +111,11 @@ const TimeInput = ({
             return (
               <button
                 type="button"
-                onClick={() => setTime((val) => ({ ...val, a: item.value }))}
+                onClick={() => {
+                  const newTime = { ...time, a: item.value };
+                  setTime(newTime);
+                  handleChange(newTime);
+                }}
                 key={item.label}
                 className={isActive ? "active" : ""}
               >
