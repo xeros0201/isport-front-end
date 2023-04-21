@@ -18,16 +18,15 @@ const TimeInput = ({
   }>({});
 
   useEffect(() => {
-    const date = dayjs(value).format("hh-mm-A");
+    const date = dayjs(value).utc().format("hh-mm-A");
     const [h, m, a] = date.split("-");
-    setTime({ h, m, a });
-  }, []);
+
+    setTime({ h: +h > 11 ? +h - 12 : h, m, a });
+  }, [value]);
 
   useEffect(() => {
     if (Object.keys(time).length) {
       let newDate = dayjs(value);
-      if (time.h) newDate = newDate.hour(+time.h + (time.a === "AM" ? 0 : 12));
-      if (time.m) newDate = newDate.minute(+time.m);
       handleChange(newDate);
     }
   }, [time]);
@@ -35,7 +34,7 @@ const TimeInput = ({
   const handleChange = (date: dayjs.Dayjs) => {
     if (!date) return;
 
-    onChange(date.toISOString());
+    if (!date.isSame(dayjs(value))) onChange(date.toDate().toISOString());
   };
 
   useEffect(() => {
@@ -75,7 +74,7 @@ const TimeInput = ({
           <input
             type="number"
             maxLength={2}
-            max={12}
+            max={11}
             onInput={handleInput}
             value={time.h}
             name="h"
