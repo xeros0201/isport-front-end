@@ -1,3 +1,4 @@
+import dayjs from "dayjs";
 import { useFormik } from "formik";
 import { useEffect, useMemo, useState } from "react";
 import { useQuery } from "react-query";
@@ -27,7 +28,7 @@ import CSVPreview from "./components/CSVPreview";
 import "./MatchForm.scss";
 
 const adminPrefix = import.meta.env.VITE_ADMIN_PREFIX;
-const defaultDate = new Date().toISOString();
+const defaultDate = dayjs().utc(true).toDate().toISOString();
 
 const MatchForm = ({ id }: FormProps) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -102,8 +103,12 @@ const MatchForm = ({ id }: FormProps) => {
       refetch();
     };
     const create = async () => {
-      await createMatch({ ...values, homePlayerIds, awayPlayerIds });
-      navigate(`${adminPrefix}/matches`);
+      const res = await createMatch({
+        ...values,
+        homePlayerIds,
+        awayPlayerIds,
+      });
+      navigate(`${adminPrefix}/matches/edit?id=${res.id}`);
     };
 
     setIsSubmitting(true);
@@ -228,10 +233,7 @@ const MatchForm = ({ id }: FormProps) => {
           <LeagueDropdown
             label="League"
             value={formik.values.leagueId}
-            onChange={(value) => {
-              formik.handleChange("leagueId")(value);
-              formik.handleChange("seasonId")("");
-            }}
+            onChange={formik.handleChange("leagueId")}
             touched={formik.touched.leagueId}
             error={formik.errors.leagueId}
             required
@@ -241,11 +243,7 @@ const MatchForm = ({ id }: FormProps) => {
           <SeasonDropdown
             label="Season"
             value={formik.values.seasonId}
-            onChange={(value) => {
-              formik.handleChange("seasonId")(value);
-              formik.handleChange("homeTeamId")("");
-              formik.handleChange("awayTeamId")("");
-            }}
+            onChange={formik.handleChange("seasonId")}
             touched={formik.touched.seasonId}
             error={formik.errors.seasonId}
             required

@@ -15,6 +15,9 @@ import { Row } from "../layout";
 import { MatchStatus } from "../../types/enums";
 import { deleteMatch } from "../../api/matches";
 import { DangerModal } from "../modals";
+import dayjs from "dayjs";
+import utc from "dayjs/plugin/utc";
+dayjs.extend(utc);
 const s3URL = import.meta.env.VITE_S3_URL;
 
 interface MatchTableProps {
@@ -31,17 +34,17 @@ const MatchTable = ({ data, isLoading = false }: MatchTableProps) => {
 
   useEffect(() => {
     setData(data);
-  }, [data])
+  }, [data]);
 
   const handleDeleteMatch = async (id: number) => {
     try {
       const rs = await deleteMatch(id);
-      const __data = _data.filter(match => match.id !== id);
-      setData(__data)
+      const __data = _data.filter((match) => match.id !== id);
+      setData(__data);
     } catch (error) {
       // console.error(error);
     }
-  }
+  };
 
   // Setup columns
   const columns = useMemo<ColumnDef<Match>[]>(
@@ -67,9 +70,7 @@ const MatchTable = ({ data, isLoading = false }: MatchTableProps) => {
         footer: (props) => props.column.id,
         cell: (info) => {
           const { logo, name } = info.getValue() as League;
-          const imgUrl = logo
-            ? `${s3URL}/images/${logo}`
-            : "/league-logo.png";
+          const imgUrl = logo ? `${s3URL}/images/${logo}` : "/league-logo.png";
           return (
             <Row removeSpacing alignItems={"center"}>
               <Logo isSquare height={42} url={imgUrl} />
@@ -92,7 +93,9 @@ const MatchTable = ({ data, isLoading = false }: MatchTableProps) => {
       {
         header: "Round",
         footer: (props) => props.column.id,
-        cell: (info) => <p style={{textAlign: "center"}}>{info.getValue() as string}</p>,
+        cell: (info) => (
+          <p style={{ textAlign: "center" }}>{info.getValue() as string}</p>
+        ),
         sortingFn: "alphanumeric",
         accessorFn: (row) => row.round,
         enableSorting: true,
@@ -101,9 +104,10 @@ const MatchTable = ({ data, isLoading = false }: MatchTableProps) => {
         header: "Date Created",
         footer: (props) => props.column.id,
         cell: ({ getValue }) => {
-          const dateTime = DateTime.fromISO(
-            getValue() as string
-          ).toLocaleString(DateTime.DATETIME_SHORT);
+          const dateTime = dayjs(getValue() as string)
+            .utc()
+            .format("DD/MM/YYYY, hh:mm A");
+
           return <p>{dateTime}</p>;
         },
         sortingFn: "datetime",
@@ -155,7 +159,7 @@ const MatchTable = ({ data, isLoading = false }: MatchTableProps) => {
                 icon="IoTrash"
                 size="small"
                 onClick={() =>
-                  setModalData({id: info.row.original.id, open: true})
+                  setModalData({ id: info.row.original.id, open: true })
                 }
               />
             </Row>
@@ -231,8 +235,7 @@ const MatchTable = ({ data, isLoading = false }: MatchTableProps) => {
         buttonLabel="Delete Match"
         buttonOnClick={() => {
           setModalData({ open: false });
-          if (modalData.id)
-            handleDeleteMatch(modalData.id);
+          if (modalData.id) handleDeleteMatch(modalData.id);
         }}
       />
     </>
