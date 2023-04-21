@@ -233,10 +233,7 @@ const MatchForm = ({ id }: FormProps) => {
           <LeagueDropdown
             label="League"
             value={formik.values.leagueId}
-            onChange={(value) => {
-              formik.handleChange("leagueId")(value);
-              formik.handleChange("seasonId")("");
-            }}
+            onChange={formik.handleChange("leagueId")}
             touched={formik.touched.leagueId}
             error={formik.errors.leagueId}
             required
@@ -246,11 +243,7 @@ const MatchForm = ({ id }: FormProps) => {
           <SeasonDropdown
             label="Season"
             value={formik.values.seasonId}
-            onChange={(value) => {
-              formik.handleChange("seasonId")(value);
-              formik.handleChange("homeTeamId")("");
-              formik.handleChange("awayTeamId")("");
-            }}
+            onChange={formik.handleChange("seasonId")}
             touched={formik.touched.seasonId}
             error={formik.errors.seasonId}
             required
