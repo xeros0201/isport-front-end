@@ -45,7 +45,9 @@ const AveragesTable = ({ data, isLoading, totals }: Props) => {
             <p>{getValue() as string}</p>
           ),
           sortingFn: "alphanumeric",
-          accessorFn: (row: TeamAverage) => row.properties[key][key2].value,
+          accessorFn: (row: TeamAverage) => {
+            return (row.properties[key][key2] || { value: 0 }).value;
+          },
         })),
       };
     });
