@@ -44,7 +44,7 @@ const CSVDropdown = ({
       required={required}
       disabled={disabled}
       options={playerOptions}
-      placeholder="Select Team"
+      placeholder="Select Player"
       asInput
     />
   );
