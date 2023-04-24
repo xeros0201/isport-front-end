@@ -17,7 +17,7 @@ const isEmptyObject = (value: object) : boolean=> {
 //Group by property
 const groupMatchesByDate = (matches: Match[]): {[key: string]: Match[]} => matches.reduce(
   (result: any, match: any) => {
-      match.dateOnly = DateTime.fromISO(match.date).toLocaleString(DateTime.DATE_FULL);
+      match.dateOnly = DateTime.fromISO(match.date).toUTC().toLocaleString(DateTime.DATE_FULL);
       return ({
           ...result,
           [match.dateOnly]: [

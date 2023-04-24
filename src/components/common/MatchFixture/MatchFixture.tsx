@@ -25,7 +25,7 @@ const MatchFixtures = ({ matchFixture }: MatchFixtureProps) => {
   const awayTeamScorePrimary = awayTeamReport?.score || 0;
 
   const time = matchFixture.date
-    ? DateTime.fromISO(matchFixture.date).toLocaleString(DateTime.TIME_SIMPLE)
+    ? DateTime.fromISO(matchFixture.date).toUTC().toLocaleString(DateTime.TIME_SIMPLE)
     : "-- : --";
 
   const isTeamWinner = (teamName?: string): boolean => {

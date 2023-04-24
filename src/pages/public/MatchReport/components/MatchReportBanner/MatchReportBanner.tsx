@@ -49,13 +49,13 @@ function MatchReportBanner({ matchId, score }: BannerProps) {
     const awayTeamLogo = match?.awayTeam.logo;
     const _matchType : string = match?.type;
     const matchType = _matchType?.replace("_", " ") || "";
-    
+
     setBannerData({
       ...bannerData,
       matchType,
       leagueLogo: logoUrl ? `${s3URL}/images/${logoUrl}` : "/league-logo.png",
       leagueName: match?.season.league.name || "",
-      time: DateTime.fromISO(match?.date as string).toLocaleString(
+      time: DateTime.fromISO(match?.date as string).toUTC().toLocaleString(
         DateTime.DATETIME_MED_WITH_WEEKDAY
       ),
       location: match?.location.name || "",
