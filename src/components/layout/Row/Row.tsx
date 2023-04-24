@@ -33,6 +33,8 @@ interface RowProps {
    * value is false if need to set width ratio each row item
    */
     isWrapRowItem?: boolean;
+
+    rowName?: string;
 }
 
 const Row = ({
@@ -42,7 +44,8 @@ const Row = ({
     removeSpacing,
     noFlex,
     disableWrapping,
-    isWrapRowItem = true
+    isWrapRowItem = true,
+    rowName,
   }: RowProps) => {
   /**
    * Convert the children to an array to make them
@@ -55,6 +58,7 @@ const Row = ({
     "row--nospacing": removeSpacing,
     "row--disallow-wrapping": disableWrapping,
     "row--no-flex": noFlex,
+    [`${rowName}`]: true,
   })
 
   return (

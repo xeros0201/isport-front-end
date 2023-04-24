@@ -101,12 +101,12 @@ const MatchTable = ({ data, isLoading = false }: MatchTableProps) => {
         enableSorting: true,
       },
       {
-        header: "Date Created",
+        header: "Match Date",
         footer: (props) => props.column.id,
         cell: ({ getValue }) => {
-          const dateTime = dayjs(getValue() as string)
-            .utc()
-            .format("DD/MM/YYYY, hh:mm A");
+          const dateTime = DateTime.fromISO(getValue() as string)
+            .toUTC()
+            .toLocaleString(DateTime.DATETIME_SHORT);
 
           return <p>{dateTime}</p>;
         },

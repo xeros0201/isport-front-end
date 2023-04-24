@@ -60,7 +60,7 @@ const UserTable = ({ data, isLoading = false }: UserTableProps) => {
             footer: (props) => props.column.id,
             cell: ({ getValue }) => {
                 const dateTime = DateTime
-                    .fromISO(getValue() as string)
+                    .fromISO(getValue() as string).toUTC()
                     .toLocaleString(DateTime.DATETIME_SHORT);
                 return <p>{dateTime}</p>
             },
