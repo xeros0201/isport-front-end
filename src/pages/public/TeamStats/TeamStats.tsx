@@ -93,7 +93,14 @@ const TeamStats = () => {
 
     const teamTotals: Record<
       string,
-      Record<string, { name: string; value: number }>
+      Record<
+        string,
+        {
+          name: string;
+          value: number;
+          text?: string | number;
+        }
+      >
     > = cloneDeep(teamAverageProperties).reduce(
       (
         accumulator: Record<
@@ -123,9 +130,13 @@ const TeamStats = () => {
 
     for (const key1 in teamTotals) {
       for (const innerKey in teamTotals[key1]) {
-        teamTotals[key1][innerKey].value =
+        const val =
           Math.round((teamTotals[key1][innerKey].value / teamLength) * 100) /
           100;
+
+        teamTotals[key1][innerKey].text = innerKey.startsWith("PER_")
+          ? `${val}%`
+          : val;
       }
     }
 
