@@ -21,7 +21,17 @@ import TFooter from "../layout/Table/TFooter";
 export interface TeamAverage {
   id: number;
   name: string;
-  properties: Record<string, Record<string, { name: string; value: number }>>;
+  properties: Record<
+    string,
+    Record<
+      string,
+      {
+        name: string;
+        value: number;
+        text?: string | number;
+      }
+    >
+  >;
   players: TeamAverage[];
 }
 
@@ -39,14 +49,16 @@ const AveragesTable = ({ data, isLoading, totals }: Props) => {
       return {
         header: key.charAt(0).toUpperCase() + key.slice(1),
         columns: Object.entries(value).map(([key2, value2]) => ({
-          footer: () => totals?.properties[key][key2].value,
+          footer: () => totals?.properties[key][key2].text,
           header: value2.name.toUpperCase(),
           cell: ({ getValue }: CellContext<TeamAverage, any>) => (
             <p>{getValue() as string}</p>
           ),
           sortingFn: "alphanumeric",
           accessorFn: (row: TeamAverage) => {
-            return (row.properties[key][key2] || { value: 0 }).value;
+            const val = (row.properties[key][key2] || { value: 0 }).value;
+
+            return key2.startsWith("PER_") ? `${val}%` : val;
           },
         })),
       };
