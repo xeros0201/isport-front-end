@@ -46,7 +46,11 @@ const MatchStatisticTable = ({ data, isLoading, type }: Props) => {
             <p>{getValue() as string}</p>
           ),
           sortingFn: "alphanumeric",
-          accessorFn: (row) => row.values[key][key2].value,
+          accessorFn: (row) => {
+            const val = (row.values[key][key2] || { value: 0 }).value;
+
+            return key2.startsWith("PER_") ? `${val}%` : val;
+          },
           id: key2,
         })),
       };
@@ -165,14 +169,15 @@ const MatchStatisticTable = ({ data, isLoading, type }: Props) => {
             return (
               <Tr key={footerGroups.id}>
                 {footerGroups.headers.map((header) => {
-                  return (
-                    <Td>
-                      {(header.index === 0
-                        ? "Total"
-                        : totals[header.id]
-                      )?.toString()}
-                    </Td>
-                  );
+                  let text = (
+                    header.index === 0 ? "Total" : totals[header.id]
+                  )?.toString();
+
+                  if (header.id.includes("PER_")) {
+                    text += "%";
+                  }
+
+                  return <Td>{text}</Td>;
                 })}
               </Tr>
             );
