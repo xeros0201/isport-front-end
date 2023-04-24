@@ -47,7 +47,9 @@ function MatchReportBanner({ matchId, score }: BannerProps) {
     const logoUrl = match?.season.league.logo;
     const homeTeamLogo = match?.homeTeam.logo;
     const awayTeamLogo = match?.awayTeam.logo;
-    const matchType = match?.type;
+    const _matchType : string = match?.type;
+    const matchType = _matchType?.replace("_", " ") || "";
+    
     setBannerData({
       ...bannerData,
       matchType,
