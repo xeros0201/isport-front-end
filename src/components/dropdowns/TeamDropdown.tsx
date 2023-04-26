@@ -3,6 +3,7 @@ import { useQuery } from "react-query";
 import { getTeamBySeasons } from "../../api/teams";
 import { getTeams } from "../../api/teams";
 import { InputError, DropdownInput } from "../input";
+import _ from "lodash";
 
 interface TeamDropdown extends ImplementedDropdownProps {
   isHasAllTeamOption?: boolean;
@@ -51,6 +52,7 @@ const TeamDropdown = ({
     if (!data) return [];
 
     let _data = filter ? data.filter(filter) : data;
+    _data = _.orderBy(_data, ["name"]);
 
     if (_data.length > 0 && isHasAllTeamOption) {
       const allTeam: Team = {
