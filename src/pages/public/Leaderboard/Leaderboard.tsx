@@ -13,7 +13,10 @@ const Leaderboard = () => {
   const [statisticAlias, setStatisticAlias] = useSearchParamsState("property", "");
 
   useEffect(() => {
-    setStatisticAlias("G");
+    const queryParams = new URLSearchParams(window.location.search);
+    const property = queryParams.get('property');
+    if(property != statisticAlias)
+      setStatisticAlias("G");
   }, []);
 
   return (
