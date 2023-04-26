@@ -104,7 +104,6 @@ const MatchFixtures = ({ matchFixture }: MatchFixtureProps) => {
 
         {/* Action */}
         <Button
-          marginAuto
           label="Match Report"
           type="outlined"
           size="small"
