@@ -6,7 +6,7 @@ import AveragesTable, {
   TeamAverage,
 } from "../../../components/tables/AveragesTable";
 import useSearchParamsState from "../../../hooks/useSearchParamsState";
-import { cloneDeep } from "lodash";
+import _, { cloneDeep } from "lodash";
 import { getTeamAverages } from "../../../api/teams";
 import { PublicNavigationButtons } from "../../../components/common";
 
@@ -61,10 +61,11 @@ const TeamStats = () => {
 
       for (const key1 in propertyTotals) {
         for (const innerKey in propertyTotals[key1]) {
-          propertyTotals[key1][innerKey].value =
-            Math.round(
-              (propertyTotals[key1][innerKey].value / playersLength) * 100
-            ) / 100;
+          propertyTotals[key1][innerKey].value = _.round(
+            ((propertyTotals[key1][innerKey].value / playersLength) * 100) /
+              100,
+            1
+          );
         }
       }
 
@@ -130,9 +131,10 @@ const TeamStats = () => {
 
     for (const key1 in teamTotals) {
       for (const innerKey in teamTotals[key1]) {
-        const val =
-          Math.round((teamTotals[key1][innerKey].value / teamLength) * 100) /
-          100;
+        const val = _.round(
+          ((teamTotals[key1][innerKey].value / teamLength) * 100) / 100,
+          1
+        );
 
         teamTotals[key1][innerKey].text = innerKey.startsWith("PER_")
           ? `${val}%`
