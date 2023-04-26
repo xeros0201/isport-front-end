@@ -30,25 +30,17 @@ const LeaderboardTable = ({
   const {
     error: fetchError,
     isLoading,
-    data: data,
+    data: _data,
   } = useQuery(
     ["getProperty", { property, teamId, seasonId, leagueId }],
     async (): Promise<PlayersOnAflResults[]> => {
-      if (!property) return [];
+      if (!property || !seasonId) return [];
       let _teamId = teamId;
       if (!teamId) _teamId = undefined;
-      const temp = await getStats(property, _teamId);
+      const temp = await getStats(seasonId, property, _teamId);
       return temp;
     }
   );
-
-  const _data = useMemo(() => {
-    if (!data) return [];
-    return data?.filter(
-      (item) =>
-        item.team.seasonId == seasonId && item.team.season.leagueId == leagueId
-    );
-  }, [data, seasonId, leagueId]);
 
   // Setup columns
   const columns = useMemo<ColumnDef<PlayersOnAflResults>[]>(
