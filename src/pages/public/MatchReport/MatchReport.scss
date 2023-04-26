@@ -127,16 +127,8 @@
   @page {
     size: landscape;
   }
-  .stat-table {
-    & .other-props {
-      & .table {
-        break-before: page;
-      }
-    }
-  }
   .table {
     .td {
-      // page-break-inside: avoid !important;
       white-space: nowrap;
       overflow: hidden;
       padding: 1px;
@@ -225,5 +217,18 @@
       gap: 10px 10px;
       grid-auto-flow: row;
     }
+  }
+
+  .overview__grid {
+    display: block !important;
+  }
+  .other-props__grid {
+    display: block !important;
+  }
+  .score-distribution-wrapper {
+    break-inside: avoid !important;
+  }
+  table, ul, ol { 
+    break-inside: avoid;
   }
 }
