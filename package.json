@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "dev-local": "yarn dev --mode .env.local",
     "build": "tsc && vite build",
     "preview": "vite preview",
     "lint": "tsc --noEmit && eslint src/**/*.ts{,x}"
