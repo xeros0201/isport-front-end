@@ -56,18 +56,26 @@
     justify-items: stretch;
     align-items: stretch;
     grid-template-areas: "home-team away-team time location button";
+    
+    @media screen and (min-width: 1001px) {
+      .button {
+        margin: auto;
+      }
+    }
+
+    @include md-screen {
+      display: block;
+      .button {
+        margin-left: 0;
+      }
+    }
   }
 
   .home-team {
     grid-area: home-team;
     justify-content: flex-start;
     align-items: center;
-    @media screen and (max-width: 1000px) {
-        display: block;
-    }
-    @media screen and (min-width: 1001px) {
-        display: flex;
-    }
+    display: flex;
     
   }
 
@@ -75,12 +83,7 @@
     grid-area: away-team;
     justify-content: flex-start;
     align-items: center;
-    @media screen and (max-width: 1000px) {
-        display: block;
-    }
-    @media screen and (min-width: 1001px) {
-        display: flex;
-    }
+    display: flex;
   }
 
   .time {
