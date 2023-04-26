@@ -127,9 +127,16 @@
   @page {
     size: landscape;
   }
+  .stat-table {
+    & .other-props {
+      & .table {
+        break-before: page;
+      }
+    }
+  }
   .table {
     .td {
-      page-break-inside: avoid !important;
+      // page-break-inside: avoid !important;
       white-space: nowrap;
       overflow: hidden;
       padding: 1px;
