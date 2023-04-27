@@ -51,7 +51,12 @@ const MatchFixtures = ({ matchFixture }: MatchFixtureProps) => {
 
   return (
     <div className="match-fixture">
-      <Row rowName="fixture-container" alignItems="center" noFlex isWrapRowItem={false}>
+      <Row
+        rowName="fixture-container"
+        alignItems="center"
+        noFlex
+        isWrapRowItem={false}
+      >
         {/* Home Team */}
         <div className="home-team">
           <Logo
@@ -66,8 +71,10 @@ const MatchFixtures = ({ matchFixture }: MatchFixtureProps) => {
           </div>
 
           <div className={`score ${isWinner(matchFixture.homeTeam?.name)}`}>
-            {homeTeamReport?.score} ({homeTeamReport?.meta.TOTAL_GOAL}.
-            {homeTeamReport?.meta.TOTAL_BEHIND})
+            {homeTeamReport?.score} ({homeTeamReport?.meta.TOTAL_GOAL || 0}.
+            {(homeTeamReport?.meta.TOTAL_BEHIND || 0) +
+              (homeTeamReport?.meta.RUSHED || 0)}
+            )
           </div>
         </div>
 
@@ -86,8 +93,10 @@ const MatchFixtures = ({ matchFixture }: MatchFixtureProps) => {
           </div>
 
           <div className={`score ${isWinner(matchFixture.awayTeam?.name)}`}>
-            {awayTeamReport?.score} ({awayTeamReport?.meta.TOTAL_GOAL}.
-            {awayTeamReport?.meta.TOTAL_BEHIND})
+            {awayTeamReport?.score} ({awayTeamReport?.meta.TOTAL_GOAL || 0}.
+            {(awayTeamReport?.meta.TOTAL_BEHIND || 0) +
+              (awayTeamReport?.meta.RUSHED || 0)}
+            )
           </div>
         </div>
 
