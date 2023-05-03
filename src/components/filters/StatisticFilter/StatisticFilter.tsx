@@ -2,13 +2,12 @@ import { Logo } from "../../common";
 import { LeagueDropdown, SeasonDropdown, TeamDropdown } from "../../dropdowns";
 import { Row } from "../../layout";
 import "./StatisticFilter.scss";
-import StatisticDropdown, {
-  statDropdown,
-} from "../../dropdowns/StatisticDropdown";
+import StatisticDropdown from "../../dropdowns/StatisticDropdown";
 import { useQuery } from "react-query";
 import { getLeague } from "../../../api/leagues";
 import { useMemo } from "react";
 import { getSeason } from "../../../api/seasons";
+import { statOptions } from "../../../data/statistics";
 const s3URL = import.meta.env.VITE_S3_URL;
 
 interface StatisticFilterProps {
@@ -39,8 +38,8 @@ const StatisticFilter = ({
     getSeason(+seasonId)
   );
   const statName = useMemo(
-    () => statDropdown.find((item) => item.alias === statisticAlias)?.name,
-    [statDropdown, statisticAlias]
+    () => statOptions.find((item) => item.alias === statisticAlias)?.name,
+    [statOptions, statisticAlias]
   );
   return (
     <div className="statistic-filter">
