@@ -38,7 +38,7 @@ export const statDropdown: Statistic[] = [
   {
     id: 70,
     name: "Kicking efficiency",
-    alias: "K",
+    alias: "PER_2",
   },
   {
     id: 47,
