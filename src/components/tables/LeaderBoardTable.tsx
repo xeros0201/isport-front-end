@@ -1,6 +1,7 @@
 import { Table, Tbody, Td, Th, Thead, Tr } from "../layout/Table";
 import { Logo, Spinner } from "../common";
 const s3URL = import.meta.env.VITE_S3_URL;
+import { statOptions } from "../../data/statistics";
 
 import {
   ColumnDef,
@@ -10,7 +11,7 @@ import {
   SortingState,
   useReactTable,
 } from "@tanstack/react-table";
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { useQuery } from "react-query";
 import { getStats } from "../../api/players";
 
@@ -41,6 +42,11 @@ const LeaderboardTable = ({
       return temp;
     }
   );
+
+  const statLabel = useMemo(() => {
+    const stat = statOptions.find((stat) => stat.alias === property);
+    return stat?.name || property;
+  }, [property]);
 
   // Setup columns
   const columns = useMemo<ColumnDef<PlayersOnAflResults>[]>(
@@ -84,7 +90,7 @@ const LeaderboardTable = ({
         enableSorting: false,
       },
       {
-        header: property || "Property",
+        header: statLabel || property || "Property",
         footer: (props) => props.column.id,
         cell: (info) => (
           <p style={{ textAlign: "right" }}>{info.getValue() as string}</p>
