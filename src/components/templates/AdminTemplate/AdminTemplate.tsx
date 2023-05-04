@@ -37,15 +37,11 @@ const AdminTemplate = () => {
     
   return (
     <div>
-     {isLoading? 
-      <Header menu={staffMenu} collapseWidth={680}>
-
-    </Header>
-     :data?.user?.role ==="ADMIN"? 
-     <Header menu={adminMenu} collapseWidth={680}>
+     {isLoading?<Header menu={staffMenu} collapseWidth={680}></Header>:data?.user?.role ==="ADMIN"? 
+      <Header menu={adminMenu} collapseWidth={680}>
         <AccountDropdown />
       </Header>:
-       <Header menu={staffMenu} collapseWidth={680}>
+      <Header menu={staffMenu} collapseWidth={680}>
        <AccountDropdown />
       </Header>
       }
