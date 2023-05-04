@@ -96,7 +96,8 @@ const LeaderboardTable = ({
           <p style={{ textAlign: "right" }}>{info.getValue() as string}</p>
         ),
         sortingFn: "alphanumeric",
-        accessorFn: (row) => row.total,
+        accessorFn: ({ total }) =>
+          `${total}${property?.startsWith("PER_") ? "%" : ""}`,
         enableSorting: false,
       },
     ],
