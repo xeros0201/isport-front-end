@@ -2,7 +2,7 @@ import { Page, Row } from "../../../components/layout";
 import { Button } from "../../../components/common";
 import { useNavigate } from "react-router-dom";
 import { useMemo, useState } from "react";
-import { QueryClient, useQuery } from "react-query";
+import { useQuery } from "react-query";
 import { getUsers } from "../../../api/users";
 import { TextInput } from "../../../components/input";
 import { UserTable } from "../../../components/tables";
@@ -30,20 +30,14 @@ const UserList = () => {
             navigate('/admin/leagues')
         },3000)
         //@ts-ignore
-        if(error.response.data.error==="Forbidden")
-        return   <Page title="Forbidden">
+        if(error?.response?.data?.error === "Forbidden")
+        return (
+        <Page title="Forbidden">
         <Row alignItems='center' disableWrapping noFlex>
             <h1>Forbidden</h1>
-        </Row>
-        <TextInput
-            placeholder="Search..."
-            value={query}
-            onChange={setQuery}
-            icon="IoSearch"
-            rounded
-        />
-        
-    </Page>
+        </Row>    
+        </Page>
+        );
     }
     return (
         <Page title="Users">

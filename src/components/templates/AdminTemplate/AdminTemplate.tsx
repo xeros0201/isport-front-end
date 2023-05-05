@@ -6,21 +6,17 @@ import { useQuery } from "react-query";
 import { checkAuth } from "../../../api/auth";
 const adminPrefix = import.meta.env.VITE_ADMIN_PREFIX;
 
-const adminMenu: Menu = [
-    { label: 'Leagues', path: `${adminPrefix}/leagues` },
-    { label: 'Seasons', path: `${adminPrefix}/seasons` },
-    { label: 'Teams', path: `${adminPrefix}/teams` },
-    { label: 'Players', path: `${adminPrefix}/players` },
-    { label: 'Matches', path: `${adminPrefix}/matches` },
-    { label: 'Users', path: `${adminPrefix}/users` },
-]
-
 const staffMenu: Menu = [
   { label: 'Leagues', path: `${adminPrefix}/leagues` },
   { label: 'Seasons', path: `${adminPrefix}/seasons` },
   { label: 'Teams', path: `${adminPrefix}/teams` },
   { label: 'Players', path: `${adminPrefix}/players` },
   { label: 'Matches', path: `${adminPrefix}/matches` },
+]
+
+const adminMenu: Menu = [
+    ...staffMenu,
+    { label: 'Users', path: `${adminPrefix}/users` },
 ]
 
 const AdminTemplate = () => {
@@ -37,14 +33,12 @@ const AdminTemplate = () => {
     
   return (
     <div>
-     {isLoading?<Header menu={staffMenu} collapseWidth={680}></Header>:data?.user?.role ==="ADMIN"? 
-      <Header menu={adminMenu} collapseWidth={680}>
-        <AccountDropdown />
-      </Header>:
-      <Header menu={staffMenu} collapseWidth={680}>
-       <AccountDropdown />
+     <Header
+        menu={data?.user?.role === "ADMIN" ? adminMenu : staffMenu}
+        collapseWidth={680}
+      >
+        {!isLoading && <AccountDropdown />}
       </Header>
-      }
       <Container>
         <Outlet />
       </Container>
