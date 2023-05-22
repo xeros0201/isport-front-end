@@ -14,7 +14,6 @@ steps:
     displayName: 'Sync repository with AWS CodeCommit'
     env:
       AZURE_REPO_URL: $(AZURE_REPO_URL)
-      AZURE_GIT_USERNAME: $(AZURE_GIT_USERNAME)
       AZURE_GIT_PASSWORD: $(AZURE_GIT_PASSWORD)
       AWS_REPO_URL: $(AWS_REPO_URL)
       AWS_GIT_USERNAME: $(AWS_GIT_USERNAME)
