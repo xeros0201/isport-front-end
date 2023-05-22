@@ -1,7 +1,43 @@
 import { InputError, InputLabel } from "../../input";
-import DatePicker, { ReactDatePickerProps } from "react-datepicker";
+import DatePicker, {
+  ReactDatePickerProps,
+  registerLocale,
+} from "react-datepicker";
 import "./DateInput.scss";
 import { Icon } from "../../common";
+import dayjs from "dayjs";
+
+function convertUTCToLocalDate(_date: string) {
+  let date = new Date(_date);
+  date = new Date(
+    date.getUTCFullYear(),
+    date.getUTCMonth(),
+    date.getUTCDate(),
+    date.getUTCHours(),
+    date.getUTCMinutes(),
+    date.getUTCSeconds()
+  );
+  return date;
+}
+
+function convertLocalToUTCDate(date: Date, initialValue: string) {
+  if (!date) {
+    return date;
+  }
+  date = new Date(date);
+  const initDate = new Date(initialValue);
+  date = new Date(
+    Date.UTC(
+      date.getFullYear(),
+      date.getMonth(),
+      date.getDate(),
+      initDate.getUTCHours(),
+      initDate.getUTCMinutes(),
+      initDate.getUTCSeconds()
+    )
+  );
+  return date;
+}
 
 interface DateInputProps
   extends Omit<ReactDatePickerProps, "onChange">,
@@ -18,8 +54,7 @@ const DateInput = ({
 }: DateInputProps) => {
   const handleChange = (date: null | Date) => {
     if (!date) return;
-
-    onChange(date.toISOString());
+    onChange(convertLocalToUTCDate(date, value as string).toISOString());
   };
 
   return (
@@ -28,7 +63,9 @@ const DateInput = ({
       <div className="dateinput__input-wrap">
         <DatePicker
           dateFormat="dd/MM/yyyy"
-          selected={value !== undefined ? new Date(value) : undefined}
+          selected={
+            value !== undefined ? convertUTCToLocalDate(value) : undefined
+          }
           onChange={handleChange}
           className="dateinput__input"
           placeholderText="DD-MM-YYYY"

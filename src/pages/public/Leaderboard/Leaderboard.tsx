@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { useEffect } from "react";
 import StatisticFilter from "../../../components/filters/StatisticFilter/StatisticFilter";
 import { Page } from "../../../components/layout";
 import LeaderboardTable from "../../../components/tables/LeaderBoardTable";
 import useSearchParamsState from "../../../hooks/useSearchParamsState";
+import { PublicNavigationButtons } from "../../../components/common";
 import "./LeaderBoard.scss";
 
 const Leaderboard = () => {
@@ -11,10 +12,16 @@ const Leaderboard = () => {
   const [teamId, setTeamId] = useSearchParamsState("teamId", "");
   const [statisticAlias, setStatisticAlias] = useSearchParamsState("property", "");
 
+  useEffect(() => {
+    const queryParams = new URLSearchParams(window.location.search);
+    const property = queryParams.get('property');
+    if(property != statisticAlias)
+      setStatisticAlias("G");
+  }, []);
+
   return (
     <Page title="Leaderboard">
       <div className="leaderboard">
-        <h1>Leaderboard</h1>
         <StatisticFilter
           leagueId={leagueId}
           onLeagueChange={setLeagueId}
@@ -25,7 +32,8 @@ const Leaderboard = () => {
           statisticAlias={statisticAlias}
           onStatisticChange={setStatisticAlias}
         ></StatisticFilter>
-  
+        <h1>Leaderboard</h1>
+        <PublicNavigationButtons currentPage="leaderboard" leagueId={+leagueId} seasonId={+seasonId} />
         <LeaderboardTable property={statisticAlias} teamId={+teamId} seasonId={+seasonId} leagueId={+leagueId} />
       </div>
     </Page>

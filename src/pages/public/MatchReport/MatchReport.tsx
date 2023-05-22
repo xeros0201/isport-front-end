@@ -1,6 +1,6 @@
 import ScoreDistributionChart from "../../../components/charts/ScoreDistributionChart";
-import { useMemo, useState } from "react";
-import { Page, TabContainer, TabSelect } from "../../../components/layout";
+import { useMemo, useState, useEffect } from "react";
+import { Footer, Page, TabContainer, TabSelect } from "../../../components/layout";
 import { useNavigate } from "react-router-dom";
 import MatchReportBanner from "./components/MatchReportBanner/MatchReportBanner";
 import { Button, Spinner } from "../../../components/common";
@@ -136,46 +136,48 @@ const MatchReport = () => {
   if (isLoading) return <Spinner size="large" />;
   if (!isLoading && !stats) return <p>No Statistics found</p>;
   return (
-    <Page title="Match Report">
-      <Button
-        label="QAFL, Round 21"
-        onClick={() => navigate(-1)}
-        type="transparent"
-        icon="IoChevronBackOutline"
-      />
-      <MatchReportBanner matchId={+matchId} score={aflResult} />
-      <TabSelect
-        tabs={["Match Overview", "Match Statistics", "Game Leaders"]}
-        selectedTab={selectedTab}
-        setSelectedTab={setSelectedTab}
-      />
-      <div>
-        <TabContainer selected={selectedTab === 0}>
-          {!!matchId ? (
-            renderDisposables()
-          ) : (
-            <p>Please select match from previous page.</p>
-          )}
-        </TabContainer>
-        <TabContainer selected={selectedTab === 1}>
-          {!!matchId && !!stats?.teamReports ? (
-            <MatchStatistic
-              data={stats?.teamReports}
-              isLoading={isLoading}
-            ></MatchStatistic>
-          ) : (
-            <p>Please select match from previous page.</p>
-          )}
-        </TabContainer>
-        <TabContainer selected={selectedTab === 2}>
-          {!!matchId ? (
-            renderGameLeader()
-          ) : (
-            <p>Please select match from previous page.</p>
-          )}
-        </TabContainer>
-      </div>
-    </Page>
+    <>
+      <Page title="Match Report">
+        <Button
+          label="Back"
+          onClick={() => navigate(-1)}
+          type="transparent"
+          icon="IoChevronBackOutline"
+        />
+        <MatchReportBanner matchId={+matchId} score={aflResult} />
+        <TabSelect
+          tabs={["Match Overview", "Match Statistics", "Game Leaders"]}
+          selectedTab={selectedTab}
+          setSelectedTab={setSelectedTab}
+        />
+        <div>
+          <TabContainer selected={selectedTab === 0}>
+            {!!matchId ? (
+              renderDisposables()
+            ) : (
+              <p>Please select match from previous page.</p>
+            )}
+          </TabContainer>
+          <TabContainer selected={selectedTab === 1}>
+            {!!matchId && !!stats?.teamReports ? (
+              <MatchStatistic
+                data={stats?.teamReports}
+                isLoading={isLoading}
+              ></MatchStatistic>
+            ) : (
+              <p>Please select match from previous page.</p>
+            )}
+          </TabContainer>
+          <TabContainer selected={selectedTab === 2}>
+            {!!matchId ? (
+              renderGameLeader()
+            ) : (
+              <p>Please select match from previous page.</p>
+            )}
+          </TabContainer>
+        </div>
+      </Page>
+    </>
   );
 };
 

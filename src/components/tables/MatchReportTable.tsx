@@ -37,7 +37,8 @@ const MatchReportTable = ({
         footer: (props) => props.column.id,
         cell: (info) => <p>{info.getValue() as string}</p>,
         sortingFn: "alphanumeric",
-        accessorFn: (row) => row.home, //Data is array of numbers. This will be split into 3 columns "Home", "Away" and "Diff."
+        accessorFn: (row) =>
+          row.name.includes("%") ? `${row.home}%` : row.home, //Data is array of numbers. This will be split into 3 columns "Home", "Away" and "Diff."
         enableSorting: false,
       },
       {
@@ -45,7 +46,8 @@ const MatchReportTable = ({
         footer: (props) => props.column.id,
         cell: (info) => <p>{info.getValue() as string}</p>,
         sortingFn: "alphanumeric",
-        accessorFn: (row) => row.away, //Data is array of numbers. This will be split into 3 columns "Home", "Away" and "Diff."
+        accessorFn: (row) =>
+          row.name.includes("%") ? `${row.away}%` : row.away, //Data is array of numbers. This will be split into 3 columns "Home", "Away" and "Diff."
         enableSorting: false,
       },
       {
@@ -53,7 +55,8 @@ const MatchReportTable = ({
         footer: (props) => props.column.id,
         cell: (info) => <p>{info.getValue() as string}</p>,
         sortingFn: "alphanumeric",
-        accessorFn: (row) => row.diff, //Data is array of numbers. This will be split into 3 columns "Home", "Away" and "Diff."
+        accessorFn: (row) =>
+          row.name.includes("%") ? `${row.diff}%` : row.diff, //Data is array of numbers. This will be split into 3 columns "Home", "Away" and "Diff."
         enableSorting: false,
       },
     ],

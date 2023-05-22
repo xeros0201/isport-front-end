@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "dev-local": "yarn dev --mode .env.local",
     "build": "tsc && vite build",
     "preview": "vite preview",
     "lint": "tsc --noEmit && eslint src/**/*.ts{,x}"
@@ -24,6 +25,7 @@
     "react-datepicker": "^4.10.0",
     "react-dom": "^18.2.0",
     "react-dropdown": "^1.11.0",
+    "react-ga4": "^2.1.0",
     "react-helmet": "^6.1.0",
     "react-icons": "^4.7.1",
     "react-image": "^4.0.3",

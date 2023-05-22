@@ -25,7 +25,7 @@ const MatchFixtures = ({ matchFixture }: MatchFixtureProps) => {
   const awayTeamScorePrimary = awayTeamReport?.score || 0;
 
   const time = matchFixture.date
-    ? DateTime.fromISO(matchFixture.date).toLocaleString(DateTime.TIME_SIMPLE)
+    ? DateTime.fromISO(matchFixture.date).toUTC().toLocaleString(DateTime.TIME_SIMPLE)
     : "-- : --";
 
   const isTeamWinner = (teamName?: string): boolean => {
@@ -51,14 +51,14 @@ const MatchFixtures = ({ matchFixture }: MatchFixtureProps) => {
 
   return (
     <div className="match-fixture">
-      <Row alignItems="center" noFlex>
+      <Row
+        rowName="fixture-container"
+        alignItems="center"
+        noFlex
+        isWrapRowItem={false}
+      >
         {/* Home Team */}
-        <Row
-          alignItems="center"
-          justifyContent="flex-start"
-          disableWrapping
-          noFlex
-        >
+        <div className="home-team">
           <Logo
             url={
               matchFixture.homeTeam?.logo
@@ -71,18 +71,15 @@ const MatchFixtures = ({ matchFixture }: MatchFixtureProps) => {
           </div>
 
           <div className={`score ${isWinner(matchFixture.homeTeam?.name)}`}>
-            {homeTeamReport?.score} ({homeTeamReport?.meta.TOTAL_GOAL}.
-            {homeTeamReport?.meta.TOTAL_BEHIND})
+            {homeTeamReport?.score} ({homeTeamReport?.meta.TOTAL_GOAL || 0}.
+            {(homeTeamReport?.meta.TOTAL_BEHIND || 0) +
+              (homeTeamReport?.meta.RUSHED || 0)}
+            )
           </div>
-        </Row>
+        </div>
 
         {/* Away Team */}
-        <Row
-          alignItems="center"
-          justifyContent="flex-start"
-          disableWrapping
-          noFlex
-        >
+        <div className="away-team">
           <Logo
             url={
               matchFixture.awayTeam?.logo
@@ -96,10 +93,12 @@ const MatchFixtures = ({ matchFixture }: MatchFixtureProps) => {
           </div>
 
           <div className={`score ${isWinner(matchFixture.awayTeam?.name)}`}>
-            {awayTeamReport?.score} ({awayTeamReport?.meta.TOTAL_GOAL}.
-            {awayTeamReport?.meta.TOTAL_BEHIND})
+            {awayTeamReport?.score} ({awayTeamReport?.meta.TOTAL_GOAL || 0}.
+            {(awayTeamReport?.meta.TOTAL_BEHIND || 0) +
+              (awayTeamReport?.meta.RUSHED || 0)}
+            )
           </div>
-        </Row>
+        </div>
 
         {/* Other info */}
         <div className="time">

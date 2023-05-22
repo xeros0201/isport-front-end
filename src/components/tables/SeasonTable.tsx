@@ -81,7 +81,7 @@ const SeasonTable = ({ data, isLoading = false }: SeasonTableProps) => {
         cell: ({ getValue }) => {
           const dateTime = DateTime.fromISO(
             getValue() as string
-          ).toLocaleString(DateTime.DATETIME_SHORT);
+          ).toUTC().toLocaleString(DateTime.DATETIME_SHORT);
           return <p>{dateTime}</p>;
         },
         sortingFn: "datetime",

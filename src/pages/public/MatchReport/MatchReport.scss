@@ -45,9 +45,32 @@
       grid-gap: 20px;
     }
   }
+  .table {
+    .thead {
+      .tr {
+        .th:first-child {
+          width: 150px;
+        }
+      }
+    }
+  }
 }
 
 .leader {
+
+  .table {
+    .thead {
+      .tr {
+        .th:first-child {
+          width: 30px;
+        }
+        .th:last-child {
+          width: 50px;
+        }
+      }
+    }
+  }
+
   .team-side {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -127,13 +150,25 @@
   @page {
     size: landscape;
   }
+  .tab-container{
+    display: block !important;
+  }
+
+  footer {
+    display: block !important;
+    position: static;
+  }
+
   .table {
     .td {
-      page-break-inside: avoid !important;
-      white-space: nowrap;
-      overflow: hidden;
-      padding: 1px;
-      font-size: xx-small;
+      p {
+        font-size: small;
+      }
+    }
+    .th {
+      div {
+        font-size: small !important;
+      }
     }
   }
 
@@ -158,7 +193,8 @@
   .leader {
     display: block;
     width: 100%;
-
+    page-break-before: always !important;
+    
     .team-side {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -203,20 +239,44 @@
     }
 
     .home-side {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-
-      grid-template-rows: 1fr;
-      gap: 10px 10px;
-      grid-auto-flow: row;
+      display: block;
     }
 
     .away-side {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      grid-template-rows: 1fr;
-      gap: 10px 10px;
-      grid-auto-flow: row;
+      display: block;
+    }
+    
+  }
+
+  .match-statistic {
+    zoom: 55% !important;
+    .table {
+      -moz-transform: scale(0.65);
+      -moz-transform-origin: 0 0;
+    }
+
+    page-break-before: always;
+    .table .tbody .tr .td > * {
+      font-size: small;
+    }
+  }
+
+  .overview__grid {
+    display: block !important;
+  }
+  .other-props__grid {
+    display: block !important;
+  }
+  .score-distribution-wrapper {
+    break-inside: avoid !important;
+  }
+  table, ul, ol { 
+    break-inside: avoid;
+  }
+
+  @-moz-document url-prefix() {
+    footer {
+      display: none !important;
     }
   }
 }

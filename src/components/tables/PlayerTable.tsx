@@ -95,7 +95,7 @@ const PlayerTable = ({ data, isLoading = false }: PlayerTableProps) => {
         cell: ({ getValue }) => {
           const dateTime = DateTime.fromISO(
             getValue() as string
-          ).toLocaleString(DateTime.DATETIME_SHORT);
+          ).toUTC().toLocaleString(DateTime.DATETIME_SHORT);
           return <p>{dateTime}</p>;
         },
         sortingFn: "datetime",

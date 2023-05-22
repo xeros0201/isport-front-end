@@ -1,6 +1,7 @@
 import { Table, Tbody, Td, Th, Thead, Tr } from "../layout/Table";
 import { Logo, Spinner } from "../common";
 const s3URL = import.meta.env.VITE_S3_URL;
+import { statOptions } from "../../data/statistics";
 
 import {
   ColumnDef,
@@ -10,7 +11,7 @@ import {
   SortingState,
   useReactTable,
 } from "@tanstack/react-table";
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { useQuery } from "react-query";
 import { getStats } from "../../api/players";
 
@@ -30,25 +31,22 @@ const LeaderboardTable = ({
   const {
     error: fetchError,
     isLoading,
-    data: data,
+    data: _data,
   } = useQuery(
     ["getProperty", { property, teamId, seasonId, leagueId }],
     async (): Promise<PlayersOnAflResults[]> => {
-      if (!property) return [];
+      if (!property || !seasonId) return [];
       let _teamId = teamId;
       if (!teamId) _teamId = undefined;
-      const temp = await getStats(property, _teamId);
+      const temp = await getStats(seasonId, property, _teamId);
       return temp;
     }
   );
 
-  const _data = useMemo(() => {
-    if (!data) return [];
-    return data?.filter(
-      (item) =>
-        item.team.seasonId == seasonId && item.team.season.leagueId == leagueId
-    );
-  }, [data, seasonId, leagueId]);
+  const statLabel = useMemo(() => {
+    const stat = statOptions.find((stat) => stat.alias === property);
+    return stat?.name || property;
+  }, [property]);
 
   // Setup columns
   const columns = useMemo<ColumnDef<PlayersOnAflResults>[]>(
@@ -92,13 +90,14 @@ const LeaderboardTable = ({
         enableSorting: false,
       },
       {
-        header: property || "Property",
+        header: statLabel || property || "Property",
         footer: (props) => props.column.id,
         cell: (info) => (
           <p style={{ textAlign: "right" }}>{info.getValue() as string}</p>
         ),
         sortingFn: "alphanumeric",
-        accessorFn: (row) => row.total,
+        accessorFn: ({ total }) =>
+          `${total}${property?.startsWith("PER_") ? "%" : ""}`,
         enableSorting: false,
       },
     ],

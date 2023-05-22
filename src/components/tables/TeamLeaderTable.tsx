@@ -35,7 +35,6 @@ const TeamLeaderTable = ({ property, data }: TeamLeaderTableProps) => {
             sortingFn: "alphanumeric",
             accessorFn: (row) => (row.player.playerNumber || row.player.id),
             enableSorting: true,
-            size: 100,
           },
           {
             header: "Player",

@@ -3,6 +3,7 @@ import { useQuery } from "react-query";
 import { getTeams } from "../../../../api/teams";
 import { Spinner } from "../../../common";
 import { InputError, DropdownInput } from "../../../input";
+import _ from "lodash";
 
 interface TeamNameDropdownProps extends ImplementedDropdownProps {
   /**
@@ -25,10 +26,13 @@ const CSVDropdown = ({
   const playerOptions: InputOption[] = useMemo(() => {
     if (!data) return [];
 
-    return data.map((item: Player) => ({
+    let _data = data.map((item: Player) => ({
       value: item.id.toString(),
       label: item.name,
     }));
+    _data = _.orderBy(_data, ["label"]);
+
+    return _data;
   }, [data]);
 
   const handleChange = (val: string) => {
@@ -44,7 +48,7 @@ const CSVDropdown = ({
       required={required}
       disabled={disabled}
       options={playerOptions}
-      placeholder="Select Team"
+      placeholder="Select Player"
       asInput
     />
   );

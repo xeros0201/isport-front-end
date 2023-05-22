@@ -17,6 +17,7 @@ import { Icon, Spinner } from "../common";
 import { Table } from "../layout";
 import { Tbody, Td, Th, Thead, Tr } from "../layout/Table";
 import TFooter from "../layout/Table/TFooter";
+import _ from "lodash";
 
 export interface TeamAverage {
   id: number;
@@ -46,7 +47,11 @@ const MatchStatisticTable = ({ data, isLoading, type }: Props) => {
             <p>{getValue() as string}</p>
           ),
           sortingFn: "alphanumeric",
-          accessorFn: (row) => row.values[key][key2].value,
+          accessorFn: (row) => {
+            const val = (row.values[key][key2] || { value: 0 }).value;
+
+            return key2.startsWith("PER_") ? `${val}%` : val;
+          },
           id: key2,
         })),
       };
@@ -91,9 +96,9 @@ const MatchStatisticTable = ({ data, isLoading, type }: Props) => {
         return obj;
       }, {}) || {};
 
-    _totals.PER_1 = Math.round((_totals.E_1 / _totals.D) * 100) / 100;
-    _totals.PER_2 = Math.round((_totals.E_2 / _totals.K) * 100) / 100;
-    _totals.PER_3 = Math.round((_totals.E_3 / _totals.HB) * 100) / 100;
+    _totals.PER_1 = _.round((_totals.E_1 / _totals.D) * 100, 1);
+    _totals.PER_2 = _.round((_totals.E_2 / _totals.K) * 100, 1);
+    _totals.PER_3 = _.round((_totals.E_3 / _totals.HB) * 100, 1);
 
     return _totals;
   }, [data]);
@@ -165,14 +170,15 @@ const MatchStatisticTable = ({ data, isLoading, type }: Props) => {
             return (
               <Tr key={footerGroups.id}>
                 {footerGroups.headers.map((header) => {
-                  return (
-                    <Td>
-                      {(header.index === 0
-                        ? "Total"
-                        : totals[header.id]
-                      )?.toString()}
-                    </Td>
-                  );
+                  let text = (
+                    header.index === 0 ? "Total" : totals[header.id]
+                  )?.toString();
+
+                  if (header.id.includes("PER_")) {
+                    text += "%";
+                  }
+
+                  return <Td>{text}</Td>;
                 })}
               </Tr>
             );

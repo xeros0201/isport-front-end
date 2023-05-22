@@ -90,24 +90,24 @@ function CSVPreview({
   }, [playerNumberList, players, playersOnMatch]);
 
   const handleDeletePlayer = async (playerNumber: string) => {
-    setPlayerNumbers((val) => {
-      const _val = [...val];
-      const index = _val.findIndex((item) => item === playerNumber);
-      _val.splice(index, 1);
-      return [..._val];
-    });
+    // setPlayerNumbers((val) => {
+    //   const _val = [...val];
+    //   const index = _val.findIndex((item) => item === playerNumber);
+    //   _val.splice(index, 1);
+    //   return [..._val];
+    // });
     setSelectedPlayers((val) => {
       delete val[playerNumber];
       return { ...val };
     });
-    if (matchId) {
-      const playerId = playersOnMatch?.find(
-        (item) =>
-          item.teamId.toString() === teamId &&
-          item.playerNumber?.toString() === playerNumber
-      )?.id;
-      if (playerId) await deletePlayerOnMatch(matchId, +playerId);
-    }
+    // if (matchId) {
+    //   const playerId = playersOnMatch?.find(
+    //     (item) =>
+    //       item.teamId.toString() === teamId &&
+    //       item.playerNumber?.toString() === playerNumber
+    //   )?.id;
+    //   if (playerId) await deletePlayerOnMatch(matchId, +playerId);
+    // }
   };
 
   const disableRemove = useMemo(
@@ -153,11 +153,13 @@ function CSVPreview({
                 <button
                   type="button"
                   onClick={() => {
-                    if (!disableRemove)
-                      setModalData({
-                        open: true,
-                        playerNumber,
-                      });
+                    if (!disableRemove) {
+                      handleDeletePlayer(playerNumber);
+                      // setModalData({
+                      //   open: true,
+                      //   playerNumber,
+                      // });
+                    }
                   }}
                   disabled={disableRemove}
                   className={"remove-btn"}
